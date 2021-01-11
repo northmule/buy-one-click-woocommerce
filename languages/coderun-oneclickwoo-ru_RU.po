@@ -1,0 +1,895 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"Project-Id-Version: buy-one-click-woocommerce\n"
+"Language: ru_RU\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-16 13:15+0000\n"
+"PO-Revision-Date: 2019-06-16 13:16+0000\n"
+"Last-Translator: coderun.ru\n"
+"Language-Team: Русский\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"X-Loco-Version: 2.3.0; wp-5.2.1"
+
+#: page/tab4-option1.php:6
+msgid "Information on"
+msgstr "Информация о"
+
+#: page/tab4-option1.php:12
+msgid "Commercial solutions for your online store"
+msgstr "Коммерческие решения для вашего интернет-магазина"
+
+#: page/tab4-option1.php:12 page/tab4-option1.php:15 page/tab4-option1.php:19 page/tab4-option1.php:22
+msgid "Link"
+msgstr "Ссылка на сайт"
+
+#: page/tab4-option1.php:15
+msgid "Plugin page, discussions, suggestions, suggestions"
+msgstr "Страница плагина, обсуждения, предложения, предложения"
+
+#: page/tab4-option1.php:17
+msgid "Other Author Plugins"
+msgstr "Другие авторские плагины"
+
+#: page/tab4-option1.php:19
+msgid "WordPress plugins page on Wordpress"
+msgstr "Страница плагинов WordPress на Wordpress"
+
+#: page/tab4-option1.php:22
+msgid "Test your hosting with Wordpress plugin"
+msgstr "Проверьте свой хостинг с плагином Wordpress"
+
+#: page/tab4-option1.php:25
+msgid "Watch for updates via"
+msgstr "Следите за обновлениями через"
+
+#: page/tab4-option1.php:40
+msgid "Version Sponsors"
+msgstr "Спонсоры версии"
+
+#: page/tab2-option1.php:6
+msgid "Methods and notification settings for the client"
+msgstr "Методы и настройки уведомлений для клиента"
+
+#: page/tab2-option1.php:14
+msgid "Setting E-mail Notifications"
+msgstr "Настройка уведомлений по электронной почте"
+
+#: page/tab2-option1.php:19
+msgid "Name from"
+msgstr "Имя от"
+
+#: page/tab2-option1.php:26 page/tab2-option1.php:37 page/tab1-option1.php:402
+msgid "Example"
+msgstr "пример"
+
+#: page/tab2-option1.php:30
+msgid "Email From"
+msgstr "Электронная почта от"
+
+#: page/tab2-option1.php:41
+msgid "Email copy"
+msgstr "Email копия"
+
+#: page/tab2-option1.php:48
+msgid "This email will receive a copy of the order messages. Through the sign \",\" you can specify multiple Email. Example:"
+msgstr "На это письмо будет отправлена копия сообщений с заказами. Через знак \",\" вы можете указать несколько адресов электронной почты. Пример:"
+
+#: page/tab2-option1.php:54
+msgid "Optional Options"
+msgstr "Дополнительные опции"
+
+#: page/tab2-option1.php:56
+msgid "Tick off the boxes to be sent."
+msgstr "Отметьте галочками поля для отправки."
+
+#: page/tab2-option1.php:61
+msgid "Ordering information"
+msgstr "Информация для заказа"
+
+#: page/tab2-option1.php:68
+msgid "Send order data to customer. A tick is worth sending!"
+msgstr "Отправить данные заказа клиенту. Галочку стоит отправить!"
+
+#: page/tab2-option1.php:73 page/tab2-option1.php:86
+msgid "Random information"
+msgstr "Случайная информация"
+
+#: page/tab2-option1.php:80
+msgid "Send additional data. You can specify any text."
+msgstr "Отправьте дополнительные данные. Вы можете указать любой текст."
+
+#: page/tab2-option1.php:93
+msgid "Arbitrary information, such as contacts or a wish. It is possible to specify the HTML tag"
+msgstr "Произвольная информация, такая как контакты или пожелание. Можно указать тег HTML"
+
+#: page/tab2-option1.php:100
+msgid "Setting SMS notifications"
+msgstr "Настройка SMS-уведомлений"
+
+#: page/tab2-option1.php:103
+msgid "Enable SMS Customer Notifications"
+msgstr "Включить SMS-уведомления клиентов"
+
+#: page/tab2-option1.php:110
+msgid "Enable SMS notifications for client via service"
+msgstr "Включить SMS-уведомления для клиента через сервис"
+
+#: page/tab2-option1.php:110
+msgid "for quick order button. If ticked - SMS notifications will work"
+msgstr "для быстрого заказа кнопки. Если галочка установлена — смс уведомления будут работать."
+
+#: page/tab2-option1.php:114
+msgid "Enable SMS Notifications Seller"
+msgstr "Включить СМС-уведомления Продавца"
+
+#: page/tab2-option1.php:121
+msgid "Enable SMS notifications for the seller through the service - If checked, SMS notifications will work."
+msgstr "Включить SMS-уведомления для продавца через сервис - если установлен этот флажок, SMS-уведомления будут работать."
+
+#: page/tab2-option1.php:125
+msgid "Online Store Owners Phone"
+msgstr "Интернет-магазин владельцев телефонов"
+
+#: page/tab2-option1.php:132
+msgid "Notifications on new orders will be sent to this phone number. Works when the daw is set higher"
+msgstr "Уведомления о новых заказах будут отправлены на этот номер телефона. Работает когда галка установлена выше"
+
+#: page/tab2-option1.php:136
+msgid "Login"
+msgstr "Авторизоваться"
+
+#: page/tab2-option1.php:143
+msgid "Your login from the service"
+msgstr "Ваш логин из сервиса"
+
+#: page/tab2-option1.php:147
+msgid "Password"
+msgstr "пароль"
+
+#: page/tab2-option1.php:154
+msgid "Your service password"
+msgstr "Ваш сервисный пароль"
+
+#: page/tab2-option1.php:158
+msgid "Use POST method"
+msgstr "Используйте метод POST"
+
+#: page/tab2-option1.php:161 page/tab2-option1.php:173
+msgid "Do not use"
+msgstr "Не использовать"
+
+#: page/tab2-option1.php:162 page/tab2-option1.php:174
+msgid "Use"
+msgstr "использование"
+
+#: page/tab2-option1.php:165
+msgid "Use the POST method. By default, do not use"
+msgstr "Используйте метод POST. По умолчанию не использовать"
+
+#: page/tab2-option1.php:169
+msgid "Use HTTPS protocol"
+msgstr "Использовать протокол HTTPS"
+
+#: page/tab2-option1.php:178
+msgid "Use for sms https. Default - do not use"
+msgstr "Используйте для смс https. По умолчанию - не использовать"
+
+#: page/tab2-option1.php:182
+msgid "Encoding"
+msgstr "кодировка"
+
+#: page/tab2-option1.php:189
+msgid "SMS encoding of messages"
+msgstr "СМС кодировка сообщений"
+
+#: page/tab2-option1.php:194
+msgid "Customer SMS Template"
+msgstr "Шаблон SMS клиента"
+
+#: page/tab2-option1.php:201 page/tab2-option1.php:223
+msgid ""
+"The specified template \"%Template Name%\" will be converted to form information. You can also enter any text.\n"
+"                         For example: \"Hello %FIO%, thanks for the order in the shop Screw and Shpuntik, the amount of your order is %TPRICE%\""
+msgstr ""
+"Указанный шаблон \"% Template Name%\" будет преобразован в информацию формы. Вы также можете ввести любой текст.\n"
+"Например: «Привет% FIO%, спасибо за заказ в магазине Винт и Шпунтик, сумма вашего заказа% TPRICE%»"
+
+#: page/tab2-option1.php:206 page/tab2-option1.php:228
+msgid "Customer name"
+msgstr "Имя покупателя"
+
+#: page/tab2-option1.php:207 page/tab2-option1.php:229
+msgid "Customer phone"
+msgstr "Телефон клиента"
+
+#: page/tab2-option1.php:208 page/tab2-option1.php:230
+msgid "Customer email"
+msgstr "Электронная почта клиента"
+
+#: page/tab2-option1.php:209 page/tab2-option1.php:231
+msgid "Field add. information from the form"
+msgstr "Поле доп. информация из формы"
+
+#: page/tab2-option1.php:210 page/tab2-option1.php:232
+msgid "The price of the product"
+msgstr "Цена товара"
+
+#: page/tab2-option1.php:211 page/tab2-option1.php:233
+msgid "Name of product"
+msgstr "Название продукта"
+
+#: page/tab2-option1.php:216
+msgid "Seller SMS Template"
+msgstr "Шаблон SMS продавца"
+
+#: page/tab2-option1.php:238
+msgid "mode"
+msgstr "Режим"
+
+#: page/tab2-option1.php:247
+msgid "Enable debug mode. Debub is off by default."
+msgstr "Включить режим отладки. Дебаг по умолчанию отключен."
+
+#: page/option1.php:7
+msgid "General"
+msgstr "Главные"
+
+#: page/option1.php:8
+msgid "Notifications"
+msgstr "Уведомления"
+
+#: page/option1.php:9
+msgid "Orders"
+msgstr "заказы"
+
+#: page/option1.php:10
+msgid "Author"
+msgstr "автор"
+
+#: page/tab3-option1.php:6
+msgid "Orders via plugin"
+msgstr "Заказы через плагин"
+
+#: page/tab3-option1.php:7
+msgid "All orders sent via the button"
+msgstr "Все заказы отправляются через кнопку"
+
+#: page/tab3-option1.php:14
+msgid "Delete history"
+msgstr "Удалить историю"
+
+#: page/tab3-option1.php:22
+msgid "Date and time of addition"
+msgstr "Дата и время добавления"
+
+#: page/tab3-option1.php:23
+msgid "Item Number"
+msgstr "Номер предмета"
+
+#: page/tab3-option1.php:24
+msgid "Full name"
+msgstr "ФИО"
+
+#: page/tab3-option1.php:25
+msgid "Phone"
+msgstr "Телефон"
+
+#: page/tab3-option1.php:27
+msgid "Product Name"
+msgstr "наименование товара"
+
+#: page/tab3-option1.php:28 inc/function-class.php:82 inc/function-class.php:328
+msgid "Price"
+msgstr "Цена"
+
+#: page/tab3-option1.php:29
+msgid "Message"
+msgstr "Сообщение"
+
+#: page/tab3-option1.php:30
+msgid "Product"
+msgstr "Товар"
+
+#: page/tab3-option1.php:31
+msgid "SMS"
+msgstr "смс"
+
+#: page/tab3-option1.php:32
+msgid "Status"
+msgstr "Статус"
+
+#: page/tab3-option1.php:33
+msgid "Remove"
+msgstr "Удалить"
+
+#: page/tab3-option1.php:51
+msgid "Count.sms"
+msgstr "Count.sms"
+
+#: page/tab3-option1.php:51
+msgid "Cost of"
+msgstr "Стоимость"
+
+#: page/tab3-option1.php:51
+msgid "Balance"
+msgstr "Остаток средств"
+
+#: page/tab3-option1.php:63
+msgid "NOT"
+msgstr "Нет"
+
+#: page/tab3-option1.php:65
+msgid "OK"
+msgstr "Ок"
+
+#: page/tab1-option1.php:6
+msgid "General add-on settings"
+msgstr "Общие настройки дополнений"
+
+#: page/tab1-option1.php:7
+msgid "Do not forget to press the save button after changing the settings in each tab."
+msgstr "Не забудьте нажать кнопку сохранения после изменения настроек на каждой вкладке."
+
+#: page/tab1-option1.php:12
+msgid "group"
+msgstr "группа"
+
+#: page/tab1-option1.php:13 page/tab1-option1.php:14 page/tab1-option1.php:15
+msgid "Plugin add-on"
+msgstr "Дополнение к плагину"
+
+#: page/tab1-option1.php:13
+msgid "Order notifications to your Telegram"
+msgstr "Заказать уведомления на вашу Telegram"
+
+#: page/tab1-option1.php:14
+msgid "Order notifications in your Viber"
+msgstr "Заказать уведомления в вашем Viber"
+
+#: page/tab1-option1.php:15
+msgid "Variable goods"
+msgstr "Переменные товары"
+
+#: page/tab1-option1.php:16
+msgid "Marketplace for developers"
+msgstr "Торговая площадка для разработчиков"
+
+#: page/tab1-option1.php:21
+msgid "Are common"
+msgstr "Общие"
+
+#: page/tab1-option1.php:24
+msgid "Plugin operation mode"
+msgstr "Режим работы плагина"
+
+#: page/tab1-option1.php:26
+msgid "Basic operation"
+msgstr "Основная операция"
+
+#: page/tab1-option1.php:27
+msgid "Add to cart mode"
+msgstr "Режим добавления в корзину"
+
+#: page/tab1-option1.php:28
+msgid "If \"Basic operation mode\" is selected - The classic logic of the plug-in will work and all the settings below will be relevant."
+msgstr "Если выбран «Базовый режим работы» - классическая логика плагина будет работать, и все настройки ниже будут актуальны."
+
+#: page/tab1-option1.php:29
+msgid "If \"Add to cart mode\" is selected - When you click on the button, the product enters the cart and is redirected to the checkout page."
+msgstr "Если выбран режим «Добавить в корзину» - при нажатии на кнопку товар попадает в корзину и перенаправляется на страницу оформления заказа."
+
+#: page/tab1-option1.php:34
+msgid "Enable button display?"
+msgstr "Включить отображение кнопки?"
+
+#: page/tab1-option1.php:41
+msgid "Enable or disable the display of the quick order button on the site. The tick is - the button is shown"
+msgstr "Включить или отключить отображение кнопки быстрого заказа на сайте. Галочка есть - кнопка показывается"
+
+#: page/tab1-option1.php:45
+msgid "Enable the display of the shortcode button?"
+msgstr "Включить отображение кнопки шорткода?"
+
+#: page/tab1-option1.php:52
+msgid "Enable or disable the display of the quick order button via shortcode. The tick is - the button is shown"
+msgstr "Включить или отключить отображение кнопки быстрого заказа с помощью шорткода. Галочка есть - кнопка показывается"
+
+#: page/tab1-option1.php:57
+msgid "Name of the button on the site"
+msgstr "Название кнопки на сайте"
+
+#: page/tab1-option1.php:64
+msgid "For example, \"Buy in one click\""
+msgstr "Например, «Купить в один клик»"
+
+#: page/tab1-option1.php:68
+msgid "Position of the button in the card"
+msgstr "Положение кнопки на карте"
+
+#: page/tab1-option1.php:76
+msgid "Above the quantity button"
+msgstr "Над кнопкой количества"
+
+#: page/tab1-option1.php:81
+msgid "In the item description tab"
+msgstr "На вкладке описания товара"
+
+#: page/tab1-option1.php:86
+msgid "Above the product image"
+msgstr "Над изображением продукта"
+
+#: page/tab1-option1.php:91
+msgid "Above full product information"
+msgstr "Над полной информацией о товаре"
+
+#: page/tab1-option1.php:96
+msgid "Under the full information about the product"
+msgstr "Под полной информацией о товаре"
+
+#: page/tab1-option1.php:101
+msgid "Under the price"
+msgstr "По цене"
+
+#: page/tab1-option1.php:107
+msgid "The place where the button will be located in the item card"
+msgstr "Место, где кнопка будет находиться в карточке товара"
+
+#: page/tab1-option1.php:111
+msgid "Write orders to the Woocommerce table"
+msgstr "Записывать заказы в таблицу Woocommerce"
+
+#: page/tab1-option1.php:118
+msgid "Setting the checkbox will enable the mechanism when the orders will get not only to the table of the plug-in, but also to the menu \"Orders\" - Woocommerce"
+msgstr "Установка флажка включит механизм, когда заказы попадут не только в таблицу плагина, но и в меню «Заказы» - Woocommerce"
+
+#: page/tab1-option1.php:122
+msgid "Enable button display in categories"
+msgstr "Включить отображение кнопок в категориях"
+
+#: page/tab1-option1.php:129
+msgid "The option enables or disables the display of the order button in one click in product categories. You can select a display position further."
+msgstr "Опция включает или отключает отображение кнопки заказа в один клик в категориях товаров. Вы можете выбрать позицию отображения дальше."
+
+#: page/tab1-option1.php:133
+msgid "Position of the button in the category"
+msgstr "Положение кнопки в категории"
+
+#: page/tab1-option1.php:141
+msgid "Over the goods"
+msgstr "По товарам"
+
+#: page/tab1-option1.php:146
+msgid "Under the name of the product to the price"
+msgstr "Под названием товара к цене"
+
+#: page/tab1-option1.php:151
+msgid "Under the goods"
+msgstr "Под товар"
+
+#: page/tab1-option1.php:154
+msgid "The place where the button will be located in the category of goods"
+msgstr "Место, где кнопка будет находиться в категории товаров"
+
+#: page/tab1-option1.php:160
+msgid "Information on the order form"
+msgstr "Информация в форме заказа"
+
+#: page/tab1-option1.php:163
+msgid "Show product information?"
+msgstr "Показать информацию о продукте?"
+
+#: page/tab1-option1.php:170
+msgid "Will the product information be displayed in a modal window or not? The tick is worth it - will be displayed"
+msgstr "Будет ли информация о продукте отображаться в модальном окне или нет? Галочка того стоит - будет отображаться"
+
+#: page/tab1-option1.php:175
+msgid "Ask for full name"
+msgstr "Спросить полное имя"
+
+#: page/tab1-option1.php:182
+msgid "Does the buyer have to enter his name? A check mark is to offer"
+msgstr "Предлагать ли покупателю вводить своё имя?Галочка стоит - предлагать"
+
+#: page/tab1-option1.php:186
+msgid "Ask phone"
+msgstr "Спросить телефон"
+
+#: page/tab1-option1.php:193
+msgid "Does the buyer have to enter his phone? Tick is worth - offer"
+msgstr "Предлагать ли покупателю вводить свой телефон? Галочка стоит - предлагать"
+
+#: page/tab1-option1.php:197
+msgid "Ask for Email"
+msgstr "Спрашивать Email"
+
+#: page/tab1-option1.php:204
+msgid "Does the buyer have to enter their email? Tick is worth - offer"
+msgstr " Предлагать ли покупателю вводить свой email? Галочка стоит - предлагать"
+
+#: page/tab1-option1.php:208
+msgid "Additional Information Field"
+msgstr "Поле дополнительной информации"
+
+#: page/tab1-option1.php:215
+msgid "Does the buyer have to enter additional information? Tick is worth - offer"
+msgstr "Предлагать ли покупателю ввод дополнительной информации? Галочка стоит - предлагать"
+
+#: page/tab1-option1.php:221
+msgid "Description of form fields"
+msgstr "Описание полей формы"
+
+#: page/tab1-option1.php:225
+msgid "Name field"
+msgstr "Имя поля"
+
+#: page/tab1-option1.php:232
+msgid "For example, \"Your name?\""
+msgstr "Например, \"Ваше имя?\""
+
+#: page/tab1-option1.php:234 page/tab1-option1.php:254 page/tab1-option1.php:294 page/tab1-option1.php:314
+msgid "Obligatory field?"
+msgstr "Обязательное поле?"
+
+#: page/tab1-option1.php:245
+msgid "Telephone box"
+msgstr "Телефонная будка"
+
+#: page/tab1-option1.php:252
+msgid "For example, \"Your phone?\""
+msgstr "Например, \"Ваш телефон?\""
+
+#: page/tab1-option1.php:263
+msgid "Format hint"
+msgstr "Подсказка формата"
+
+#: page/tab1-option1.php:270
+msgid "for example"
+msgstr "например"
+
+#: page/tab1-option1.php:274
+msgid "Phone number entry format"
+msgstr "Формат ввода номера телефона"
+
+#: page/tab1-option1.php:281
+msgid "For input formatting used JS plugin jquery.maskedinput. Examples:"
+msgstr "Для форматирования ввода используется плагин JS jquery.maskedinput. Примеры:"
+
+#: page/tab1-option1.php:285
+msgid "Email field"
+msgstr "Поле электронной почты"
+
+#: page/tab1-option1.php:292
+msgid "For example, \"Your email?\""
+msgstr "Например, \"Ваш электронный адрес?\""
+
+#: page/tab1-option1.php:305
+msgid "Field \"Advanced\""
+msgstr "Поле \"Дополнительно\""
+
+#: page/tab1-option1.php:312
+msgid "For example, \"Delivery Address\""
+msgstr "Например, «Адрес доставки»"
+
+#: page/tab1-option1.php:325
+msgid "Name of the button in the form"
+msgstr "Название кнопки в форме"
+
+#: page/tab1-option1.php:332
+msgid "For example, \"Order\""
+msgstr "Например, «Заказать»"
+
+#: page/tab1-option1.php:339
+msgid "Behavior and dependencies on some WooCommerce options"
+msgstr "Поведение и зависимости от некоторых опций WooCommerce"
+
+#: page/tab1-option1.php:342
+msgid "Actions related to setting \"Balance Status\" in WooCommerce"
+msgstr "Действия, связанные с настройкой «Остатков товара» в WooCommerce"
+
+#: page/tab1-option1.php:344
+msgid "Enable this option?"
+msgstr "Включить эту опцию?"
+
+#: page/tab1-option1.php:351
+msgid "Text on the button if the product is not in stock"
+msgstr "Текст на кнопке, если товара нет в наличии"
+
+#: page/tab1-option1.php:358
+msgid "For example, \"Make a pre-order\""
+msgstr "Например, «Сделать предварительный заказ»"
+
+#: page/tab1-option1.php:364
+msgid "Actions and notifications"
+msgstr "Действия и уведомления"
+
+#: page/tab1-option1.php:367
+msgid "Message in the form"
+msgstr "Сообщение в форме"
+
+#: page/tab1-option1.php:374
+msgid "Message about the successful registration of the order. For example: \"Thanks for the order!\". A message appears in the \"One Click\" order form after the user has clicked the order confirmation button. The message should be short."
+msgstr "Сообщение об успешной регистрации заказа. Например: «Спасибо за заказ!». Сообщение появляется в форме заказа в один клик после того, как пользователь нажал кнопку подтверждения заказа. Сообщение должно быть коротким."
+
+#: page/tab1-option1.php:378
+msgid "What to do after pressing the button"
+msgstr "Что делать после нажатия кнопки"
+
+#: page/tab1-option1.php:384
+msgid "Nothing to do"
+msgstr "Нечего делать"
+
+#: page/tab1-option1.php:384
+msgid "The window will remain open, the user will see the message above."
+msgstr "Окно останется открытым, пользователь увидит сообщение выше."
+
+#: page/tab1-option1.php:385
+msgid "Close through"
+msgstr "Закрыть через"
+
+#: page/tab1-option1.php:389
+msgid "ms"
+msgstr "Миз"
+
+#: page/tab1-option1.php:389
+msgid "For example: \"2000\". The user will see the message above and the form will be closed after the specified time."
+msgstr "Например: «2000». Пользователь увидит сообщение выше, и форма будет закрыта после указанного времени."
+
+#: page/tab1-option1.php:390
+msgid "Show message (html available)"
+msgstr "Показать сообщение (HTML доступен)"
+
+#: page/tab1-option1.php:395
+msgid "Redirect to page"
+msgstr "Перенаправить на страницу"
+
+#: page/tab1-option1.php:402
+msgid "The user will see the message and go to the specified page."
+msgstr "Пользователь увидит сообщение и перейдет на указанную страницу."
+
+#: page/tab1-option1.php:409
+msgid "Quick order forms - styles"
+msgstr "Быстрые формы заказа - стили"
+
+#: page/tab1-option1.php:410
+msgid "Basic"
+msgstr "основной"
+
+#: page/tab1-option1.php:411
+msgid "Blue"
+msgstr "синий"
+
+#: page/tab1-option1.php:412
+msgid "Red"
+msgstr "красный"
+
+#: page/tab1-option1.php:413
+msgid "Green"
+msgstr "зеленый"
+
+#: page/tab1-option1.php:414
+msgid "Orange"
+msgstr "оранжевый"
+
+#: page/tab1-option1.php:415
+msgid "Your WordPress Theme Styles"
+msgstr "Ваши стили темы WordPress"
+
+#: page/tab1-option1.php:416
+msgid "If you want to change the CSS design of the form, create it in your template folder or in"
+msgstr "Если вы хотите изменить дизайн CSS формы, создайте ее в папке с шаблонами или в"
+
+#: page/tab1-option1.php:418
+msgid "folder"
+msgstr "папка"
+
+#: page/tab1-option1.php:420
+msgid "and copy files from there"
+msgstr "и скопировать файлы оттуда"
+
+#: page/tab1-option1.php:421
+msgid "plugin_folder"
+msgstr "plugin_folder"
+
+#: page/tab1-option1.php:424
+msgid "Other options"
+msgstr "Другие опции"
+
+#: page/tab1-option1.php:425
+msgid "Do not send the order form more often than: (seconds)"
+msgstr "Не отправляйте форму заказа чаще, чем: (секунды)"
+
+#: page/tab1-option1.php:426
+msgid "Message in the form when re-sending."
+msgstr "Сообщение в форме при повторной отправке."
+
+#: page/tab1-option1.php:427
+msgid "The default is 10 seconds. This means if the client will click the button to send the order from the form more often, the order will not be duplicated."
+msgstr "По умолчанию это 10 секунд. Это означает, что если клиент будет нажимать кнопку, чтобы чаще отправлять заказ из формы, заказ не будет дублироваться."
+
+#: page/tab1-option1.php:428
+msgid "Consent to the processing of personal data"
+msgstr "Согласие на обработку персональных данных"
+
+#: page/tab1-option1.php:428
+msgid "Enable?"
+msgstr "Включить?"
+
+#: page/tab1-option1.php:433
+msgid "Text (can HTML)"
+msgstr "Текст в форме (Возможен HTML)"
+
+#: page/tab1-option1.php:453
+msgid "Shortcodes and plugin hooks"
+msgstr "Шорткоды и подключаемые модули"
+
+#: page/tab1-option1.php:459 page/tab1-option1.php:466
+msgid "Element"
+msgstr "Элемент"
+
+#: page/tab1-option1.php:460
+msgid "Code to use"
+msgstr "Код для использования"
+
+#: page/tab1-option1.php:461
+msgid "Description"
+msgstr "Описание"
+
+#: page/tab1-option1.php:468
+msgid ""
+"Button shortcode must be inserted in product output cycles, where it is possible to get the product ID. Wherein\n"
+"                         The shortcode loads styles and scripts for itself, and the \"buy\" button will be shown if there is a tick \"Enable the display of the shortcode button\""
+msgstr "Шорткод кнопки нужно вставлять в циклах вывода товара, где возможно получить ID товара. При этом Шорткод загружает для себя стили и скрипты,а кнопка \"купить\" будет показана при наличие галочки \"Включить показ кнопки-шорткода\" "
+
+#: page/tab1-option1.php:474
+msgid "Buy button in any version"
+msgstr "Кнопка купить в произвольном исполнении"
+
+#: page/tab1-option1.php:475
+msgid "your item code (string)"
+msgstr "Ваш код товара (строка)"
+
+#: page/tab1-option1.php:475
+msgid "your name (string)"
+msgstr "ваше имя (строка)"
+
+#: page/tab1-option1.php:475
+msgid "purchase quantity (number)"
+msgstr "количество покупки (количество)"
+
+#: page/tab1-option1.php:475
+msgid "price (number)"
+msgstr "цена (число)"
+
+#: page/tab1-option1.php:476
+msgid ""
+"Short code buttons with arbitrary parameters, you can set the \"gag\" is not tied to real goods.\n"
+"                         With this shortcode, orders will be recorded only in the plug-in table, in the Woocommerce table - no entries will be made.\n"
+"                         In this case, the Shortcode loads styles and scripts for itself, and the \"buy\" button will be shown if there is a checkmark \"Enable display of the shortcode button\""
+msgstr ""
+"Короткие коды кнопок с произвольными параметрами позволяют установить «затычки», не привязанные к реальным товарам.\n"
+"С этим шорткодом заказы будут записываться только в таблицу плагинов, в таблицу Woocommerce - записи не будут сделаны.\n"
+"В этом случае шорткод загружает стили и сценарии для себя, и кнопка «Купить» будет отображаться, если есть галочка «Включить отображение кнопки шорткода»."
+
+#: page/tab1-option1.php:483
+msgid "New order event"
+msgstr "Событие нового заказа"
+
+#: page/tab1-option1.php:484
+msgid "Call"
+msgstr "Вызов"
+
+#: page/tab1-option1.php:484
+msgid "Your function"
+msgstr "Ваша функция"
+
+#: page/tab1-option1.php:485
+msgid "An event (hook) occurs when a new order is formed via a plug-in form. As of arguments takes two arrays 1st function result, 2 - data sent to the plugins order book"
+msgstr "Событие (хук) происходит, когда новый заказ формируется через форму плагина. В качестве аргументов принимает два массива 1-й результат функции, 2 - данные, отправленные в журнал заказов плагинов"
+
+#: inc/function-class.php:38
+msgid "Notification"
+msgstr "уведомление"
+
+#: inc/function-class.php:80 inc/function-class.php:332
+msgid "Name"
+msgstr "название"
+
+#: inc/function-class.php:86
+msgid "Picture"
+msgstr "Картина"
+
+#: inc/function-class.php:119
+msgid "Format"
+msgstr "Формат"
+
+#: inc/function-class.php:281
+msgid "Buy on click"
+msgstr "Купить по клику"
+
+#: inc/function-class.php:320
+msgid "Date"
+msgstr "Дата"
+
+#: inc/function-class.php:324
+msgid "Link to the product"
+msgstr "Ссылка на товар"
+
+#: inc/function-class.php:336
+msgid "Email"
+msgstr "Эл. адрес"
+
+#: inc/function-class.php:340
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: inc/function-class.php:344
+msgid "Customer"
+msgstr "Покупатель"
+
+#: inc/function-class.php:348
+msgid "Additionally"
+msgstr "Дополнительно"
+
+#: inc/Ajax.php:54
+msgid "Email field is required"
+msgstr "Поле электронной почты обязательно для заполнения"
+
+#: inc/Ajax.php:58
+msgid "Name field is required"
+msgstr "Имя обязательно для заполнения"
+
+#: inc/Ajax.php:62
+msgid "Telephone field is required"
+msgstr "Укажите телефон"
+
+#: inc/Ajax.php:66
+msgid "Message field is required"
+msgstr "Заполните обязательно поле"
+
+#: inc/Ajax.php:70
+msgid "You need to give consent"
+msgstr "Заполните обязательное поле"
+
+#: inc/Ajax.php:83
+msgid "You have already sent an order!"
+msgstr "Вы уже отправили заказ!"
+
+#: inc/Ajax.php:127
+msgid "request error"
+msgstr "ошибка запроса"
+
+#: inc/Ajax.php:159
+msgid "An error has occurred! Order not formed"
+msgstr "Произошла ошибка! Заказ не сформирован"
+
+#: inc/Ajax.php:245
+msgid "Look"
+msgstr "Посмотрите"
+
+#: inc/Ajax.php:301
+msgid "The order has been sent"
+msgstr "Заказ отправлен"
+
+#: inc/Ajax.php:335
+msgid "Are you a hacker?"
+msgstr "Вы хакер?"
+
+msgid "Buy one click WooCommerce"
+msgstr "Купить в один клик WooCommerce"
+
+#. Description of the plugin
+msgid "Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click"
+msgstr "Купить в один клик для WooCommerce. Лучший плагин который добавляет в ваш интернет магазин кнопку покупки товара в один клик"
+
+msgid "http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html"
+msgstr "http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html"
+
+msgid "Djo"
+msgstr "Djo"
+
+msgid "http://zixn.ru"
+msgstr "http://zixn.ru"

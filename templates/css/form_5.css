@@ -1,0 +1,30 @@
+/*Orange*/
+#formOrderOneClick .popup .close_order {
+    background-color: rgba(238, 130, 8, 1);
+    border: 1px solid rgba(238, 130, 8, 1);
+    box-shadow: -1px 1px 3px rgba(238, 130, 8, 0.5);
+}
+#formOrderOneClick .popup .close_order:hover {
+    background-color: rgba(238, 130, 8, .8);;
+    border: 1px solid rgba(238, 130, 8, .8);
+}
+#formOrderOneClick .popup .close_order:active {
+    background: #8f9be0;
+}
+#formOrderOneClick input[type="email"], #buyoneclick_form_order input[type="tel"], #buyoneclick_form_order input[type="text"] {
+    border: 1px solid rgba(238, 130, 8, 1);
+    background-color: #fff;
+}
+#formOrderOneClick input[type="email"]:focus, #buyoneclick_form_order input[type="tel"]:focus, #buyoneclick_form_order input[type="text"]:focus,#formOrderOneClick textarea:focus {
+    box-shadow: 0 0 5px rgba(238, 130, 8, 1);
+    -webkit-box-shadow: 0 0 5px rgba(238, 130, 8, 1);
+    -moz-box-shadow: 0 0 5px rgba(238, 130, 8, 1);
+}
+
+#formOrderOneClick .button{
+    background-color: rgba(238, 130, 8, 1);
+    border: 1px solid rgba(238, 130, 8, 1);
+    color: #ffffff;
+    box-shadow: 2px 2px 9px rgba(238, 130, 8, 0.5);
+}
+
