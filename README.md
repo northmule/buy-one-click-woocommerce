@@ -1,5 +1,5 @@
 # Addition to WooCommerce for orders in one click
-[View the plugin at wordpress.org](https://ru.wordpress.org/plugins/buy-one-click-woocommerce/advanced/)
+[View the plugin at wordpress.org](https://wordpress.org/plugins/buy-one-click-woocommerce/)
 ___
 The plugin allows you to place orders from the product card or from the product category by clicking the button bypassing the shopping cart. 
 
