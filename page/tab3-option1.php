@@ -56,10 +56,18 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
             <th><?php echo $form['user_name']; ?></th>
             <th><?php echo $form['user_phone']; ?></th>
             <th><?php echo $form['user_email']; ?></th>
-            <th><?php echo $order['product_name']; ?></th>
+            <th>
+                <?php echo $order['product_name']; ?>
+                <br>
+                <?php
+                if(isset($form['quantity_product'])) {
+                    echo __('Quantity', 'coderun-oneclickwoo') . ': ' . $form['quantity_product'];
+                }
+                ?>
+            </th>
             <th><?php echo $order['product_price']; ?></th>
             <th><?php echo $form['user_cooment']; ?></th>
-            <th><?php echo $form['linktovar']; ?></th>
+            <th><?php echo isset($form['product_link_admin']) ? $form['product_link_admin'] : ''; ?></th>
             <th><?php
                 if (!empty($sms['sms_log']) && is_array($sms['sms_log'])) {
                     echo 'id:' . $sms[0] . '</br>' . __('Count.sms', 'coderun-oneclickwoo') . ':' . $sms[1] . '</br>' . __('Cost of', 'coderun-oneclickwoo') . ':' . $sms[2] . '</br>' . __('Balance', 'coderun-oneclickwoo') . ':' . $sms[3];

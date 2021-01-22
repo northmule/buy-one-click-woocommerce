@@ -15,3 +15,13 @@ for development
 
 ![JetBrains](https://zixn.ru/wp-content/uploads/jetbrains-logo-wordpress.jpg "jetbrains")
 
+## Images
+### Options
+![wp_admin](https://zixn.ru/wp-content/uploads/one_click_woo_1.jpg)
+### Form Order
+![wp_admin](https://zixn.ru/wp-content/uploads/one_click_woo_2.jpg)
+### Changelog
+#### 1.12
+- Added a setting related to the number of products. The form can be enabled / disabled in the settings
+- Now you can select the number of products in the form
+- Minor code fixes

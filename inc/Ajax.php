@@ -190,6 +190,7 @@ class Ajax {
             'order_time' => current_time('mysql'),
             'custom' => $help->get_value_field($base_form_data, 'custom'),
             'files' => !empty($_FILES['files']) ? $_FILES['files'] : null,
+            'quantity_product' => $help->get_value_field($base_form_data, 'quantity_product'),
         );
         
         //@todo поле теперь отличается, нет name и value
@@ -238,7 +239,7 @@ class Ajax {
                     'country' => '',
                     'order_status' => 'processing', //Статус заказа который будет установлен
                     'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
-                    'qty' => 1,
+                    'qty' => empty($field['quantity_product']) ? 1 : $field['quantity_product'],
                     'product_id' => $product_id, //ИД товара Woo
                 )
             );
@@ -301,7 +302,7 @@ class Ajax {
             'product_name'=>$field['product_name'],
             'product_meta'=>null,
             'product_price'=>$field['product_price'],
-            'product_quantity'=>1,
+            'product_quantity'=> empty($field['quantity_product']) ? 1 : $field['quantity_product'],
             'form'=>\wp_json_encode($field),
             'sms_log'=>\wp_json_encode($smslog),
             'woo_order_id'=>$woo_order_id,

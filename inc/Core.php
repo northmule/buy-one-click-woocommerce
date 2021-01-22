@@ -107,7 +107,6 @@ class Core {
      * @uses [nametovar] - Название товара
      * @uses [pricetovar] - Цена товара
      * @uses [message] - Сообщение от клиента
-     * @uses [linktovar] - ссылка на товар вместе с тегами и подписью
      * @uses [smslog] - Лог СМС
      */
     static $buyzakaz;

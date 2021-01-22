@@ -81,6 +81,8 @@ if (!defined('ABSPATH')) {
                 </p>
             <?php } ?>
             
+            <?php echo $field['html_form_quantity']; ?>
+            
             <?php wp_nonce_field('one_click_send','_coderun_nonce'); ?>
             <input type="hidden" name="nametovar" value="<?php echo $field['product_name']; ?>" />
             <input type="hidden" name="pricetovar" value="<?php echo $field['product_price']; ?>" />

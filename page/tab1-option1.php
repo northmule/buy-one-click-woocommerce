@@ -118,7 +118,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                                 selected($buyoptions['positionbutton_out_stock'], 'woocommerce_get_stock_html', true);
                             }
                             ?>><?php _e('woocommerce_get_stock_html', 'coderun-oneclickwoo'); ?></option>
-                            
+
                         </select>
                         <span class="description"><?php _e('The place where the button will be located in the item card if the item is not in stock. Only for the main button position in woocommerce_after_add_to_cart_button', 'coderun-oneclickwoo'); ?></span>
                     </td>
@@ -229,6 +229,17 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                         }
                         ?>/>
                         <span class="description"><?php _e('Does the buyer have to enter additional information? Tick is worth - offer', 'coderun-oneclickwoo'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Quantity', 'coderun-oneclickwoo'); ?></th>
+                    <td>
+                        <input type="checkbox" name="buyoptions[add_quantity_form]" <?php
+                        if (isset($buyoptions['add_quantity_form'])) {
+                            checked($buyoptions['add_quantity_form'], 'on', 1);
+                        }
+                        ?>/>
+                        <span class="description"><?php _e('Add a quantity input form', 'coderun-oneclickwoo'); ?></span>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -485,31 +496,31 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     <th scope="row"><?php _e('Enable recaptcha in the order form', 'coderun-oneclickwoo'); ?></th>
                     <td>
                         <p>
-                        <?php _e('Do not use in the order form','coderun-oneclickwoo'); ?>
-                        <input
-                                name="buyoptions[recaptcha_order_form]"
-                                type="radio"
-                                value="0"
-                            <?php checked($buyoptions['recaptcha_order_form'], 0, 1); ?>
-                        >
-                        </p>
-                        <?php foreach (\Coderun\BuyOneClick\ReCaptcha::getInstance()->isSupported() as $key_recapcha=>$item) { ?>
-                        <p>
-                            <?php _e('I use a plugin: ', 'coderun-oneclickwoo'); ?><a target="_blank" href="<?php echo $item['url']; ?>"><?php echo $item['name']; ?></a>
+                            <?php _e('Do not use in the order form','coderun-oneclickwoo'); ?>
                             <input
                                     name="buyoptions[recaptcha_order_form]"
                                     type="radio"
-                                    value="<?php echo $key_recapcha; ?>"
-                                <?php checked($buyoptions['recaptcha_order_form'], $key_recapcha, 1); ?>
-                            >  -  <?php _e('Tested with the "I am not a robot" captcha in V2, but it may also work with other options','coderun-oneclickwoo'); ?>
+                                    value="0"
+                                <?php checked($buyoptions['recaptcha_order_form'], 0, 1); ?>
+                            >
                         </p>
+                        <?php foreach (\Coderun\BuyOneClick\ReCaptcha::getInstance()->isSupported() as $key_recapcha=>$item) { ?>
+                            <p>
+                                <?php _e('I use a plugin: ', 'coderun-oneclickwoo'); ?><a target="_blank" href="<?php echo $item['url']; ?>"><?php echo $item['name']; ?></a>
+                                <input
+                                        name="buyoptions[recaptcha_order_form]"
+                                        type="radio"
+                                        value="<?php echo $key_recapcha; ?>"
+                                    <?php checked($buyoptions['recaptcha_order_form'], $key_recapcha, 1); ?>
+                                >  -  <?php _e('Tested with the "I am not a robot" captcha in V2, but it may also work with other options','coderun-oneclickwoo'); ?>
+                            </p>
                         <?php } ?>
 
-                            <p>
-                                <span class="description"><?php _e('Includes support for anti-spam forms based on third-party plugins. Be careful, as the functionality of third-party plugins may not be predictable.', 'coderun-oneclickwoo'); ?></span>
+                        <p>
+                            <span class="description"><?php _e('Includes support for anti-spam forms based on third-party plugins. Be careful, as the functionality of third-party plugins may not be predictable.', 'coderun-oneclickwoo'); ?></span>
 
-                            </p>
-                         </td>
+                        </p>
+                    </td>
                 </tr>
             </table>
             <?php /*

@@ -183,7 +183,12 @@
 
 
 }
+#formOrderOneClick [name="quantity_product"] {
+    position: relative;
+    height: 50%;
+    width: 75px;
 
+}
 @media screen and (max-width: 600px) {
     #formOrderOneClick > .popup {
         min-width: 90%;
