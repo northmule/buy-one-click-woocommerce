@@ -223,9 +223,12 @@ class Core {
                 );
             }
             
+          
+            
         }
-        
-
+    
+        $service = Service::getInstance();
+        add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', array($this, 'jsVariableHead'));
     }
 

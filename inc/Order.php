@@ -154,11 +154,12 @@ class Order {
     public function set_order($params) {
         
         $order = $this->create_order($params);
-        $order->update_status($params['order_status'], $params['message_notes_order']);
+        // Вызывается ниже по коду, что бы не запускать события раньше времени
+        // $order->update_status($params['order_status'], $params['message_notes_order']);
         $order->calculate_totals();
-        
         return $order->get_id();
     }
+    
     
     /**
      * Сохраняет заказ в таблицу
@@ -185,7 +186,7 @@ class Order {
             'user_id'=>null,
         ];
         
-        $order = array_merge($default_field,$order);
+        $order = array_merge($default_field, $order);
         $wpdb->insert($this->order_table, $order);
         BuyHookPlugin::saveOrderToTable($wpdb->insert_id);
         return $wpdb->insert_id;
@@ -195,9 +196,21 @@ class Order {
     
     public function get_order($order_id) {
         global $wpdb;
-        $order_id=intval($order_id);
+        $order_id = intval($order_id);
         return $wpdb->get_row( "select * from {$this->order_table} where id={$order_id}", ARRAY_A);
         
+    }
+    
+    /**
+     * Вернуть заказ под ИД WooCommere заказа
+     * @param $order_id
+     *
+     * @return array|object|void|null
+     */
+    public function get_wc_order($order_id) {
+        global $wpdb;
+        $order_id = intval($order_id);
+        return $wpdb->get_row( "select * from {$this->order_table} where woo_order_id={$order_id}", ARRAY_A);
     }
     
     public function get_orders() {

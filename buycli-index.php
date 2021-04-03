@@ -4,13 +4,13 @@
  * Plugin Name: Buy one click WooCommerce
  * Plugin URI: http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 1.12
+ * Version: 1.13
  * Author: Djo
  * Author URI: https://zixn.ru
  * WC requires at least: 3.9
- * WC tested up to: 4.8
+ * WC tested up to: 5.2
  * Requires at least: 5.1
- * Tested up to: 5.6
+ * Tested up to: 5.7
  * Text Domain: coderun-oneclickwoo
  * Domain Path: /languages
  */
@@ -59,13 +59,14 @@ function coderun_buy_plugin_init_core() {
         'coderun-oneclickwoo', false, dirname(plugin_basename(__FILE__)) . '/languages'
     );
     
+    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Service.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Help.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Core.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/hook-class.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/function-class.php');
+    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/BuyHookPlugin.php');
+    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/BuyFunction.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Ajax.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/smsc-class.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/shortcode-class.php');
+    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/BuyShortcode.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Order.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Loadfile.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/ReCaptcha.php');
@@ -77,7 +78,7 @@ function coderun_buy_plugin_init_core() {
     
     $core = Coderun\BuyOneClick\Core::getInstance();
     
-    add_action('wp', array($core, 'addAction'));
+    add_action('woocommerce_init', array($core, 'addAction'));
     
     //$core->addAction();
     

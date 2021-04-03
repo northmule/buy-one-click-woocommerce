@@ -277,7 +277,7 @@ class BuyFunction {
     }
     
     /**
-     * Шаблон emial сообщения
+     * Шаблон emial сообщения плагина
      */
     static function htmlEmailTemplate($params) {
         
@@ -291,11 +291,25 @@ class BuyFunction {
             'user_phone' => '',
             'order_admin_comment' => '',
             'user_email' => '',
+            'quantity_product' => 1,
+            'files_url' => [],
         );
         
         $params = wp_parse_args($params, $default_params);
         
         
+        $filesMessage = '';
+        $filesMessageItems = '';
+        foreach ($params['files_url'] as $fileUrl) {
+            if (empty($fileUrl)) {
+                continue;
+            }
+            $filesMessageItems .= sprintf('<td style="border-color: #132cba; text-align: center; vertical-align: middle;">%s</td>', $fileUrl);
+        }
+        if ($filesMessageItems) {
+            $filesMessage = sprintf('<td style="border-color: #132cba; text-align: center; vertical-align: middle;">%s: </td>', __('Files', 'coderun-oneclickwoo'));
+            $filesMessage .= $filesMessageItems;
+        }
         
         $message = ' 
 <table style="height: 255px; border-color: #1b0dd9;" border="2" width="579">
@@ -320,6 +334,10 @@ class BuyFunction {
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['product_name'] . '</td>
 </tr>
 <tr>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Quantity', 'coderun-oneclickwoo') . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['quantity_product'] . '</td>
+</tr>
+<tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Email', 'coderun-oneclickwoo') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['user_email'] . '</td>
 </tr>
@@ -331,6 +349,7 @@ class BuyFunction {
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Customer', 'coderun-oneclickwoo') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['user_name'] . '</td>
 </tr>
+'.$filesMessage.'
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Additionally', 'coderun-oneclickwoo') . ' </td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . $params['user_cooment'] . ' </td>
@@ -344,5 +363,7 @@ class BuyFunction {
         ';
         return $message;
     }
+    
+    
     
 }

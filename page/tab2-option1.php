@@ -81,7 +81,17 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
                     <span class="description"><?php _e('Send additional data. You can specify any text.', 'coderun-oneclickwoo'); ?></span>
                 </td>
             </tr>
-
+            <tr valign="top">
+                <th scope="row"><?php _e('Links to files', 'coderun-oneclickwoo'); ?></th>
+                <td>
+                    <input type="checkbox" name="buynotification[links_to_files]" <?php
+                    if (isset($buynotification['links_to_files'])) {
+                        checked($buynotification['links_to_files'], 'on', 1);
+                    }
+                    ?>/>
+                    <span class="description"><?php _e('Send links to downloaded files in emails?', 'coderun-oneclickwoo'); ?></span>
+                </td>
+            </tr>
 
             <tr valign="top">
                 <th scope="row"><?php _e('Random information', 'coderun-oneclickwoo'); ?></th>

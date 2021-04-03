@@ -3,11 +3,11 @@ Contributors: northmule
 Donate link: https://money.yandex.ru/to/41001746944171
 Tags: woocommerce, ecommerce, mode catalog, buy one click
 Requires at least: 5.0
-Tested up to: 5.6
-Stable tag: 5.5
-Requires PHP: 7.0
-WC requires at least: 3.9
-WC tested up to: 4.1
+Tested up to: 5.7
+Stable tag: 5.7
+Requires PHP: 7.1
+WC requires at least: 4.1
+WC tested up to: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,10 @@ This is the best solution for Woocommers to easily add a quick order button to t
 * Russian
 * English
 
+= Sponsors =
+This project supports the best IDE for development [JetBrains](https://www.jetbrains.com/?from=Original-texts-yandex-web-master-WordPress)
+![JetBrains](https://zixn.ru/wp-content/uploads/jetbrains-logo-wordpress.jpg)
+
 = Donate link: =
 <a href="https://money.yandex.ru/to/41001746944171" target="_blank">Visa / MasterCard / Mir / YandexMoney</a>
 
@@ -66,6 +70,11 @@ This is the best solution for Woocommers to easily add a quick order button to t
 
 
 == Changelog ==
+= 1.13 =
+* Добавлен мод шаблона WooCommerce
+* Добавлена отправка ссылки на файл в письме (оба шаблона), только при включеной опции
+* Изменён порядок сохранения заказа и срабатывания хуков
+* Плагин инициализируется на хуке woocommerce_init, вместо wp
 = 1.12 =
 * Добавлена настройка связанная с количеством товаров. Форму можно включить/отключить в настройках
 * Появилась возможность в форме выбрать количество товаров

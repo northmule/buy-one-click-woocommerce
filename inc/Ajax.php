@@ -178,6 +178,7 @@ class Ajax {
             'user_phone' => $help->get_value_field($base_form_data, 'txtphone'),
             'user_email' => sanitize_email($help->get_value_field($base_form_data, 'txtemail')),
             'user_cooment' => $help->get_value_field($base_form_data, 'message'),
+            'order_comment' => $help->get_value_field($base_form_data, 'message'),
             'product_id' => $product_id,
             'product_name' => $help->get_value_field($base_form_data, 'nametovar'),
             'product_price' => $help->get_value_field($base_form_data, 'pricetovar'),
@@ -218,32 +219,6 @@ class Ajax {
         }
         
         $smslog = ''; //Лог смс
-        $woo_order_id=0;
-        //В таблицу Woo
-        if (isset($options['buyoptions']['add_tableorder_woo']) and $field['custom'] == 0) {
-            
-            $woo_order = Order::getInstance();
-            
-            $woo_order_id = $woo_order->set_order(
-                array(
-                    'first_name' => $field['user_name'],
-                    'last_name' => '',
-                    'company' => '',
-                    'email' => $field['user_email'],
-                    'phone' => $field['user_phone'],
-                    'address_1' => $field['user_cooment'],
-                    'address_2' => '',
-                    'city' => '',
-                    'state' => '',
-                    'postcode' => '',
-                    'country' => '',
-                    'order_status' => 'processing', //Статус заказа который будет установлен
-                    'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
-                    'qty' => empty($field['quantity_product']) ? 1 : $field['quantity_product'],
-                    'product_id' => $product_id, //ИД товара Woo
-                )
-            );
-        }
         
         // Копия для модификации в уведомлениях
         $copyField = $field;
@@ -251,13 +226,7 @@ class Ajax {
             $wcOrder = Order::getInstance()->create_order(['product_id' => $product_id]);
             $copyField['product_price'] = Order::getInstance()->calculate_order_totals($wcOrder);
         }
-  
-        if (empty($options['buyoptions']['add_tableorder_woo']) && !empty($field['user_email']) && !empty($options['buynotification']['infozakaz_chek'])) {
-            BuyFunction::BuyEmailNotification($field['user_email'], $field['company_name'], $copyField);
-        }
-        if (!empty($options['buynotification']['emailbbc'])) {
-            BuyFunction::BuyEmailNotification($options['buynotification']['emailbbc'], $field['company_name'], $copyField);
-        }
+        
         //Отправка СМС клиенту
         if (!empty($options['buysmscoptions']['enable_smsc'])) {
             $smsmessage = array(
@@ -292,28 +261,66 @@ class Ajax {
         $arResult['result'] = $options['buyoptions']['success'];
         if (!empty($options['buyoptions']['upload_input_file_chek'])) {
             $arResult['files'] = LoadFile::getInstance()->load();
-            
             $field['user_cooment'] .= '<br>' . $help->get_message_files_url($arResult['files']);
+            $field['files_url'] = $help->get_message_files($arResult['files']);
+            $copyField['files_url'] =  $field['files_url'];
+        }
+    
+        if (empty($options['buyoptions']['add_tableorder_woo']) && !empty($field['user_email']) && !empty($options['buynotification']['infozakaz_chek'])) {
+            BuyFunction::BuyEmailNotification($field['user_email'], $field['company_name'], $copyField);
+        }
+        if (!empty($options['buynotification']['emailbbc'])) {
+            BuyFunction::BuyEmailNotification($options['buynotification']['emailbbc'], $field['company_name'], $copyField);
         }
         
- 
+        $woo_order_id = 0;
+        //В таблицу Woo
+        if (isset($options['buyoptions']['add_tableorder_woo']) and $field['custom'] == 0) {
+            
+            $woo_order = Order::getInstance();
+            
+            $woo_order_id = $woo_order->set_order(
+                array(
+                    'first_name' => $field['user_name'],
+                    'last_name' => '',
+                    'company' => '',
+                    'email' => $field['user_email'],
+                    'phone' => $field['user_phone'],
+                    'address_1' => $field['order_comment'],
+                    'address_2' => '',
+                    'city' => '',
+                    'state' => '',
+                    'postcode' => '',
+                    'country' => '',
+                    'order_status' => 'processing', //Статус заказа который будет установлен
+                    'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
+                    'qty' => empty($field['quantity_product']) ? 1 : $field['quantity_product'],
+                    'product_id' => $product_id, //ИД товара Woo
+                )
+            );
+        }
+        
         $order_field = [
-            'product_id'=>$product_id,
-            'product_name'=>$field['product_name'],
-            'product_meta'=>null,
-            'product_price'=>$field['product_price'],
+            'product_id' => $product_id,
+            'product_name' => $field['product_name'],
+            'product_meta' => null,
+            'product_price' => $field['product_price'],
             'product_quantity'=> empty($field['quantity_product']) ? 1 : $field['quantity_product'],
-            'form'=>\wp_json_encode($field),
-            'sms_log'=>\wp_json_encode($smslog),
-            'woo_order_id'=>$woo_order_id,
-            'user_id'=>\get_current_user_id(),
+            'form' => \wp_json_encode($field),
+            'sms_log' => \wp_json_encode($smslog),
+            'woo_order_id' => $woo_order_id,
+            'user_id' => \get_current_user_id(),
         ];
-    
+        
         Order::getInstance()->save_order(
             $order_field
         );
-
-       BuyHookPlugin::buyClickNewrder($arResult, $order_field);
+        // Смена статуса заказа запускает Хуки отправки сообщений WooCommerce
+        if ($woo_order_id) {
+            $wcOrder = \wc_get_order($woo_order_id);
+            $wcOrder->update_status('processing', 'Quick order form');
+        }
+        BuyHookPlugin::buyClickNewrder($arResult, $order_field);
         
         ob_end_clean();
         
@@ -336,7 +343,7 @@ class Ajax {
             $plugin_id=$_POST['pluginId'];
             $order = Order::getInstance()->get_order($order_id);
             if(!empty($order['woo_order_id'])) {
-
+                
                 if(!Help::getInstance()->isset_woo_order($order['woo_order_id'])) {
                     wp_send_json_error();
                 }
@@ -349,7 +356,7 @@ class Ajax {
         }
         
         wp_send_json_error();
-
+        
     }
     
     /**
