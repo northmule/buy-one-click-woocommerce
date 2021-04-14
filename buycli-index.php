@@ -4,7 +4,7 @@
  * Plugin Name: Buy one click WooCommerce
  * Plugin URI: http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 1.13
+ * Version: 1.14
  * Author: Djo
  * Author URI: https://zixn.ru
  * WC requires at least: 3.9
@@ -78,7 +78,7 @@ function coderun_buy_plugin_init_core() {
     
     $core = Coderun\BuyOneClick\Core::getInstance();
     
-    add_action('woocommerce_init', array($core, 'addAction'));
+    add_action('wp_loaded', array($core, 'addAction'));
     
     //$core->addAction();
     

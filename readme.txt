@@ -1,6 +1,6 @@
 === Buy one click WooCommerce ===
 Contributors: northmule
-Donate link: https://money.yandex.ru/to/41001746944171
+Donate link: https://yoomoney.ru/to/41001746944171
 Tags: woocommerce, ecommerce, mode catalog, buy one click
 Requires at least: 5.0
 Tested up to: 5.7
@@ -70,6 +70,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.14 =
+* Плагин инициализируется на хуке wp_loaded
 = 1.13 =
 * Добавлен мод шаблона WooCommerce
 * Добавлена отправка ссылки на файл в письме (оба шаблона), только при включеной опции
