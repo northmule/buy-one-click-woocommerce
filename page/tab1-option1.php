@@ -458,7 +458,10 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
 
 
                         </p><span class="description"><?php _e('Example', 'coderun-oneclickwoo'); ?>: <a href="https://coderun.ru">"https://coderun.ru"</a>. <?php _e('The user will see the message and go to the specified page.', 'coderun-oneclickwoo'); ?></span>
-
+                       
+                        <p><input name="buyoptions[success_action]" type="radio" value="5" <?php checked($buyoptions['success_action'], '5', 1); ?>>
+                            <?php _e('Send to the order page WooCommerce', 'coderun-oneclickwoo'); ?></p>
+                        <span class="description"><?php _e('The buyer will be redirected to the WooCommerce completed order page. It only works if orders are placed in the WooCommerce table', 'coderun-oneclickwoo'); ?></span>
                     </td>
                 </tr>
             </table>

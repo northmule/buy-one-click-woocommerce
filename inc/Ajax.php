@@ -256,7 +256,6 @@ class Ajax {
         }
         
         //Конец журналирования
-        ob_end_clean();
         $arResult['message'] = __('The order has been sent', 'coderun-oneclickwoo');
         $arResult['result'] = $options['buyoptions']['success'];
         if (!empty($options['buyoptions']['upload_input_file_chek'])) {
@@ -319,12 +318,14 @@ class Ajax {
         if ($woo_order_id) {
             $wcOrder = \wc_get_order($woo_order_id);
             $wcOrder->update_status('processing', 'Quick order form');
+            $arResult['redirectUrl'] = $wcOrder->get_checkout_order_received_url();
         }
+        
+        
         BuyHookPlugin::buyClickNewrder($arResult, $order_field);
         
-        ob_end_clean();
         
-        echo wp_send_json_success($arResult);
+        wp_send_json_success($arResult);
     }
     
     /**

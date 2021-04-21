@@ -70,6 +70,9 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.15 =
+* Добавлена новая настройка, теперь покупателя можно отправить на страницу с информацией о совершённом заказе WooCommerce
+* Небольшая оптимизация кода
 = 1.14 =
 * Плагин инициализируется на хуке wp_loaded
 = 1.13 =

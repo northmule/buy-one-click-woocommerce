@@ -94,6 +94,11 @@ jQuery(document).ready(function () {
             } else if (buyone_ajax.success_action === 4) { // Сделать редирект action
                 jQuery("#buyoneclick_form_order .form-message-result").html(buyone_ajax.after_message_form)
                 window.location.href = buyone_ajax.after_submit_form;
+            } else if (buyone_ajax.success_action === 5) { // Сделать редирект WooCommerce
+                if (response.success && response.data && response.data.redirectUrl) {
+                    jQuery("#buyoneclick_form_order .form-message-result").html(buyone_ajax.after_message_form)
+                    window.location.href = response.data.redirectUrl;
+                }
             }
         }).fail(function (response) {
             console.log(response);
