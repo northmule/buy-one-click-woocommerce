@@ -94,7 +94,7 @@ jQuery(document).ready(function () {
             } else if (buyone_ajax.success_action === 4) { // Сделать редирект action
                 jQuery("#buyoneclick_form_order .form-message-result").html(buyone_ajax.after_message_form)
                 window.location.href = buyone_ajax.after_submit_form;
-            } else if (buyone_ajax.success_action === 5) { // Сделать редирект WooCommerce
+            } else if (buyone_ajax.success_action === 5 || buyone_ajax.success_action === 6) { // Сделать редирект WooCommerce
                 if (response.success && response.data && response.data.redirectUrl) {
                     jQuery("#buyoneclick_form_order .form-message-result").html(buyone_ajax.after_message_form)
                     window.location.href = response.data.redirectUrl;
@@ -161,7 +161,7 @@ jQuery(document).ready(function () {
                 }
 
                 jQuery('#formOrderOneClick').remove();
-                jQuery(butObj).after(response);
+                jQuery(butObj).append(response);
                 jQuery('.popup, .overlay').css('opacity', '1');
                 jQuery('.popup, .overlay').css('visibility', 'visible');
 

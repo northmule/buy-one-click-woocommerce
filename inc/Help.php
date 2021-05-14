@@ -85,6 +85,7 @@ class Help {
 
     /**
      * Вернут настройки плагина
+     * @deprecated
      * @return array
      */
     public function get_options($name = null) {
@@ -148,7 +149,6 @@ class Help {
 
         $this->options_plugin = array(
             'buyoptions' => get_option('buyoptions', array()),
-            //'buyzakaz' => get_option('buyzakaz', array()),
             'buynotification' => get_option('buynotification', array()),
             'buysmscoptions' => get_option('buysmscoptions', array()),
         );

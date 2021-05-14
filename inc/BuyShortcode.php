@@ -30,20 +30,21 @@ class BuyShortcode {
     /**
      * Класическая кнопка покупки в один клик
      * Используется везде где можно получить ИД товара из Объекта WP
+     * @param array $params - Дополнительные параметры шорткода. $params[id] - ИД товара WooCommerce
      * @return string
      */
-    public function viewBuyButton() {
+    public function viewBuyButton($params) {
         $buyoptions = $this->options['buyoptions'];
-        //return;
         $content = '';
         if (!empty($buyoptions['enable_button_shortcod']) and $buyoptions['enable_button_shortcod'] == 'on') {
+            $params = \shortcode_atts(['id' => 0], $params);
             $core = Core::getInstance();
             $core->styleAddFrontPage();
             $core->scriptAddFrontPage();
             if (Core::$variation && class_exists('BuyVariationClass') && method_exists('BuyVariationClass','shortCode')) {
-              $content =   BuyVariationClass::shortCode();
+                $content =   BuyVariationClass::shortCode();
             }
-            $content .= BuyFunction::viewBuyButton(true);
+            $content .= BuyFunction::viewBuyButton(true, $params);
             return $content;
         } else {
             return '';

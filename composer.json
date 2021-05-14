@@ -1,0 +1,14 @@
+{
+  "name": "coderun/buy-one-click-woocommerce",
+  "description": "One-click purchase plugin for WooCommerce",
+  "type": "project",
+  "require": {
+    "php": ">=7.1",
+    "ext-curl": "*",
+    "composer/installers": "^1",
+    "monolog/monolog": "^2.2"
+  },
+  "config": {
+    "platform-check": false
+  }
+}

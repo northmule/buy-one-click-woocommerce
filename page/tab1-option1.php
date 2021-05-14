@@ -458,10 +458,19 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
 
 
                         </p><span class="description"><?php _e('Example', 'coderun-oneclickwoo'); ?>: <a href="https://coderun.ru">"https://coderun.ru"</a>. <?php _e('The user will see the message and go to the specified page.', 'coderun-oneclickwoo'); ?></span>
-                       
+
                         <p><input name="buyoptions[success_action]" type="radio" value="5" <?php checked($buyoptions['success_action'], '5', 1); ?>>
                             <?php _e('Send to the order page WooCommerce', 'coderun-oneclickwoo'); ?></p>
                         <span class="description"><?php _e('The buyer will be redirected to the WooCommerce completed order page. It only works if orders are placed in the WooCommerce table', 'coderun-oneclickwoo'); ?></span>
+
+
+                        <p><input name="buyoptions[success_action]" type="radio" value="6" <?php checked($buyoptions['success_action'], '6', 1); ?>>
+                            <?php _e('Send to the order payment page', 'coderun-oneclickwoo'); ?></p>
+                        <span class="description">
+                            <?php _e('The buyer will be redirected to the order payment page. This option only works if orders are placed in the WooCommerce table.', 'coderun-oneclickwoo'); ?>
+                            <?php _e('Please note that in this case, the order will automatically switch to the "Waiting for payment" status."', 'coderun-oneclickwoo') ?>
+                        </span>
+
                     </td>
                 </tr>
             </table>
@@ -517,12 +526,32 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                                     <?php checked($buyoptions['recaptcha_order_form'], $key_recapcha, 1); ?>
                                 >  -  <?php _e('Tested with the "I am not a robot" captcha in V2, but it may also work with other options','coderun-oneclickwoo'); ?>
                             </p>
+
+
+                            <p>
+                                <span class="description"><?php _e('Includes support for anti-spam forms based on third-party plugins. Be careful, as the functionality of third-party plugins may not be predictable.', 'coderun-oneclickwoo'); ?></span>
+
+                            </p>
                         <?php } ?>
-
+                    </td>
+                </tr>
+            </table>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php _e('Embed form styles in html', 'coderun-oneclickwoo'); ?></th>
+                    <td>
                         <p>
-                            <span class="description"><?php _e('Includes support for anti-spam forms based on third-party plugins. Be careful, as the functionality of third-party plugins may not be predictable.', 'coderun-oneclickwoo'); ?></span>
-
+                            <input
+                                    name="buyoptions[style_insert_html]"
+                                    type="checkbox"
+                                    value="on"
+                                <?php checked(Core::getInstance()->getOption('style_insert_html', 'buyoptions', ''), 'on', 1); ?>
+                            >  -  <?php _e('The styles will be added to the html page','coderun-oneclickwoo'); ?>
                         </p>
+                        <p>
+                            <span class="description"><?php _e('This option is not needed in 99% of cases. When enabled, all plugin styles are embedded in the html page content. You don\'t need to turn it on just like that.', 'coderun-oneclickwoo'); ?></span>
+                        </p>
+
                     </td>
                 </tr>
             </table>
@@ -557,9 +586,12 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tbody>
                 <tr>
                     <td class="active"><?php _e('Element', 'coderun-oneclickwoo'); ?></td>
-                    <td class="success">[viewBuyButton]</td>
-                    <td class="warning"><?php _e('Button shortcode must be inserted in product output cycles, where it is possible to get the product ID. Wherein
+                    <td class="success">[viewBuyButton id="<?php _e('Optional parameter of the real product ID','coderun-oneclickwoo'); ?>"]</td>
+                    <td class="warning">
+                        1. <?php _e('Button shortcode must be inserted in product output cycles, where it is possible to get the product ID. Wherein
                          The shortcode loads styles and scripts for itself, and the "buy" button will be shown if there is a tick "Enable the display of the shortcode button"', 'coderun-oneclickwoo'); ?>
+                        <br>
+                        2. <?php _e('If the ID of the actual WooCommerce product is specified, then you can insert the button anywhere on your site.', 'coderun-oneclickwoo') ?>
                     </td>
 
                 </tr>

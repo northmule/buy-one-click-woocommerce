@@ -45,7 +45,7 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 ![JetBrains](https://zixn.ru/wp-content/uploads/jetbrains-logo-wordpress.jpg)
 
 = Donate link: =
-<a href="https://money.yandex.ru/to/41001746944171" target="_blank">Visa / MasterCard / Mir / YandexMoney</a>
+<a href="https://yoomoney.ru/to/41001746944171" target="_blank">Visa / MasterCard / Mir / YandexMoney</a>
 
 == Installation ==
 
@@ -70,6 +70,20 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.15.4 =
+* Добавлен composer с зависимостями и сторонними библиотеками
+* Добавлена новая опция, для перенаправления на страницу оплаты после оформления заказа
+* Добавлен лог ошибок во время работы плагина. Лог сохраняется в wp-content/uploads/buy-one-click-woocommerce
+* Небольшая оптимизация кода
+= 1.15.3 =
+* Добавлена настройка для встраивания стилей плагина в html страницы
+* Исправлены мелкие ошибки
+* Небольшая оптимизация кода
+= 1.15.2 =
+* исправлено имя загружаемого файла
+= 1.15.1 =
+* К шорткоду [viewBuyButton] добавлен не обязательный параметр id. В параметр id необходимо указыать ид реального товара WooCommerce для размещения кнопки в любом месте сайта
+* Небольшие правки ошибок
 = 1.15 =
 * Добавлена новая настройка, теперь покупателя можно отправить на страницу с информацией о совершённом заказе WooCommerce
 * Небольшая оптимизация кода

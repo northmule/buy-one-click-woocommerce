@@ -15,10 +15,13 @@ use Exception;
  */
 class Ajax {
     
+    protected $logger = null;
+    
     /**
      * Конструктор класса
      */
     public function __construct() {
+        $this->logger = Logger::getInstance();
         $this->addaction();
     }
     
@@ -206,15 +209,14 @@ class Ajax {
         }
         
         try {
-            
             if ($product_id < 1) {
-                wp_send_json_error(array('message' => __('An error has occurred! Order not formed', 'coderun-oneclickwoo')));
+                throw new \Exception(__('An error has occurred! Order not formed', 'coderun-oneclickwoo'));
             }
             
             self::checkRequireField($field);
-            
             self::checkLimitSendForm($product_id);
         } catch (Exception $ex) {
+            $this->logger->setInfo($ex->getMessage());
             wp_send_json_error(array('message' => $ex->getMessage()));
         }
         
@@ -263,68 +265,83 @@ class Ajax {
             $field['user_cooment'] .= '<br>' . $help->get_message_files_url($arResult['files']);
             $field['files_url'] = $help->get_message_files($arResult['files']);
             $copyField['files_url'] =  $field['files_url'];
+            
+            if (!empty(LoadFile::getInstance()->getErrors())) {
+                $this->logger->setInfo(__('File upload error', 'coderun-oneclickwoo'), LoadFile::getInstance()->getErrors());
+            }
         }
-    
+        
         if (empty($options['buyoptions']['add_tableorder_woo']) && !empty($field['user_email']) && !empty($options['buynotification']['infozakaz_chek'])) {
             BuyFunction::BuyEmailNotification($field['user_email'], $field['company_name'], $copyField);
         }
         if (!empty($options['buynotification']['emailbbc'])) {
             BuyFunction::BuyEmailNotification($options['buynotification']['emailbbc'], $field['company_name'], $copyField);
         }
-        
-        $woo_order_id = 0;
-        //В таблицу Woo
-        if (isset($options['buyoptions']['add_tableorder_woo']) and $field['custom'] == 0) {
+        try {
+            $woo_order_id = 0;
+            //В таблицу Woo
+            if (isset($options['buyoptions']['add_tableorder_woo']) and $field['custom'] == 0) {
+                
+                $woo_order = Order::getInstance();
+                
+                $woo_order_id = $woo_order->set_order(
+                    array(
+                        'first_name' => $field['user_name'],
+                        'last_name' => '',
+                        'company' => '',
+                        'email' => $field['user_email'],
+                        'phone' => $field['user_phone'],
+                        'address_1' => $field['order_comment'],
+                        'address_2' => '',
+                        'city' => '',
+                        'state' => '',
+                        'postcode' => '',
+                        'country' => '',
+                        'order_status' => 'processing', //Статус заказа который будет установлен
+                        'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
+                        'qty' => empty($field['quantity_product']) ? 1 : $field['quantity_product'],
+                        'product_id' => $product_id, //ИД товара Woo
+                    )
+                );
+            }
             
-            $woo_order = Order::getInstance();
+            $order_field = [
+                'product_id' => $product_id,
+                'product_name' => $field['product_name'],
+                'product_meta' => null,
+                'product_price' => $field['product_price'],
+                'product_quantity'=> empty($field['quantity_product']) ? 1 : $field['quantity_product'],
+                'form' => \wp_json_encode($field),
+                'sms_log' => \wp_json_encode($smslog),
+                'woo_order_id' => $woo_order_id,
+                'user_id' => \get_current_user_id(),
+            ];
             
-            $woo_order_id = $woo_order->set_order(
-                array(
-                    'first_name' => $field['user_name'],
-                    'last_name' => '',
-                    'company' => '',
-                    'email' => $field['user_email'],
-                    'phone' => $field['user_phone'],
-                    'address_1' => $field['order_comment'],
-                    'address_2' => '',
-                    'city' => '',
-                    'state' => '',
-                    'postcode' => '',
-                    'country' => '',
-                    'order_status' => 'processing', //Статус заказа который будет установлен
-                    'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
-                    'qty' => empty($field['quantity_product']) ? 1 : $field['quantity_product'],
-                    'product_id' => $product_id, //ИД товара Woo
-                )
+            Order::getInstance()->save_order(
+                $order_field
             );
+            // Смена статуса заказа запускает Хуки отправки сообщений WooCommerce
+            if ($woo_order_id) {
+                $wcOrder = \wc_get_order($woo_order_id);
+                if ($wcOrder instanceof \WC_Order) {
+                    $wcOrder->update_status('processing', 'Quick order form');
+                    if (isset($options['buyoptions']['success_action']) && intval($options['buyoptions']['success_action']) === 5) {
+                        $arResult['redirectUrl'] = $wcOrder->get_checkout_order_received_url();
+                    } else if (isset($options['buyoptions']['success_action']) && intval($options['buyoptions']['success_action']) === 6) {
+                        $wcOrder->update_status('wc-pending');
+                        $arResult['redirectUrl'] = $wcOrder->get_checkout_payment_url();
+                    }
+                } else {
+                    throw new \Exception(__('Couldn\'t create WooCommerce order', 'coderun-oneclickwoo'). ' №'.$woo_order_id);
+                }
+            }
+            
+        } catch (Exception $ex) {
+            $this->logger->setInfo($ex->getMessage());
         }
-        
-        $order_field = [
-            'product_id' => $product_id,
-            'product_name' => $field['product_name'],
-            'product_meta' => null,
-            'product_price' => $field['product_price'],
-            'product_quantity'=> empty($field['quantity_product']) ? 1 : $field['quantity_product'],
-            'form' => \wp_json_encode($field),
-            'sms_log' => \wp_json_encode($smslog),
-            'woo_order_id' => $woo_order_id,
-            'user_id' => \get_current_user_id(),
-        ];
-        
-        Order::getInstance()->save_order(
-            $order_field
-        );
-        // Смена статуса заказа запускает Хуки отправки сообщений WooCommerce
-        if ($woo_order_id) {
-            $wcOrder = \wc_get_order($woo_order_id);
-            $wcOrder->update_status('processing', 'Quick order form');
-            $arResult['redirectUrl'] = $wcOrder->get_checkout_order_received_url();
-        }
-        
         
         BuyHookPlugin::buyClickNewrder($arResult, $order_field);
-        
-        
+
         wp_send_json_success($arResult);
     }
     
@@ -341,16 +358,14 @@ class Ajax {
             wp_send_json_success();
         }elseif(!empty($_POST['orderId']) && !empty($_POST['pluginId'])){ //Удаление заказа
             $order_id = $_POST['orderId'];
-            $plugin_id=$_POST['pluginId'];
-            $order = Order::getInstance()->get_order($order_id);
+            $plugin_id = $_POST['pluginId'];
+            $order = Order::getInstance()->get_wc_order($order_id);
             if(!empty($order['woo_order_id'])) {
-                
                 if(!Help::getInstance()->isset_woo_order($order['woo_order_id'])) {
                     wp_send_json_error();
                 }
-                
                 $order = new \WC_Order($order['woo_order_id']);
-                if($order->delete()){
+                if($order instanceof \WC_Order && $order->delete()){
                     wp_send_json_success();
                 }
             }
