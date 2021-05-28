@@ -41,8 +41,8 @@ class BuyShortcode {
             $core = Core::getInstance();
             $core->styleAddFrontPage();
             $core->scriptAddFrontPage();
-            if (Core::$variation && class_exists('BuyVariationClass') && method_exists('BuyVariationClass','shortCode')) {
-                $content =   BuyVariationClass::shortCode();
+            if (Help::getInstance()->module_variation) {
+                $content = Coderun\BuyOneClick\VariationsAddition::getInstance()->shortCode();
             }
             $content .= BuyFunction::viewBuyButton(true, $params);
             return $content;

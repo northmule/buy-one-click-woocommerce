@@ -100,6 +100,10 @@ jQuery(document).ready(function () {
                     window.location.href = response.data.redirectUrl;
                 }
             }
+            if (typeof buyone_ajax.callback_successful_form_submission !== 'undefined') {
+                var callback = new Function(buyone_ajax.callback_successful_form_submission);
+                callback();
+            }
         }).fail(function (response) {
             console.log(response);
             jQuery(root_selector + " .form-message-result").html('server error 500');
@@ -113,6 +117,7 @@ jQuery(document).ready(function () {
     });
 
     /**
+     * Кнопка "Заказать в один клик"
      * Нарисует форму
      */
     jQuery(document).on('click', 'button.clickBuyButton', function (e) {
@@ -154,12 +159,10 @@ jQuery(document).ready(function () {
                 variation_attr: variation_attr,
             },
             success: function (response) {
-
                 if (action == 'add_to_cart') {
                     window.location.href = response;
                     return true;
                 }
-
                 jQuery('#formOrderOneClick').remove();
                 jQuery(butObj).append(response);
                 jQuery('.popup, .overlay').css('opacity', '1');
@@ -168,10 +171,12 @@ jQuery(document).ready(function () {
                 if (typeof buyone_ajax.tel_mask != 'undefined') {
                     jQuery('#buyoneclick_form_order [name="txtphone"]').mask(buyone_ajax.tel_mask);
                 }
-
                 jQuery(button).removeClass('running');
-
                 buyone_click_body_scroll();
+                if (typeof buyone_ajax.callback_after_clicking_on_button !== 'undefined') {
+                    var callback = new Function(buyone_ajax.callback_after_clicking_on_button);
+                    callback();
+                }
             }
         });
     });
@@ -204,7 +209,10 @@ jQuery(document).ready(function () {
                 jQuery('.popup, .overlay').css('opacity', '1');
                 jQuery('.popup, .overlay').css('visibility', 'visible');
                 buyone_click_body_scroll();
-
+                if (typeof buyone_ajax.callback_after_clicking_on_button !== 'undefined') {
+                    var callback = new Function(buyone_ajax.callback_after_clicking_on_button);
+                    callback();
+                }
             }
         });
     });

@@ -199,11 +199,11 @@ class Ajax {
         
         //@todo поле теперь отличается, нет name и value
         if ($help->module_variation) {
-            if ($variation = \BuyVariationClass::getVariableProductInfo($field['forms_field'])) {
+            if ($variation = \Coderun\BuyOneClick\VariationsAddition::getInstance()->getVariableProductInfo($field['forms_field'])) {
                 
                 $field['product_name'] .= '<br>' . $variation;
             }
-            if (($variation_id = \BuyVariationClass::get_variation_id($field['forms_field'])) > 0) {
+            if (($variation_id = \Coderun\BuyOneClick\VariationsAddition::getInstance()->getVariationId($field['forms_field'])) > 0) {
                 $product_id = $variation_id;
             }
         }

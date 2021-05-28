@@ -7,13 +7,10 @@ if (!defined('ABSPATH')) {
 /**
  * Шаблон формы быстрого заказа
  */
+/** @var array $options */
+/** @var array $field */
 ?>
 <div id="formOrderOneClick">
-    <?php
-    if ($field['variation_plugin']) {
-        \BuyVariationClass::viewJs();
-    }
-    ?>
     <div class="overlay" title="окно"></div>
     <div class="popup">
         <div class="close_order <?php echo ($field['is_template_style'] ? 'button' : '') ?>">x</div>

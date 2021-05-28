@@ -45,6 +45,8 @@ class Core {
      */
     const INDEX_NAME_FILE = 'buycli-index.php';
     
+    const OPTIONS_MARKETING = 'buyoptions_marketing';
+    
     /**
      * Версия ядра
      */
@@ -52,84 +54,19 @@ class Core {
     
     protected static $_instance = null;
     
-    /**
-     * Настройки плагина
-     * @uses [enable_button] - Включатель кнопки
-     * @uses [enable_button_shortcod] Показ кнопки шорткода
-     * @uses [namebutton] - Название кнопки "купить"
-     * @uses [positionbutton]- Расположение кнопк "купить"
-     * @uses [infotovar_chek] - Показывать или нет информацию о товаре в окне
-     * @uses [fio_chek] - Запрос на ФИО
-     * @uses [fon_chek] - Запрос телефона
-     * @uses [email_chek] - Запрос email
-     * @uses [dopik_chek] - Показывать поле дополнительной информации
-     * @uses [fio_descript] - Описание поля ФИО
-     * @uses [fon_descript] - Описание поля телефон
-     * @uses [email_descript] - Описание поля email
-     * @uses [dopik_descript] - Описание поля email
-     * @uses [butform_descript] - Название кнопки в форме отправки данных о покупателе
-     * @uses [infotovar_chek] - Показывать или нет информацию о товаре в окне
-     * @uses [success] - Сообщение об успешном совершение заказа в форме
-     * @uses [fio_verifi] - Обязательно поле ФИО
-     * @uses [fon_verifi] - Обязательно поле ФИО
-     * @uses [fon_format] - Формат телефона
-     * @uses [email_verifi] - Обязательно поле ФИО
-     * @uses [dopik_verifi] - Обязательно поле ФИО
-     * @uses [success_action] - radio действия после закрытия
-     * @uses [success_action_close] - Время в мс до закрытия формы заказа
-     * @uses [success_action_message] - Сообщение после заказа
-     * @uses [success_action_redirect] - URL редиректа после заказа
-     * @uses [regex_fon] Регулярное выражение проверки телефона
-     * @uses [add_tableorder_woo] Включает добавление заказов в таблицу Woo
-     *
-     */
-    static $buyoptions;
     
-    /**
-     * Настройки уведомлений плагина
-     * @uses [namemag] - Название магазина
-     * @uses [emailfrom] - Email для ответов
-     * @uses [emailbbc] - Email для копий
-     * @uses [infozakaz_chek] - Отправка клиенту сообщения о заказе
-     * @uses [dopiczakaz_chek] - Отправка клиенту доп сообщения
-     * @uses [dopiczakaz] - Дополнительная информация
-     */
-    static $buynotification;
+    public static $buyoptions;
     
-    /**
-     * @deprecated Заказы теперь сохраняются в свою таблицу смотри Order.php
-     * Журнал заказов. Вложенные массивы имеют следующие данные
-     * @uses [time] - Время создания заказа
-     * @uses [idtovar] - ID товара или записи Wordpress
-     * @uses [txtname] - ФИО клиента
-     * @uses [txtphone] - Номер телефона клиента
-     * @uses [txtemail] - Email клиента
-     * @uses [nametovar] - Название товара
-     * @uses [pricetovar] - Цена товара
-     * @uses [message] - Сообщение от клиента
-     * @uses [smslog] - Лог СМС
-     */
-    static $buyzakaz;
+    public static $buynotification;
     
-    /**
-     * Опции СМСЦЕНТРА
-     * @uses [login] - логин пользователя
-     * @uses [password] - Пароль или MD5-хеш пароля в нижнем регистре
-     * @uses [methodpost] - Использовать метод POST
-     * @uses [https] - использовать HTTPS протокол
-     * @uses [charset] -кодировка сообщения: utf-8, koi8-r или windows-1251 (по умолчанию)
-     * @uses [debug] - флаг отладки
-     * @uses [smtpfrom] - e-mail адрес отправителя
-     * @uses [smshablon] - SMS шаблон
-     * @uses [enable_smsc] - Вкючение СМС отправки на сайте
-     */
-    static $buysmscoptions;
+    public static $buyzakaz;
+    public static $buysmscoptions;
     
     /**
      * Работа с вариативными товарами
      * @var type
      */
-    public static $variation = FALSE;
+    public static $variation = false;
     
     /**
      * @deprecated
@@ -145,6 +82,7 @@ class Core {
         'buyoptions' => [],
         'buynotification'=> [],
         'buysmscoptions'=> [],
+        self::OPTIONS_MARKETING => [],
     ];
     
     /**
@@ -177,32 +115,28 @@ class Core {
         $this->options = $options = $help->get_options();
         
         if (class_exists('BuyVariationClass')) {
-            
             $help->module_variation = true;
-            
             self::$variation = $help->module_variation;
         }
         
         self::$buyoptions = $options['buyoptions']; //Загрука опций из базы
-        //self::$buyzakaz = $options['buyzakaz']; //Загрука опций из базы
         self::$buynotification = $options['buynotification']; //Загрука опций из базы
         self::$buysmscoptions = $options['buysmscoptions']; //Получаем настройки смсцентра из опций
-        // $this->addAction();
-        // $this->addOptions();
+        add_action('init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
     }
     
     /**
      * Подключение функций через add_action Wordpress
      */
-    public function addAction() {
-    
-        require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Logger.php');
+    public function addAction()
+    {
+        $this->initializeAdditions();
         
         $buyoptions = $this->options['buyoptions'];
         if (!empty($buyoptions['enable_button']) and $buyoptions['enable_button'] == 'on') {
             $position = $buyoptions['positionbutton']; //Позиция кнопки
             if (self::$variation) {
-                $strPosition = \BuyVariationClass::getPositionButton();
+                $strPosition = VariationsAddition::getInstance()->getPositionButton();
                 if ($strPosition !== FALSE) {
                     $position = $strPosition;
                 }
@@ -221,7 +155,7 @@ class Core {
             
             $position = $buyoptions['positionbutton_out_stock'];
             
-            if(strlen($position)>5) {
+            if (strlen($position)>5) {
                 add_filter('woocommerce_get_stock_html', function ($html) {
                     global $product;
                     if(is_object($product) && $product instanceof \WC_Product && method_exists('WC_Product','get_availability')) {
@@ -235,20 +169,30 @@ class Core {
                             }
                         }
                     }
-                    
                     return $html;
                 }
                 );
             }
-            
-            
-            
         }
         
         $service = Service::getInstance();
         add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', array($this, 'jsVariableHead'));
         
+    }
+    
+    /**
+     * Поздняя инициализация дополнений
+     */
+    protected function initializeAdditions()
+    {
+        $help = Help::getInstance();
+        do_action('buy_one_click_woocommerce_start_load_core');
+        
+        if (\class_exists('\Coderun\BuyOneClick\VariationsAddition')) {
+            $help->module_variation = true;
+            self::$variation = $help->module_variation;
+        }
     }
     
     public function action_admin_page() {
@@ -279,7 +223,6 @@ class Core {
         }
         
         //Режим работы плагина
-        
         if (isset($buyoptions['plugin_work_mode'])) {
             $variables['work_mode'] = intval($buyoptions['plugin_work_mode']);
         } else {
@@ -302,6 +245,12 @@ class Core {
                 $variables['after_message_form'] = $buyoptions['success'];
             }
         }
+        if ($this->getOption('after_clicking_on_button', self::OPTIONS_MARKETING)) {
+            $variables['callback_after_clicking_on_button'] = $this->getOption('after_clicking_on_button', self::OPTIONS_MARKETING);
+        }
+        if ($this->getOption('successful_form_submission', self::OPTIONS_MARKETING)) {
+            $variables['callback_successful_form_submission'] = $this->getOption('successful_form_submission', self::OPTIONS_MARKETING);
+        }
         
         
         $str = '';
@@ -318,10 +267,6 @@ class Core {
      * Операции выполняемые при деактивации плагина
      */
     public function deactivationPlugin() {
-        // delete_option('buyoptions');
-        // delete_option('buyzakaz');
-        //delete_option('buynotification');
-        //delete_option('buysmscoptions');
         remove_shortcode('viewBuyButton');
     }
     
@@ -330,7 +275,6 @@ class Core {
      */
     public function addOptions() {
         add_option('buyoptions', array()); //массив настроек плагина
-        // add_option('buyzakaz', array()); //массив Заказов через форму
         add_option('buynotification', array()); //Массив настроек уведомлений
         add_option('buysmscoptions', array()); //Настройки smsc
         PluginUpdate::createOrderTable();
@@ -508,25 +452,21 @@ class Core {
      * Подключает нужную страницу исходя из вкладки на страницы настроек плагина
      * @result include_once tab{номер вкладки}-option1.php
      */
-    public function tabViwer() {
+    public function showPage()
+    {
         
-        if (isset($_GET['tab'])) {
-            $tab = $_GET['tab'];
-            switch ($tab) {
-                case 'notification':
-                    include_once WP_PLUGIN_DIR . '/' . self::PATCH_PLUGIN . '/page/tab2-option1.php';
-                    break;
-                case 'orders':
-                    include_once WP_PLUGIN_DIR . '/' . self::PATCH_PLUGIN . '/page/tab3-option1.php';
-                    break;
-                case 'help':
-                    include_once WP_PLUGIN_DIR . '/' . self::PATCH_PLUGIN . '/page/tab4-option1.php';
-                    break;
-                default :
-                    include_once WP_PLUGIN_DIR . '/' . self::PATCH_PLUGIN . '/page/tab1-option1.php';
-            }
-        } else {
-            include_once WP_PLUGIN_DIR . '/' . self::PATCH_PLUGIN . '/page/tab1-option1.php';
+        $path = WP_PLUGIN_DIR.DIRECTORY_SEPARATOR.self::PATCH_PLUGIN.DIRECTORY_SEPARATOR.'page';
+        $pages = [
+            'default' => sprintf('%s/tab1-option1.php',$path),
+            'general' => sprintf('%s/tab1-option1.php',$path),
+            'notification' => sprintf('%s/tab2-option1.php',$path),
+            'orders' => sprintf('%s/tab3-option1.php',$path),
+            'help' => sprintf('%s/tab4-option1.php',$path),
+            'marketing' => sprintf('%s/tab5-option1.php',$path),
+        ];
+        $tab = $_GET['tab'] ?? 'default';
+        if(\array_key_exists($tab, $pages) && \file_exists($pages[$tab])) {
+            include_once $pages[$tab];
         }
     }
     
@@ -562,7 +502,6 @@ class Core {
             throw new \Exception(sprintf('Invalid settings key: %s', $optionsBush));
         }
         
-        
         if (empty($this->optionsPull[$optionsBush])) {
             $this->optionsPull[$optionsBush] = \get_option($optionsBush, []);
         }
@@ -571,6 +510,29 @@ class Core {
             return $this->optionsPull[$optionsBush][$key];
         }
         return $defaultValue;
+    }
+    
+    /**
+     * Указываем WordPress опции с которыми работает плагин
+     */
+    public function registeringSettings()
+    {
+        register_setting(sprintf('%s_options', self::OPTIONS_MARKETING), self::OPTIONS_MARKETING, [
+            'type'              => 'array',
+            'group'             => sprintf('%s_options', self::OPTIONS_MARKETING),
+            'description'       => '',
+            'sanitize_callback' => function($forms) {
+                if (\is_array($forms)) {
+                    foreach ($forms as $key => $value) {
+                        $forms[$key] = \trim($value);
+                    }
+                }
+                return $forms;
+            },
+            'show_in_rest'      => false,
+            'default' => [],
+        ]);
+        
     }
     
 }
