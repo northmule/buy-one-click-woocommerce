@@ -1,4 +1,5 @@
 <?php
+namespace Coderun\BuyOneClick;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -7,18 +8,32 @@ if (!defined('ABSPATH')) {
 use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\Core;
 
-class BuyShortcode {
-
+class ShortCodes {
+    
     protected $options = array();
-
+    
+    protected static $_instance = null;
+    
+    /**
+     * Singletone
+     * @return self
+     */
+    public static function getInstance() {
+        
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+    
     /**
      * Кнопка купить
      * Возможно размещение только в цикле вывода товаров
      */
-    public function __construct() {
-
+    protected function __construct() {
+        
         $this->options = Help::getInstance()->get_options();
-
+        
         if (!shortcode_exists('viewBuyButton')) {
             add_shortcode('viewBuyButton', array($this, 'viewBuyButton'));
         }
@@ -26,7 +41,7 @@ class BuyShortcode {
             add_shortcode('viewBuyButtonCustom', array($this, 'viewBuyButtonCustom'));
         }
     }
-
+    
     /**
      * Класическая кнопка покупки в один клик
      * Используется везде где можно получить ИД товара из Объекта WP
@@ -36,41 +51,41 @@ class BuyShortcode {
     public function viewBuyButton($params) {
         $buyoptions = $this->options['buyoptions'];
         $content = '';
-        if (!empty($buyoptions['enable_button_shortcod']) and $buyoptions['enable_button_shortcod'] == 'on') {
+        if (!empty($buyoptions['enable_button_shortcod']) and $buyoptions['enable_button_shortcod'] === 'on') {
             $params = \shortcode_atts(['id' => 0], $params);
             $core = Core::getInstance();
             $core->styleAddFrontPage();
             $core->scriptAddFrontPage();
             if (Help::getInstance()->module_variation) {
-                $content = Coderun\BuyOneClick\VariationsAddition::getInstance()->shortCode();
+                $content = \Coderun\BuyOneClick\VariationsAddition::getInstance()->shortCode();
             }
-            $content .= BuyFunction::viewBuyButton(true, $params);
+            $content .=\BuyFunction::viewBuyButton(true, $params);
             return $content;
         } else {
             return '';
         }
     }
-
+    
     /**
      * @param array $arParams id - код товара, name- наименование, count-количество,price- цена(число)
      * Кнопка с возможностью передать параметры
      */
     public function viewBuyButtonCustom($arParams) {
         $buyoptions = $this->options['buyoptions'];
-        if (!empty($buyoptions['enable_button_shortcod']) and $buyoptions['enable_button_shortcod'] == 'on') {
-            $arParams = shortcode_atts(array(
+        if (!empty($buyoptions['enable_button_shortcod']) and $buyoptions['enable_button_shortcod'] === 'on') {
+            $arParams = \shortcode_atts(array(
                 'id' => '1',
                 'name' => 'noname',
                 'count' => 1,
                 'price' => 5,
-                    ), $arParams);
+            ), $arParams);
             $core = Core::getInstance();
             $core->styleAddFrontPage();
             $core->scriptAddFrontPage();
-            return BuyFunction::viewBuyButtonCustrom($arParams);
+            return \BuyFunction::viewBuyButtonCustrom($arParams);
         } else {
             return '';
         }
     }
-
+    
 }

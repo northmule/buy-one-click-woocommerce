@@ -12,6 +12,8 @@ class Order {
     
     protected $order_table = 'wp_coderun_oneclickwoo_orders';
     
+    protected $logger = null;
+    
     /**
      * Singletone
      * @return Order
@@ -22,6 +24,10 @@ class Order {
             self::$_instance = new self();
         }
         return self::$_instance;
+    }
+    
+    protected function __construct() {
+        $this->logger = Logger::getInstance();
     }
     
     /**
@@ -173,7 +179,7 @@ class Order {
         
         $default_field = [
             'active'=>1,
-            'plugin_version' =>CODERUN_ONECLICKWOO_PLUGIN_VERSION,
+            'plugin_version' => CODERUN_ONECLICKWOO_PLUGIN_VERSION,
             'status'=>1,
             'product_id'=>null,
             'product_name'=>null,
@@ -189,6 +195,9 @@ class Order {
         $order = array_merge($default_field, $order);
         $wpdb->insert($this->order_table, $order);
         BuyHookPlugin::saveOrderToTable($wpdb->insert_id);
+        if ($wpdb->last_error) {
+            $this->logger->setInfo($wpdb->last_error);
+        }
         return $wpdb->insert_id;
         
         
@@ -220,7 +229,7 @@ class Order {
     
     public function deactive_order($order_id) {
         global $wpdb;
-        $wpdb->update($this->order_table,['active'=>1],['id'=>$order_id]);
+        $wpdb->update($this->order_table,['active' => 0],['id' => $order_id]);
     }
     
     public function remove_order_all() {
@@ -231,13 +240,6 @@ class Order {
     public function update_status($order_id,$status) {
         global $wpdb;
         $wpdb->update($this->order_table,['status'=>$status],['id'=>$order_id]);
-    }
-    
-    
-    
-    
-    protected function __construct() {
-        
     }
     
     public function __clone() {

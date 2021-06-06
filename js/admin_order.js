@@ -20,11 +20,10 @@ jQuery(document).ready(function () {
             async: false,
             data: {
                 action: 'removeorderall',
-                nonce: buyadminnonce // переменная содержащая массив с URL и NONCE
+                nonce: buyadminnonce
             },
             success: function (resp) {
-                // alert(resp);
-                if (resp == 'ok') {
+                if (resp.success) {
                     jQuery('table tbody').fadeOut();
                 }
             }
@@ -45,7 +44,6 @@ jQuery(document).ready(function () {
                 text: id
             }
         });
-        //alert(id);
 
 
     });

@@ -27,7 +27,7 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
         <th><?php _e('Full name', 'coderun-oneclickwoo'); ?></th>
         <th><?php _e('Phone', 'coderun-oneclickwoo'); ?></th>
         <th>Email</th>
-        <th><?php _e('Product Name', 'coderun-oneclickwoo'); ?></th>
+        <th><?php _e('Product Information', 'coderun-oneclickwoo'); ?></th>
         <th><?php _e('Price', 'coderun-oneclickwoo'); ?></th>
         <th><?php _e('Message', 'coderun-oneclickwoo'); ?></th>
         <th><?php _e('Product', 'coderun-oneclickwoo'); ?></th>
@@ -57,7 +57,7 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
             <th><?php echo $form['user_phone']; ?></th>
             <th><?php echo $form['user_email']; ?></th>
             <th>
-                <?php echo $order['product_name']; ?>
+                <?php echo $form['product_name']; ?>
                 <br>
                 <?php
                 if(isset($form['quantity_product'])) {

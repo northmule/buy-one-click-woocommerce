@@ -47,10 +47,18 @@ class Core {
     
     const OPTIONS_MARKETING = 'buyoptions_marketing';
     
+    const OPTIONS_GENERAL = 'buyoptions';
+    /**
+     * Вкладка Уведомлений
+     */
+    const OPTIONS_NOTIFICATIONS = 'buynotification';
+    
+    const OPTIONS_SMS = 'buysmscoptions';
+    
     /**
      * Версия ядра
      */
-    const VERSION = '1.9.7';
+    const VERSION = '1.16.1';
     
     protected static $_instance = null;
     
@@ -79,9 +87,9 @@ class Core {
      *
      */
     protected $optionsPull = [
-        'buyoptions' => [],
+        self::OPTIONS_GENERAL => [],
         'buynotification'=> [],
-        'buysmscoptions'=> [],
+        self::OPTIONS_NOTIFICATIONS => [],
         self::OPTIONS_MARKETING => [],
     ];
     
@@ -89,7 +97,8 @@ class Core {
      * Singletone
      * @return Core
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
@@ -108,32 +117,27 @@ class Core {
     /**
      * Конструктор класса
      */
-    protected function __construct() {
-        
-        $help = Help::getInstance();
-        
-        $this->options = $options = $help->get_options();
-        
-        if (class_exists('BuyVariationClass')) {
-            $help->module_variation = true;
-            self::$variation = $help->module_variation;
-        }
-        
-        self::$buyoptions = $options['buyoptions']; //Загрука опций из базы
-        self::$buynotification = $options['buynotification']; //Загрука опций из базы
-        self::$buysmscoptions = $options['buysmscoptions']; //Получаем настройки смсцентра из опций
+    protected function __construct()
+    {
+        add_action('init', [$this, 'initOptions']);
+        add_action('init', [$this, 'initializeAdditions']);
+        add_action('init', [$this, 'initAction']);
         add_action('init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
+        add_action('init', [\Coderun\BuyOneClick\BuyHookPlugin::class, 'load']);
+        add_action('init', [\Coderun\BuyOneClick\ShortCodes::class, 'getInstance']);
+        $service = Service::getInstance();
+        // todo сделать настройку
+        add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
+        add_action('wp_head', [$this, 'jsVariableHead']);
+        add_action('init', [\Coderun\BuyOneClick\Ajax::class, 'getInstance']);
+        
+        $this->initAdminPages();
     }
     
-    /**
-     * Подключение функций через add_action Wordpress
-     */
-    public function addAction()
+    public function initAction()
     {
-        $this->initializeAdditions();
-        
         $buyoptions = $this->options['buyoptions'];
-        if (!empty($buyoptions['enable_button']) and $buyoptions['enable_button'] == 'on') {
+        if (!empty($buyoptions['enable_button']) and $buyoptions['enable_button'] === 'on') {
             $position = $buyoptions['positionbutton']; //Позиция кнопки
             if (self::$variation) {
                 $strPosition = VariationsAddition::getInstance()->getPositionButton();
@@ -145,7 +149,7 @@ class Core {
             add_action($position, array($this, 'scriptAddFrontPage')); //Скрипты фронта
             add_action($position, array('BuyFunction', 'viewBuyButton')); //Кнопка заказать
             //Положение в категории товаров
-            if (!empty($buyoptions['enable_button_category']) and $buyoptions['enable_button_category'] == 'on') {
+            if (!empty($buyoptions['enable_button_category']) && $buyoptions['enable_button_category'] === 'on') {
                 $position_category = $buyoptions['positionbutton_category']; //Позиция кнопки
                 add_action($position_category, array('BuyFunction', 'viewBuyButton')); //Кнопка заказать
                 add_action($position_category, array($this, 'styleAddFrontPage')); //Стили фронта
@@ -155,50 +159,53 @@ class Core {
             
             $position = $buyoptions['positionbutton_out_stock'];
             
-            if (strlen($position)>5) {
+            if (strlen($position) > 5) {
                 add_filter('woocommerce_get_stock_html', function ($html) {
                     global $product;
-                    if(is_object($product) && $product instanceof \WC_Product && method_exists('WC_Product','get_availability')) {
+                    if (is_object($product) && $product instanceof \WC_Product && \method_exists('WC_Product','get_availability')) {
                         $this->styleAddFrontPage();
                         $this->scriptAddFrontPage();
                         $availability = $product->get_availability();
                         // Товар имеет статус не в наличие
-                        if(strlen($html)>1 && isset($availability['class']) && $availability['class']==='out-of-stock') {
+                        if(strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
                             if(!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
                                 $html .= \BuyFunction::viewBuyButton(true);
                             }
                         }
                     }
                     return $html;
-                }
-                );
+                });
             }
         }
-        
-        $service = Service::getInstance();
-        add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
-        add_action('wp_head', array($this, 'jsVariableHead'));
-        
     }
+    
+    public function initOptions()
+    {
+        $help = Help::getInstance();
+        $this->options = $options = $help->get_options();
+        self::$buyoptions = $options['buyoptions']; //Загрука опций из базы
+        self::$buynotification = $options['buynotification']; //Загрука опций из базы
+        self::$buysmscoptions = $options['buysmscoptions']; //Получаем настройки смсцентра из опций
+    }
+    
     
     /**
      * Поздняя инициализация дополнений
      */
-    protected function initializeAdditions()
+    public function initializeAdditions()
     {
         $help = Help::getInstance();
         do_action('buy_one_click_woocommerce_start_load_core');
-        
         if (\class_exists('\Coderun\BuyOneClick\VariationsAddition')) {
             $help->module_variation = true;
             self::$variation = $help->module_variation;
         }
     }
     
-    public function action_admin_page() {
-        add_action('admin_menu', array($this, 'adminOptions'));
-        
-        add_filter('plugin_action_links', array($this, 'pluginLinkSetting'), 10, 2); //Настройка на странице плагинов
+    protected function initAdminPages()
+    {
+        add_action('admin_menu', [$this, 'adminOptions']);
+        add_filter('plugin_action_links', [$this, 'pluginLinkSetting'], 10, 2); //Настройка на странице плагинов
     }
     
     /**
@@ -276,7 +283,6 @@ class Core {
     public function addOptions() {
         add_option('buyoptions', array()); //массив настроек плагина
         add_option('buynotification', array()); //Массив настроек уведомлений
-        add_option('buysmscoptions', array()); //Настройки smsc
         PluginUpdate::createOrderTable();
     }
     
@@ -517,7 +523,8 @@ class Core {
      */
     public function registeringSettings()
     {
-        register_setting(sprintf('%s_options', self::OPTIONS_MARKETING), self::OPTIONS_MARKETING, [
+        // Tab5
+        \register_setting(sprintf('%s_options', self::OPTIONS_MARKETING), self::OPTIONS_MARKETING, [
             'type'              => 'array',
             'group'             => sprintf('%s_options', self::OPTIONS_MARKETING),
             'description'       => '',
@@ -527,6 +534,28 @@ class Core {
                         $forms[$key] = \trim($value);
                     }
                 }
+                return $forms;
+            },
+            'show_in_rest'      => false,
+            'default' => [],
+        ]);
+        // Tab1
+        \register_setting(sprintf('%s_options', self::OPTIONS_GENERAL), self::OPTIONS_GENERAL, [
+            'type'              => 'array',
+            'group'             => sprintf('%s_options', self::OPTIONS_GENERAL),
+            'description'       => '',
+            'sanitize_callback' => function($forms) {
+                return $forms;
+            },
+            'show_in_rest'      => false,
+            'default' => [],
+        ]);
+        // Tab2 - Уведомления
+        \register_setting(sprintf('%s_options', self::OPTIONS_NOTIFICATIONS), self::OPTIONS_NOTIFICATIONS, [
+            'type'              => 'array',
+            'group'             => sprintf('%s_options', self::OPTIONS_NOTIFICATIONS),
+            'description'       => '',
+            'sanitize_callback' => function($forms) {
                 return $forms;
             },
             'show_in_rest'      => false,

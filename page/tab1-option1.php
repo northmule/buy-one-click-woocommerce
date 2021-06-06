@@ -9,19 +9,19 @@ use Coderun\BuyOneClick\Help;
     <h3><?php _e('General add-on settings', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
     <p><?php _e('Do not forget to press the save button after changing the settings in each tab.', 'coderun-oneclickwoo'); ?></p>
 <?php
-$buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив настроек
-//$buyoptions= get_option('buyoptions');
+$buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Массив настроек
 ?>
     <form method="post" action="options.php">
         <?php wp_nonce_field('update-options'); ?>
+        <?php settings_fields(sprintf('%s_options', Core::OPTIONS_GENERAL)); ?>
         <fieldset>
             <legend><?php _e('Are common', 'coderun-oneclickwoo'); ?></legend>
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php _e('Plugin operation mode', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <p><input name="buyoptions[plugin_work_mode]" type="radio" value="0" <?php checked($buyoptions['plugin_work_mode'], '0', 1); ?>><?php _e('Basic operation', 'coderun-oneclickwoo'); ?></p>
-                        <p><input name="buyoptions[plugin_work_mode]" type="radio" value="1" <?php checked($buyoptions['plugin_work_mode'], '1', 1); ?>><?php _e('Add to cart mode', 'coderun-oneclickwoo'); ?></p>
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[plugin_work_mode]" type="radio" value="0" <?php checked(Core::getInstance()->getOption('plugin_work_mode', Core::OPTIONS_GENERAL), '0', 1); ?>><?php _e('Basic operation', 'coderun-oneclickwoo'); ?></p>
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[plugin_work_mode]" type="radio" value="1" <?php checked(Core::getInstance()->getOption('plugin_work_mode', Core::OPTIONS_GENERAL), '1', 1); ?>><?php _e('Add to cart mode', 'coderun-oneclickwoo'); ?></p>
                         <span class="description"><?php _e('If "Basic operation mode" is selected - The classic logic of the plug-in will work and all the settings below will be relevant.', 'coderun-oneclickwoo'); ?><br>
                         <?php _e('If "Add to cart mode" is selected - When you click on the button, the product enters the cart and is redirected to the checkout page.', 'coderun-oneclickwoo'); ?>
                     </span>
@@ -30,7 +30,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Enable button display?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[enable_button]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[enable_button]" <?php
                         if (isset($buyoptions['enable_button'])) {
                             checked($buyoptions['enable_button'], 'on', 1);
                         }
@@ -41,7 +41,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Enable the display of the shortcode button?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[enable_button_shortcod]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[enable_button_shortcod]" <?php
                         if (isset($buyoptions['enable_button_shortcod'])) {
                             checked($buyoptions['enable_button_shortcod'], 'on', 1);
                         }
@@ -53,7 +53,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Name of the button on the site', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[namebutton]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[namebutton]" value="<?php
                         if (isset($buyoptions['namebutton'])) {
                             echo $buyoptions['namebutton'];
                         }
@@ -64,7 +64,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Position of the button in the card', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <select name="buyoptions[positionbutton]">
+                        <select name="<?php echo Core::OPTIONS_GENERAL; ?>[positionbutton]">
                             <option value="woocommerce_simple_add_to_cart" <?php
                             if (isset($buyoptions['positionbutton'])) {
                                 selected($buyoptions['positionbutton'], 'woocommerce_simple_add_to_cart', true);
@@ -107,7 +107,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Position of the button in the card for products that are not available', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <select name="buyoptions[positionbutton_out_stock]">
+                        <select name="<?php echo Core::OPTIONS_GENERAL; ?>[positionbutton_out_stock]">
                             <option value="-1" <?php
                             if (isset($buyoptions['positionbutton_out_stock'])) {
                                 selected($buyoptions['positionbutton_out_stock'], '-1', true);
@@ -126,7 +126,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Write orders to the Woocommerce table', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[add_tableorder_woo]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[add_tableorder_woo]" <?php
                         if (isset($buyoptions['add_tableorder_woo'])) {
                             checked($buyoptions['add_tableorder_woo'], 'on', 1);
                         }
@@ -137,7 +137,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Enable button display in categories', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[enable_button_category]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[enable_button_category]" <?php
                         if (isset($buyoptions['enable_button_category'])) {
                             checked($buyoptions['enable_button_category'], 'on', 1);
                         }
@@ -178,7 +178,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Show product information?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[infotovar_chek]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[infotovar_chek]" <?php
                         if (isset($buyoptions['infotovar_chek'])) {
                             checked($buyoptions['infotovar_chek'], 'on', 1);
                         }
@@ -190,7 +190,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Ask for full name', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[fio_chek]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[fio_chek]" <?php
                         if (isset($buyoptions['fio_chek'])) {
                             checked($buyoptions['fio_chek'], 'on', 1);
                         }
@@ -201,7 +201,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Ask phone', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[fon_chek]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[fon_chek]" <?php
                         if (isset($buyoptions['fon_chek'])) {
                             checked($buyoptions['fon_chek'], 'on', 1);
                         }
@@ -212,7 +212,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Ask for Email', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[email_chek]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[email_chek]" <?php
                         if (isset($buyoptions['email_chek'])) {
                             checked($buyoptions['email_chek'], 'on', 1);
                         }
@@ -223,7 +223,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Additional Information Field', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[dopik_chek]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[dopik_chek]" <?php
                         if (isset($buyoptions['dopik_chek'])) {
                             checked($buyoptions['dopik_chek'], 'on', 1);
                         }
@@ -234,7 +234,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Quantity', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[add_quantity_form]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[add_quantity_form]" <?php
                         if (isset($buyoptions['add_quantity_form'])) {
                             checked($buyoptions['add_quantity_form'], 'on', 1);
                         }
@@ -245,7 +245,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('File upload field', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[upload_input_file_chek]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[upload_input_file_chek]" <?php
                         if (isset($buyoptions['upload_input_file_chek'])) {
                             checked($buyoptions['upload_input_file_chek'], 'on', 1);
                         }
@@ -262,7 +262,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Name field', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[fio_descript]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[fio_descript]" value="<?php
                         if (isset($buyoptions['fio_descript'])) {
                             echo $buyoptions['fio_descript'];
                         }
@@ -271,7 +271,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     </td>
                     <th scope="row"><?php _e('Obligatory field?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[fio_verifi]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[fio_verifi]" <?php
                         if (isset($buyoptions['fio_verifi'])) {
                             checked($buyoptions['fio_verifi'], 'on', 1);
                         }
@@ -282,7 +282,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Telephone box', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[fon_descript]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[fon_descript]" value="<?php
                         if (isset($buyoptions['fon_descript'])) {
                             echo $buyoptions['fon_descript'];
                         }
@@ -291,7 +291,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     </td>
                     <th scope="row"><?php _e('Obligatory field?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[fon_verifi]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[fon_verifi]" <?php
                         if (isset($buyoptions['fon_verifi'])) {
                             checked($buyoptions['fon_verifi'], 'on', 1);
                         }
@@ -300,7 +300,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     </td>
                     <th scope="row"><?php _e('Format hint', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="input" name="buyoptions[fon_format]" value="<?php
+                        <input type="input" name="<?php echo Core::OPTIONS_GENERAL; ?>[fon_format]" value="<?php
                         if (isset($buyoptions['fon_format'])) {
                             echo $buyoptions['fon_format'];
                         }
@@ -311,7 +311,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Phone number entry format', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[fon_format_input]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[fon_format_input]" value="<?php
                         if (isset($buyoptions['fon_format_input'])) {
                             echo $buyoptions['fon_format_input'];
                         }
@@ -322,7 +322,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Email field', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[email_descript]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[email_descript]" value="<?php
                         if (isset($buyoptions['email_descript'])) {
                             echo $buyoptions['email_descript'];
                         }
@@ -331,7 +331,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     </td>
                     <th scope="row"><?php _e('Obligatory field?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[email_verifi]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[email_verifi]" <?php
                         if (isset($buyoptions['email_verifi'])) {
                             checked($buyoptions['email_verifi'], 'on', 1);
                         }
@@ -342,7 +342,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Field "Advanced"', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[dopik_descript]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[dopik_descript]" value="<?php
                         if (isset($buyoptions['dopik_descript'])) {
                             echo $buyoptions['dopik_descript'];
                         }
@@ -351,7 +351,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     </td>
                     <th scope="row"><?php _e('Obligatory field?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[dopik_verifi]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[dopik_verifi]" <?php
                         if (isset($buyoptions['dopik_verifi'])) {
                             checked($buyoptions['dopik_verifi'], 'on', 1);
                         }
@@ -362,7 +362,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Field "Upload file"', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[upload_input_file_descript]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[upload_input_file_descript]" value="<?php
                         if (isset($buyoptions['upload_input_file_descript'])) {
                             echo $buyoptions['upload_input_file_descript'];
                         }
@@ -371,7 +371,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     </td>
                     <th scope="row"><?php _e('Obligatory field?', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="checkbox" name="buyoptions[upload_input_file_verifi]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[upload_input_file_verifi]" <?php
                         if (isset($buyoptions['upload_input_file_verifi'])) {
                             checked($buyoptions['upload_input_file_verifi'], 'on', 1);
                         }
@@ -382,7 +382,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Name of the button in the form', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[butform_descript]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[butform_descript]" value="<?php
                         if (isset($buyoptions['butform_descript'])) {
                             echo $buyoptions['butform_descript'];
                         }
@@ -400,7 +400,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     <td><?php _e('Actions related to setting "Balance Status" in WooCommerce', 'coderun-oneclickwoo'); ?></td>
                     <td>
                         <?php _e('Enable this option?', 'coderun-oneclickwoo'); ?>
-                        <input type="checkbox" name="buyoptions[woo_stock_status_enable]" <?php
+                        <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[woo_stock_status_enable]" <?php
                         if (isset($buyoptions['woo_stock_status_enable'])) {
                             checked($buyoptions['woo_stock_status_enable'], 'on', 1);
                         }
@@ -408,7 +408,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     </td>
                     <th scope="row"><?php _e('Text on the button if the product is not in stock', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[woo_stock_status_button_text]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[woo_stock_status_button_text]" value="<?php
                         if (isset($buyoptions['woo_stock_status_button_text'])) {
                             echo $buyoptions['woo_stock_status_button_text'];
                         }
@@ -424,7 +424,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                 <tr valign="top">
                     <th scope="row"><?php _e('Message in the form', 'coderun-oneclickwoo'); ?></th>
                     <td>
-                        <input type="text" name="buyoptions[success]" value="<?php
+                        <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[success]" value="<?php
                         if (isset($buyoptions['success'])) {
                             echo $buyoptions['success'];
                         }
@@ -439,18 +439,18 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                         }
                         ?></th>
                     <td>
-                        <p><input name="buyoptions[success_action]" type="radio" value="1" <?php checked($buyoptions['success_action'], '1', 1); ?>> <?php _e('Nothing to do', 'coderun-oneclickwoo'); ?></p><span class="description"><?php _e('The window will remain open, the user will see the message above.', 'coderun-oneclickwoo'); ?></span>
-                        <p><input name="buyoptions[success_action]" type="radio" value="2" <?php checked($buyoptions['success_action'], '2', 1); ?>> <?php _e('Close through', 'coderun-oneclickwoo'); ?> <input type="text" name="buyoptions[success_action_close]" maxlength="6" pattern="[0-9]*" size="5"  value="<?php
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action]" type="radio" value="1" <?php checked($buyoptions['success_action'], '1', 1); ?>> <?php _e('Nothing to do', 'coderun-oneclickwoo'); ?></p><span class="description"><?php _e('The window will remain open, the user will see the message above.', 'coderun-oneclickwoo'); ?></span>
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action]" type="radio" value="2" <?php checked($buyoptions['success_action'], '2', 1); ?>> <?php _e('Close through', 'coderun-oneclickwoo'); ?> <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action_close]" maxlength="6" pattern="[0-9]*" size="5"  value="<?php
                             if (isset($buyoptions['success_action_close'])) {
                                 echo $buyoptions['success_action_close'];
                             }
                             ?>" /><?php _e('ms', 'coderun-oneclickwoo'); ?>.</p><span class="description"><?php _e('For example: "2000". The user will see the message above and the form will be closed after the specified time.', 'coderun-oneclickwoo'); ?></span>
-                        <p><input name="buyoptions[success_action]" type="radio" value="3" <?php checked($buyoptions['success_action'], '3', 1); ?>> <?php _e('Show message (html available)', 'coderun-oneclickwoo'); ?></p>  <textarea cols="20" rows="4" name="buyoptions[success_action_message]"><?php
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action]" type="radio" value="3" <?php checked($buyoptions['success_action'], '3', 1); ?>> <?php _e('Show message (html available)', 'coderun-oneclickwoo'); ?></p>  <textarea cols="20" rows="4" name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action_message]"><?php
                             if (isset($buyoptions['success_action_message'])) {
                                 echo $buyoptions['success_action_message'];
                             }
                             ?></textarea>
-                        <p><input name="buyoptions[success_action]" type="radio" value="4" <?php checked($buyoptions['success_action'], '4', 1); ?>> <?php _e('Redirect to page', 'coderun-oneclickwoo'); ?> <input type="text" name="buyoptions[success_action_redirect]" value="<?php
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action]" type="radio" value="4" <?php checked($buyoptions['success_action'], '4', 1); ?>> <?php _e('Redirect to page', 'coderun-oneclickwoo'); ?> <input type="text" name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action_redirect]" value="<?php
                             if (isset($buyoptions['success_action_redirect'])) {
                                 echo $buyoptions['success_action_redirect'];
                             }
@@ -459,12 +459,12 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
 
                         </p><span class="description"><?php _e('Example', 'coderun-oneclickwoo'); ?>: <a href="https://coderun.ru">"https://coderun.ru"</a>. <?php _e('The user will see the message and go to the specified page.', 'coderun-oneclickwoo'); ?></span>
 
-                        <p><input name="buyoptions[success_action]" type="radio" value="5" <?php checked($buyoptions['success_action'], '5', 1); ?>>
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action]" type="radio" value="5" <?php checked($buyoptions['success_action'], '5', 1); ?>>
                             <?php _e('Send to the order page WooCommerce', 'coderun-oneclickwoo'); ?></p>
                         <span class="description"><?php _e('The buyer will be redirected to the WooCommerce completed order page. It only works if orders are placed in the WooCommerce table', 'coderun-oneclickwoo'); ?></span>
 
 
-                        <p><input name="buyoptions[success_action]" type="radio" value="6" <?php checked($buyoptions['success_action'], '6', 1); ?>>
+                        <p><input name="<?php echo Core::OPTIONS_GENERAL; ?>[success_action]" type="radio" value="6" <?php checked($buyoptions['success_action'], '6', 1); ?>>
                             <?php _e('Send to the order payment page', 'coderun-oneclickwoo'); ?></p>
                         <span class="description">
                             <?php _e('The buyer will be redirected to the order payment page. This option only works if orders are placed in the WooCommerce table.', 'coderun-oneclickwoo'); ?>
@@ -477,12 +477,12 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
         </fieldset>
         <fieldset>
             <legend><?php _e('Quick order forms - styles', 'coderun-oneclickwoo'); ?></legend>
-            <p>№1. <input name="buyoptions[form_style_color]" type="radio" value="1" <?php checked($buyoptions['form_style_color'], '1', 1); ?>> <?php _e('Basic', 'coderun-oneclickwoo'); ?></p>
-            <p>№2. <input name="buyoptions[form_style_color]" type="radio" value="2" <?php checked($buyoptions['form_style_color'], '2', 1); ?>> <?php _e('Blue', 'coderun-oneclickwoo'); ?></p>
-            <p>№3. <input name="buyoptions[form_style_color]" type="radio" value="3" <?php checked($buyoptions['form_style_color'], '3', 1); ?>> <?php _e('Red', 'coderun-oneclickwoo'); ?></p>
-            <p>№4. <input name="buyoptions[form_style_color]" type="radio" value="4" <?php checked($buyoptions['form_style_color'], '4', 1); ?>> <?php _e('Green', 'coderun-oneclickwoo'); ?></p>
-            <p>№5. <input name="buyoptions[form_style_color]" type="radio" value="5" <?php checked($buyoptions['form_style_color'], '5', 1); ?>> <?php _e('Orange', 'coderun-oneclickwoo'); ?></p>
-            <p>№6. <input name="buyoptions[form_style_color]" type="radio" value="6" <?php checked($buyoptions['form_style_color'], '6', 1); ?>> <?php _e('Your WordPress Theme Styles', 'coderun-oneclickwoo'); ?></p>
+            <p>№1. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[form_style_color]" type="radio" value="1" <?php checked($buyoptions['form_style_color'], '1', 1); ?>> <?php _e('Basic', 'coderun-oneclickwoo'); ?></p>
+            <p>№2. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[form_style_color]" type="radio" value="2" <?php checked($buyoptions['form_style_color'], '2', 1); ?>> <?php _e('Blue', 'coderun-oneclickwoo'); ?></p>
+            <p>№3. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[form_style_color]" type="radio" value="3" <?php checked($buyoptions['form_style_color'], '3', 1); ?>> <?php _e('Red', 'coderun-oneclickwoo'); ?></p>
+            <p>№4. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[form_style_color]" type="radio" value="4" <?php checked($buyoptions['form_style_color'], '4', 1); ?>> <?php _e('Green', 'coderun-oneclickwoo'); ?></p>
+            <p>№5. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[form_style_color]" type="radio" value="5" <?php checked($buyoptions['form_style_color'], '5', 1); ?>> <?php _e('Orange', 'coderun-oneclickwoo'); ?></p>
+            <p>№6. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[form_style_color]" type="radio" value="6" <?php checked($buyoptions['form_style_color'], '6', 1); ?>> <?php _e('Your WordPress Theme Styles', 'coderun-oneclickwoo'); ?></p>
             <span><?php _e('If you want to change the CSS design of the form, create it in your template folder or in', 'coderun-oneclickwoo'); ?>
             wp-content/uploads/ 
             <?php _e('folder', 'coderun-oneclickwoo'); ?>
@@ -492,15 +492,15 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
         </fieldset>
         <fieldset>
             <legend><?php _e('Other options', 'coderun-oneclickwoo'); ?></legend>
-            <p><?php _e('Do not send the order form more often than: (seconds)', 'coderun-oneclickwoo'); ?>. <input name="buyoptions[time_limit_send_form]" type="number" value="<?php echo $buyoptions['time_limit_send_form']; ?>"></p>
-            <p><?php _e('Message in the form when re-sending.', 'coderun-oneclickwoo'); ?>. <input name="buyoptions[time_limit_message]" type="txt" value="<?php echo $buyoptions['time_limit_message']; ?>"></p>
+            <p><?php _e('Do not send the order form more often than: (seconds)', 'coderun-oneclickwoo'); ?>. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[time_limit_send_form]" type="number" value="<?php echo $buyoptions['time_limit_send_form']; ?>"></p>
+            <p><?php _e('Message in the form when re-sending.', 'coderun-oneclickwoo'); ?>. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[time_limit_message]" type="txt" value="<?php echo $buyoptions['time_limit_message']; ?>"></p>
             <span><?php _e('The default is 10 seconds. This means if the client will click the button to send the order from the form more often, the order will not be duplicated.', 'coderun-oneclickwoo'); ?>.</span>
             <p><?php _e('Consent to the processing of personal data', 'coderun-oneclickwoo'); ?>: <?php _e('Enable?', 'coderun-oneclickwoo') ?>
-                <input type="checkbox" name="buyoptions[conset_personal_data_enabled]" <?php
+                <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[conset_personal_data_enabled]" <?php
                 if (isset($buyoptions['conset_personal_data_enabled'])) {
                     checked($buyoptions['conset_personal_data_enabled'], 'on', 1);
                 }
-                ?>> <?php _e('Text (can HTML)', 'coderun-oneclickwoo') ?> <input name="buyoptions[conset_personal_data_text]" size="80" type="txt" value="<?php esc_html_e($buyoptions['conset_personal_data_text']); ?>">
+                ?>> <?php _e('Text (can HTML)', 'coderun-oneclickwoo') ?> <input name="<?php echo Core::OPTIONS_GENERAL; ?>[conset_personal_data_text]" size="80" type="txt" value="<?php esc_html_e(Core::getInstance()->getOption('conset_personal_data_text', Core::OPTIONS_GENERAL)); ?>">
 
             </p>
             <table class="form-table">
@@ -510,20 +510,20 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                         <p>
                             <?php _e('Do not use in the order form','coderun-oneclickwoo'); ?>
                             <input
-                                    name="buyoptions[recaptcha_order_form]"
+                                    name="<?php echo Core::OPTIONS_GENERAL; ?>[recaptcha_order_form]"
                                     type="radio"
                                     value="0"
-                                <?php checked($buyoptions['recaptcha_order_form'], 0, 1); ?>
+                                <?php checked(Core::getInstance()->getOption('recaptcha_order_form', Core::OPTIONS_GENERAL), 0, 1); ?>
                             >
                         </p>
                         <?php foreach (\Coderun\BuyOneClick\ReCaptcha::getInstance()->isSupported() as $key_recapcha=>$item) { ?>
                             <p>
                                 <?php _e('I use a plugin: ', 'coderun-oneclickwoo'); ?><a target="_blank" href="<?php echo $item['url']; ?>"><?php echo $item['name']; ?></a>
                                 <input
-                                        name="buyoptions[recaptcha_order_form]"
+                                        name="<?php echo Core::OPTIONS_GENERAL; ?>[recaptcha_order_form]"
                                         type="radio"
                                         value="<?php echo $key_recapcha; ?>"
-                                    <?php checked($buyoptions['recaptcha_order_form'], $key_recapcha, 1); ?>
+                                    <?php checked(Core::getInstance()->getOption('recaptcha_order_form', Core::OPTIONS_GENERAL), $key_recapcha, 1); ?>
                                 >  -  <?php _e('Tested with the "I am not a robot" captcha in V2, but it may also work with other options','coderun-oneclickwoo'); ?>
                             </p>
 
@@ -542,7 +542,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
                     <td>
                         <p>
                             <input
-                                    name="buyoptions[style_insert_html]"
+                                    name="<?php echo Core::OPTIONS_GENERAL; ?>[style_insert_html]"
                                     type="checkbox"
                                     value="on"
                                 <?php checked(Core::getInstance()->getOption('style_insert_html', 'buyoptions', ''), 'on', 1); ?>
@@ -564,7 +564,7 @@ $buyoptions = Help::getInstance()->get_options('buyoptions'); //Массив н�
          */ ?>
         </fieldset>
         <input type="hidden" name="action" value="update" />
-        <input type="hidden" name="page_options" value="buyoptions" />
+        <input type="hidden" name="page_options" value="<?php echo Core::OPTIONS_GENERAL; ?>" />
         <p class="submit">
             <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
         </p>

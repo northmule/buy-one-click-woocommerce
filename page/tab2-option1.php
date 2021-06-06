@@ -5,24 +5,19 @@ if (!defined('ABSPATH')) {
 use Coderun\BuyOneClick\Core;
 ?>
 <h3><?php _e('Methods and notification settings for the client', 'coderun-oneclickwoo'); ?>  <?php echo Core::NAME_PLUGIN; ?></h3>
-<?php
-$buynotification = get_option('buynotification');
-$buysmscoptions = get_option('buysmscoptions'); //настройки смсц
-?>
 
 <form method="post" action="options.php">
     <fieldset>
         <legend><?php _e('Setting E-mail Notifications', 'coderun-oneclickwoo'); ?></legend>
         <?php wp_nonce_field('update-options'); ?>
+        <?php settings_fields(sprintf('%s_options', Core::OPTIONS_NOTIFICATIONS)); ?>
         <table class="form-table">
 
             <tr valign="top">
                 <th scope="row"><?php _e('Name from', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="text" name="buynotification[namemag]" value="<?php
-                    if (isset($buynotification['namemag'])) {
-                        echo $buynotification['namemag'];
-                    }
+                    <input type="text" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[namemag]" value="<?php
+                    echo Core::getInstance()->getOption('namemag',Core::OPTIONS_NOTIFICATIONS);
                     ?>" />
                     <span class="description"><?php _e('Example', 'coderun-oneclickwoo'); ?> "<?php bloginfo('name'); ?>"</span>
                 </td>
@@ -30,10 +25,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Email From', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="text" name="buynotification[emailfrom]" value="<?php
-                    if (isset($buynotification['emailfrom'])) {
-                        echo $buynotification['emailfrom'];
-                    }
+                    <input type="text" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[emailfrom]" value="<?php
+                    echo Core::getInstance()->getOption('emailfrom',Core::OPTIONS_NOTIFICATIONS);
                     ?>" />
                     <span class="description"><?php _e('Example', 'coderun-oneclickwoo'); ?> "izm@zixn.ru" </span>
                 </td>
@@ -41,10 +34,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Email copy', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="text" name="buynotification[emailbbc]" value="<?php
-                    if (isset($buynotification['emailbbc'])) {
-                        echo $buynotification['emailbbc'];
-                    }
+                    <input type="text" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[emailbbc]" value="<?php
+                    echo Core::getInstance()->getOption('emailbbc',Core::OPTIONS_NOTIFICATIONS);
                     ?>" />
                     <span class="description"><?php _e('This email will receive a copy of the order messages. Through the sign "," you can specify multiple Email. Example:', 'coderun-oneclickwoo'); ?>
                         shop@mail.ru, jora@mail.ru, barak-obama@google.com</span>
@@ -61,10 +52,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Ordering information', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="checkbox" name="buynotification[infozakaz_chek]" <?php
-                    if (isset($buynotification['infozakaz_chek'])) {
-                        checked($buynotification['infozakaz_chek'], 'on', 1);
-                    }
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[infozakaz_chek]" <?php
+                    checked(Core::getInstance()->getOption('infozakaz_chek',Core::OPTIONS_NOTIFICATIONS), 'on', 1);
                     ?>/>
                     <span class="description"><?php _e('Send order data to customer. A tick is worth sending!', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -73,10 +62,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Random information', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="checkbox" name="buynotification[dopiczakaz_chek]" <?php
-                    if (isset($buynotification['dopiczakaz_chek'])) {
-                        checked($buynotification['dopiczakaz_chek'], 'on', 1);
-                    }
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[dopiczakaz_chek]" <?php
+                    checked(Core::getInstance()->getOption('dopiczakaz_chek',Core::OPTIONS_NOTIFICATIONS), 'on', 1);
                     ?>/>
                     <span class="description"><?php _e('Send additional data. You can specify any text.', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -84,10 +71,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Links to files', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="checkbox" name="buynotification[links_to_files]" <?php
-                    if (isset($buynotification['links_to_files'])) {
-                        checked($buynotification['links_to_files'], 'on', 1);
-                    }
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[links_to_files]" <?php
+                    checked(Core::getInstance()->getOption('links_to_files',Core::OPTIONS_NOTIFICATIONS), 'on', 1);
                     ?>/>
                     <span class="description"><?php _e('Send links to downloaded files in emails?', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -96,10 +81,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Random information', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <textarea cols="50" rows="10" name="buynotification[dopiczakaz]"><?php
-                        if (isset($buynotification['dopiczakaz'])) {
-                            echo $buynotification['dopiczakaz'];
-                        }
+                    <textarea cols="50" rows="10" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[dopiczakaz]"><?php
+                        echo Core::getInstance()->getOption('dopiczakaz',Core::OPTIONS_NOTIFICATIONS);
                         ?></textarea>
                     <span class="description"><?php _e('Arbitrary information, such as contacts or a wish. It is possible to specify the HTML tag', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -113,10 +96,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Enable SMS Customer Notifications', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="checkbox" name="buysmscoptions[enable_smsc]" <?php
-                    if (isset($buysmscoptions['enable_smsc'])) {
-                        checked($buysmscoptions['enable_smsc'], 'on', 1);
-                    }
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_enable_smsc]" <?php
+                    checked(Core::getInstance()->getOption('sms_enable_smsc',Core::OPTIONS_NOTIFICATIONS), 'on', 1);
                     ?>/>
                     <span class="description"><?php _e('Enable SMS notifications for client via service', 'coderun-oneclickwoo'); ?> "<a href="http://smsc.ru/?ppzixn.ru" target="_blank">SMSC</a>" <?php _e('for quick order button. If ticked - SMS notifications will work', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -124,10 +105,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Enable SMS Notifications Seller', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="checkbox" name="buysmscoptions[enable_smsc_saller]" <?php
-                    if (isset($buysmscoptions['enable_smsc_saller'])) {
-                        checked($buysmscoptions['enable_smsc_saller'], 'on', 1);
-                    }
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_enable_smsc_saller]" <?php
+                    checked(Core::getInstance()->getOption('sms_enable_smsc_saller',Core::OPTIONS_NOTIFICATIONS), 'on', 1);
                     ?>/>
                     <span class="description"><?php _e('Enable SMS notifications for the seller through the service - If checked, SMS notifications will work.', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -135,10 +114,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Online Store Owners Phone', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="text" name="buysmscoptions[phone_saller]" value="<?php
-                    if (isset($buysmscoptions['phone_saller'])) {
-                        echo $buysmscoptions['phone_saller'];
-                    }
+                    <input type="text" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_phone_saller]" value="<?php
+                    echo Core::getInstance()->getOption('sms_phone_saller',Core::OPTIONS_NOTIFICATIONS);
                     ?>" />
                     <span class="description"><?php _e('Notifications on new orders will be sent to this phone number. Works when the daw is set higher', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -146,10 +123,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Login', 'coderun-oneclickwoo'); ?> smsc</th>
                 <td>
-                    <input type="text" name="buysmscoptions[login]" value="<?php
-                    if (isset($buysmscoptions['login'])) {
-                        echo $buysmscoptions['login'];
-                    }
+                    <input type="text" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_login]" value="<?php
+                    echo Core::getInstance()->getOption('sms_login',Core::OPTIONS_NOTIFICATIONS)
                     ?>" />
                     <span class="description"><?php _e('Your login from the service', 'coderun-oneclickwoo'); ?> "<a href="http://smsc.ru/?ppzixn.ru" target="_blank">SMSC</a>"</span>
                 </td>
@@ -157,10 +132,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Password', 'coderun-oneclickwoo'); ?> smsc</th>
                 <td>
-                    <input type="password" name="buysmscoptions[password]" value="<?php
-                    if (isset($buysmscoptions['password'])) {
-                        echo $buysmscoptions['password'];
-                    }
+                    <input type="password" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_password]" value="<?php
+                    echo Core::getInstance()->getOption('sms_password',Core::OPTIONS_NOTIFICATIONS)
                     ?>" />
                     <span class="description"><?php _e('Your service password', 'coderun-oneclickwoo'); ?> "SMSC"</span>
                 </td>
@@ -168,9 +141,9 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Use POST method', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <select name="buysmscoptions[methodpost]">
-                        <option value="0" <?php selected($buysmscoptions['methodpost'], '0', true); ?>><?php _e('Do not use', 'coderun-oneclickwoo'); ?></option>
-                        <option value="1" <?php selected($buysmscoptions['methodpost'], '1', true); ?>><?php _e('Use', 'coderun-oneclickwoo'); ?></option>
+                    <select name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_methodpost]">
+                        <option value="0" <?php selected(Core::getInstance()->getOption('sms_methodpost',Core::OPTIONS_NOTIFICATIONS), '0', true); ?>><?php _e('Do not use', 'coderun-oneclickwoo'); ?></option>
+                        <option value="1" <?php selected(Core::getInstance()->getOption('sms_methodpost',Core::OPTIONS_NOTIFICATIONS), '1', true); ?>><?php _e('Use', 'coderun-oneclickwoo'); ?></option>
 
                     </select>
                     <span class="description"><?php _e('Use the POST method. By default, do not use', 'coderun-oneclickwoo'); ?>.</span>
@@ -180,9 +153,9 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
                 <th scope="row"><?php _e('Use HTTPS protocol', 'coderun-oneclickwoo'); ?></th>
                 <td>
 
-                    <select name="buysmscoptions[https]">
-                        <option value="0" <?php selected($buysmscoptions['https'], '0', true); ?>><?php _e('Do not use', 'coderun-oneclickwoo'); ?></option>
-                        <option value="1" <?php selected($buysmscoptions['https'], '1', true); ?>><?php _e('Use', 'coderun-oneclickwoo'); ?></option>
+                    <select name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_https]">
+                        <option value="0" <?php selected(Core::getInstance()->getOption('sms_https',Core::OPTIONS_NOTIFICATIONS), '0', true); ?>><?php _e('Do not use', 'coderun-oneclickwoo'); ?></option>
+                        <option value="1" <?php selected(Core::getInstance()->getOption('sms_https',Core::OPTIONS_NOTIFICATIONS), '1', true); ?>><?php _e('Use', 'coderun-oneclickwoo'); ?></option>
 
                     </select>
 
@@ -192,10 +165,10 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Encoding', 'coderun-oneclickwoo'); ?> sms</th>
                 <td>
-                    <select name="buysmscoptions[charset]">
-                        <option value="utf-8" <?php selected($buysmscoptions['charset'], 'utf-8', true); ?>>UTF-8</option>
-                        <option value="koi8-r" <?php selected($buysmscoptions['charset'], 'koi8-r', true); ?>>KOI8-R</option>
-                        <option value="windows-1251" <?php selected($buysmscoptions['charset'], 'windows-1251', true); ?>>WINDOWS-1251</option>
+                    <select name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_charset]">
+                        <option value="utf-8" <?php selected(Core::getInstance()->getOption('sms_charset',Core::OPTIONS_NOTIFICATIONS), 'utf-8', true); ?>>UTF-8</option>
+                        <option value="koi8-r" <?php selected(Core::getInstance()->getOption('sms_charset',Core::OPTIONS_NOTIFICATIONS), 'koi8-r', true); ?>>KOI8-R</option>
+                        <option value="windows-1251" <?php selected(Core::getInstance()->getOption('sms_charset',Core::OPTIONS_NOTIFICATIONS), 'windows-1251', true); ?>>WINDOWS-1251</option>
                     </select>
                     <span class="description"><?php _e('SMS encoding of messages', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -204,10 +177,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Customer SMS Template', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <textarea cols="50" rows="5" name="buysmscoptions[smshablon]"><?php
-                        if (isset($buysmscoptions['smshablon'])) {
-                            echo $buysmscoptions['smshablon'];
-                        }
+                    <textarea cols="50" rows="5" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_smshablon]"><?php
+                        echo Core::getInstance()->getOption('sms_smshablon',Core::OPTIONS_NOTIFICATIONS);
                         ?></textarea>
                     <span class="description"><?php _e('The specified template "%Template Name%" will be converted to form information. You can also enter any text.
                          For example: "Hello %FIO%, thanks for the order in the shop Screw and Shpuntik, the amount of your order is %TPRICE%"', 'coderun-oneclickwoo'); ?></span>
@@ -226,10 +197,8 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Seller SMS Template', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <textarea cols="50" rows="5" name="buysmscoptions[smshablon_saller]"><?php
-                        if (isset($buysmscoptions['smshablon_saller'])) {
-                            echo $buysmscoptions['smshablon_saller'];
-                        }
+                    <textarea cols="50" rows="5" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_smshablon_saller]"><?php
+                            echo Core::getInstance()->getOption('sms_smshablon_saller',Core::OPTIONS_NOTIFICATIONS);
                         ?></textarea>
                     <span class="description"><?php _e('The specified template "%Template Name%" will be converted to form information. You can also enter any text.
                          For example: "Hello %FIO%, thanks for the order in the shop Screw and Shpuntik, the amount of your order is %TPRICE%"', 'coderun-oneclickwoo'); ?></span>
@@ -249,9 +218,9 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
                 <th scope="row">Debug <?php _e('mode', 'coderun-oneclickwoo'); ?></th>
                 <td>
 
-                    <select name="buysmscoptions[debug]">
-                        <option value="0" <?php selected($buysmscoptions['debug'], '0', true); ?>>Выключить</option>
-                        <option value="1" <?php selected($buysmscoptions['debug'], '1', true); ?>>Включить</option>
+                    <select name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[sms_debug]">
+                        <option value="0" <?php selected(Core::getInstance()->getOption('sms_debug',Core::OPTIONS_NOTIFICATIONS), '0', true); ?>>Выключить</option>
+                        <option value="1" <?php selected(Core::getInstance()->getOption('sms_debug',Core::OPTIONS_NOTIFICATIONS), '1', true); ?>>Включить</option>
 
                     </select>
 
@@ -267,18 +236,25 @@ $buysmscoptions = get_option('buysmscoptions'); //настройки смсц
             <tr valign="top">
                 <th scope="row"><?php _e('Price in the email', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="checkbox" name="buynotification[price_including_tax]" <?php
-                    if (isset($buynotification['price_including_tax'])) {
-                        checked($buynotification['price_including_tax'], 'on', 1);
-                    }
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[price_including_tax]" <?php
+                    checked(Core::getInstance()->getOption('price_including_tax',Core::OPTIONS_NOTIFICATIONS), 'on', 1);
                     ?>/>
                     <span class="description"><?php _e('Specify the price including tax', 'coderun-oneclickwoo'); ?></span>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><?php _e('Add order information to a WooCommerce email', 'coderun-oneclickwoo'); ?></th>
+                <td>
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_NOTIFICATIONS ?>[modificationOrderTemplate]" <?php
+                    checked(Core::getInstance()->getOption('modificationOrderTemplate',Core::OPTIONS_NOTIFICATIONS), 'on', 1);
+                    ?>/>
+                    <span class="description"><?php _e('Enabling this setting will add information from the plugin to the Woocommerce email template.', 'coderun-oneclickwoo'); ?></span>
                 </td>
             </tr>
         </table>
     </fieldset>
     <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="page_options" value="buynotification,buysmscoptions" />
+    <input type="hidden" name="page_options" value="<?php echo Core::OPTIONS_NOTIFICATIONS ?>" />
     <p class="submit">
         <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
     </p>

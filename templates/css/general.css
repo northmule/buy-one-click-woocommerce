@@ -70,7 +70,8 @@
     left: 50%;
     opacity: 0;
     padding: 0.7em;
-    width: 27%;
+    width: 100%;
+    max-width: 500px;
     min-width: 320px;
     height: auto;
     position: fixed;

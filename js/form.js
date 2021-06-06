@@ -34,9 +34,9 @@ function getAjaxUrl() {
 
 function buyone_click_body_scroll() {
 
-    var formVisible=jQuery('#formOrderOneClick .popup').css('visibility')
+    var formVisible = jQuery('#formOrderOneClick .popup').css('visibility')
 
-    if(formVisible==='visible'){
+    if(formVisible === 'visible'){
         jQuery('body').css('overflow','hidden')
     }else {
         jQuery('body').css('overflow','');
@@ -128,6 +128,7 @@ jQuery(document).ready(function () {
         }
         var zixnAjaxUrl = getAjaxUrl();
         var butObj = 'body';
+        // var butObj = self.parent();
 
         var button = jQuery(this);
 
@@ -159,7 +160,7 @@ jQuery(document).ready(function () {
                 variation_attr: variation_attr,
             },
             success: function (response) {
-                if (action == 'add_to_cart') {
+                if (action === 'add_to_cart') {
                     window.location.href = response;
                     return true;
                 }

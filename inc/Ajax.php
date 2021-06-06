@@ -17,29 +17,42 @@ class Ajax {
     
     protected $logger = null;
     
+    protected static $_instance = null;
+    
+    
+    /**
+     * Singletone
+     * @return self
+     */
+    public static function getInstance() {
+        
+        if (is_null(self::$_instance)) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    }
+    
     /**
      * Конструктор класса
      */
-    public function __construct() {
+    protected function __construct() {
         $this->logger = Logger::getInstance();
-        $this->addaction();
+        $this->initAction();
     }
     
     /**
      * Адды
      */
-    public function addaction() {
+    public function initAction() {
         
-        $pref='coderun_send_form_buy_one_click';
+        $pref = 'coderun_send_form_buy_one_click';
         
         add_action("wp_ajax_{$pref}_buybuttonform", array($this, 'ajaxBuyButtonForm'));
         add_action("wp_ajax_nopriv_{$pref}_buybuttonform", array($this, 'ajaxBuyButtonForm'));
         add_action('wp_ajax_removeorder', array($this, 'ajaxRemoveOrderId'));
-        //add_action('wp_ajax_nopriv_removeorder', array($this, 'ajaxRemoveOrderId'));
         add_action('wp_ajax_updatestatus', array($this, 'ajaxStatusOrderId'));
         add_action('wp_ajax_nopriv_updatestatus', array($this, 'ajaxStatusOrderId'));
         add_action('wp_ajax_removeorderall', array($this, 'ajaxRemoveOrderAll'));
-        add_action('wp_ajax_nopriv_removeorderall', array($this, 'ajaxRemoveOrderAll'));
         add_action('wp_ajax_getViewForm', array($this, 'ajaxgetViewForm')); //Запрос формы
         add_action('wp_ajax_nopriv_getViewForm', array($this, 'ajaxgetViewForm')); //Запрос формы
         add_action('wp_ajax_getViewFormCustom', array($this, 'ajaxgetViewFormCustom')); //Запрос Кастомной формы
@@ -51,6 +64,7 @@ class Ajax {
          */
         // add_action('wp_ajax_load_form_file', array($this, 'load_form_file'));
         // add_action('wp_ajax_nopriv_load_form_file', array($this, 'load_form_file'));
+        
     }
     
     /**
@@ -59,10 +73,7 @@ class Ajax {
     protected static function checkRequireField($form) {
         
         $options = Help::getInstance()->get_options();
-        
         $params = $options['buyoptions'];
-        
-        
         if (empty($params)) {
             return true;
         }
@@ -184,6 +195,7 @@ class Ajax {
             'order_comment' => $help->get_value_field($base_form_data, 'message'),
             'product_id' => $product_id,
             'product_name' => $help->get_value_field($base_form_data, 'nametovar'),
+            'product_original_name' => $help->get_value_field($base_form_data, 'nametovar'),
             'product_price' => $help->get_value_field($base_form_data, 'pricetovar'),
             'product_link_admin' => '<a href="' . $product_link . '" target="_blank"><span class="glyphicon glyphicon-share"></span></a>',
             'product_link' => '<a href="' . $product_link . '" target="_blank">' . __('Look', 'coderun-oneclickwoo') . '</a>',
@@ -201,7 +213,7 @@ class Ajax {
         if ($help->module_variation) {
             if ($variation = \Coderun\BuyOneClick\VariationsAddition::getInstance()->getVariableProductInfo($field['forms_field'])) {
                 
-                $field['product_name'] .= '<br>' . $variation;
+                $field['product_name'] .= '<br>' . $variation; // todo - убрать из этого поля
             }
             if (($variation_id = \Coderun\BuyOneClick\VariationsAddition::getInstance()->getVariationId($field['forms_field'])) > 0) {
                 $product_id = $variation_id;
@@ -230,31 +242,34 @@ class Ajax {
         }
         
         //Отправка СМС клиенту
-        if (!empty($options['buysmscoptions']['enable_smsc'])) {
+        if (Core::getInstance()->getOption('sms_enable_smsc', Core::OPTIONS_NOTIFICATIONS)) {
             $smsmessage = array(
                 'fon' => $field['user_phone'],
                 'fio' => $field['user_name'],
                 'txtemail' => $field['user_email'],
                 'dopinfo' => $field['order_admin_comment'],
                 'price' => $field['product_price'],
-                'nametov' => $field['product_name']
+                'nametov' => $field['product_original_name']
             );
             $sms = new BuySMSC();
-            $smslog = $sms->send_sms(trim($smsmessage['fon']), BuyFunction::composeSms($options['buysmscoptions']['smshablon'], $smsmessage));
+            $smsTemplate = Core::getInstance()->getOption('sms_smshablon', Core::OPTIONS_NOTIFICATIONS);
+            $smslog = $sms->send_sms(trim($smsmessage['fon']), BuyFunction::composeSms($smsTemplate, $smsmessage));
             ///Переписать функцию sms? помнить про static
         }
         //Отправка СМС продавцу
-        if (!empty($options['buysmscoptions']['enable_smsc_saller'])) {
+        if (Core::getInstance()->getOption('sms_enable_smsc_saller', Core::OPTIONS_NOTIFICATIONS)) {
             $smsmessage = array(
                 'fon' => $field['user_phone'],
                 'fio' => $field['user_name'],
                 'txtemail' => $field['user_email'],
                 'dopinfo' => $field['order_admin_comment'],
                 'price' => $field['product_price'],
-                'nametov' => $field['product_name']
+                'nametov' => $field['product_original_name']
             );
             $sms2 = new BuySMSC();
-            $smslog = $sms2->send_sms(trim($options['buysmscoptions']['phone_saller']), BuyFunction::composeSms($options['buysmscoptions']['smshablon_saller'], $smsmessage));
+            $smsTemplate = Core::getInstance()->getOption('sms_smshablon_saller', Core::OPTIONS_NOTIFICATIONS);
+            $smsPhoneSeller = Core::getInstance()->getOption('sms_phone_saller', Core::OPTIONS_NOTIFICATIONS);
+            $smslog = $sms2->send_sms($smsPhoneSeller, BuyFunction::composeSms($smsTemplate, $smsmessage));
         }
         
         //Конец журналирования
@@ -307,7 +322,7 @@ class Ajax {
             
             $order_field = [
                 'product_id' => $product_id,
-                'product_name' => $field['product_name'],
+                'product_name' => $field['product_original_name'],
                 'product_meta' => null,
                 'product_price' => $field['product_price'],
                 'product_quantity'=> empty($field['quantity_product']) ? 1 : $field['quantity_product'],
@@ -341,7 +356,7 @@ class Ajax {
         }
         
         BuyHookPlugin::buyClickNewrder($arResult, $order_field);
-
+        
         wp_send_json_success($arResult);
     }
     
@@ -353,7 +368,7 @@ class Ajax {
         
         // Удаление записи журнала плагина
         if(!empty($_POST['text'])) {
-            $order_id = $_POST['text'];
+            $order_id = intval($_POST['text']);
             Order::getInstance()->deactive_order($order_id);
             wp_send_json_success();
         }elseif(!empty($_POST['orderId']) && !empty($_POST['pluginId'])){ //Удаление заказа
@@ -384,9 +399,9 @@ class Ajax {
         ob_end_clean();
         if (wp_verify_nonce($nonce['nonce'], 'superKey')) {
             Order::getInstance()->remove_order_all();
-            wp_die('ok');
+            wp_send_json_success('ok');
         } else {
-            wp_die(__('Are you a hacker?', 'coderun-oneclickwoo'));
+            wp_send_json_error('error');
         }
     }
     

@@ -149,8 +149,7 @@ class Help {
 
         $this->options_plugin = array(
             'buyoptions' => get_option('buyoptions', array()),
-            'buynotification' => get_option('buynotification', array()),
-            'buysmscoptions' => get_option('buysmscoptions', array()),
+            'buynotification' => get_option('buynotification', array())
         );
     }
 

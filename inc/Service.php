@@ -29,6 +29,11 @@ class Service
     public function modificationOrderTemplateWooCommerce($order, $sent_to_admin, $plain_text = false)
     {
         
+        if (Core::getInstance()->getOption('modificationOrderTemplate', Core::OPTIONS_NOTIFICATIONS, '') !== 'on') {
+            return;
+        }
+        
+        
         $pluginOrder = Order::getInstance()->get_wc_order($order->get_id());
         // $metaData = $order->get_meta_data();
         if (empty($pluginOrder)) {
@@ -43,7 +48,7 @@ class Service
         }
         $htmlItems = '';
         
-        $htmlItems .= '<h2>In one click</h2>';
+        $htmlItems .= '<h2>'.__('In one click','coderun-oneclickwoo').'</h2>';
         
         if (!empty($form['user_name'])) {
             $htmlItems .= sprintf('<p>%s: %s</p>', __('Name','coderun-oneclickwoo'), $form['user_name']);

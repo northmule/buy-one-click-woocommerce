@@ -4,7 +4,7 @@
  * Plugin Name: Buy one click WooCommerce
  * Plugin URI: http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 1.16.0
+ * Version: 1.16.1
  * Author: Djo
  * Author URI: https://zixn.ru
  * WC requires at least: 3.9
@@ -44,7 +44,7 @@ define('CODERUN_ONECLICKWOO_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . dirname(plugin_ba
 
 define('CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR', CODERUN_ONECLICKWOO_PLUGIN_DIR . '/templates');
 
-define('CODERUN_ONECLICKWOO_PLUGIN_VERSION','1.10.6');
+define('CODERUN_ONECLICKWOO_PLUGIN_VERSION','1.16.1');
 
 
 //add_action('wp_loaded', 'buy_plugin_init_core', 100);
@@ -71,35 +71,15 @@ function coderun_buy_plugin_init_core() {
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/BuyFunction.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Ajax.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/smsc-class.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/BuyShortcode.php');
+    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/ShortCodes.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Order.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Loadfile.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/ReCaptcha.php');
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/PluginUpdate.php');
-
     
     $core = Coderun\BuyOneClick\Core::getInstance();
-    
-    add_action('wp_loaded', array($core, 'addAction'));
-    
-    //$core->addAction();
-    
-    if (is_admin()) {
-        $core->action_admin_page();
-    }
-    
-    new BuyShortcode();
-    
-    if (class_exists('Coderun\BuyOneClick\BuyHookPlugin')) {
-        Coderun\BuyOneClick\BuyHookPlugin::load();
-    }
-    
-    if (wp_doing_ajax()) {
-        new \Coderun\BuyOneClick\Ajax();
-    }
-    
+
     register_deactivation_hook(__FILE__, array($core, 'deactivationPlugin'));
-    
     register_activation_hook(__FILE__, array($core, 'addOptions'));
     
     /** сервисные операции */
