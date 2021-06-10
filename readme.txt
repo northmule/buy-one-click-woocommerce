@@ -70,6 +70,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.16.2 =
+* Удалена часть старого кода
 = 1.16.1 =
 * Изменена структура настроек SMS, необходимо заново настроить этот раздел
 * Добавлена опция убирающая блок сообщения от плагина в письме WooCommerce

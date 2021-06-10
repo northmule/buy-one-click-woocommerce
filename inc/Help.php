@@ -147,9 +147,10 @@ class Help {
 
     protected function __construct() {
 
+        // todo - убрать
         $this->options_plugin = array(
-            'buyoptions' => get_option('buyoptions', array()),
-            'buynotification' => get_option('buynotification', array())
+            'buyoptions' => \get_option('buyoptions', []),
+            'buynotification' => \get_option('buynotification', [])
         );
     }
 

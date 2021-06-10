@@ -62,14 +62,8 @@ class Core {
     
     protected static $_instance = null;
     
-    
-    public static $buyoptions;
-    
-    public static $buynotification;
-    
     public static $buyzakaz;
-    public static $buysmscoptions;
-    
+
     /**
      * Работа с вариативными товарами
      * @var type
@@ -88,7 +82,6 @@ class Core {
      */
     protected $optionsPull = [
         self::OPTIONS_GENERAL => [],
-        'buynotification'=> [],
         self::OPTIONS_NOTIFICATIONS => [],
         self::OPTIONS_MARKETING => [],
     ];
@@ -130,6 +123,8 @@ class Core {
         add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', [$this, 'jsVariableHead']);
         add_action('init', [\Coderun\BuyOneClick\Ajax::class, 'getInstance']);
+//        add_action('woocommerce_before_order_object_save', function(\WC_Order $data, \WC_Data_Store $store) {
+//        }, 10, 2);
         
         $this->initAdminPages();
     }
@@ -182,10 +177,7 @@ class Core {
     public function initOptions()
     {
         $help = Help::getInstance();
-        $this->options = $options = $help->get_options();
-        self::$buyoptions = $options['buyoptions']; //Загрука опций из базы
-        self::$buynotification = $options['buynotification']; //Загрука опций из базы
-        self::$buysmscoptions = $options['buysmscoptions']; //Получаем настройки смсцентра из опций
+        $this->options = $help->get_options();
     }
     
     

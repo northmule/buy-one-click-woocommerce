@@ -239,6 +239,8 @@ class Ajax {
         if (!empty($options['buynotification']['price_including_tax'])) {
             $wcOrder = Order::getInstance()->create_order(['product_id' => $product_id]);
             $copyField['product_price'] = Order::getInstance()->calculate_order_totals($wcOrder);
+            $wcOrder->delete(true); // todo переделать
+            unset($wcOrder);
         }
         
         //Отправка СМС клиенту
@@ -296,10 +298,8 @@ class Ajax {
             $woo_order_id = 0;
             //В таблицу Woo
             if (isset($options['buyoptions']['add_tableorder_woo']) and $field['custom'] == 0) {
-                
-                $woo_order = Order::getInstance();
-                
-                $woo_order_id = $woo_order->set_order(
+
+                $woo_order_id = Order::getInstance()->set_order(
                     array(
                         'first_name' => $field['user_name'],
                         'last_name' => '',
@@ -339,7 +339,7 @@ class Ajax {
             if ($woo_order_id) {
                 $wcOrder = \wc_get_order($woo_order_id);
                 if ($wcOrder instanceof \WC_Order) {
-                    $wcOrder->update_status('processing', 'Quick order form');
+                     $wcOrder->update_status('processing', 'Quick order form');
                     if (isset($options['buyoptions']['success_action']) && intval($options['buyoptions']['success_action']) === 5) {
                         $arResult['redirectUrl'] = $wcOrder->get_checkout_order_received_url();
                     } else if (isset($options['buyoptions']['success_action']) && intval($options['buyoptions']['success_action']) === 6) {
