@@ -6,8 +6,8 @@ Requires at least: 5.0
 Tested up to: 5.7
 Stable tag: 5.7
 Requires PHP: 7.1
-WC requires at least: 4.1
-WC tested up to: 5.2
+WC requires at least: 4.7
+WC tested up to: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,8 @@ This is the best solution for Woocommers to easily add a quick order button to t
 * [Telegram Group @coderunphp](https://t.me/coderunphp)
 
 * [On the plugin page](http://www.zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html)
+
+* [GitHub](https://github.com/northmule/buy-one-click-woocommerce)
 
 = Required Plugins =
 * [WooCommerce](https://wordpress.org/plugins/woocommerce/)
