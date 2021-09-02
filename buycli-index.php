@@ -4,7 +4,7 @@
  * Plugin Name: Buy one click WooCommerce
  * Plugin URI: http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 1.16.2
+ * Version: 1.16.3
  * Author: Djo
  * Author URI: https://zixn.ru
  * WC requires at least: 3.9
@@ -47,10 +47,6 @@ define('CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR', CODERUN_ONECLICKWOO_PLUGIN_DI
 define('CODERUN_ONECLICKWOO_PLUGIN_VERSION','1.16.1');
 
 
-//add_action('wp_loaded', 'buy_plugin_init_core', 100);
-
-
-
 /**
  * Инициализация всего плагина
  */
@@ -61,22 +57,8 @@ function coderun_buy_plugin_init_core() {
         'coderun-oneclickwoo', false, dirname(plugin_basename(__FILE__)) . '/languages'
     );
     
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php'); //composer
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Logger.php');
-    
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Service.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Help.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Core.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/BuyHookPlugin.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/BuyFunction.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Ajax.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/smsc-class.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/ShortCodes.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Order.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/Loadfile.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/ReCaptcha.php');
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/inc/PluginUpdate.php');
-    
+    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
+
     $core = Coderun\BuyOneClick\Core::getInstance();
 
     register_deactivation_hook(__FILE__, array($core, 'deactivationPlugin'));

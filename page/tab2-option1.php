@@ -254,7 +254,6 @@ use Coderun\BuyOneClick\Core;
         </table>
     </fieldset>
     <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="page_options" value="<?php echo Core::OPTIONS_NOTIFICATIONS ?>" />
     <p class="submit">
         <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
     </p>

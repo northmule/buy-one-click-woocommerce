@@ -1,4 +1,5 @@
 <?php
+
 namespace Coderun\BuyOneClick;
 
 if (!defined('ABSPATH')) {
@@ -59,7 +60,7 @@ class ShortCodes {
             if (Help::getInstance()->module_variation) {
                 $content = \Coderun\BuyOneClick\VariationsAddition::getInstance()->shortCode();
             }
-            $content .=\BuyFunction::viewBuyButton(true, $params);
+            $content .= BuyFunction::viewBuyButton(true, $params);
             return $content;
         } else {
             return '';
@@ -82,7 +83,7 @@ class ShortCodes {
             $core = Core::getInstance();
             $core->styleAddFrontPage();
             $core->scriptAddFrontPage();
-            return \BuyFunction::viewBuyButtonCustrom($arParams);
+            return BuyFunction::viewBuyButtonCustrom($arParams);
         } else {
             return '';
         }

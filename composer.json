@@ -1,14 +1,32 @@
 {
   "name": "coderun/buy-one-click-woocommerce",
   "description": "One-click purchase plugin for WooCommerce",
+  "keywords": ["WooCommerce","WordPress","One Click"],
   "type": "project",
+  "authors": [
+    {
+      "name": "Djo",
+      "email": "izm@zixn.ru",
+      "homepage": "https://zixn.ru",
+      "role": "Developer"
+    }
+  ],
   "require": {
     "php": ">=7.1",
     "ext-curl": "*",
     "composer/installers": "^1",
     "monolog/monolog": "^2.2"
   },
+  "autoload": {
+    "psr-4": {
+      "Coderun\\": "src/Coderun"
+    },
+    "files": ["src/smsc-class.php"]
+  },
   "config": {
-    "platform-check": false
+    "platform-check": true
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
   }
 }

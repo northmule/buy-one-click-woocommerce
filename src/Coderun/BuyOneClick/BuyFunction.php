@@ -1,10 +1,6 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit;
-}
+namespace Coderun\BuyOneClick;
 
-use Coderun\BuyOneClick\Core;
-use Coderun\BuyOneClick\Help;
 
 /**
  * Некоторый функционал плагина

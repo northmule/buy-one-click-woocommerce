@@ -2,11 +2,6 @@
 
 namespace Coderun\BuyOneClick;
 
-use Coderun\BuyOneClick\Help;
-
-if (!defined('ABSPATH')) {
-    exit;
-}
 
 /**
  * Базовый класс плагина
@@ -48,6 +43,8 @@ class Core {
     const OPTIONS_MARKETING = 'buyoptions_marketing';
     
     const OPTIONS_GENERAL = 'buyoptions';
+    
+    const OPTIONS_DESIGN_FORM = 'buyoptions_design_form';
     /**
      * Вкладка Уведомлений
      */
@@ -84,6 +81,7 @@ class Core {
         self::OPTIONS_GENERAL => [],
         self::OPTIONS_NOTIFICATIONS => [],
         self::OPTIONS_MARKETING => [],
+        self::OPTIONS_DESIGN_FORM => [],
     ];
     
     /**
@@ -115,7 +113,7 @@ class Core {
         add_action('init', [$this, 'initOptions']);
         add_action('init', [$this, 'initializeAdditions']);
         add_action('init', [$this, 'initAction']);
-        add_action('init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
+        add_action('admin_init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
         add_action('init', [\Coderun\BuyOneClick\BuyHookPlugin::class, 'load']);
         add_action('init', [\Coderun\BuyOneClick\ShortCodes::class, 'getInstance']);
         $service = Service::getInstance();
@@ -142,11 +140,11 @@ class Core {
             }
             add_action($position, array($this, 'styleAddFrontPage')); //Стили фронта
             add_action($position, array($this, 'scriptAddFrontPage')); //Скрипты фронта
-            add_action($position, array('BuyFunction', 'viewBuyButton')); //Кнопка заказать
+            add_action($position, array(BuyFunction::class, 'viewBuyButton')); //Кнопка заказать
             //Положение в категории товаров
             if (!empty($buyoptions['enable_button_category']) && $buyoptions['enable_button_category'] === 'on') {
                 $position_category = $buyoptions['positionbutton_category']; //Позиция кнопки
-                add_action($position_category, array('BuyFunction', 'viewBuyButton')); //Кнопка заказать
+                add_action($position_category, array(BuyFunction::class, 'viewBuyButton')); //Кнопка заказать
                 add_action($position_category, array($this, 'styleAddFrontPage')); //Стили фронта
                 add_action($position_category, array($this, 'scriptAddFrontPage')); //Скрипты фронта
             }
@@ -164,7 +162,7 @@ class Core {
                         // Товар имеет статус не в наличие
                         if(strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
                             if(!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
-                                $html .= \BuyFunction::viewBuyButton(true);
+                                $html .= BuyFunction::viewBuyButton(true);
                             }
                         }
                     }
@@ -515,6 +513,23 @@ class Core {
      */
     public function registeringSettings()
     {
+        // Tab6
+        \register_setting(\sprintf('%s_options', self::OPTIONS_DESIGN_FORM), self::OPTIONS_DESIGN_FORM, [
+            'type'              => 'array',
+            'group'             => \sprintf('%s_options', self::OPTIONS_DESIGN_FORM),
+            'description'       => '',
+            'sanitize_callback' => function($forms) {
+                if (\is_array($forms)) {
+                    foreach ($forms as $key => $value) {
+                        $forms[$key] = \trim($value);
+                    }
+                }
+                return $forms;
+            },
+            'show_in_rest'      => false,
+            'default' => [],
+        ]);
+        
         // Tab5
         \register_setting(sprintf('%s_options', self::OPTIONS_MARKETING), self::OPTIONS_MARKETING, [
             'type'              => 'array',

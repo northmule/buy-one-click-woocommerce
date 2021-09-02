@@ -2,9 +2,6 @@
 
 namespace Coderun\BuyOneClick;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
 
 /**
  * Description of Help

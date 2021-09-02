@@ -1,14 +1,11 @@
 <?php
-/**
- * Только для обновления плагина, каки-то сервисные операции
- */
 
 namespace Coderun\BuyOneClick;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
 
+/**
+ * Только для обновления плагина, каки-то сервисные операции
+ */
 class PluginUpdate
 {
     const DB_VERSION = 2;

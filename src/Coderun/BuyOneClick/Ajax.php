@@ -2,11 +2,6 @@
 
 namespace Coderun\BuyOneClick;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-
-use BuyFunction;
 use BuySMSC;
 use Exception;
 
@@ -222,6 +217,7 @@ class Ajax {
         
         try {
             if ($product_id < 1) {
+                $this->logger->setInfo(__('An error has occurred! Order not formed', 'coderun-oneclickwoo'), ['productId' => $product_id]);
                 throw new \Exception(__('An error has occurred! Order not formed', 'coderun-oneclickwoo'));
             }
             

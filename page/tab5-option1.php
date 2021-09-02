@@ -38,7 +38,6 @@ if (!defined('ABSPATH')) {
         </tr>
     </table>
     <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="page_options" value="<?php echo Core::OPTIONS_MARKETING; ?>" />
     <p class="submit">
         <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
     </p>

@@ -1,7 +1,7 @@
 === Buy one click WooCommerce ===
 Contributors: northmule
 Donate link: https://yoomoney.ru/to/41001746944171
-Tags: woocommerce, ecommerce, mode catalog, buy one click
+Tags: woocommerce, ecommerce, mode catalog, buy one click, buy now, add to cart, buy now button, buttons
 Requires at least: 5.0
 Tested up to: 5.7
 Stable tag: 5.7
@@ -70,6 +70,9 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.16.3 =
+* изменена автозагрузка классов
+* изменена структура кода
 = 1.16.2 =
 * Удалена часть старого кода
 = 1.16.1 =

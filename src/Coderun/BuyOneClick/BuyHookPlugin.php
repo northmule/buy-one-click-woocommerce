@@ -1,9 +1,6 @@
 <?php
 namespace Coderun\BuyOneClick;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
 
 /**
  * События

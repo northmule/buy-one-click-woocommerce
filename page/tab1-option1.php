@@ -564,7 +564,6 @@ $buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Мас�
          */ ?>
         </fieldset>
         <input type="hidden" name="action" value="update" />
-        <input type="hidden" name="page_options" value="<?php echo Core::OPTIONS_GENERAL; ?>" />
         <p class="submit">
             <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
         </p>
@@ -615,8 +614,3 @@ $buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Мас�
             </table>
         </div>
     </fieldset>
-
-
-<?php
-//BuyFunction::viewBuyForm();
-?>

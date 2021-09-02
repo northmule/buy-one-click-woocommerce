@@ -1,9 +1,5 @@
 <?php
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\Core;
 
