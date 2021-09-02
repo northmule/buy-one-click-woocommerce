@@ -493,7 +493,7 @@ $buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Мас�
         <fieldset>
             <legend><?php _e('Other options', 'coderun-oneclickwoo'); ?></legend>
             <p><?php _e('Do not send the order form more often than: (seconds)', 'coderun-oneclickwoo'); ?>. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[time_limit_send_form]" type="number" value="<?php echo $buyoptions['time_limit_send_form']; ?>"></p>
-            <p><?php _e('Message in the form when re-sending.', 'coderun-oneclickwoo'); ?>. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[time_limit_message]" type="txt" value="<?php echo $buyoptions['time_limit_message']; ?>"></p>
+            <p><?php _e('Message in the form when re-sending.', 'coderun-oneclickwoo'); ?>. <input name="<?php echo Core::OPTIONS_GENERAL; ?>[time_limit_message]" type="txt" value="<?php echo $buyoptions['time_limit_message'] ? $buyoptions['time_limit_message'] : ''; ?>"></p>
             <span><?php _e('The default is 10 seconds. This means if the client will click the button to send the order from the form more often, the order will not be duplicated.', 'coderun-oneclickwoo'); ?>.</span>
             <p><?php _e('Consent to the processing of personal data', 'coderun-oneclickwoo'); ?>: <?php _e('Enable?', 'coderun-oneclickwoo') ?>
                 <input type="checkbox" name="<?php echo Core::OPTIONS_GENERAL; ?>[conset_personal_data_enabled]" <?php
