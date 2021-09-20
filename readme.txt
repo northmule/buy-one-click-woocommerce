@@ -7,7 +7,7 @@ Tested up to: 5.8
 Stable tag: 5.7
 Requires PHP: 7.1
 WC requires at least: 4.7
-WC tested up to: 5.6
+WC tested up to: 5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,9 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.17.0 =
+* Изменена структура
+* Исправлен баг с загрузкой файлов
 = 1.16.3 =
 * изменена автозагрузка классов
 * изменена структура кода

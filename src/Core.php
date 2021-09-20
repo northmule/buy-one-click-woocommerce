@@ -450,7 +450,16 @@ class Core {
      */
     public function showPage()
     {
-        
+    
+        $pages = $this->getTabs();
+        $tab = $_GET['tab'] ?? 'default';
+        if(\array_key_exists($tab, $pages) && \file_exists($pages[$tab])) {
+            include_once $pages[$tab];
+        }
+    }
+    
+    public function getTabs()
+    {
         $path = WP_PLUGIN_DIR.DIRECTORY_SEPARATOR.self::PATCH_PLUGIN.DIRECTORY_SEPARATOR.'page';
         $pages = [
             'default' => sprintf('%s/tab1-option1.php',$path),
@@ -459,11 +468,9 @@ class Core {
             'orders' => sprintf('%s/tab3-option1.php',$path),
             'help' => sprintf('%s/tab4-option1.php',$path),
             'marketing' => sprintf('%s/tab5-option1.php',$path),
+            'design_form' => sprintf('%s/tab6-option1.php',$path),
         ];
-        $tab = $_GET['tab'] ?? 'default';
-        if(\array_key_exists($tab, $pages) && \file_exists($pages[$tab])) {
-            include_once $pages[$tab];
-        }
+        return $pages;
     }
     
     /**

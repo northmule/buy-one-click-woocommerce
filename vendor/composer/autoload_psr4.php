@@ -9,5 +9,5 @@ return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
-    'Coderun\\' => array($baseDir . '/src/Coderun'),
+    'Coderun\\BuyOneClick\\' => array($baseDir . '/src'),
 );
