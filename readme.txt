@@ -72,6 +72,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.17.1 =
+* fix smsc bug
 = 1.17.0 =
 * Изменена структура
 * Исправлен баг с загрузкой файлов

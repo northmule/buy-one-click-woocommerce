@@ -24,6 +24,6 @@
     "files": ["src/smsc-class.php"]
   },
   "config": {
-    "platform-check": true
+    "platform-check": false
   }
 }
