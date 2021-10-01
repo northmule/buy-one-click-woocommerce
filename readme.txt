@@ -15,6 +15,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Description ==
 
 The plugin adds a buy button in one click to your WooCommerce
+[You can view the work of the plugin on the test site](https://tastewp.com/new?pre-installed-plugin-slug=woocommerce%2Cbuy-one-click-woocommerce&redirect=plugins.php&ni=true)
 
 This is the best solution for Woocommers to easily add a quick order button to the site.
 
