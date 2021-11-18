@@ -7,8 +7,8 @@
  * Version: 1.17.1
  * Author: Djo
  * Author URI: https://zixn.ru
- * WC requires at least: 3.9
- * WC tested up to: 5.6
+ * WC requires at least: 5.2
+ * WC tested up to: 5.8
  * Requires at least: 5.1
  * Tested up to: 5.8
  * Text Domain: coderun-oneclickwoo

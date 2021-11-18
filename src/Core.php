@@ -282,14 +282,14 @@ class Core {
     public function adminOptions() {
         //Подключается если есть менюя от Woocommerce
         $page_option = add_submenu_page('woocommerce', self::NAME_SUB_MENU, self::NAME_SUB_MENU, 'manage_woocommerce', self::URL_SUB_MENU, array($this, 'showSettingPage'));
-        add_action('admin_print_styles-' . $page_option, array($this, 'styleAddpage')); //загружаем стили только для страницы плагина
-        add_action('admin_print_scripts-' . $page_option, array($this, 'scriptAddpage')); //Скрипты
+        add_action('admin_print_styles-' . $page_option, array($this, 'styleAddPage')); //загружаем стили только для страницы плагина
+        add_action('admin_print_scripts-' . $page_option, array($this, 'scriptAddPage')); //Скрипты
     }
     
     /**
      * Стили для страницы плагина
      */
-    public function styleAddpage() {
+    public function styleAddPage() {
         wp_register_style('buybootstrapcss1', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/css/bootstrap.css');
         wp_enqueue_style('buybootstrapcss1');
         wp_register_style('buyadmincss2', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'css/admin.css');
@@ -299,7 +299,7 @@ class Core {
     /**
      * Скрипты для страницы плагина
      */
-    public function scriptAddpage() {
+    public function scriptAddPage() {
         wp_enqueue_script('buybootstrapjs1', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/js/bootstrap.js', ['jquery'], self::VERSION);
         wp_enqueue_script('buyorder', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js', ['jquery'], self::VERSION);
         
@@ -308,6 +308,8 @@ class Core {
                                                               'url' => admin_url(plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js'),
                                                               'nonce' => wp_create_nonce('superKey')
         ));
+        wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-builder.min.js',plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
+        wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-render.min.js',plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
     }
     
     /**

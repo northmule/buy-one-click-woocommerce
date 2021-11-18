@@ -12,22 +12,52 @@ if (!defined('ABSPATH')) {
     <?php wp_nonce_field('update-options'); ?>
     <?php settings_fields(sprintf('%s_options', Core::OPTIONS_DESIGN_FORM)); ?>
 
-    <table class="form-table">
-        <h3><?php _e('Design form', 'coderun-oneclickwoo'); ?></h3>
-            <select>
-                <option value="input">Input</option>
-                <option value="textarea">Textarea</option>
-            </select>
-        <button class="btn btn-warning">Add</button>
-        <input type="hidden" name="action" value="update"/>
-        <p class="submit">
-            <input type="submit" class="button-primary"
-                   value="<?php _e('Save Changes') ?>"/>
-        </p>
+    <div id="fb-editor"></div>
+
 </form>
 <script>
-jQuery(function($){
-  var clas2s = $('#design-form').attr('action');
-  console.log(clas2s)
-})
+  jQuery(function($) {
+    var options = {
+      disableFields: [
+        'autocomplete',
+        'button',
+       // 'checkbox-group',
+       // 'date',
+       // 'file',
+       // 'header',
+       // 'hidden',
+       // 'number',
+        'paragraph',
+        'radio-group',
+       // 'select',
+       // 'starRating',
+       // 'text',
+       // 'textarea',
+      ],
+      disabledAttrs: [
+        'access',
+        // 'className',
+        // 'description',
+        'inline',
+        'label',
+        'max',
+        'maxlength',
+        'min',
+        'multiple',
+        'name',
+        'options',
+       // 'other',
+        'placeholder',
+        'required',
+       // 'rows',
+        //'step',
+        'style',
+        // 'subtype',
+        'toggle',
+        'value'
+      ]
+    };
+    // https://formbuilder.online/docs/
+    $(document.getElementById('fb-editor')).formBuilder(options);
+  });
 </script>
