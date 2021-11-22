@@ -4,13 +4,13 @@
  * Plugin Name: Buy one click WooCommerce
  * Plugin URI: http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 1.17.1
+ * Version: 1.18.0
  * Author: Djo
  * Author URI: https://zixn.ru
- * WC requires at least: 3.9
- * WC tested up to: 5.6
+ * WC requires at least: 5.2
+ * WC tested up to: 5.9
  * Requires at least: 5.1
- * Tested up to: 5.8
+ * Tested up to: 5.9
  * Text Domain: coderun-oneclickwoo
  * Domain Path: /languages
  */

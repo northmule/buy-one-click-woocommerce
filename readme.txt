@@ -73,6 +73,10 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 1.18.0 =
+* Обновил вкладку для установки целей Метрик
+* Добавлена справка по настройке целей
+* Добавил доработку на новый функционал в будущем
 = 1.17.1 =
 * fix smsc bug
 = 1.17.0 =
