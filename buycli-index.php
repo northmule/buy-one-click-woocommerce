@@ -41,18 +41,14 @@ if (!defined('ABSPATH')) {
 }
 
 define('CODERUN_ONECLICKWOO_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)));
-
 define('CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR', CODERUN_ONECLICKWOO_PLUGIN_DIR . '/templates');
-
 define('CODERUN_ONECLICKWOO_PLUGIN_VERSION','1.16.1');
-
 
 /**
  * Инициализация всего плагина
  */
 function coderun_buy_plugin_init_core() {
-    
-    
+
     load_plugin_textdomain(
         'coderun-oneclickwoo', false, dirname(plugin_basename(__FILE__)) . '/languages'
     );
@@ -60,7 +56,6 @@ function coderun_buy_plugin_init_core() {
     require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
 
     $core = Coderun\BuyOneClick\Core::getInstance();
-
     register_deactivation_hook(__FILE__, array($core, 'deactivationPlugin'));
     register_activation_hook(__FILE__, array($core, 'addOptions'));
     
