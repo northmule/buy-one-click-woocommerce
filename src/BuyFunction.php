@@ -1,37 +1,38 @@
 <?php
+
 namespace Coderun\BuyOneClick;
 
+use Coderun\BuyOneClick\ValueObject\OrderForm;
 
 /**
  * Некоторый функционал плагина
  *
  */
-class BuyFunction {
+class BuyFunction
+{
     /**
      * Собирает тело сообщения SMS
      * @param string $options Текст смс сообщения
-     * @param array $data Массив данных для замены
+     * @param OrderForm $orderForm
      *
      */
-    static public function composeSms($options, $data) {
-        //Тэги замены
-        $template = array(
-            '%FIO%' => $data['fio'],
-            '%FON%' => $data['fon'],
-            '%EMAIL%' => $data['txtemail'],
-            '%DOPINFO%' => $data['dopinfo'],
-            '%TPRICE%' => $data['price'],
-            '%TNAME%' => $data['nametov']
-        );
-        $return_text = strtr($options, $template);
-        return $return_text;
+    public static function composeSms($options, OrderForm $orderForm)
+    {
+        return strtr($options, [
+            '%FIO%' => $orderForm->getUserName(),
+            '%FON%' => $orderForm->getUserPhone(),
+            '%EMAIL%' => $orderForm->getUserEmail(),
+            '%DOPINFO%' => $orderForm->getOrderAdminComment(),
+            '%TPRICE%' => $orderForm->getProductPrice(),
+            '%TNAME%' => $orderForm->getProductName(),
+        ]);
     }
     
     /**
      * Форма для быстрого заказа
      */
-    public static function viewBuyForm($params) {
-        
+    public static function viewBuyForm($params)
+    {
         $default_params = array(
             'article' => '',
             'name' => '',
@@ -73,9 +74,10 @@ class BuyFunction {
      * HTML форма кнопки "Заказать в один клик"
      * Кнопка работает с реальными товарами WooCommerce
      */
-    static function viewBuyButton($short_code = false, $params = []) {
+    public static function viewBuyButton($short_code = false, $params = [])
+    {
         $page = '';
-        if (Core::getInstance()->getOption('positionbutton','buyoptions')) {
+        if (Core::getInstance()->getOption('positionbutton', 'buyoptions')) {
             $name = self::get_button_name();
             $productId = self::getProductId();
             if (isset($params['id']) && !empty($params['id'])) {
@@ -86,9 +88,9 @@ class BuyFunction {
             }
             $scripts = '';
             $style = '';
-            if (Core::getInstance()->getOption('style_insert_html','buyoptions')) {
-                $scripts .= \file_get_contents(sprintf('%s/js/form.js',CODERUN_ONECLICKWOO_PLUGIN_DIR));
-                $scripts .= \file_get_contents(sprintf('%s/js/jquery.maskedinput.min.js',CODERUN_ONECLICKWOO_PLUGIN_DIR));
+            if (Core::getInstance()->getOption('style_insert_html', 'buyoptions')) {
+                $scripts .= \file_get_contents(sprintf('%s/js/form.js', CODERUN_ONECLICKWOO_PLUGIN_DIR));
+                $scripts .= \file_get_contents(sprintf('%s/js/jquery.maskedinput.min.js', CODERUN_ONECLICKWOO_PLUGIN_DIR));
                 foreach (Core::getInstance()->getStylesFront() as $styleName => $styleParam) {
                     if (!empty($styleParam['path']) && \file_exists($styleParam['path'])) {
                         $style .= \file_get_contents($styleParam['path']);
@@ -101,9 +103,8 @@ class BuyFunction {
             if ($style) {
                 $style = sprintf('<style>%s</style>', $style);
             }
-            ob_start();
-            ?>
-            <?php if(strlen($name) > 0) { ?>
+            ob_start(); ?>
+            <?php if (strlen($name) > 0) { ?>
                 <?php echo $scripts; ?>
                 <?php echo $style; ?>
                 <button
@@ -126,7 +127,8 @@ class BuyFunction {
         }
     }
     
-    public static function getProductId() {
+    public static function getProductId()
+    {
         global $product;
         
         $product_id = 0;
@@ -140,14 +142,14 @@ class BuyFunction {
     /**
      * HTML форма кнопки "Заказать в один клик" для произвольного способа заказа
      */
-    static function viewBuyButtonCustrom($arParams) {
+    public static function viewBuyButtonCustrom($arParams)
+    {
         $page = '';
         
         $options = Help::getInstance()->get_options();
         
         if (!empty($options['buyoptions']['namebutton']) and ! empty($options['buyoptions']['positionbutton'])) {
-            ob_start();
-            ?>
+            ob_start(); ?>
 
             <button
                     class="clickBuyButtonCustom button21 button alt ld-ext-left"
@@ -171,7 +173,8 @@ class BuyFunction {
      * Вернёт форму загрузки файлов
      * @return type
      */
-    protected static function get_from_upload_file() {
+    protected static function get_from_upload_file()
+    {
         $options = Help::getInstance()->get_options('buyoptions');
         if (!empty($options['upload_input_file_chek'])) {
             ob_start();
@@ -205,7 +208,8 @@ class BuyFunction {
     }
     
     
-    protected static function is_template_style() {
+    protected static function is_template_style()
+    {
         $options = Help::getInstance()->get_options();
         if (isset($options['buyoptions']['form_style_color']) && $options['buyoptions']['form_style_color'] == '6') {
             return true;
@@ -220,14 +224,13 @@ class BuyFunction {
      * @return array 'article' - код товара, 'name'-наименование,'imageurl'-url картинки,'amount'-цена,
      * 'quantity' -количество
      */
-    public static function get_product_param($product_id) {
-        
+    public static function get_product_param($product_id)
+    {
         $result = array();
         
         $product = wc_get_product($product_id); // Класс Woo для работы с товаром
         
         if (method_exists($product, 'get_image_id')) {
-            
             $name = $product->get_post_data()->post_title; //Название товара
             $image_param = wp_get_attachment_image_src($product->get_image_id()); //Урл картинки товара
             $amount = $product->get_price(); //Цена товара
@@ -248,18 +251,19 @@ class BuyFunction {
     /**
      * Отправка Email
      */
-    static function BuyEmailNotification($to, $subject, $field) {
-        
+    public static function BuyEmailNotification($to, $subject, $field)
+    {
         $options = Help::getInstance()->get_options();
         
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
         $headers .= "From: " . $field['company_name'] . " <" . $options['buynotification']['emailfrom'] . ">\r\n";
-//Функция Wordpress иногда ломается, можно использовать просто mail
+        //Функция Wordpress иногда ломается, можно использовать просто mail
         wp_mail($to, $subject, self::htmlEmailTemplate($field), $headers);
     }
     
-    protected static function get_button_name() {
+    protected static function get_button_name()
+    {
         global $product;
         
         $options = Help::getInstance()->get_options();
@@ -295,8 +299,8 @@ class BuyFunction {
     /**
      * Шаблон emial сообщения плагина
      */
-    static function htmlEmailTemplate($params) {
-        
+    public static function htmlEmailTemplate($params)
+    {
         $default_params = array(
             'company_name' => '',
             'order_time' => '',
@@ -379,7 +383,4 @@ class BuyFunction {
         ';
         return $message;
     }
-    
-    
-    
 }

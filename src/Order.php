@@ -2,31 +2,33 @@
 
 namespace Coderun\BuyOneClick;
 
+use Coderun\BuyOneClick\ValueObject\OrderForm;
 
-class Order {
-    
+class Order
+{
     protected static $_instance = null;
-    
+
     protected $order_table = 'wp_coderun_oneclickwoo_orders';
-    
+
     protected $logger = null;
-    
+
     /**
      * Singletone
      * @return Order
      */
-    public static function getInstance() {
-        
+    public static function getInstance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
     }
-    
-    protected function __construct() {
+
+    protected function __construct()
+    {
         $this->logger = Logger::getInstance();
     }
-    
+
     /**
      *
      * Создаёт необходимый объект заказа
@@ -54,7 +56,7 @@ class Order {
             'qty' => 1,
             'product_id' => 0, //ИД товара Woo или ИД вариации
         );
-        
+
         $params = wp_parse_args($params, $default_params);
         $product = wc_get_product($params['product_id']);
         $order = wc_create_order(); //создаём новый заказ
@@ -80,7 +82,7 @@ class Order {
         $order->set_billing_state($params['state']);
         $order->set_billing_postcode($params['postcode']);
         $order->set_billing_country($params['country']);
-        
+
         $order->set_shipping_first_name($params['first_name']);
         $order->set_shipping_last_name($params['last_name']);
         $order->set_shipping_company($params['company']);
@@ -90,11 +92,11 @@ class Order {
         $order->set_shipping_state($params['state']);
         $order->set_shipping_postcode($params['postcode']);
         $order->set_shipping_country($params['country']);
-        
+
         $order->set_customer_id(get_current_user_id());
         return $order;
     }
-    
+
     /**
      * Расчёт стоимости заказа без сохранения заказа
      * @param \WC_Order $order
@@ -110,60 +112,60 @@ class Order {
         $shipping_total    = 0;
         $cart_subtotal_tax = 0;
         $cart_total_tax    = 0;
-        
-        foreach ( $order->get_items() as $item ) {
-            $cart_subtotal += round( $item->get_subtotal(), wc_get_price_decimals() );
-            $cart_total    += round( $item->get_total(), wc_get_price_decimals() );
+
+        foreach ($order->get_items() as $item) {
+            $cart_subtotal += round($item->get_subtotal(), wc_get_price_decimals());
+            $cart_total    += round($item->get_total(), wc_get_price_decimals());
         }
-        foreach ( $order->get_shipping_methods() as $shipping ) {
-            $shipping_total += round( $shipping->get_total(), wc_get_price_decimals() );
+        foreach ($order->get_shipping_methods() as $shipping) {
+            $shipping_total += round($shipping->get_total(), wc_get_price_decimals());
         }
-        
-        $order->set_shipping_total( $shipping_total );
-        foreach ( $order->get_fees() as $item ) {
+
+        $order->set_shipping_total($shipping_total);
+        foreach ($order->get_fees() as $item) {
             $amount = $item->get_amount();
-            
-            if ( 0 > $amount ) {
-                $item->set_total( $amount );
-                $max_discount = round( $cart_total + $fee_total + $shipping_total, wc_get_price_decimals() ) * -1;
-                
-                if ( $item->get_total() < $max_discount ) {
-                    $item->set_total( $max_discount );
+
+            if (0 > $amount) {
+                $item->set_total($amount);
+                $max_discount = round($cart_total + $fee_total + $shipping_total, wc_get_price_decimals()) * -1;
+
+                if ($item->get_total() < $max_discount) {
+                    $item->set_total($max_discount);
                 }
             }
-            
+
             $fee_total += $item->get_total();
         }
         $order->calculate_taxes();
-        
-        foreach ( $order->get_items() as $item ) {
+
+        foreach ($order->get_items() as $item) {
             $cart_subtotal_tax += $item->get_subtotal_tax();
             $cart_total_tax    += $item->get_total_tax();
         }
-        
-        $order->set_discount_total( $cart_subtotal - $cart_total );
-        $order->set_discount_tax( $cart_subtotal_tax - $cart_total_tax );
-        $order->set_total( round( $cart_total + $fee_total + $order->get_shipping_total() + $order->get_cart_tax() + $order->get_shipping_tax(), wc_get_price_decimals() ) );
-        
-        
+
+        $order->set_discount_total($cart_subtotal - $cart_total);
+        $order->set_discount_tax($cart_subtotal_tax - $cart_total_tax);
+        $order->set_total(round($cart_total + $fee_total + $order->get_shipping_total() + $order->get_cart_tax() + $order->get_shipping_tax(), wc_get_price_decimals()));
+
+
         return $order->get_total();
     }
-    
-    
+
+
     /**
      * Создаёт заказ в WooCommerce
      * @param array $params массив параметров аналогичный $default_params
      */
-    public function set_order($params) {
-        
+    public function set_order($params)
+    {
         $order = $this->create_order($params);
         // Вызывается ниже по коду, что бы не запускать события раньше времени
         // $order->update_status($params['order_status'], $params['message_notes_order']);
         $order->calculate_totals();
         return $order->get_id();
     }
-    
-    
+
+
     /**
      * Сохраняет заказ в таблицу
      *
@@ -196,55 +198,59 @@ class Order {
             $this->logger->setInfo($wpdb->last_error);
         }
         return $wpdb->insert_id;
-        
-        
     }
-    
-    public function get_order($order_id) {
+
+    public function get_order($order_id)
+    {
         global $wpdb;
         $order_id = intval($order_id);
-        return $wpdb->get_row( "select * from {$this->order_table} where id={$order_id}", ARRAY_A);
-        
+        return $wpdb->get_row("select * from {$this->order_table} where id={$order_id}", ARRAY_A);
     }
-    
+
     /**
      * Вернуть заказ под ИД WooCommere заказа
      * @param $order_id
      *
      * @return array|object|void|null
      */
-    public function get_wc_order($order_id) {
+    public function get_wc_order($order_id)
+    {
         global $wpdb;
         $order_id = intval($order_id);
-        return $wpdb->get_row( "select * from {$this->order_table} where woo_order_id={$order_id}", ARRAY_A);
+        return $wpdb->get_row("select * from {$this->order_table} where woo_order_id={$order_id}", ARRAY_A);
     }
-    
-    public function get_orders() {
+
+    public function get_orders()
+    {
         global $wpdb;
-        return $wpdb->get_results( "select * from {$this->order_table} where active=1", ARRAY_A );
+        return $wpdb->get_results("select * from {$this->order_table} where active=1", ARRAY_A);
     }
-    
-    public function deactive_order($order_id) {
+
+    public function deactive_order($order_id)
+    {
         global $wpdb;
-        $wpdb->update($this->order_table,['active' => 0],['id' => $order_id]);
+        $wpdb->update($this->order_table, ['active' => 0], ['id' => $order_id]);
     }
-    
-    public function remove_order_all() {
+
+    public function remove_order_all()
+    {
         global $wpdb;
         $wpdb->query("truncate table {$this->order_table}");
     }
-    
-    public function update_status($order_id,$status) {
+
+    public function update_status($order_id, $status)
+    {
         global $wpdb;
-        $wpdb->update($this->order_table,['status'=>$status],['id'=>$order_id]);
+        $wpdb->update($this->order_table, ['status'=>$status], ['id'=>$order_id]);
     }
-    
-    public function __clone() {
+
+    public function __clone()
+    {
         throw new \Exception('Forbiden instance __clone');
     }
-    
-    public function __wakeup() {
+
+    public function __wakeup()
+    {
         throw new \Exception('Forbiden instance __wakeup');
     }
-    
 }

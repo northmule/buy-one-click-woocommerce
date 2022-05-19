@@ -1,16 +1,17 @@
 <?php
-namespace Coderun\BuyOneClick;
 
+namespace Coderun\BuyOneClick;
 
 /**
  * События
  */
-class BuyHookPlugin {
-    
+class BuyHookPlugin
+{
     /**
      * Плагин загружен
      */
-    public static function load() {
+    public static function load()
+    {
         do_action('buy_click_load');
     }
 
@@ -19,15 +20,16 @@ class BuyHookPlugin {
      * @param array $arResult результат функции с заказом
      * @param array $arLog лог(журнал плагина)
      */
-    public static function buyClickNewrder($arResult, $arLog) {
+    public static function buyClickNewrder($arResult, $arLog)
+    {
         do_action('buy_click_new_order', $arResult, $arLog);
     }
-    
+
     /**
      * Вызывается после сохранения в таблицу данных о заказе
      */
-    public static function saveOrderToTable($order_id) {
-        do_action('buy_click_save_order_to_table',$order_id);
+    public static function saveOrderToTable($order_id)
+    {
+        do_action('buy_click_save_order_to_table', $order_id);
     }
-
 }

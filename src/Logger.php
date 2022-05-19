@@ -5,39 +5,38 @@ namespace Coderun\BuyOneClick;
 use Monolog\Logger as MonologLogger;
 use Monolog\Handler\StreamHandler;
 
-
 class Logger
 {
     protected $path = '';
-    
+
     private static $_instance = null;
-    
+
     /**
      * @var MonologLogger
      */
     protected $log;
-    
+
     protected $name = 'buy-one-click-woocommerce';
-    
+
     protected $enable = true;
-    
+
     /**
      * @var array Дополнительные данные
      */
     protected $context = [];
-    
+
     /**
      * Singletone
      * @return self
      */
-    public static function getInstance() {
-        
+    public static function getInstance()
+    {
         if (\is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
     }
-    
+
     /**
      * Logger constructor.
      *
@@ -54,7 +53,7 @@ class Logger
         $this->log = new MonologLogger($this->name);
         $this->log->pushHandler(new StreamHandler($this->path, MonologLogger::INFO));
     }
-    
+
     public function setInfo($message, array $context = [])
     {
         $context = array_merge($context, $this->context);
@@ -62,12 +61,12 @@ class Logger
             $this->log->info($message, $context);
         }
     }
-    
+
     public function setError($message, array $context = [])
     {
         $this->log->error($message, $context);
     }
-    
+
     /**
      * Set name
      *
@@ -80,7 +79,7 @@ class Logger
         $this->name = $name;
         return $this;
     }
-    
+
     /**
      * Включить/выключить логирование
      *
@@ -93,6 +92,4 @@ class Logger
         $this->enable = $enable;
         return $this;
     }
-    
-    
 }

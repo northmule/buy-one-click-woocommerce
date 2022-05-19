@@ -2,15 +2,15 @@
 
 namespace Coderun\BuyOneClick;
 
-
 /**
  * Только для обновления плагина, каки-то сервисные операции
  */
 class PluginUpdate
 {
-    const DB_VERSION = 2;
-    
-    public static function createOrderTable() {
+    public const DB_VERSION = 2;
+
+    public static function createOrderTable()
+    {
         global $wpdb;
         $query = <<<EOT
                         CREATE TABLE `wp_coderun_oneclickwoo_orders` (
@@ -38,11 +38,9 @@ class PluginUpdate
 
 
 EOT;
-        if ($wpdb->get_var("SHOW TABLES LIKE 'wp_coderun_oneclickwoo_orders'") != 'wp_coderun_oneclickwoo_orders'){
+        if ($wpdb->get_var("SHOW TABLES LIKE 'wp_coderun_oneclickwoo_orders'") != 'wp_coderun_oneclickwoo_orders') {
             $wpdb->query($query);
-            update_option('wp_coderun_oneclickwoo_db_version',self::DB_VERSION);
+            update_option('wp_coderun_oneclickwoo_db_version', self::DB_VERSION);
         }
-        
     }
-    
 }
