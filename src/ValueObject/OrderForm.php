@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\ValueObject;
 
 use Coderun\BuyOneClick\LoadFile;
+use Coderun\BuyOneClick\Options\General as GeneralOptions;
+use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Coderun\BuyOneClick\Order;
 use Coderun\BuyOneClick\VariationsAddition;
 use WC_Data_Exception;
@@ -39,7 +41,7 @@ class OrderForm
     protected int $quantityProduct;
     protected string $productUrl;
     protected array $formData;
-    protected array $options;
+    protected NotificationOptions $notificationOptions;
     protected array $filesUrlCollection;
     protected string $filesLink;
     
@@ -50,12 +52,12 @@ class OrderForm
      */
     public function __construct(
         array $formData,
-        array $options,
+        NotificationOptions $notificationOptions,
         bool $variationEnable = false
     )
     {
         $this->formData = $formData;
-        $this->options = $options;
+        $this->notificationOptions = $notificationOptions;
         $this->userName = $this->formDateParse('txtname');
         $this->userPhone = $this->formDateParse('txtphone');
         $this->userEmail = sanitize_email($this->formDateParse('txtemail'));
@@ -68,8 +70,8 @@ class OrderForm
         $this->productPrice = (float)$this->formDateParse('pricetovar');
         $this->productLinkAdmin = $this->collectLinkToProductForAdministrator();
         $this->productLinkUser = $this->collectLinkToProductForUser();
-        $this->companyName = $this->optionsParse('namemag');
-        $this->orderAdminComment = $this->optionsParse('dopiczakaz');
+        $this->companyName = $this->notificationOptions->getOrganizationName();
+        $this->orderAdminComment = $this->notificationOptions->getAdditionalFieldMessage();
         $this->conset = (bool)$this->formDateParse('conset_personal_data');
         $this->formsField = $this->formDateLegacyParse();
         $this->orderTime = current_time('mysql');
@@ -147,15 +149,6 @@ class OrderForm
         return $this->arrayParse($this->formData, $key);
     }
     
-    /**
-     * @param $key
-     *
-     * @return array|string
-     */
-    private function optionsParse($key)
-    {
-        return $this->arrayParse($this->options, $key);
-    }
     /**
      * Проверяют указанное поле и возвращает значение если есть
      * @param array<string, mixed> $data
@@ -672,24 +665,6 @@ class OrderForm
         return $this;
     }
     
-    /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
-    }
-    
-    /**
-     * @param array $options
-     *
-     * @return OrderForm
-     */
-    public function setOptions(array $options): OrderForm
-    {
-        $this->options = $options;
-        return $this;
-    }
     
     
     

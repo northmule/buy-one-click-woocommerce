@@ -75,31 +75,27 @@ class Ajax
      */
     protected function checkRequireField(OrderForm $orderForm): void
     {
-        $options = Help::getInstance()->get_options();
-        $params = $options['buyoptions'] ?? [];
-        if (empty($params)) {
-            return;
-        }
+        $commonOptions = Core::getInstance()->getCommonOptions();
 
-        if (!empty($params['email_verifi']) && !$orderForm->getUserEmail()) {
+        if ($commonOptions->isFieldEmailIsRequired() && !$orderForm->getUserEmail()) {
             RequireFieldException::fieldIsRequired('email');
         }
-        if (!empty($params['fio_verifi']) && !$orderForm->getUserName()) {
+        if ($commonOptions->isFieldNameIsRequired() && !$orderForm->getUserName()) {
             RequireFieldException::fieldIsRequired('name');
         }
-        if (!empty($params['fon_verifi']) && !$orderForm->getUserPhone()) {
+        if ($commonOptions->isFieldPhoneIsRequired() && !$orderForm->getUserPhone()) {
             RequireFieldException::fieldIsRequired('phone');
         }
-        if (!empty($params['dopik_verifi']) && !$orderForm->getUserComment()) {
+        if ($commonOptions->isFieldCommentIsRequired() && !$orderForm->getUserComment()) {
             RequireFieldException::fieldIsRequired('message');
         }
-        if (!empty($params['conset_personal_data_enabled']) && !$orderForm->isConset()) {
+        if ($commonOptions->isConsentToProcessing() && !$orderForm->isConset()) {
             RequireFieldException::fieldIsRequired('consent');
         }
         $files = array_filter($orderForm->getFiles()['name'] ?? []); // todo тут ошибка
 
-        if (!empty($params['upload_input_file_chek'])
-            && !empty($params['upload_input_file_verifi'])
+        if ($commonOptions->isEnableFieldWithFiles()
+            && $commonOptions->isFieldFilesIsRequired()
             && count($files) == 0) {
             RequireFieldException::fieldIsRequired('files');
         }
@@ -113,18 +109,14 @@ class Ajax
      */
     protected function checkLimitSendForm(int $product_id): void
     {
+        $commonOptions = Core::getInstance()->getCommonOptions();
         $sessionKey = 'BUY_ONE_CLICK_WOOCOMMERCE';
-        $options = Help::getInstance()->get_options();
-        $params = $options['buyoptions'];
-        //Лимит отправки формы
-        $limit_time = intval($params['time_limit_send_form'] ?? 0);
-        $message = $params['time_limit_message'] ?? null;
         $key = sprintf('ORDER_LAST_DATE_%s', $product_id);
         if (empty($_SESSION[$sessionKey][$key])) {//Установка
             $_SESSION[$sessionKey][$key] = time();
         } else {
-            if (($_SESSION[$sessionKey][$key] + $limit_time) > time()) {
-                LimitOnSendingFormsException::error($message);
+            if (($_SESSION[$sessionKey][$key] + $commonOptions->getFormSubmissionLimit()) > time()) {
+                LimitOnSendingFormsException::error($commonOptions->getFormSubmissionLimitMessage());
             } else {
                 $_SESSION[$sessionKey][$key] = time();
             }
@@ -146,17 +138,19 @@ class Ajax
             wp_send_json_error(array('message' => __('request error', 'coderun-oneclickwoo')), 200);
         }
         $help = Help::getInstance();
+        $commonOptions = Core::getInstance()->getCommonOptions();
+        $notificationOptions = Core::getInstance()->getNotificationOptions();
         $options = $help->get_options();
-        if (!empty($options['buyoptions']['recaptcha_order_form'])) {
-            $check_recaptcha = ReCaptcha::getInstance()->check($options['buyoptions']['recaptcha_order_form']);
-            if ($check_recaptcha['check']!==true) {
+        if ($commonOptions->isRecaptchaEnabled()) {
+            $check_recaptcha = ReCaptcha::getInstance()->check($commonOptions->getCaptchaProvider());
+            if ($check_recaptcha['check'] !== true) {
                 wp_send_json_error(array('message' => $check_recaptcha['message']), 200);
             }
         }
         
         $orderForm = new OrderForm(
             $_POST,
-            $options,
+            $notificationOptions,
             $help->module_variation
         );
         
@@ -208,7 +202,7 @@ class Ajax
 
         // Копия для модификации в уведомлениях
         $copyField = $field;
-        if (!empty($options['buynotification']['price_including_tax'])) {
+        if ($notificationOptions->isEnablePriceWithTax()) {
             $wcOrder = Order::getInstance()->create_order(['product_id' => $product_id]);
             $copyField['product_price'] = Order::getInstance()->calculate_order_totals($wcOrder);
             $wcOrder->delete(true); // todo переделать
@@ -231,8 +225,8 @@ class Ajax
 
         //Конец журналирования
         $arResult['message'] = __('The order has been sent', 'coderun-oneclickwoo');
-        $arResult['result'] = $options['buyoptions']['success'];
-        if (!empty($options['buyoptions']['upload_input_file_chek'])) {
+        $arResult['result'] = $commonOptions->getSubmittingFormMessageSuccess();
+        if ($commonOptions->isEnableFieldWithFiles()) {
             $arResult['files'] = LoadFile::getInstance()->load();
             $field['user_cooment'] .= '<br>' . $help->get_message_files_url($arResult['files']);
             $field['files_url'] = $help->get_message_files($arResult['files']);

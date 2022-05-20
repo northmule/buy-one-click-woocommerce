@@ -20,4 +20,12 @@ interface OptionsInterface
      * @return array
      */
     public function toArrayWp(): array;
+    
+    /**
+     * В настройки WordPress для сохранения
+     *
+     * @return array
+     */
+    public function toArrayWpToSave(): array;
+    
 }

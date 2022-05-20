@@ -2,10 +2,14 @@
 
 namespace Coderun\BuyOneClick;
 
+use Coderun\BuyOneClick\Options\General as GeneralOptions;
+use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Exception;
 use WC_Product;
+use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
 
 use function method_exists;
+use function get_option;
 
 /**
  * Базовый класс плагина
@@ -44,17 +48,17 @@ class Core
      */
     public const INDEX_NAME_FILE = 'buycli-index.php';
 
-    public const OPTIONS_MARKETING = 'buyoptions_marketing';
+    public const OPTIONS_MARKETING = OptionsType::MARKETING;
 
-    public const OPTIONS_GENERAL = 'buyoptions';
+    public const OPTIONS_GENERAL = OptionsType::GENERAL;
 
-    public const OPTIONS_DESIGN_FORM = 'buyoptions_design_form';
+    public const OPTIONS_DESIGN_FORM = OptionsType::DESIGN_FORM;
     /**
      * Вкладка Уведомлений
      */
-    public const OPTIONS_NOTIFICATIONS = 'buynotification';
+    public const OPTIONS_NOTIFICATIONS = OptionsType::NOTIFICATIONS;
 
-    public const OPTIONS_SMS = 'buysmscoptions';
+    public const OPTIONS_SMS = OptionsType::SMS;
 
     /**
      * Версия ядра
@@ -76,6 +80,19 @@ class Core
      * @var array|type
      */
     protected $options = array();
+    
+    /**
+     * Настройки плагина
+     *
+     * @var GeneralOptions
+     */
+    protected GeneralOptions $commonOptions;
+    /**
+     * Настройки плагина
+     *
+     * @var NotificationOptions
+     */
+    protected NotificationOptions $notificationOptions;
 
     /**
      * Все настройки плагина
@@ -176,11 +193,23 @@ class Core
             }
         }
     }
-
+    
+    /**
+     * Инициализация настроек, настройка объектов
+     * @return void
+     */
     public function initOptions()
     {
+       
         $help = Help::getInstance();
         $this->options = $help->get_options();
+        $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
+        $this->notificationOptions = new NotificationOptions(get_option(OptionsType::MARKETING, []));
+        $optionsArrayGeneral = $this->commonOptions->toArrayWp();
+        $optionsArrayNitification = $this->notificationOptions->toArrayWp();
+        $optionsArrayGeneralS = $this->commonOptions->toArrayWpToSave();
+        $optionsArrayNitificationS = $this->notificationOptions->toArrayWpToSave();
+        return;
     }
 
 
@@ -591,4 +620,23 @@ class Core
             'default' => [],
         ]);
     }
+    
+    /**
+     * @return GeneralOptions
+     */
+    public function getCommonOptions(): GeneralOptions
+    {
+        return $this->commonOptions;
+    }
+    
+    /**
+     * @return NotificationOptions
+     */
+    public function getNotificationOptions(): NotificationOptions
+    {
+        return $this->notificationOptions;
+    }
+    
+    
+    
 }
