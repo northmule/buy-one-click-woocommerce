@@ -248,19 +248,7 @@ class BuyFunction
         return $result;
     }
     
-    /**
-     * Отправка Email
-     */
-    public static function BuyEmailNotification($to, $subject, $field)
-    {
-        $options = Help::getInstance()->get_options();
-        
-        $headers = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= "Content-type: text/html; charset=UTF-8 \r\n";
-        $headers .= "From: " . $field['company_name'] . " <" . $options['buynotification']['emailfrom'] . ">\r\n";
-        //Функция Wordpress иногда ломается, можно использовать просто mail
-        wp_mail($to, $subject, self::htmlEmailTemplate($field), $headers);
-    }
+
     
     protected static function get_button_name()
     {
@@ -296,91 +284,5 @@ class BuyFunction
         return $default_name;
     }
     
-    /**
-     * Шаблон emial сообщения плагина
-     */
-    public static function htmlEmailTemplate($params)
-    {
-        $default_params = array(
-            'company_name' => '',
-            'order_time' => '',
-            'product_link' => '',
-            'product_price' => '',
-            'product_name' => '',
-            'user_cooment' => '',
-            'user_phone' => '',
-            'order_admin_comment' => '',
-            'user_email' => '',
-            'quantity_product' => 1,
-            'files_url' => [],
-        );
-        
-        $params = wp_parse_args($params, $default_params);
-        
-        
-        $filesMessage = '';
-        $filesMessageItems = '';
-        foreach ($params['files_url'] as $fileUrl) {
-            if (empty($fileUrl)) {
-                continue;
-            }
-            $filesMessageItems .= sprintf('<td style="border-color: #132cba; text-align: center; vertical-align: middle;">%s</td>', $fileUrl);
-        }
-        if ($filesMessageItems) {
-            $filesMessage = sprintf('<td style="border-color: #132cba; text-align: center; vertical-align: middle;">%s: </td>', __('Files', 'coderun-oneclickwoo'));
-            $filesMessage .= $filesMessageItems;
-        }
-        
-        $message = ' 
-<table style="height: 255px; border-color: #1b0dd9;" border="2" width="579">
-<tbody>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;" colspan="2">' . $params['company_name'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Date', 'coderun-oneclickwoo') . ': </td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['order_time'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Link to the product', 'coderun-oneclickwoo') . ': </td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['product_link'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Price', 'coderun-oneclickwoo') . ': </td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['product_price'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Name', 'coderun-oneclickwoo') . '</td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['product_name'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Quantity', 'coderun-oneclickwoo') . '</td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['quantity_product'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Email', 'coderun-oneclickwoo') . '</td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['user_email'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Phone number', 'coderun-oneclickwoo') . '</td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['user_phone'] . '</td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Customer', 'coderun-oneclickwoo') . '</td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $params['user_name'] . '</td>
-</tr>
-'.$filesMessage.'
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Additionally', 'coderun-oneclickwoo') . ' </td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . $params['user_cooment'] . ' </td>
-</tr>
-<tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;" colspan="2">' . $params['order_admin_comment'] . '</td>
-</tr>
-</tbody>
-</table>
-&nbsp;
-        ';
-        return $message;
-    }
+
 }

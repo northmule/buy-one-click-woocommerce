@@ -25,7 +25,13 @@ class OrderForm
     protected string $orderComment;
     protected int $productId;
     protected string $productName;
-    protected string $variationData;
+    
+    /**
+     * Информация о вариации
+     *
+     * @var string
+     */
+    protected string $variationData = '';
     protected string $productOriginalName;
     protected float $productPrice;
     protected float $productPriceWithTax;
@@ -39,6 +45,12 @@ class OrderForm
     protected int $custom;
     protected ?array $files;
     protected int $quantityProduct;
+    
+    /**
+     * URL на товар
+     *
+     * @var string|false|\WP_Error
+     */
     protected string $productUrl;
     protected array $formData;
     protected NotificationOptions $notificationOptions;
@@ -69,7 +81,7 @@ class OrderForm
         $this->productOriginalName = $this->formDateParse('nametovar');
         $this->productPrice = (float)$this->formDateParse('pricetovar');
         $this->productLinkAdmin = $this->collectLinkToProductForAdministrator();
-        $this->productLinkUser = $this->collectLinkToProductForUser();
+        $this->productLinkUser = $this->collectLinkToProductForUser($this->productUrl);
         $this->companyName = $this->notificationOptions->getOrganizationName();
         $this->orderAdminComment = $this->notificationOptions->getAdditionalFieldMessage();
         $this->conset = (bool)$this->formDateParse('conset_personal_data');
@@ -84,7 +96,9 @@ class OrderForm
         }
         $dataAboutUploadedFiles = LoadFile::getInstance()->load();
         $this->filesUrlCollection = $this->collectUrlToUploadedFiles($dataAboutUploadedFiles);
-        $this->filesLink = $this->collectLinkToProductForUser($dataAboutUploadedFiles);
+        foreach ($this->filesUrlCollection as $fileUrl) {
+            $this->filesLink = sprintf('</br> %s', $this->collectLinkToProductForUser($fileUrl));
+        }
     }
     
     /**
@@ -129,11 +143,11 @@ class OrderForm
     /**
      * @return string
      */
-    private function collectLinkToProductForUser(): string
+    private function collectLinkToProductForUser(string $url): string
     {
         return sprintf(
             '<a href="%s" target="_blank">%s</a>',
-            $this->productUrl,
+            $url,
             __('Look', 'coderun-oneclickwoo')
         );
     }
@@ -665,7 +679,21 @@ class OrderForm
         return $this;
     }
     
+    /**
+     * @return array|mixed[]
+     */
+    public function getFilesUrlCollection(): array
+    {
+        return $this->filesUrlCollection;
+    }
     
-    
+    /**
+     * @return string
+     */
+    public function getFilesLink(): string
+    {
+        return $this->filesLink;
+    }
+
     
 }

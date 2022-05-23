@@ -41,7 +41,7 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
                 if(!empty($order['woo_order_id'])) {
                     echo '<br>'.__('Woo Order №', 'coderun-oneclickwoo').": <a href='/wp-admin/post.php?post={$order['woo_order_id']}&action=edit'>{$order['woo_order_id']}</a>";
                 }
-                $form = json_decode($order['form'],true);
+                $form = json_decode($order['form'], true);
                 $sms = json_decode($order['sms_log'], true);
                 ?>
             </th>

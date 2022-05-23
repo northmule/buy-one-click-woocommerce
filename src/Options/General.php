@@ -309,9 +309,9 @@ class General extends Base
      * @wpOptionsName success_action
      *
      *
-     * @var ?string
+     * @var int
      */
-    protected ?string $actionAfterSubmittingForm;
+    protected int $actionAfterSubmittingForm;
     
     /**
      * Закрыть форму через N сек.
@@ -478,7 +478,7 @@ class General extends Base
         $this->descriptionOfPreOrderButton
             = $options['woo_stock_status_button_text'] ?? '';
         $this->submittingFormMessageSuccess = $options['success'] ?? '';
-        $this->actionAfterSubmittingForm = $options['success_action'] ?? null;
+        $this->actionAfterSubmittingForm = intval($options['success_action'] ?? 0);
         $this->secondsBeforeClosingForm = intval(
             $options['success_action_close'] ?? 5
         );
@@ -1114,19 +1114,19 @@ class General extends Base
     }
     
     /**
-     * @return string|null
+     * @return int
      */
-    public function getActionAfterSubmittingForm(): ?string
+    public function getActionAfterSubmittingForm(): int
     {
         return $this->actionAfterSubmittingForm;
     }
     
     /**
-     * @param string|null $actionAfterSubmittingForm
+     * @param int $actionAfterSubmittingForm
      *
      * @return General
      */
-    public function setActionAfterSubmittingForm($actionAfterSubmittingForm): General
+    public function setActionAfterSubmittingForm(int $actionAfterSubmittingForm): General
     {
         $this->actionAfterSubmittingForm = $actionAfterSubmittingForm;
         return $this;

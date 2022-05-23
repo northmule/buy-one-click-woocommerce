@@ -2,6 +2,10 @@
 
 namespace Coderun\BuyOneClick;
 
+use Coderun\BuyOneClick\Controller\AdminController;
+use Coderun\BuyOneClick\Controller\CartController;
+use Coderun\BuyOneClick\Controller\FormController;
+use Coderun\BuyOneClick\Controller\OrderController;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Exception;
@@ -142,9 +146,11 @@ class Core
         // todo сделать настройку
         add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', [$this, 'jsVariableHead']);
-        add_action('init', [\Coderun\BuyOneClick\Ajax::class, 'getInstance']);
-//        add_action('woocommerce_before_order_object_save', function(\WC_Order $data, \WC_Data_Store $store) {
-//        }, 10, 2);
+        // Обработчики запросов
+        add_action('init', [new OrderController(), 'init']);
+        add_action('init', [new FormController(), 'init']);
+        add_action('init', [new CartController(), 'init']);
+        add_action('init', [new AdminController(), 'init']);
 
         $this->initAdminPages();
     }
@@ -204,12 +210,7 @@ class Core
         $help = Help::getInstance();
         $this->options = $help->get_options();
         $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
-        $this->notificationOptions = new NotificationOptions(get_option(OptionsType::MARKETING, []));
-        $optionsArrayGeneral = $this->commonOptions->toArrayWp();
-        $optionsArrayNitification = $this->notificationOptions->toArrayWp();
-        $optionsArrayGeneralS = $this->commonOptions->toArrayWpToSave();
-        $optionsArrayNitificationS = $this->notificationOptions->toArrayWpToSave();
-        return;
+        $this->notificationOptions = new NotificationOptions(get_option(OptionsType::NOTIFICATIONS, []));
     }
 
 

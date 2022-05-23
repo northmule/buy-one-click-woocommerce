@@ -5,8 +5,12 @@ use Coderun\BuyOneClick\Core;
 
 class BuySMSC
 {
+    
     /**
      * Обычная отправка СМС
+     *
+     * @return array<string, mixed>
+     * @throws Exception
      */
     public function send_sms($phones, $message, $translit = 0, $time = 0, $id = 0, $format = 0, $sender = false, $query = "", $files = array())
     {
