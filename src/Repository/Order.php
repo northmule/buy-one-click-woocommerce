@@ -1,8 +1,11 @@
 <?php
 
-namespace Coderun\BuyOneClick;
+namespace Coderun\BuyOneClick\Repository;
 
-use Coderun\BuyOneClick\ValueObject\OrderForm;
+use Coderun\BuyOneClick\Entity\Order as OrderEntity;
+use Coderun\BuyOneClick\Hydrator\CommonHydrator;
+use Coderun\BuyOneClick\Logger;
+use Coderun\BuyOneClick\BuyHookPlugin;
 
 class Order
 {
@@ -219,11 +222,30 @@ class Order
         $order_id = intval($order_id);
         return $wpdb->get_row("select * from {$this->order_table} where woo_order_id={$order_id}", ARRAY_A);
     }
-
-    public function get_orders()
+    
+    /**
+     * Список заказов
+     *
+     * @return array<int, OrderEntity>
+     * @throws \Exception
+     */
+    public function getOrders(): array
     {
         global $wpdb;
-        return $wpdb->get_results("select * from {$this->order_table} where active=1", ARRAY_A);
+        $rows = $wpdb->get_results(
+            sprintf(
+                'select * from %s where active = %d order by id asc',
+                $this->order_table,
+                1
+            ),
+            ARRAY_A
+        );
+        $result = [];
+        $hydrator = new CommonHydrator();
+        foreach ($rows as $row) {
+            $result[] = $hydrator->hydrateArrayToObject($row, new OrderEntity());
+        }
+        return $result;
     }
 
     public function deactive_order($order_id)

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Controller;
 
 use Coderun\BuyOneClick\Help;
-use Coderun\BuyOneClick\Order;
+use Coderun\BuyOneClick\Repository\Order;
 
 /**
  * Class AdminController

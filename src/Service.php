@@ -2,6 +2,8 @@
 
 namespace Coderun\BuyOneClick;
 
+use Coderun\BuyOneClick\Repository\Order;
+
 class Service
 {
     protected static $_instance = null;

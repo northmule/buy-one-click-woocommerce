@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\ValueObject;
 
 use Coderun\BuyOneClick\LoadFile;
-use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
-use Coderun\BuyOneClick\Order;
+use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\VariationsAddition;
 use WC_Data_Exception;
 
@@ -18,13 +17,13 @@ use WC_Data_Exception;
  */
 class OrderForm
 {
-    protected string $userName;
-    protected string $userPhone;
-    protected string $userEmail;
-    protected string $userComment;
-    protected string $orderComment;
-    protected int $productId;
-    protected string $productName;
+    protected string $userName = '';
+    protected string $userPhone = '';
+    protected string $userEmail = '';
+    protected string $userComment = '';
+    protected string $orderComment = '';
+    protected int $productId = 0;
+    protected string $productName = '';
     
     /**
      * Информация о вариации
@@ -32,19 +31,19 @@ class OrderForm
      * @var string
      */
     protected string $variationData = '';
-    protected string $productOriginalName;
-    protected float $productPrice;
-    protected float $productPriceWithTax;
-    protected string $productLinkAdmin;
-    protected string $productLinkUser;
-    protected string $companyName;
-    protected string $orderAdminComment;
-    protected bool $conset;
-    protected array $formsField;
-    protected string $orderTime;
-    protected int $custom;
+    protected string $productOriginalName = '';
+    protected float $productPrice = 0.00;
+    protected float $productPriceWithTax = 0.00;
+    protected string $productLinkAdmin = '';
+    protected string $productLinkUser = '';
+    protected string $companyName = '';
+    protected string $orderAdminComment = '';
+    protected bool $conset = true;
+    protected array $formsField  = [];
+    protected string $orderTime  = '';
+    protected int $custom = 10;
     protected ?array $files;
-    protected int $quantityProduct;
+    protected int $quantityProduct = 1;
     
     /**
      * URL на товар
@@ -53,7 +52,6 @@ class OrderForm
      */
     protected string $productUrl;
     protected array $formData;
-    protected NotificationOptions $notificationOptions;
     protected array $filesUrlCollection;
     protected string $filesLink;
     
@@ -63,13 +61,17 @@ class OrderForm
      * @throws WC_Data_Exception
      */
     public function __construct(
-        array $formData,
-        NotificationOptions $notificationOptions,
-        bool $variationEnable = false
+        ?array $formData,
+        ?NotificationOptions $notificationOptions,
+        ?bool $variationEnable = false
     )
     {
+        if ($formData == null
+            || $notificationOptions == null
+            || $variationEnable == null) {
+            return;
+        }
         $this->formData = $formData;
-        $this->notificationOptions = $notificationOptions;
         $this->userName = $this->formDateParse('txtname');
         $this->userPhone = $this->formDateParse('txtphone');
         $this->userEmail = sanitize_email($this->formDateParse('txtemail'));
@@ -82,8 +84,8 @@ class OrderForm
         $this->productPrice = (float)$this->formDateParse('pricetovar');
         $this->productLinkAdmin = $this->collectLinkToProductForAdministrator();
         $this->productLinkUser = $this->collectLinkToProductForUser($this->productUrl);
-        $this->companyName = $this->notificationOptions->getOrganizationName();
-        $this->orderAdminComment = $this->notificationOptions->getAdditionalFieldMessage();
+        $this->companyName = $notificationOptions->getOrganizationName();
+        $this->orderAdminComment = $notificationOptions->getAdditionalFieldMessage();
         $this->conset = (bool)$this->formDateParse('conset_personal_data');
         $this->formsField = $this->formDateLegacyParse();
         $this->orderTime = current_time('mysql');
@@ -694,6 +696,29 @@ class OrderForm
     {
         return $this->filesLink;
     }
+    
+    /**
+     * @param array|mixed[] $filesUrlCollection
+     *
+     * @return OrderForm
+     */
+    public function setFilesUrlCollection(array $filesUrlCollection): OrderForm
+    {
+        $this->filesUrlCollection = $filesUrlCollection;
+        return $this;
+    }
+    
+    /**
+     * @param string $filesLink
+     *
+     * @return OrderForm
+     */
+    public function setFilesLink(string $filesLink): OrderForm
+    {
+        $this->filesLink = $filesLink;
+        return $this;
+    }
 
+    
     
 }

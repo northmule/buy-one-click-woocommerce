@@ -26,4 +26,22 @@ class VariablesException extends BaseException implements ExceptionInterface
             ),
         );
     }
+    
+    /**
+     *
+     * @return VariablesException
+     */
+    public static function valueIsNumeric(): VariablesException
+    {
+        return new self('The number is not expected in the current context');
+    }
+    
+    /**
+     * @return VariablesException
+     */
+    public static function variableWasNotExpected()
+    {
+        return new self('The value of the variable was not expected');
+    }
+
 }

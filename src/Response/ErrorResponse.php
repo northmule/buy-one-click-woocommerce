@@ -36,7 +36,7 @@ class ErrorResponse implements ResponseInterface
     /**
      * @return bool
      */
-    public function isError():bool
+    public function isError(): bool
     {
         return $this->message !== '';
     }

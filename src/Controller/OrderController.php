@@ -14,12 +14,15 @@ use Coderun\BuyOneClick\Exceptions\RequireFieldException;
 use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
 use Coderun\BuyOneClick\LoadFile;
-use Coderun\BuyOneClick\Order;
+use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\ReCaptcha;
 use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
 use Coderun\BuyOneClick\ValueObject\OrderForm;
+
+use function get_current_user_id;
+use function wp_json_encode;
 
 /**
  * Class OrderController
@@ -86,7 +89,7 @@ class OrderController extends Controller
             $errorResponse->setMessage($ex->getMessage());
         } finally {
             if ($errorResponse->isError()) {
-                $this->logger->setInfo($ex->getMessage());
+                $this->logger->setInfo($errorResponse->getMessage());
                 wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
             }
         }
@@ -156,10 +159,10 @@ class OrderController extends Controller
                 'product_meta' => null,
                 'product_price' => $orderForm->getProductPrice(),
                 'product_quantity'=> $orderForm->getQuantityProduct() ?: 1,
-                'form' => \wp_json_encode($orderForm->getFormData()),
-                'sms_log' => \wp_json_encode($smsLog),
+                'form' => wp_json_encode((new CommonHydrator())->extractToArray($orderForm)),
+                'sms_log' => wp_json_encode($smsLog),
                 'woo_order_id' => $woo_order_id,
-                'user_id' => \get_current_user_id(),
+                'user_id' => get_current_user_id(),
             ];
             
             Order::getInstance()->save_order(
