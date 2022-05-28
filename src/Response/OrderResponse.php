@@ -19,7 +19,7 @@ class OrderResponse implements ResponseInterface
     protected string $result = '';
     /** @var string  */
     protected string $redirectUrl = '';
-    
+
     /**
      * @return string
      */
@@ -27,7 +27,7 @@ class OrderResponse implements ResponseInterface
     {
         return $this->message;
     }
-    
+
     /**
      * @param string $message
      *
@@ -38,7 +38,7 @@ class OrderResponse implements ResponseInterface
         $this->message = $message;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -46,7 +46,7 @@ class OrderResponse implements ResponseInterface
     {
         return $this->result;
     }
-    
+
     /**
      * @param string $result
      *
@@ -57,7 +57,7 @@ class OrderResponse implements ResponseInterface
         $this->result = $result;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -65,7 +65,7 @@ class OrderResponse implements ResponseInterface
     {
         return $this->redirectUrl;
     }
-    
+
     /**
      * @param string $redirectUrl
      *
@@ -76,6 +76,4 @@ class OrderResponse implements ResponseInterface
         $this->redirectUrl = $redirectUrl;
         return $this;
     }
-    
-    
 }

@@ -26,7 +26,7 @@ class Email
         $headers = [
             'MIME-Version: 1.0',
             'Content-type: text/html; charset=UTF-8',
-            sprintf('From: %s <%s>',$orderForm->getCompanyName(), $notificationOptions->getEmailFromWhom()),
+            sprintf('From: %s <%s>', $orderForm->getCompanyName(), $notificationOptions->getEmailFromWhom()),
         ];
         wp_mail(
             $emailTo,
@@ -35,7 +35,7 @@ class Email
             implode("\r\n", $headers)
         );
     }
-    
+
     /**
      * Сборка шаблона
      *
@@ -53,7 +53,7 @@ class Email
                 $orderForm->getFilesLink()
             );
         }
-        
+
         $message = '
 <table style="height: 255px; border-color: #1b0dd9;" border="2" width="579">
 <tbody>

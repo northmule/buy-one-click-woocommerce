@@ -31,7 +31,7 @@ class LoadFile
      *
      * @return array
      */
-    public function load():array
+    public function load(): array
     {
         $result = array();
 
@@ -74,13 +74,16 @@ class LoadFile
     /**
      * Пересоборка файла/файлов в одну структуру
      * @param type $multi
-     * @return type
+     * @return array
      */
-    protected function compose_files_structure($multi = false)
+    protected function compose_files_structure($multi = false): array
     {
-        $result = array();
+        $result = [];
 
-        $file_list = $_FILES['files'];
+        $file_list = $_FILES['files'] ?? null;
+        if ($file_list == null) {
+            return $result;
+        }
 
         if ($multi) {
             foreach ($file_list['name'] as $key_file => $value) {
@@ -92,11 +95,11 @@ class LoadFile
             }
         } else {
             $key_file = 0;
-            $result[$key_file]['name'] = $file_list['name'];
-            $result[$key_file]['type'] = $file_list['type'];
-            $result[$key_file]['tmp_name'] = $file_list['tmp_name'];
-            $result[$key_file]['error'] = $file_list['error'];
-            $result[$key_file]['size'] = $file_list['size'];
+            $result[$key_file]['name'] = $file_list['name'] ?? null;
+            $result[$key_file]['type'] = $file_list['type'] ?? null;
+            $result[$key_file]['tmp_name'] = $file_list['tmp_name'] ?? null;
+            $result[$key_file]['error'] = $file_list['error'] ?? null;
+            $result[$key_file]['size'] = $file_list['size'] ?? null;
         }
 
         return $result;

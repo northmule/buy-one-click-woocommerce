@@ -6,5 +6,4 @@ namespace Coderun\BuyOneClick\Entity;
 
 interface EntityInterface
 {
-    
 }

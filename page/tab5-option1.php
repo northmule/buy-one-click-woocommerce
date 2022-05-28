@@ -10,11 +10,11 @@ if (!defined('ABSPATH')) {
     <?php wp_nonce_field('update-options'); ?>
     <?php settings_fields(sprintf('%s_options', Core::OPTIONS_MARKETING)); ?>
 
-    <h3><?php _e('Additional settings','coderun-oneclickwoo'); ?></h3>
-    <p><?php _e('Example','coderun-oneclickwoo') ?>: <a target="_blank" href="https://coderun.ru/blog/kak-v-plagin-buy-one-click-woocommerce-dobavit-celi-po-sobytiya-javascript/"><?php _e('Switching to another site','coderun-oneclickwoo') ?></a> </p>
+    <h3><?php _e('Additional settings', 'coderun-oneclickwoo'); ?></h3>
+    <p><?php _e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://coderun.ru/blog/kak-v-plagin-buy-one-click-woocommerce-dobavit-celi-po-sobytiya-javascript/"><?php _e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
     <table class="form-table">
         <tr valign="top">
-            <th scope="row"><?php _e('Event after clicking the button','coderun-oneclickwoo'); ?></th>
+            <th scope="row"><?php _e('Event after clicking the button', 'coderun-oneclickwoo'); ?></th>
             <td>
                 <?php
                 $codeMirrorSetting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
@@ -40,15 +40,15 @@ if (!defined('ABSPATH')) {
                 ]);
                 ?>
                 <p><span class="description">
-                    <?php _e('The JavaScript code that will be called when you click on the button to open the order form.','coderun-oneclickwoo'); ?>
+                    <?php _e('The JavaScript code that will be called when you click on the button to open the order form.', 'coderun-oneclickwoo'); ?>
                         <br>
-                     <?php _e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.','coderun-oneclickwoo'); ?>
+                     <?php _e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
                     </span>
                 </p>
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row"><?php _e('Event after successful form submission','coderun-oneclickwoo'); ?></th>
+            <th scope="row"><?php _e('Event after successful form submission', 'coderun-oneclickwoo'); ?></th>
             <td>
                 <?php
                 $codeMirrorSetting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
@@ -74,9 +74,9 @@ if (!defined('ABSPATH')) {
                 ]);
                 ?>
                 <p><span class="description">
-                        <?php _e('The JavaScript code that will be called after the successful submission of the order form.','coderun-oneclickwoo'); ?>
+                        <?php _e('The JavaScript code that will be called after the successful submission of the order form.', 'coderun-oneclickwoo'); ?>
                         <br>
-                    <?php _e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.','coderun-oneclickwoo'); ?>
+                    <?php _e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
                     </span>
                 </p>
             </td>

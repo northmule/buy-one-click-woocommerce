@@ -11,10 +11,9 @@ use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
  */
 class General extends Base
 {
-    
     /** @var string  */
     protected const ROOT_KEY = OptionsType::GENERAL;
-    
+
     /**
      * Режим работы плагина
      *
@@ -23,7 +22,7 @@ class General extends Base
      * @var string|null
      */
     protected ?string $pluginWorkMode;
-    
+
     /**
      * Включить/отключить кнопку
      *
@@ -32,7 +31,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableButton;
-    
+
     /**
      * Включить/отключить кнопку шорткод
      *
@@ -41,7 +40,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableButtonShortcode;
-    
+
     /**
      * Имя кнопки
      *
@@ -50,7 +49,7 @@ class General extends Base
      * @var string|null
      */
     protected ?string $nameButton;
-    
+
     /**
      * Позиция кнопки
      *
@@ -59,7 +58,7 @@ class General extends Base
      * @var string|null
      */
     protected ?string $positionButton;
-    
+
     /**
      * Позиция кнопки для товара которого нет в наличие
      *
@@ -68,7 +67,7 @@ class General extends Base
      * @var string|null
      */
     protected ?string $positionButtonOutStock;
-    
+
     /**
      * Записывать заказы в таблицу WooCommerce
      *
@@ -77,7 +76,7 @@ class General extends Base
      * @var bool
      */
     protected bool $addAnOrderToWooCommerce;
-    
+
     /**
      * Включить кнопку в категории
      *
@@ -86,7 +85,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableButtonCategory;
-    
+
     /**
      * Позиция кнопки в категории
      *
@@ -95,7 +94,7 @@ class General extends Base
      * @var string|null
      */
     protected ?string $buttonPositionInCategory;
-    
+
     /**
      * Включить информацию о товаре на форму
      *
@@ -104,7 +103,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableProductInformation;
-    
+
     /**
      * Включить поле с именем на форму
      *
@@ -113,7 +112,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableFieldWithName;
-    
+
     /**
      * Включить поле с телефоном на форму
      *
@@ -122,7 +121,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableFieldWithPhone;
-    
+
     /**
      * Включить поле с email на форму
      *
@@ -131,7 +130,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableFieldWithEmail;
-    
+
     /**
      * Включить поле с комментарием на форму
      *
@@ -140,7 +139,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableFieldWithComment;
-    
+
     /**
      * Включить поле с количеством на форму
      *
@@ -149,7 +148,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableFieldWithQuantity;
-    
+
     /**
      * Включить поле с файлами на форму
      *
@@ -158,7 +157,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableFieldWithFiles;
-    
+
     /**
      * Описание для поля Имя
      *
@@ -167,7 +166,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldName;
-    
+
     /**
      * Описание для поля Телефон
      *
@@ -176,7 +175,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldPhone;
-    
+
     /**
      * Описание для поля Формат телефон
      *
@@ -185,7 +184,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldFormatPhone;
-    
+
     /**
      * Описание для поля Email
      *
@@ -194,7 +193,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldEmail;
-    
+
     /**
      * Описание для поля Комментарий
      *
@@ -203,7 +202,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldComment;
-    
+
     /**
      * Описание для поля Файлы
      *
@@ -212,7 +211,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldFiles;
-    
+
     /**
      * Название кнопки на форме быстрого заказа
      *
@@ -221,7 +220,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldOrderButton;
-    
+
     /**
      * Является обязательным поле Имя
      *
@@ -230,7 +229,7 @@ class General extends Base
      * @var bool
      */
     protected bool $fieldNameIsRequired;
-    
+
     /**
      * Является обязательным поле Телефон
      *
@@ -239,7 +238,7 @@ class General extends Base
      * @var bool
      */
     protected bool $fieldPhoneIsRequired;
-    
+
     /**
      * Является обязательным поле Email
      *
@@ -248,7 +247,7 @@ class General extends Base
      * @var bool
      */
     protected bool $fieldEmailIsRequired;
-    
+
     /**
      * Является обязательным поле Комментарий
      *
@@ -257,7 +256,7 @@ class General extends Base
      * @var bool
      */
     protected bool $fieldCommentIsRequired;
-    
+
     /**
      * Является обязательным поле Файлы
      *
@@ -266,7 +265,7 @@ class General extends Base
      * @var bool
      */
     protected bool $fieldFilesIsRequired;
-    
+
     /**
      * Маска ввода номера телефона
      *
@@ -275,7 +274,7 @@ class General extends Base
      * @var string
      */
     protected string $phoneNumberInputMask;
-    
+
     /**
      * Включить взаимодействие с механизмом остатков в WooCommerce
      *
@@ -284,7 +283,7 @@ class General extends Base
      * @var bool
      */
     protected bool $enableWorkWithRemainingItems;
-    
+
     /**
      * Описание для кнопки предзаказа (при упралвении остатками)
      *
@@ -293,7 +292,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionOfPreOrderButton;
-    
+
     /**
      * Сообщение в форме после отправки
      *
@@ -302,7 +301,7 @@ class General extends Base
      * @var string
      */
     protected string $submittingFormMessageSuccess;
-    
+
     /**
      * Действие после отправки
      *
@@ -312,7 +311,7 @@ class General extends Base
      * @var int
      */
     protected int $actionAfterSubmittingForm;
-    
+
     /**
      * Закрыть форму через N сек.
      *
@@ -321,7 +320,7 @@ class General extends Base
      * @var int
      */
     protected int $secondsBeforeClosingForm;
-    
+
     /**
      * Доп. сообщение после отправки
      *
@@ -330,7 +329,7 @@ class General extends Base
      * @var string
      */
     protected string $messageAfterSubmittingForm;
-    
+
     /**
      * URL адрес перенаправления (произвольный)
      *
@@ -339,7 +338,7 @@ class General extends Base
      * @var ?string
      */
     protected ?string $urlRedirectAddress;
-    
+
     /**
      * Стиль формы
      *
@@ -348,7 +347,7 @@ class General extends Base
      * @var string
      */
     protected string $formStyle;
-    
+
     /**
      * Лимит на отправку формы
      *
@@ -357,7 +356,7 @@ class General extends Base
      * @var int
      */
     protected int $formSubmissionLimit;
-    
+
     /**
      * Сообщение при лимите
      *
@@ -366,7 +365,7 @@ class General extends Base
      * @var string
      */
     protected string $formSubmissionLimitMessage;
-    
+
     /**
      * Согласие на обработку
      *
@@ -375,7 +374,7 @@ class General extends Base
      * @var bool
      */
     protected bool $consentToProcessing;
-    
+
     /**
      * Согласие на обработку текст
      *
@@ -384,7 +383,7 @@ class General extends Base
      * @var string
      */
     protected string $descriptionConsentToProcessing;
-    
+
     /**
      * Использовать Капчу
      *
@@ -393,7 +392,7 @@ class General extends Base
      * @var bool
      */
     protected bool $recaptchaEnabled;
-    
+
     /**
      * Плагин предоставляющий капчу
      *
@@ -402,7 +401,7 @@ class General extends Base
      * @var string
      */
     protected string $captchaProvider;
-    
+
     /**
      * Добавить css в форму
      *
@@ -411,7 +410,7 @@ class General extends Base
      * @var bool
      */
     protected bool $styleInsertHtml;
-    
+
     /**
      * Настройки из WordPress в св-ва
      *
@@ -504,7 +503,7 @@ class General extends Base
             $options['style_insert_html'] ?? false
         );
     }
-    
+
     /**
      * @return string|null
      */
@@ -512,7 +511,7 @@ class General extends Base
     {
         return $this->pluginWorkMode;
     }
-    
+
     /**
      * @param string|null $pluginWorkMode
      *
@@ -523,7 +522,7 @@ class General extends Base
         $this->pluginWorkMode = $pluginWorkMode;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -531,7 +530,7 @@ class General extends Base
     {
         return $this->enableButton;
     }
-    
+
     /**
      * @param bool $enableButton
      *
@@ -542,7 +541,7 @@ class General extends Base
         $this->enableButton = $enableButton;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -550,18 +549,19 @@ class General extends Base
     {
         return $this->enableButtonShortcode;
     }
-    
+
     /**
      * @param bool $enableButtonShortcode
      *
      * @return General
      */
-    public function setEnableButtonShortcode(bool $enableButtonShortcode
+    public function setEnableButtonShortcode(
+        bool $enableButtonShortcode
     ): General {
         $this->enableButtonShortcode = $enableButtonShortcode;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -569,7 +569,7 @@ class General extends Base
     {
         return $this->nameButton;
     }
-    
+
     /**
      * @param string|null $nameButton
      *
@@ -580,7 +580,7 @@ class General extends Base
         $this->nameButton = $nameButton;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -588,7 +588,7 @@ class General extends Base
     {
         return $this->positionButton;
     }
-    
+
     /**
      * @param string|null $positionButton
      *
@@ -599,7 +599,7 @@ class General extends Base
         $this->positionButton = $positionButton;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -607,7 +607,7 @@ class General extends Base
     {
         return $this->positionButtonOutStock;
     }
-    
+
     /**
      * @param string|null $positionButtonOutStock
      *
@@ -618,7 +618,7 @@ class General extends Base
         $this->positionButtonOutStock = $positionButtonOutStock;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -626,18 +626,19 @@ class General extends Base
     {
         return $this->addAnOrderToWooCommerce;
     }
-    
+
     /**
      * @param bool $addAnOrderToWooCommerce
      *
      * @return General
      */
-    public function setAddAnOrderToWooCommerce(bool $addAnOrderToWooCommerce
+    public function setAddAnOrderToWooCommerce(
+        bool $addAnOrderToWooCommerce
     ): General {
         $this->addAnOrderToWooCommerce = $addAnOrderToWooCommerce;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -645,7 +646,7 @@ class General extends Base
     {
         return $this->enableButtonCategory;
     }
-    
+
     /**
      * @param bool $enableButtonCategory
      *
@@ -656,7 +657,7 @@ class General extends Base
         $this->enableButtonCategory = $enableButtonCategory;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -664,18 +665,19 @@ class General extends Base
     {
         return $this->buttonPositionInCategory;
     }
-    
+
     /**
      * @param string|null $buttonPositionInCategory
      *
      * @return General
      */
-    public function setButtonPositionInCategory($buttonPositionInCategory
+    public function setButtonPositionInCategory(
+        $buttonPositionInCategory
     ): General {
         $this->buttonPositionInCategory = $buttonPositionInCategory;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -683,18 +685,19 @@ class General extends Base
     {
         return $this->enableProductInformation;
     }
-    
+
     /**
      * @param bool $enableProductInformation
      *
      * @return General
      */
-    public function setEnableProductInformation(bool $enableProductInformation
+    public function setEnableProductInformation(
+        bool $enableProductInformation
     ): General {
         $this->enableProductInformation = $enableProductInformation;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -702,7 +705,7 @@ class General extends Base
     {
         return $this->enableFieldWithName;
     }
-    
+
     /**
      * @param bool $enableFieldWithName
      *
@@ -713,7 +716,7 @@ class General extends Base
         $this->enableFieldWithName = $enableFieldWithName;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -721,7 +724,7 @@ class General extends Base
     {
         return $this->enableFieldWithPhone;
     }
-    
+
     /**
      * @param bool $enableFieldWithPhone
      *
@@ -732,7 +735,7 @@ class General extends Base
         $this->enableFieldWithPhone = $enableFieldWithPhone;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -740,7 +743,7 @@ class General extends Base
     {
         return $this->enableFieldWithEmail;
     }
-    
+
     /**
      * @param bool $enableFieldWithEmail
      *
@@ -751,7 +754,7 @@ class General extends Base
         $this->enableFieldWithEmail = $enableFieldWithEmail;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -759,18 +762,19 @@ class General extends Base
     {
         return $this->enableFieldWithComment;
     }
-    
+
     /**
      * @param bool $enableFieldWithComment
      *
      * @return General
      */
-    public function setEnableFieldWithComment(bool $enableFieldWithComment
+    public function setEnableFieldWithComment(
+        bool $enableFieldWithComment
     ): General {
         $this->enableFieldWithComment = $enableFieldWithComment;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -778,18 +782,19 @@ class General extends Base
     {
         return $this->enableFieldWithQuantity;
     }
-    
+
     /**
      * @param bool $enableFieldWithQuantity
      *
      * @return General
      */
-    public function setEnableFieldWithQuantity(bool $enableFieldWithQuantity
+    public function setEnableFieldWithQuantity(
+        bool $enableFieldWithQuantity
     ): General {
         $this->enableFieldWithQuantity = $enableFieldWithQuantity;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -797,7 +802,7 @@ class General extends Base
     {
         return $this->enableFieldWithFiles;
     }
-    
+
     /**
      * @param bool $enableFieldWithFiles
      *
@@ -808,7 +813,7 @@ class General extends Base
         $this->enableFieldWithFiles = $enableFieldWithFiles;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -816,18 +821,19 @@ class General extends Base
     {
         return $this->descriptionForFieldName;
     }
-    
+
     /**
      * @param string $descriptionForFieldName
      *
      * @return General
      */
-    public function setDescriptionForFieldName($descriptionForFieldName
+    public function setDescriptionForFieldName(
+        $descriptionForFieldName
     ): General {
         $this->descriptionForFieldName = $descriptionForFieldName;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -835,18 +841,19 @@ class General extends Base
     {
         return $this->descriptionForFieldPhone;
     }
-    
+
     /**
      * @param string $descriptionForFieldPhone
      *
      * @return General
      */
-    public function setDescriptionForFieldPhone($descriptionForFieldPhone
+    public function setDescriptionForFieldPhone(
+        $descriptionForFieldPhone
     ): General {
         $this->descriptionForFieldPhone = $descriptionForFieldPhone;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -854,18 +861,19 @@ class General extends Base
     {
         return $this->descriptionForFieldFormatPhone;
     }
-    
+
     /**
      * @param string $descriptionForFieldFormatPhone
      *
      * @return General
      */
-    public function setDescriptionForFieldFormatPhone($descriptionForFieldFormatPhone
+    public function setDescriptionForFieldFormatPhone(
+        $descriptionForFieldFormatPhone
     ): General {
         $this->descriptionForFieldFormatPhone = $descriptionForFieldFormatPhone;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -873,18 +881,19 @@ class General extends Base
     {
         return $this->descriptionForFieldEmail;
     }
-    
+
     /**
      * @param string $descriptionForFieldEmail
      *
      * @return General
      */
-    public function setDescriptionForFieldEmail($descriptionForFieldEmail
+    public function setDescriptionForFieldEmail(
+        $descriptionForFieldEmail
     ): General {
         $this->descriptionForFieldEmail = $descriptionForFieldEmail;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -892,18 +901,19 @@ class General extends Base
     {
         return $this->descriptionForFieldComment;
     }
-    
+
     /**
      * @param string $descriptionForFieldComment
      *
      * @return General
      */
-    public function setDescriptionForFieldComment($descriptionForFieldComment
+    public function setDescriptionForFieldComment(
+        $descriptionForFieldComment
     ): General {
         $this->descriptionForFieldComment = $descriptionForFieldComment;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -911,7 +921,7 @@ class General extends Base
     {
         return $this->descriptionForFieldFiles;
     }
-    
+
     /**
      * @param string $descriptionForFieldFiles
      *
@@ -922,7 +932,7 @@ class General extends Base
         $this->descriptionForFieldFiles = $descriptionForFieldFiles;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -930,18 +940,19 @@ class General extends Base
     {
         return $this->descriptionForFieldOrderButton;
     }
-    
+
     /**
      * @param string $descriptionForFieldOrderButton
      *
      * @return General
      */
-    public function setDescriptionForFieldOrderButton($descriptionForFieldOrderButton
+    public function setDescriptionForFieldOrderButton(
+        $descriptionForFieldOrderButton
     ): General {
         $this->descriptionForFieldOrderButton = $descriptionForFieldOrderButton;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -949,7 +960,7 @@ class General extends Base
     {
         return $this->fieldNameIsRequired;
     }
-    
+
     /**
      * @param bool $fieldNameIsRequired
      *
@@ -960,7 +971,7 @@ class General extends Base
         $this->fieldNameIsRequired = $fieldNameIsRequired;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -968,7 +979,7 @@ class General extends Base
     {
         return $this->fieldPhoneIsRequired;
     }
-    
+
     /**
      * @param bool $fieldPhoneIsRequired
      *
@@ -979,7 +990,7 @@ class General extends Base
         $this->fieldPhoneIsRequired = $fieldPhoneIsRequired;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -987,7 +998,7 @@ class General extends Base
     {
         return $this->fieldEmailIsRequired;
     }
-    
+
     /**
      * @param bool $fieldEmailIsRequired
      *
@@ -998,7 +1009,7 @@ class General extends Base
         $this->fieldEmailIsRequired = $fieldEmailIsRequired;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -1006,18 +1017,19 @@ class General extends Base
     {
         return $this->fieldCommentIsRequired;
     }
-    
+
     /**
      * @param bool $fieldCommentIsRequired
      *
      * @return General
      */
-    public function setFieldCommentIsRequired(bool $fieldCommentIsRequired
+    public function setFieldCommentIsRequired(
+        bool $fieldCommentIsRequired
     ): General {
         $this->fieldCommentIsRequired = $fieldCommentIsRequired;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -1025,7 +1037,7 @@ class General extends Base
     {
         return $this->fieldFilesIsRequired;
     }
-    
+
     /**
      * @param bool $fieldFilesIsRequired
      *
@@ -1036,7 +1048,7 @@ class General extends Base
         $this->fieldFilesIsRequired = $fieldFilesIsRequired;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1044,7 +1056,7 @@ class General extends Base
     {
         return $this->phoneNumberInputMask;
     }
-    
+
     /**
      * @param string $phoneNumberInputMask
      *
@@ -1055,7 +1067,7 @@ class General extends Base
         $this->phoneNumberInputMask = $phoneNumberInputMask;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -1063,18 +1075,19 @@ class General extends Base
     {
         return $this->enableWorkWithRemainingItems;
     }
-    
+
     /**
      * @param bool $enableWorkWithRemainingItems
      *
      * @return General
      */
-    public function setEnableWorkWithRemainingItems(bool $enableWorkWithRemainingItems
+    public function setEnableWorkWithRemainingItems(
+        bool $enableWorkWithRemainingItems
     ): General {
         $this->enableWorkWithRemainingItems = $enableWorkWithRemainingItems;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1082,7 +1095,7 @@ class General extends Base
     {
         return $this->descriptionOfPreOrderButton;
     }
-    
+
     /**
      * @param string $descriptionOfPreOrderButton
      *
@@ -1093,7 +1106,7 @@ class General extends Base
         $this->descriptionOfPreOrderButton = $descriptionOfPreOrderButton;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1101,18 +1114,19 @@ class General extends Base
     {
         return $this->submittingFormMessageSuccess;
     }
-    
+
     /**
      * @param string $submittingFormMessageSuccess
      *
      * @return General
      */
-    public function setSubmittingFormMessageSuccess($submittingFormMessageSuccess
+    public function setSubmittingFormMessageSuccess(
+        $submittingFormMessageSuccess
     ): General {
         $this->submittingFormMessageSuccess = $submittingFormMessageSuccess;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -1120,7 +1134,7 @@ class General extends Base
     {
         return $this->actionAfterSubmittingForm;
     }
-    
+
     /**
      * @param int $actionAfterSubmittingForm
      *
@@ -1131,7 +1145,7 @@ class General extends Base
         $this->actionAfterSubmittingForm = $actionAfterSubmittingForm;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -1139,18 +1153,19 @@ class General extends Base
     {
         return $this->secondsBeforeClosingForm;
     }
-    
+
     /**
      * @param int $secondsBeforeClosingForm
      *
      * @return General
      */
-    public function setSecondsBeforeClosingForm(int $secondsBeforeClosingForm
+    public function setSecondsBeforeClosingForm(
+        int $secondsBeforeClosingForm
     ): General {
         $this->secondsBeforeClosingForm = $secondsBeforeClosingForm;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1158,7 +1173,7 @@ class General extends Base
     {
         return $this->messageAfterSubmittingForm;
     }
-    
+
     /**
      * @param string $messageAfterSubmittingForm
      *
@@ -1169,7 +1184,7 @@ class General extends Base
         $this->messageAfterSubmittingForm = $messageAfterSubmittingForm;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -1177,7 +1192,7 @@ class General extends Base
     {
         return $this->urlRedirectAddress;
     }
-    
+
     /**
      * @param string|null $urlRedirectAddress
      *
@@ -1188,7 +1203,7 @@ class General extends Base
         $this->urlRedirectAddress = $urlRedirectAddress;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1196,7 +1211,7 @@ class General extends Base
     {
         return $this->formStyle;
     }
-    
+
     /**
      * @param string $formStyle
      *
@@ -1207,7 +1222,7 @@ class General extends Base
         $this->formStyle = $formStyle;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -1215,7 +1230,7 @@ class General extends Base
     {
         return $this->formSubmissionLimit;
     }
-    
+
     /**
      * @param int $formSubmissionLimit
      *
@@ -1226,7 +1241,7 @@ class General extends Base
         $this->formSubmissionLimit = $formSubmissionLimit;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1234,7 +1249,7 @@ class General extends Base
     {
         return $this->formSubmissionLimitMessage;
     }
-    
+
     /**
      * @param string $formSubmissionLimitMessage
      *
@@ -1245,7 +1260,7 @@ class General extends Base
         $this->formSubmissionLimitMessage = $formSubmissionLimitMessage;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -1253,7 +1268,7 @@ class General extends Base
     {
         return $this->consentToProcessing;
     }
-    
+
     /**
      * @param bool $consentToProcessing
      *
@@ -1264,7 +1279,7 @@ class General extends Base
         $this->consentToProcessing = $consentToProcessing;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1272,18 +1287,19 @@ class General extends Base
     {
         return $this->descriptionConsentToProcessing;
     }
-    
+
     /**
      * @param string $descriptionConsentToProcessing
      *
      * @return General
      */
-    public function setDescriptionConsentToProcessing($descriptionConsentToProcessing
+    public function setDescriptionConsentToProcessing(
+        $descriptionConsentToProcessing
     ): General {
         $this->descriptionConsentToProcessing = $descriptionConsentToProcessing;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -1291,7 +1307,7 @@ class General extends Base
     {
         return $this->recaptchaEnabled;
     }
-    
+
     /**
      * @param bool $recaptchaEnabled
      *
@@ -1302,7 +1318,7 @@ class General extends Base
         $this->recaptchaEnabled = $recaptchaEnabled;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -1310,7 +1326,7 @@ class General extends Base
     {
         return $this->captchaProvider;
     }
-    
+
     /**
      * @param string $captchaProvider
      *
@@ -1321,7 +1337,7 @@ class General extends Base
         $this->captchaProvider = $captchaProvider;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -1329,7 +1345,7 @@ class General extends Base
     {
         return $this->styleInsertHtml;
     }
-    
+
     /**
      * @param bool $styleInsertHtml
      *
@@ -1340,7 +1356,7 @@ class General extends Base
         $this->styleInsertHtml = $styleInsertHtml;
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      *
@@ -1350,6 +1366,4 @@ class General extends Base
     {
         return self::ROOT_KEY;
     }
-    
-    
 }

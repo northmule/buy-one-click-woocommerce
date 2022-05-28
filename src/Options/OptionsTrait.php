@@ -11,7 +11,6 @@ use Generator;
 
 trait OptionsTrait
 {
-    
     /**
      * @inheritDoc
      *
@@ -26,7 +25,7 @@ trait OptionsTrait
         }
         return $options;
     }
-    
+
     /**
      * @inheritDoc
      *
@@ -45,11 +44,10 @@ trait OptionsTrait
             }
             $optionsName = $annotations[self::DOC_OPTIONS_NAME];
             $options[$optionsName] = $item->getValue($this);
-            
         }
         return $options;
     }
-    
+
     /**
      * @inheritDoc
      *
@@ -59,7 +57,7 @@ trait OptionsTrait
     {
         return [$this->getRootKey() => $this->toArrayWp()];
     }
-    
+
     /**
      * @return Generator<ReflectionProperty>
      */

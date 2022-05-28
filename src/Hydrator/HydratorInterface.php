@@ -6,7 +6,6 @@ namespace Coderun\BuyOneClick\Hydrator;
 
 interface HydratorInterface
 {
-    
     /**
      * Создание объекта на основе данных из массива
      *
@@ -15,8 +14,8 @@ interface HydratorInterface
      *
      * @return object
      */
-    public function hydrate (array $initialData, object $destinationObject): object;
-    
+    public function hydrate(array $initialData, object $destinationObject): object;
+
     /**
      * Распакова объекта в массив
      *
@@ -25,5 +24,4 @@ interface HydratorInterface
      * @return array
      */
     public function extractToArray(object $initialObject): array;
-    
 }

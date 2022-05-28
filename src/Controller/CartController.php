@@ -14,7 +14,6 @@ use function intval;
  */
 class CartController extends Controller
 {
-    
     /**
      * @inheritDoc
      */
@@ -24,13 +23,13 @@ class CartController extends Controller
             'wp_ajax_add_to_cart',
             [$this, 'addToCart']
         );
-        
+
         add_action(
             'wp_ajax_nopriv_add_to_cart',
             [$this, 'addToCart']
         );
     }
-    
+
     /**
      * Добавляет товар в корзину
      *
@@ -67,5 +66,4 @@ class CartController extends Controller
         echo $url;
         die();
     }
-    
 }

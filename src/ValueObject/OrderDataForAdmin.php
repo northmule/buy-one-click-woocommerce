@@ -7,7 +7,7 @@ namespace Coderun\BuyOneClick\ValueObject;
 use Coderun\BuyOneClick\Exceptions\ObjectException;
 use Coderun\BuyOneClick\Exceptions\VariablesException;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
-use Coderun\BuyOneClick\ValueObject\OrderForm as OrderFormValueObject;
+use Coderun\BuyOneClick\ValueObject\OrderBlank as OrderFormValueObject;
 
 use function strval;
 
@@ -18,43 +18,55 @@ use function strval;
  */
 class OrderDataForAdmin
 {
-    
     /**
      * Покупатель
      * @var string
      */
     protected string $userName = '';
-    
+
     /**
      * Телефон
      * @var string
      */
     protected string $userPhone = '';
-    
+
     /**
      * Email
      * @var string
      */
     protected string $userEmail = '';
-    
+
     /**
      * Количество
      * @var string
      */
     protected string $quantityProduct = '';
-    
+
     /**
      * Ссылка на товар
      * @var string
      */
     protected string $productLinkAdmin;
-    
+
+    /**
+     * Данные по вариативному товару
+     *
+     * @var string
+     */
+    protected string $variationData = '';
+
     /**
      * Вся прочая информация(комментарий, вариации и т.д)
      * @var string
      */
     protected string $userComment;
-    
+
+    /**
+     * Вариативный?
+     * @var bool
+     */
+    protected bool $productIsVariable = false;
+
     /**
      * @param array|null $data
      *
@@ -68,7 +80,7 @@ class OrderDataForAdmin
         try {
             $order = (new CommonHydrator())->hydrateArrayToObject(
                 $data,
-                new OrderFormValueObject(null,null,null)
+                new OrderFormValueObject()
             );
         } catch (VariablesException|ObjectException $e) {
             $order = null;
@@ -77,10 +89,10 @@ class OrderDataForAdmin
             $this->parseOldData($data);
             return;
         }
-        
+
         $this->parseData($order);
     }
-    
+
     /**
      * @return string
      */
@@ -88,7 +100,7 @@ class OrderDataForAdmin
     {
         return $this->userName;
     }
-    
+
     /**
      * @return string
      */
@@ -96,7 +108,7 @@ class OrderDataForAdmin
     {
         return $this->userPhone;
     }
-    
+
     /**
      * @return string
      */
@@ -104,7 +116,7 @@ class OrderDataForAdmin
     {
         return $this->userEmail;
     }
-    
+
     /**
      * @return string
      */
@@ -112,7 +124,7 @@ class OrderDataForAdmin
     {
         return $this->quantityProduct;
     }
-    
+
     /**
      * @return string
      */
@@ -120,7 +132,7 @@ class OrderDataForAdmin
     {
         return $this->productLinkAdmin;
     }
-    
+
     /**
      * @return string
      */
@@ -128,13 +140,29 @@ class OrderDataForAdmin
     {
         return $this->userComment;
     }
-    
-    
-    
+
+    /**
+     * @return string
+     */
+    public function getVariationData(): string
+    {
+        return $this->variationData;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProductIsVariable(): bool
+    {
+        return $this->productIsVariable;
+    }
+
+
+
     /**
      * Старые данные
      *
-     * @param array<string, string> $data
+     * @param array<string, string> $form
      *
      * @return void
      */
@@ -147,7 +175,7 @@ class OrderDataForAdmin
         $this->userComment = $form['user_cooment'] ?? '';
         $this->productLinkAdmin = $form['product_link_admin'] ?? '';
     }
-    
+
     /**
      * Данные из объекта
      *
@@ -163,7 +191,7 @@ class OrderDataForAdmin
         $this->quantityProduct = strval($data->getQuantityProduct());
         $this->userComment = $data->getUserComment();
         $this->productLinkAdmin = $data->getProductLinkAdmin();
+        $this->variationData = $data->getVariationData();
+        $this->productIsVariable = $data->isProductIsVariable();
     }
-    
-    
 }

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Hydrator;
+
 use Coderun\BuyOneClick\Exceptions\ObjectException;
 use Coderun\BuyOneClick\Exceptions\VariablesException;
 use Coderun\BuyOneClick\Utils\ManipulationsWithStrings;
@@ -21,7 +22,6 @@ use function boolval;
 
 trait HydrateTrait
 {
-    
     /**
      * @inheritDoc
      *
@@ -38,7 +38,7 @@ trait HydrateTrait
         }
         return $options;
     }
-    
+
     /**
      * Массив в объект
      *
@@ -70,7 +70,7 @@ trait HydrateTrait
         }
         return $entity;
     }
-    
+
     /**
      * @param object $object
      *
@@ -89,7 +89,7 @@ trait HydrateTrait
             yield $property;
         }
     }
-    
+
     /**
      * Типы свойств из докблоков
      *
@@ -107,11 +107,10 @@ trait HydrateTrait
                 throw ObjectException::propertyTypeIsNotDefined();
             }
             $typesMap[$item->getName()] = $typeData;
-            
         }
         return $typesMap;
     }
-    
+
     /**
      * Преобразование строковых переменных в нужный тип
      * для значения сеттеров
@@ -148,7 +147,7 @@ trait HydrateTrait
                     return floatval($variable);
                 case 'null':
                     continue 2;
-                case 'array';
+                case 'array':
                     return $variable;
                 default:
                     throw VariablesException::variableWasNotExpected();

@@ -31,7 +31,7 @@ class FormController extends Controller
             'wp_ajax_nopriv_getViewForm',
             [$this, 'viewFormOrder']
         );
-    
+
         add_action(
             'wp_ajax_getViewFormCustom',
             [$this, 'viewFormOrderCustom']
@@ -41,7 +41,7 @@ class FormController extends Controller
             [$this, 'viewFormOrderCustom']
         );
     }
-    
+
     /**
      * Форма заказа
      *
@@ -51,7 +51,7 @@ class FormController extends Controller
     {
         $productId = intval($_POST['productid']);
         $variationId = intval($_POST['variation_selected']);
-        
+
         if ($variationId > 0) {
             $productId = $variationId;
         }
@@ -60,7 +60,7 @@ class FormController extends Controller
         echo BuyFunction::viewBuyForm($form);
         die();
     }
-    
+
     /**
      * Рисуте форму заказа (кастомную)
      *

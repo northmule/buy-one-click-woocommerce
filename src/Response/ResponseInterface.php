@@ -6,5 +6,4 @@ namespace Coderun\BuyOneClick\Response;
 
 interface ResponseInterface
 {
-    
 }

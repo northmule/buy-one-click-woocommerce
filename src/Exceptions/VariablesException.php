@@ -11,7 +11,6 @@ namespace Coderun\BuyOneClick\Exceptions;
  */
 class VariablesException extends BaseException implements ExceptionInterface
 {
-    
     /**
      * @param string $variableName
      *
@@ -26,7 +25,7 @@ class VariablesException extends BaseException implements ExceptionInterface
             ),
         );
     }
-    
+
     /**
      *
      * @return VariablesException
@@ -35,13 +34,12 @@ class VariablesException extends BaseException implements ExceptionInterface
     {
         return new self('The number is not expected in the current context');
     }
-    
+
     /**
      * @return VariablesException
      */
-    public static function variableWasNotExpected()
+    public static function variableWasNotExpected(): VariablesException
     {
         return new self('The value of the variable was not expected');
     }
-
 }

@@ -84,7 +84,7 @@ class Core
      * @var array|type
      */
     protected $options = array();
-    
+
     /**
      * Настройки плагина
      *
@@ -147,10 +147,18 @@ class Core
         add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', [$this, 'jsVariableHead']);
         // Обработчики запросов
-        add_action('init', [new OrderController(), 'init']);
-        add_action('init', [new FormController(), 'init']);
-        add_action('init', [new CartController(), 'init']);
-        add_action('init', [new AdminController(), 'init']);
+        add_action('init', static function () {
+            (new OrderController())->init();
+        });
+        add_action('init', static function () {
+            (new FormController())->init();
+        });
+        add_action('init', static function () {
+            (new CartController())->init();
+        });
+        add_action('init', static function () {
+            (new AdminController())->init();
+        });
 
         $this->initAdminPages();
     }
@@ -199,14 +207,13 @@ class Core
             }
         }
     }
-    
+
     /**
      * Инициализация настроек, настройка объектов
      * @return void
      */
     public function initOptions()
     {
-       
         $help = Help::getInstance();
         $this->options = $help->get_options();
         $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
@@ -621,7 +628,7 @@ class Core
             'default' => [],
         ]);
     }
-    
+
     /**
      * @return GeneralOptions
      */
@@ -629,7 +636,7 @@ class Core
     {
         return $this->commonOptions;
     }
-    
+
     /**
      * @return NotificationOptions
      */
@@ -637,7 +644,4 @@ class Core
     {
         return $this->notificationOptions;
     }
-    
-    
-    
 }

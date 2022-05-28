@@ -17,14 +17,38 @@ use WC_Data_Exception;
  */
 class OrderForm
 {
+    /**
+     * Имя
+     *
+     * @var string
+     */
     protected string $userName = '';
+
+    /**
+     * Телефон
+     *
+     * @var string
+     */
     protected string $userPhone = '';
+
+    /**
+     * Email
+     *
+     * @var string
+     */
     protected string $userEmail = '';
+
+    /**
+     * Комментарий, доп. поле
+     *
+     * @var string
+     */
     protected string $userComment = '';
     protected string $orderComment = '';
     protected int $productId = 0;
+    protected bool $productIsVariable = false;
     protected string $productName = '';
-    
+
     /**
      * Информация о вариации
      *
@@ -42,35 +66,29 @@ class OrderForm
     protected array $formsField  = [];
     protected string $orderTime  = '';
     protected int $custom = 10;
-    protected ?array $files;
+    protected array $files = [];
     protected int $quantityProduct = 1;
-    
+
     /**
      * URL на товар
      *
      * @var string|false|\WP_Error
      */
-    protected string $productUrl;
-    protected array $formData;
-    protected array $filesUrlCollection;
-    protected string $filesLink;
-    
+    protected string $productUrl = '';
+    protected array $formData = [];
+    protected array $filesUrlCollection = [];
+    protected string $filesLink = '';
+
     /**
      * @param array<string, mixed> $formData
      *
      * @throws WC_Data_Exception
      */
     public function __construct(
-        ?array $formData,
-        ?NotificationOptions $notificationOptions,
-        ?bool $variationEnable = false
-    )
-    {
-        if ($formData == null
-            || $notificationOptions == null
-            || $variationEnable == null) {
-            return;
-        }
+        array $formData,
+        NotificationOptions $notificationOptions,
+        bool $variationEnable = false
+    ) {
         $this->formData = $formData;
         $this->userName = $this->formDateParse('txtname');
         $this->userPhone = $this->formDateParse('txtphone');
@@ -90,8 +108,9 @@ class OrderForm
         $this->formsField = $this->formDateLegacyParse();
         $this->orderTime = current_time('mysql');
         $this->custom = (int)$this->formDateParse('custom');
-        $this->files = array_map('array_filter',$_FILES['files'] ?? []);
-        $this->quantityProduct = (int)$this->formDateParse('quantity_product');
+        $this->files = array_map('array_filter', $_FILES['files'] ?? []);
+        $this->quantityProduct = $this->formDateParse('quantity_product') == ''
+            ? 1 : intval($this->formDateParse('quantity_product'));
         $this->fillInPriceWithTax();
         if ($variationEnable) {
             $this->fillingWithVariations();
@@ -102,7 +121,7 @@ class OrderForm
             $this->filesLink = sprintf('</br> %s', $this->collectLinkToProductForUser($fileUrl));
         }
     }
-    
+
     /**
      * Заполняет цену с учётом налога
      *
@@ -116,7 +135,7 @@ class OrderForm
         $wcOrder->delete(true); // todo переделать
         unset($wcOrder);
     }
-    
+
     /**
      * Данные от дополнения вариативных товаров
      *
@@ -127,16 +146,16 @@ class OrderForm
         $pluginVariations = VariationsAddition::getInstance();
         $this->variationData = $pluginVariations->getVariableProductInfo($this->getFormsField());
         if (($variation_id = $pluginVariations->getVariationId($this->getFormsField())) > 0) {
-            $this->productId = $variation_id;
+            $this->productIsVariable = true;
+            $this->productId = (int)$variation_id;
         }
     }
-    
+
     /**
      * @return string
      */
     private function collectLinkToProductForAdministrator(): string
     {
-        
         return sprintf(
             '<a href="%s" target="_blank"><span class="glyphicon glyphicon-share"></span></a>',
             $this->productUrl
@@ -153,8 +172,8 @@ class OrderForm
             __('Look', 'coderun-oneclickwoo')
         );
     }
-    
-    
+
+
     /**
      * @param $key
      *
@@ -164,14 +183,14 @@ class OrderForm
     {
         return $this->arrayParse($this->formData, $key);
     }
-    
+
     /**
      * Проверяют указанное поле и возвращает значение если есть
      * @param array<string, mixed> $data
      * @param string $key ключ массива
      * @return array|string
      */
-    private function arrayParse(array $data, $key)
+    private function arrayParse(array $data, string $key)
     {
         $result = '';
         if (isset($data[$key])) {
@@ -186,7 +205,7 @@ class OrderForm
         }
         return $result;
     }
-    
+
     /**
      * Для совместимости данных формы в виде массива name -> value
      *
@@ -203,8 +222,8 @@ class OrderForm
         }
         return $result;
     }
-    
-    
+
+
     /**
      * @param array $files
      *
@@ -218,13 +237,13 @@ class OrderForm
         }
         return array_filter($result);
     }
-    
+
     /**
      * Файлы в виде ссылок и строки
      * @param array $files
      * @return string
      */
-    private function collectLinksToUploadedFiles(array $files):string
+    private function collectLinksToUploadedFiles(array $files): string
     {
         $result = '';
         $count = 1;
@@ -240,10 +259,10 @@ class OrderForm
                 $count++
             );
         }
-        
+
         return $result;
     }
-    
+
     /**
      * @return array|string
      */
@@ -251,7 +270,7 @@ class OrderForm
     {
         return $this->userName;
     }
-    
+
     /**
      * @param array|string $userName
      *
@@ -262,7 +281,7 @@ class OrderForm
         $this->userName = $userName;
         return $this;
     }
-    
+
     /**
      * @return array|string
      */
@@ -270,7 +289,7 @@ class OrderForm
     {
         return $this->userPhone;
     }
-    
+
     /**
      * @param array|string $userPhone
      *
@@ -281,7 +300,7 @@ class OrderForm
         $this->userPhone = $userPhone;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -289,7 +308,7 @@ class OrderForm
     {
         return $this->userEmail;
     }
-    
+
     /**
      * @param string $userEmail
      *
@@ -300,7 +319,7 @@ class OrderForm
         $this->userEmail = $userEmail;
         return $this;
     }
-    
+
     /**
      * @return array|string
      */
@@ -308,7 +327,7 @@ class OrderForm
     {
         return $this->userComment;
     }
-    
+
     /**
      * @param array|string $userComment
      *
@@ -319,7 +338,7 @@ class OrderForm
         $this->userComment = $userComment;
         return $this;
     }
-    
+
     /**
      * @return array|string
      */
@@ -327,7 +346,7 @@ class OrderForm
     {
         return $this->orderComment;
     }
-    
+
     /**
      * @param array|string $orderComment
      *
@@ -338,7 +357,7 @@ class OrderForm
         $this->orderComment = $orderComment;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -346,7 +365,7 @@ class OrderForm
     {
         return $this->productId;
     }
-    
+
     /**
      * @param int $productId
      *
@@ -357,7 +376,7 @@ class OrderForm
         $this->productId = $productId;
         return $this;
     }
-    
+
     /**
      * @return array|string
      */
@@ -365,7 +384,7 @@ class OrderForm
     {
         return $this->productName;
     }
-    
+
     /**
      * @param array|string $productName
      *
@@ -376,7 +395,7 @@ class OrderForm
         $this->productName = $productName;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -384,7 +403,7 @@ class OrderForm
     {
         return $this->variationData;
     }
-    
+
     /**
      * @param string $variationData
      *
@@ -395,7 +414,7 @@ class OrderForm
         $this->variationData = $variationData;
         return $this;
     }
-    
+
     /**
      * @return array|string
      */
@@ -403,7 +422,7 @@ class OrderForm
     {
         return $this->productOriginalName;
     }
-    
+
     /**
      * @param array|string $productOriginalName
      *
@@ -414,7 +433,7 @@ class OrderForm
         $this->productOriginalName = $productOriginalName;
         return $this;
     }
-    
+
     /**
      * @return float
      */
@@ -422,7 +441,7 @@ class OrderForm
     {
         return $this->productPrice;
     }
-    
+
     /**
      * @param float $productPrice
      *
@@ -433,7 +452,7 @@ class OrderForm
         $this->productPrice = $productPrice;
         return $this;
     }
-    
+
     /**
      * @return float
      */
@@ -441,18 +460,19 @@ class OrderForm
     {
         return $this->productPriceWithTax;
     }
-    
+
     /**
      * @param float $productPriceWithTax
      *
      * @return OrderForm
      */
-    public function setProductPriceWithTax(float $productPriceWithTax
+    public function setProductPriceWithTax(
+        float $productPriceWithTax
     ): OrderForm {
         $this->productPriceWithTax = $productPriceWithTax;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -460,7 +480,7 @@ class OrderForm
     {
         return $this->productLinkAdmin;
     }
-    
+
     /**
      * @param string $productLinkAdmin
      *
@@ -471,7 +491,7 @@ class OrderForm
         $this->productLinkAdmin = $productLinkAdmin;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -479,7 +499,7 @@ class OrderForm
     {
         return $this->productLinkUser;
     }
-    
+
     /**
      * @param string $productLinkUser
      *
@@ -490,7 +510,7 @@ class OrderForm
         $this->productLinkUser = $productLinkUser;
         return $this;
     }
-    
+
     /**
      * @return array|string
      */
@@ -498,7 +518,7 @@ class OrderForm
     {
         return $this->companyName;
     }
-    
+
     /**
      * @param array|string $companyName
      *
@@ -509,7 +529,7 @@ class OrderForm
         $this->companyName = $companyName;
         return $this;
     }
-    
+
     /**
      * @return array|string
      */
@@ -517,7 +537,7 @@ class OrderForm
     {
         return $this->orderAdminComment;
     }
-    
+
     /**
      * @param array|string $orderAdminComment
      *
@@ -528,7 +548,7 @@ class OrderForm
         $this->orderAdminComment = $orderAdminComment;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -536,7 +556,7 @@ class OrderForm
     {
         return $this->conset;
     }
-    
+
     /**
      * @param bool $conset
      *
@@ -547,7 +567,7 @@ class OrderForm
         $this->conset = $conset;
         return $this;
     }
-    
+
     /**
      * @return array
      */
@@ -555,7 +575,7 @@ class OrderForm
     {
         return $this->formsField;
     }
-    
+
     /**
      * @param array $formsField
      *
@@ -566,7 +586,7 @@ class OrderForm
         $this->formsField = $formsField;
         return $this;
     }
-    
+
     /**
      * @return int|string
      */
@@ -574,7 +594,7 @@ class OrderForm
     {
         return $this->orderTime;
     }
-    
+
     /**
      * @param int|string $orderTime
      *
@@ -585,7 +605,7 @@ class OrderForm
         $this->orderTime = $orderTime;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -593,7 +613,7 @@ class OrderForm
     {
         return $this->custom;
     }
-    
+
     /**
      * @param int $custom
      *
@@ -604,7 +624,7 @@ class OrderForm
         $this->custom = $custom;
         return $this;
     }
-    
+
     /**
      * @return array|null
      */
@@ -612,7 +632,7 @@ class OrderForm
     {
         return $this->files;
     }
-    
+
     /**
      * @param array|null $files
      *
@@ -623,7 +643,7 @@ class OrderForm
         $this->files = $files;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -631,7 +651,7 @@ class OrderForm
     {
         return $this->quantityProduct;
     }
-    
+
     /**
      * @param int $quantityProduct
      *
@@ -642,7 +662,7 @@ class OrderForm
         $this->quantityProduct = $quantityProduct;
         return $this;
     }
-    
+
     /**
      * @return false|string|\WP_Error
      */
@@ -650,7 +670,7 @@ class OrderForm
     {
         return $this->productUrl;
     }
-    
+
     /**
      * @param false|string|\WP_Error $productUrl
      *
@@ -661,7 +681,7 @@ class OrderForm
         $this->productUrl = $productUrl;
         return $this;
     }
-    
+
     /**
      * @return array|mixed[]
      */
@@ -669,7 +689,7 @@ class OrderForm
     {
         return $this->formData;
     }
-    
+
     /**
      * @param array|mixed[] $formData
      *
@@ -680,7 +700,7 @@ class OrderForm
         $this->formData = $formData;
         return $this;
     }
-    
+
     /**
      * @return array|mixed[]
      */
@@ -688,7 +708,7 @@ class OrderForm
     {
         return $this->filesUrlCollection;
     }
-    
+
     /**
      * @return string
      */
@@ -696,7 +716,7 @@ class OrderForm
     {
         return $this->filesLink;
     }
-    
+
     /**
      * @param array|mixed[] $filesUrlCollection
      *
@@ -707,7 +727,7 @@ class OrderForm
         $this->filesUrlCollection = $filesUrlCollection;
         return $this;
     }
-    
+
     /**
      * @param string $filesLink
      *
@@ -719,6 +739,22 @@ class OrderForm
         return $this;
     }
 
-    
-    
+    /**
+     * @return bool
+     */
+    public function isProductIsVariable(): bool
+    {
+        return $this->productIsVariable;
+    }
+
+    /**
+     * @param bool $productIsVariable
+     *
+     * @return OrderForm
+     */
+    public function setProductIsVariable(bool $productIsVariable): OrderForm
+    {
+        $this->productIsVariable = $productIsVariable;
+        return $this;
+    }
 }

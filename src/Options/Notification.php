@@ -15,10 +15,9 @@ use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
  */
 class Notification extends Base
 {
-    
     /** @var string  */
     protected const ROOT_KEY = OptionsType::NOTIFICATIONS;
-   
+
     /**
      * Название организации
      *
@@ -27,7 +26,7 @@ class Notification extends Base
      * @var string
      */
     protected string $organizationName;
-    
+
     /**
      * Email в поле от кого
      *
@@ -36,7 +35,7 @@ class Notification extends Base
      * @var string
      */
     protected string $emailFromWhom;
-    
+
     /**
      * Email скрытая копия
      *
@@ -45,7 +44,7 @@ class Notification extends Base
      * @var string
      */
     protected string $emailBcc;
-    
+
     /**
      * Информация о заказе
      *
@@ -54,7 +53,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableOrderInformation;
-    
+
     /**
      * Дополнительное поле из настроек
      *
@@ -63,7 +62,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableAdditionalField;
-    
+
     /**
      * Ссылки на файлы
      *
@@ -72,7 +71,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableFileLinks;
-    
+
     /**
      * Сообщение из доп. поля настроек
      *
@@ -81,7 +80,7 @@ class Notification extends Base
      * @var string
      */
     protected string $additionalFieldMessage;
-    
+
     /**
      * Включить уведомление смс клиенту
      *
@@ -90,7 +89,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableSendingSmsToClient;
-    
+
     /**
      * Включить уведомление смс продавцу
      *
@@ -99,7 +98,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableSendingSmsToSeller;
-    
+
     /**
      * Номер телефона продавца
      *
@@ -108,7 +107,7 @@ class Notification extends Base
      * @var string
      */
     protected string $sellerPhoneNumber;
-    
+
     /**
      * Логин сервис смс
      *
@@ -117,7 +116,7 @@ class Notification extends Base
      * @var string
      */
     protected string $smsServiceLogin;
-    
+
     /**
      * Пароль сервис смс
      *
@@ -126,7 +125,7 @@ class Notification extends Base
      * @var string
      */
     protected string $smsServicePassword;
-    
+
     /**
      * Sms POST
      *
@@ -135,7 +134,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableSmsServicePostProtocol;
-    
+
     /**
      * Sms https
      *
@@ -144,7 +143,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableSmsServiceHttpsProtocol;
-    
+
     /**
      * Sms кодировка символов
      *
@@ -153,7 +152,7 @@ class Notification extends Base
      * @var string
      */
     protected string $smsCharacterEncoding;
-    
+
     /**
      * Sms шаблон клиента
      *
@@ -162,7 +161,7 @@ class Notification extends Base
      * @var string
      */
     protected string $smsClientTemplate;
-    
+
     /**
      * Sms шаблон продавца
      *
@@ -171,7 +170,7 @@ class Notification extends Base
      * @var string
      */
     protected string $smsSellerTemplate;
-    
+
     /**
      * sms debug
      *
@@ -180,7 +179,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableSmsDebug;
-    
+
     /**
      * Цена с учётом налога
      *
@@ -189,7 +188,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enablePriceWithTax;
-    
+
     /**
      * Включить информацию о заказе в шаблон WooCommerce
      *
@@ -198,7 +197,7 @@ class Notification extends Base
      * @var bool
      */
     protected bool $enableOrderInformationToTemplateWoo;
-    
+
     /**
      * Настройки из WordPress в св-ва
      *
@@ -227,8 +226,8 @@ class Notification extends Base
         $this->enablePriceWithTax = boolval($options['price_including_tax'] ?? false);
         $this->enableOrderInformationToTemplateWoo = boolval($options['modificationOrderTemplate'] ?? false);
     }
-    
-    
+
+
     /**
      * @return string
      */
@@ -236,7 +235,7 @@ class Notification extends Base
     {
         return $this->organizationName;
     }
-    
+
     /**
      * @param string $organizationName
      *
@@ -247,7 +246,7 @@ class Notification extends Base
         $this->organizationName = $organizationName;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -255,7 +254,7 @@ class Notification extends Base
     {
         return $this->emailFromWhom;
     }
-    
+
     /**
      * @param string $emailFromWhom
      *
@@ -266,7 +265,7 @@ class Notification extends Base
         $this->emailFromWhom = $emailFromWhom;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -274,7 +273,7 @@ class Notification extends Base
     {
         return $this->emailBcc;
     }
-    
+
     /**
      * @param string $emailBcc
      *
@@ -285,7 +284,7 @@ class Notification extends Base
         $this->emailBcc = $emailBcc;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -293,18 +292,19 @@ class Notification extends Base
     {
         return $this->enableOrderInformation;
     }
-    
+
     /**
      * @param bool $enableOrderInformation
      *
      * @return Notification
      */
-    public function setEnableOrderInformation(bool $enableOrderInformation
+    public function setEnableOrderInformation(
+        bool $enableOrderInformation
     ): Notification {
         $this->enableOrderInformation = $enableOrderInformation;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -312,18 +312,19 @@ class Notification extends Base
     {
         return $this->enableAdditionalField;
     }
-    
+
     /**
      * @param bool $enableAdditionalField
      *
      * @return Notification
      */
-    public function setEnableAdditionalField(bool $enableAdditionalField
+    public function setEnableAdditionalField(
+        bool $enableAdditionalField
     ): Notification {
         $this->enableAdditionalField = $enableAdditionalField;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -331,7 +332,7 @@ class Notification extends Base
     {
         return $this->enableFileLinks;
     }
-    
+
     /**
      * @param bool $enableFileLinks
      *
@@ -342,7 +343,7 @@ class Notification extends Base
         $this->enableFileLinks = $enableFileLinks;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -350,18 +351,19 @@ class Notification extends Base
     {
         return $this->additionalFieldMessage;
     }
-    
+
     /**
      * @param string $additionalFieldMessage
      *
      * @return Notification
      */
-    public function setAdditionalFieldMessage(string $additionalFieldMessage
+    public function setAdditionalFieldMessage(
+        string $additionalFieldMessage
     ): Notification {
         $this->additionalFieldMessage = $additionalFieldMessage;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -369,18 +371,19 @@ class Notification extends Base
     {
         return $this->enableSendingSmsToClient;
     }
-    
+
     /**
      * @param bool $enableSendingSmsToClient
      *
      * @return Notification
      */
-    public function setEnableSendingSmsToClient(bool $enableSendingSmsToClient
+    public function setEnableSendingSmsToClient(
+        bool $enableSendingSmsToClient
     ): Notification {
         $this->enableSendingSmsToClient = $enableSendingSmsToClient;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -388,18 +391,19 @@ class Notification extends Base
     {
         return $this->enableSendingSmsToSeller;
     }
-    
+
     /**
      * @param bool $enableSendingSmsToSeller
      *
      * @return Notification
      */
-    public function setEnableSendingSmsToSeller(bool $enableSendingSmsToSeller
+    public function setEnableSendingSmsToSeller(
+        bool $enableSendingSmsToSeller
     ): Notification {
         $this->enableSendingSmsToSeller = $enableSendingSmsToSeller;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -407,18 +411,19 @@ class Notification extends Base
     {
         return $this->sellerPhoneNumber;
     }
-    
+
     /**
      * @param string $sellerPhoneNumber
      *
      * @return Notification
      */
-    public function setSellerPhoneNumber(string $sellerPhoneNumber
+    public function setSellerPhoneNumber(
+        string $sellerPhoneNumber
     ): Notification {
         $this->sellerPhoneNumber = $sellerPhoneNumber;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -426,7 +431,7 @@ class Notification extends Base
     {
         return $this->smsServiceLogin;
     }
-    
+
     /**
      * @param string $smsServiceLogin
      *
@@ -437,7 +442,7 @@ class Notification extends Base
         $this->smsServiceLogin = $smsServiceLogin;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -445,18 +450,19 @@ class Notification extends Base
     {
         return $this->smsServicePassword;
     }
-    
+
     /**
      * @param string $smsServicePassword
      *
      * @return Notification
      */
-    public function setSmsServicePassword(string $smsServicePassword
+    public function setSmsServicePassword(
+        string $smsServicePassword
     ): Notification {
         $this->smsServicePassword = $smsServicePassword;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -464,18 +470,19 @@ class Notification extends Base
     {
         return $this->enableSmsServicePostProtocol;
     }
-    
+
     /**
      * @param bool $enableSmsServicePostProtocol
      *
      * @return Notification
      */
-    public function setEnableSmsServicePostProtocol(bool $enableSmsServicePostProtocol
+    public function setEnableSmsServicePostProtocol(
+        bool $enableSmsServicePostProtocol
     ): Notification {
         $this->enableSmsServicePostProtocol = $enableSmsServicePostProtocol;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -483,18 +490,19 @@ class Notification extends Base
     {
         return $this->enableSmsServiceHttpsProtocol;
     }
-    
+
     /**
      * @param bool $enableSmsServiceHttpsProtocol
      *
      * @return Notification
      */
-    public function setEnableSmsServiceHttpsProtocol(bool $enableSmsServiceHttpsProtocol
+    public function setEnableSmsServiceHttpsProtocol(
+        bool $enableSmsServiceHttpsProtocol
     ): Notification {
         $this->enableSmsServiceHttpsProtocol = $enableSmsServiceHttpsProtocol;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -502,18 +510,19 @@ class Notification extends Base
     {
         return $this->smsCharacterEncoding;
     }
-    
+
     /**
      * @param string $smsCharacterEncoding
      *
      * @return Notification
      */
-    public function setSmsCharacterEncoding(string $smsCharacterEncoding
+    public function setSmsCharacterEncoding(
+        string $smsCharacterEncoding
     ): Notification {
         $this->smsCharacterEncoding = $smsCharacterEncoding;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -521,18 +530,19 @@ class Notification extends Base
     {
         return $this->smsClientTemplate;
     }
-    
+
     /**
      * @param string $smsClientTemplate
      *
      * @return Notification
      */
-    public function setSmsClientTemplate(string $smsClientTemplate
+    public function setSmsClientTemplate(
+        string $smsClientTemplate
     ): Notification {
         $this->smsClientTemplate = $smsClientTemplate;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -540,18 +550,19 @@ class Notification extends Base
     {
         return $this->smsSellerTemplate;
     }
-    
+
     /**
      * @param string $smsSellerTemplate
      *
      * @return Notification
      */
-    public function setSmsSellerTemplate(string $smsSellerTemplate
+    public function setSmsSellerTemplate(
+        string $smsSellerTemplate
     ): Notification {
         $this->smsSellerTemplate = $smsSellerTemplate;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -559,7 +570,7 @@ class Notification extends Base
     {
         return $this->enableSmsDebug;
     }
-    
+
     /**
      * @param bool $enableSmsDebug
      *
@@ -570,7 +581,7 @@ class Notification extends Base
         $this->enableSmsDebug = $enableSmsDebug;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -578,18 +589,19 @@ class Notification extends Base
     {
         return $this->enablePriceWithTax;
     }
-    
+
     /**
      * @param bool $enablePriceWithTax
      *
      * @return Notification
      */
-    public function setEnablePriceWithTax(bool $enablePriceWithTax
+    public function setEnablePriceWithTax(
+        bool $enablePriceWithTax
     ): Notification {
         $this->enablePriceWithTax = $enablePriceWithTax;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -597,19 +609,20 @@ class Notification extends Base
     {
         return $this->enableOrderInformationToTemplateWoo;
     }
-    
+
     /**
      * @param bool $enableOrderInformationToTemplateWoo
      *
      * @return Notification
      */
-    public function setEnableOrderInformationToTemplateWoo(bool $enableOrderInformationToTemplateWoo
+    public function setEnableOrderInformationToTemplateWoo(
+        bool $enableOrderInformationToTemplateWoo
     ): Notification {
         $this->enableOrderInformationToTemplateWoo
             = $enableOrderInformationToTemplateWoo;
         return $this;
     }
-    
+
     /**
      * @inheritDoc
      *
@@ -619,5 +632,4 @@ class Notification extends Base
     {
         return self::ROOT_KEY;
     }
-    
 }

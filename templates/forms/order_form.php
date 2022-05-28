@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 <div id="formOrderOneClick">
     <div class="overlay" title="окно"></div>
     <div class="popup">
-        <div class="close_order <?php echo ($field['is_template_style'] ? 'button' : '') ?>">x</div>
+        <div class="close_order <?php echo($field['is_template_style'] ? 'button' : '') ?>">x</div>
         <form id="buyoneclick_form_order" class="b1c-form" method="post" action="#">
             <h2><?php echo $options['buyoptions']['namebutton']; ?></h2>
             <?php if (!empty($options['buyoptions']['infotovar_chek'])) { ?>
@@ -54,10 +54,10 @@ if (!defined('ABSPATH')) {
             <?php } ?>
             
             <?php if (!empty($options['buyoptions']['fio_chek'])) { ?>
-                <input class="buyvalide <?php echo ($field['is_template_style'] ? 'input-text' : '') ?>" type="text" <?php ?> placeholder="<?php echo $options['buyoptions']['fio_descript']; ?>" name="txtname">
+                <input class="buyvalide <?php echo($field['is_template_style'] ? 'input-text' : '') ?>" type="text" <?php ?> placeholder="<?php echo $options['buyoptions']['fio_descript']; ?>" name="txtname">
             <?php } ?>
             <?php if (!empty($options['buyoptions']['fon_chek'])) { ?>
-                <input class="buyvalide <?php echo ($field['is_template_style'] ? 'input-text' : '') ?> " type="tel" <?php ?> placeholder="<?php echo $options['buyoptions']['fon_descript']; ?>" name="txtphone">
+                <input class="buyvalide <?php echo($field['is_template_style'] ? 'input-text' : '') ?> " type="tel" <?php ?> placeholder="<?php echo $options['buyoptions']['fon_descript']; ?>" name="txtphone">
                 <p class="phoneFormat"><?php
                     if (!empty($options['buyoptions']['fon_format'])) {
                         echo __('Format', 'coderun-oneclickwoo') . ' ' . $options['buyoptions']['fon_format'];
@@ -65,7 +65,7 @@ if (!defined('ABSPATH')) {
                     ?></p>
             <?php } ?>
             <?php if (!empty($options['buyoptions']['email_chek'])) { ?>
-                <input class="buyvalide <?php echo ($field['is_template_style'] ? 'input-text' : '') ?> " type="email" <?php ?> placeholder="<?php echo $options['buyoptions']['email_descript']; ?>" name="txtemail">
+                <input class="buyvalide <?php echo($field['is_template_style'] ? 'input-text' : '') ?> " type="email" <?php ?> placeholder="<?php echo $options['buyoptions']['email_descript']; ?>" name="txtemail">
             <?php } ?>
             <?php if (!empty($options['buyoptions']['dopik_chek'])) { ?>
                 <textarea class="buymessage buyvalide" <?php ?> name="message" placeholder="<?php echo $options['buyoptions']['dopik_descript']; ?>" rows="2" value=""></textarea>
@@ -80,7 +80,7 @@ if (!defined('ABSPATH')) {
             
             <?php echo $field['html_form_quantity']; ?>
             
-            <?php wp_nonce_field('one_click_send','_coderun_nonce'); ?>
+            <?php wp_nonce_field('one_click_send', '_coderun_nonce'); ?>
             <input type="hidden" name="nametovar" value="<?php echo $field['product_name']; ?>" />
             <input type="hidden" name="pricetovar" value="<?php echo $field['product_price']; ?>" />
             <input type="hidden" name="idtovar" value="<?php echo $field['product_id']; ?>" />
@@ -90,11 +90,11 @@ if (!defined('ABSPATH')) {
             <?php
             //Форма файлов
             echo $field['html_form_file_upload'];
-            
-            if(!empty($options['buyoptions']['recaptcha_order_form'])) {
+
+            if (!empty($options['buyoptions']['recaptcha_order_form'])) {
                 Coderun\BuyOneClick\ReCaptcha::getInstance()->view($options['buyoptions']['recaptcha_order_form']);
             }
-            
+
             ?>
             
             <p class="form-message-result"></p>

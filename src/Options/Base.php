@@ -12,14 +12,14 @@ namespace Coderun\BuyOneClick\Options;
 abstract class Base implements OptionsInterface
 {
     use OptionsTrait;
-    
+
     /**
      * Имя докБлока для разбора значений опций WoordPress
      *
      * @var string
      */
     protected const DOC_OPTIONS_NAME = 'wpOptionsName';
-    
+
     /**
      * Имя корневой настройки
      *

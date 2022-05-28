@@ -13,106 +13,105 @@ use DateTime;
  */
 class Order implements EntityInterface
 {
-    
     /**
      * @var int
      */
     protected int $id;
-    
+
     /**
      * Версия плагина
      *
      * @var string|null
      */
     protected ?string $pluginVersion;
-    
+
     /**
      * Активность
      *
      * @var bool
      */
     protected bool $active;
-    
+
     /**
      * Статус заказа
      *
      * @var int
      */
     protected int $status;
-    
+
     /**
      * ИД товара WooCommerce
      *
      * @var int|null
      */
     protected ?int $productId;
-    
+
     /**
      * Имя товара WooCommerce
      *
      * @var string
      */
     protected ?string $productName;
-    
+
     /**
      * ХЗ
      *
      * @var string
      */
     protected ?string $productMeta;
-    
+
     /**
      * Цена товара WooCommerce
      *
      * @var float
      */
     protected ?float $productPrice;
-    
+
     /**
      * Заказанное количество
      *
      * @var int
      */
     protected int $productQuantity;
-    
+
     /**
      * Вся форма заказа
      *
      * @var string|null
      */
     protected ?string $form;
-    
+
     /**
      * СМС лог от сервиса СМС
      *
      * @var string|null
      */
     protected ?string $smsLog;
-    
+
     /**
      * ID Заказ WooCommerce
      *
      * @var int|null
      */
     protected ?int $wooOrderId;
-    
+
     /**
      * Покупатель
      *
      * @var int
      */
     protected ?int $userId;
-    
+
     /**
      * @var DateTime|null
      */
     protected ?DateTime $dateUpdate;
-    
+
     /**
      * @var DateTime
      */
     protected DateTime $dateCreate;
-    
+
     /**
      * @return int
      */
@@ -120,7 +119,7 @@ class Order implements EntityInterface
     {
         return $this->id;
     }
-    
+
     /**
      * @param int $id
      *
@@ -131,7 +130,7 @@ class Order implements EntityInterface
         $this->id = $id;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -139,7 +138,7 @@ class Order implements EntityInterface
     {
         return $this->pluginVersion;
     }
-    
+
     /**
      * @param string|null $pluginVersion
      *
@@ -150,7 +149,7 @@ class Order implements EntityInterface
         $this->pluginVersion = $pluginVersion;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -158,7 +157,7 @@ class Order implements EntityInterface
     {
         return $this->active;
     }
-    
+
     /**
      * @param bool $active
      *
@@ -169,7 +168,7 @@ class Order implements EntityInterface
         $this->active = $active;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -177,7 +176,7 @@ class Order implements EntityInterface
     {
         return $this->status;
     }
-    
+
     /**
      * @param int $status
      *
@@ -188,7 +187,7 @@ class Order implements EntityInterface
         $this->status = $status;
         return $this;
     }
-    
+
     /**
      * @return int|null
      */
@@ -196,7 +195,7 @@ class Order implements EntityInterface
     {
         return $this->productId;
     }
-    
+
     /**
      * @param int|null $productId
      *
@@ -207,7 +206,7 @@ class Order implements EntityInterface
         $this->productId = $productId;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -215,7 +214,7 @@ class Order implements EntityInterface
     {
         return $this->productName;
     }
-    
+
     /**
      * @param string $productName
      *
@@ -226,7 +225,7 @@ class Order implements EntityInterface
         $this->productName = $productName;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -234,7 +233,7 @@ class Order implements EntityInterface
     {
         return $this->productMeta;
     }
-    
+
     /**
      * @param string $productMeta
      *
@@ -245,7 +244,7 @@ class Order implements EntityInterface
         $this->productMeta = $productMeta;
         return $this;
     }
-    
+
     /**
      * @return float
      */
@@ -253,7 +252,7 @@ class Order implements EntityInterface
     {
         return $this->productPrice;
     }
-    
+
     /**
      * @param float $productPrice
      *
@@ -264,7 +263,7 @@ class Order implements EntityInterface
         $this->productPrice = $productPrice;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -272,7 +271,7 @@ class Order implements EntityInterface
     {
         return $this->productQuantity;
     }
-    
+
     /**
      * @param int $productQuantity
      *
@@ -283,7 +282,7 @@ class Order implements EntityInterface
         $this->productQuantity = $productQuantity;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -291,7 +290,7 @@ class Order implements EntityInterface
     {
         return $this->form;
     }
-    
+
     /**
      * @param string|null $form
      *
@@ -302,7 +301,7 @@ class Order implements EntityInterface
         $this->form = $form;
         return $this;
     }
-    
+
     /**
      * @return string|null
      */
@@ -310,7 +309,7 @@ class Order implements EntityInterface
     {
         return $this->smsLog;
     }
-    
+
     /**
      * @param string|null $smsLog
      *
@@ -321,7 +320,7 @@ class Order implements EntityInterface
         $this->smsLog = $smsLog;
         return $this;
     }
-    
+
     /**
      * @return int|null
      */
@@ -329,7 +328,7 @@ class Order implements EntityInterface
     {
         return $this->wooOrderId;
     }
-    
+
     /**
      * @param int|null $wooOrderId
      *
@@ -340,7 +339,7 @@ class Order implements EntityInterface
         $this->wooOrderId = $wooOrderId;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -348,7 +347,7 @@ class Order implements EntityInterface
     {
         return $this->userId;
     }
-    
+
     /**
      * @param int $userId
      *
@@ -359,7 +358,7 @@ class Order implements EntityInterface
         $this->userId = $userId;
         return $this;
     }
-    
+
     /**
      * @return DateTime|null
      */
@@ -367,7 +366,7 @@ class Order implements EntityInterface
     {
         return $this->dateUpdate;
     }
-    
+
     /**
      * @param DateTime|null $dateUpdate
      *
@@ -378,7 +377,7 @@ class Order implements EntityInterface
         $this->dateUpdate = $dateUpdate;
         return $this;
     }
-    
+
     /**
      * @return DateTime
      */
@@ -386,7 +385,7 @@ class Order implements EntityInterface
     {
         return $this->dateCreate;
     }
-    
+
     /**
      * @param DateTime $dateCreate
      *
@@ -397,7 +396,4 @@ class Order implements EntityInterface
         $this->dateCreate = $dateCreate;
         return $this;
     }
-    
-  
-    
 }

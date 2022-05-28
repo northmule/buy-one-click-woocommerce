@@ -14,7 +14,6 @@ use Coderun\BuyOneClick\Repository\Order;
  */
 class AdminController extends Controller
 {
-    
     /**
      * @inheritDoc
      *
@@ -25,7 +24,7 @@ class AdminController extends Controller
         if (!is_admin()) {
             return;
         }
-    
+
         add_action(
             'wp_ajax_removeorder',
             [$this, 'deleteOrderById']
@@ -38,9 +37,8 @@ class AdminController extends Controller
             'wp_ajax_removeorderall',
             [$this, 'deleteAllOrders']
         );
-        
     }
-    
+
     /**
      * Удаляет заказ из таблицы заказов
      *
@@ -48,7 +46,7 @@ class AdminController extends Controller
      */
     public function deleteOrderById(): void
     {
-        
+
         // Удаление записи журнала плагина
         if (!empty($_POST['text'])) {
             $order_id = intval($_POST['text']);
@@ -67,10 +65,10 @@ class AdminController extends Controller
                 }
             }
         }
-        
+
         wp_send_json_error();
     }
-    
+
     /**
      *
      * Удаляет все заказы из таблицы
@@ -87,7 +85,7 @@ class AdminController extends Controller
             wp_send_json_error('error');
         }
     }
-    
+
     /**
      *
      *
@@ -100,5 +98,4 @@ class AdminController extends Controller
         Order::getInstance()->update_status($id, intval($text['status']));
         wp_send_json_success();
     }
-    
 }

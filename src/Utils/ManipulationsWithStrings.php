@@ -13,7 +13,6 @@ use function ucfirst;
  */
 class ManipulationsWithStrings
 {
-    
     /**
      * Изменение имени с-ва
      *

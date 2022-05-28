@@ -4,7 +4,6 @@ namespace Coderun\BuyOneClick\Repository;
 
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
-use Coderun\BuyOneClick\Logger;
 use Coderun\BuyOneClick\BuyHookPlugin;
 
 class Order
@@ -13,7 +12,6 @@ class Order
 
     protected $order_table = 'wp_coderun_oneclickwoo_orders';
 
-    protected $logger = null;
 
     /**
      * Singletone
@@ -29,7 +27,6 @@ class Order
 
     protected function __construct()
     {
-        $this->logger = Logger::getInstance();
     }
 
     /**
@@ -176,9 +173,10 @@ class Order
      *
      * @return int
      */
-    public function save_order(array $order) {
+    public function save_order(array $order)
+    {
         global $wpdb;
-        
+
         $default_field = [
             'active'=>1,
             'plugin_version' => CODERUN_ONECLICKWOO_PLUGIN_VERSION,
@@ -193,12 +191,11 @@ class Order
             'woo_order_id'=>null,
             'user_id'=>null,
         ];
-        
+
         $order = array_merge($default_field, $order);
         $wpdb->insert($this->order_table, $order);
         BuyHookPlugin::saveOrderToTable($wpdb->insert_id);
         if ($wpdb->last_error) {
-            $this->logger->setInfo($wpdb->last_error);
         }
         return $wpdb->insert_id;
     }
@@ -222,7 +219,7 @@ class Order
         $order_id = intval($order_id);
         return $wpdb->get_row("select * from {$this->order_table} where woo_order_id={$order_id}", ARRAY_A);
     }
-    
+
     /**
      * Список заказов
      *

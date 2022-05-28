@@ -30,7 +30,7 @@
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  */
 
 __('Buy one click WooCommerce');
@@ -42,29 +42,36 @@ if (!defined('ABSPATH')) {
 
 define('CODERUN_ONECLICKWOO_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)));
 define('CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR', CODERUN_ONECLICKWOO_PLUGIN_DIR . '/templates');
-define('CODERUN_ONECLICKWOO_PLUGIN_VERSION','1.16.1');
+define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.0.0');
 
 /**
  * Инициализация всего плагина
  */
-function coderun_buy_plugin_init_core() {
-
+function coderun_buy_plugin_init_core()
+{
     load_plugin_textdomain(
-        'coderun-oneclickwoo', false, dirname(plugin_basename(__FILE__)) . '/languages'
+        'coderun-oneclickwoo',
+        false,
+        dirname(plugin_basename(__FILE__)) . '/languages'
     );
-    
-    require_once (CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
 
-    $core = Coderun\BuyOneClick\Core::getInstance();
-    register_deactivation_hook(__FILE__, array($core, 'deactivationPlugin'));
-    register_activation_hook(__FILE__, array($core, 'addOptions'));
-    
+    require_once(CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
+    try {
+        $core = Coderun\BuyOneClick\Core::getInstance();
+        register_deactivation_hook(__FILE__, [$core, 'deactivationPlugin']);
+        register_activation_hook(__FILE__, [$core, 'addOptions']);
+    } catch (Exception $ex) {
+        \Coderun\BuyOneClick\Common\Logger::getInstance()->error($ex->getMessage(), [
+            $ex->getFile(),
+            $ex->getLine(),
+            $ex->getTraceAsString(),
+        ]);
+        throw $ex;
+    }
+
     /** сервисные операции */
-    if (get_option( 'wp_coderun_oneclickwoo_db_version',0) !=  Coderun\BuyOneClick\PluginUpdate::DB_VERSION) {
+    if (get_option('wp_coderun_oneclickwoo_db_version', 0) !=  Coderun\BuyOneClick\PluginUpdate::DB_VERSION) {
         Coderun\BuyOneClick\PluginUpdate::createOrderTable();
     }
-    
 }
-
 coderun_buy_plugin_init_core();
-

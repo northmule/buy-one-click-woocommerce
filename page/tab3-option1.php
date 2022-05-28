@@ -40,16 +40,16 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
                 echo '<br>'.__('Plugin Order №', 'coderun-oneclickwoo').": {$order->getId()}";
                 ?>
                 <?php
-                if($order->getWooOrderId()) {
+                if ($order->getWooOrderId()) {
                     echo '<br>'.__('Woo Order №', 'coderun-oneclickwoo').": <a href='/wp-admin/post.php?post={$order->getWooOrderId()}&action=edit'>{$order->getWooOrderId()}</a>";
                 }
-                
+
 
                 $sms = json_decode($order->getSmsLog(), true);
                 $orderData = new OrderDataForAdminValueObject(
                     json_decode($order->getForm(), true)
                 )
-                
+
                 ?>
             </th>
             <th><?php echo $order->getDateCreate()->format('d.m.Y H:i:s'); ?></th>
@@ -60,10 +60,10 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
             <th>
                 <?php echo $order->getProductName(); ?>
                 <br>
+                <?php echo $orderData->isProductIsVariable() ? $orderData->getVariationData() : ''; ?>
+                <br>
                 <?php
-                if($orderData->getQuantityProduct()) {
                     echo __('Quantity', 'coderun-oneclickwoo') . ': ' . $orderData->getQuantityProduct();
-                }
                 ?>
             </th>
             <th><?php echo $order->getProductPrice(); ?></th>
@@ -98,7 +98,7 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
                 <a class="removeorder" id="<?php echo $order->getId(); ?>" href="<?php echo $url_tab; ?>#id=<?php echo $order->getId(); ?>">
                     <span class="glyphicon glyphicon-remove-circle"><?php _e('OnlyPlugin', 'coderun-oneclickwoo'); ?></span>
                 </a>
-                <?php if(!empty($order->getWooOrderId()) && Help::getInstance()->isset_woo_order($order->getWooOrderId())) { ?>
+                <?php if (!empty($order->getWooOrderId()) && Help::getInstance()->isset_woo_order($order->getWooOrderId())) { ?>
                     <br><br>
                     <a class="removeorder_woo" data-plugin_id="<?php echo $order->getId(); ?>" data-woo_id="<?php echo $order->getWooOrderId(); ?>" href="<?php echo $url_tab; ?>#id=<?php echo $order->getWooOrderId(); ?>">
                         <span class="glyphicon glyphicon-remove-circle"><?php _e('OnlyWoo', 'coderun-oneclickwoo'); ?></span>

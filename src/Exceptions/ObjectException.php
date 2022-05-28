@@ -11,7 +11,6 @@ namespace Coderun\BuyOneClick\Exceptions;
  */
 class ObjectException extends BaseException implements ExceptionInterface
 {
-    
     /**
      * @param string $method
      * @param object $class
@@ -28,7 +27,7 @@ class ObjectException extends BaseException implements ExceptionInterface
             ),
         );
     }
-    
+
     /**
      * @return ObjectException
      */
@@ -36,5 +35,4 @@ class ObjectException extends BaseException implements ExceptionInterface
     {
         return new self('the property type is not defined');
     }
-    
 }

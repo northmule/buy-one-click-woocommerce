@@ -13,7 +13,7 @@ class ErrorResponse implements ResponseInterface
 {
     /** @var string  */
     protected string $message = '';
-    
+
     /**
      * @return string
      */
@@ -21,7 +21,7 @@ class ErrorResponse implements ResponseInterface
     {
         return $this->message;
     }
-    
+
     /**
      * @param string $message
      *
@@ -32,7 +32,7 @@ class ErrorResponse implements ResponseInterface
         $this->message = $message;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -40,6 +40,4 @@ class ErrorResponse implements ResponseInterface
     {
         return $this->message !== '';
     }
-    
-    
 }

@@ -5,7 +5,6 @@ use Coderun\BuyOneClick\Core;
 
 class BuySMSC
 {
-    
     /**
      * Обычная отправка СМС
      *

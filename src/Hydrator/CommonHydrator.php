@@ -12,7 +12,7 @@ namespace Coderun\BuyOneClick\Hydrator;
 class CommonHydrator implements HydratorInterface
 {
     use HydrateTrait;
-    
+
     /**
      * @inheritDoc
      *
@@ -21,9 +21,10 @@ class CommonHydrator implements HydratorInterface
      *
      * @return object
      */
-    public function hydrate(array $initialData, object $destinationObject
+    public function hydrate(
+        array $initialData,
+        object $destinationObject
     ): object {
         return $destinationObject; // todo
     }
-    
 }
