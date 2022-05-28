@@ -76,6 +76,7 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 = 2.0.0 =
 * Refactoring the code structure
 * PHP below 7.4 is no longer supported, the plugin will cause fatal errors
+* Generating a translation file
 = 1.18.0 =
 * Обновил вкладку для установки целей Метрик
 * Добавлена справка по настройке целей
