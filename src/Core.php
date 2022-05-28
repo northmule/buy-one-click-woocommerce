@@ -2,63 +2,75 @@
 
 namespace Coderun\BuyOneClick;
 
+use Coderun\BuyOneClick\Controller\AdminController;
+use Coderun\BuyOneClick\Controller\CartController;
+use Coderun\BuyOneClick\Controller\FormController;
+use Coderun\BuyOneClick\Controller\OrderController;
+use Coderun\BuyOneClick\Options\General as GeneralOptions;
+use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
+use Exception;
+use WC_Product;
+use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
+
+use function method_exists;
+use function get_option;
 
 /**
  * Базовый класс плагина
  * Создаёт настройки, отображает опции в админки
  * Вызывает хуки ВордПресс
  */
-class Core {
-    
+class Core
+{
     /**
      * Полное название плагина
      */
-    const NAME_PLUGIN = 'Buy one click WooCommerce';
-    
+    public const NAME_PLUGIN = 'Buy one click WooCommerce';
+
     /**
      * Имя папки с плагином без слэшей
      */
-    const PATCH_PLUGIN = 'buy-one-click-woocommerce';
-    
+    public const PATCH_PLUGIN = 'buy-one-click-woocommerce';
+
     /**
      * Название пункта подменю
      */
-    const NAME_SUB_MENU = 'BuyOneClick';
-    
+    public const NAME_SUB_MENU = 'BuyOneClick';
+
     /**
      * URL страницы подменю
      */
-    const URL_SUB_MENU = 'buyone';
-    
+    public const URL_SUB_MENU = 'buyone';
+
     /**
      * Путь до страницы опций плагина HTML
      */
-    const OPTIONS_NAME_PAGE = 'page/option1.php';
-    
+    public const OPTIONS_NAME_PAGE = 'page/option1.php';
+
     /**
      * Имя индексного файла
      */
-    const INDEX_NAME_FILE = 'buycli-index.php';
-    
-    const OPTIONS_MARKETING = 'buyoptions_marketing';
-    
-    const OPTIONS_GENERAL = 'buyoptions';
-    
-    const OPTIONS_DESIGN_FORM = 'buyoptions_design_form';
+    public const INDEX_NAME_FILE = 'buycli-index.php';
+
+    public const OPTIONS_MARKETING = OptionsType::MARKETING;
+
+    public const OPTIONS_GENERAL = OptionsType::GENERAL;
+
+    public const OPTIONS_DESIGN_FORM = OptionsType::DESIGN_FORM;
     /**
      * Вкладка Уведомлений
      */
-    const OPTIONS_NOTIFICATIONS = 'buynotification';
-    
-    const OPTIONS_SMS = 'buysmscoptions';
-    
+    public const OPTIONS_NOTIFICATIONS = OptionsType::NOTIFICATIONS;
+
+    public const OPTIONS_SMS = OptionsType::SMS;
+
     /**
      * Версия ядра
      */
-    const VERSION = '1.16.1';
-    
+    public const VERSION = '1.16.1';
+
     protected static $_instance = null;
-    
+
     public static $buyzakaz;
 
     /**
@@ -66,13 +78,26 @@ class Core {
      * @var type
      */
     public static $variation = false;
-    
+
     /**
      * @deprecated
      * @var array|type
      */
     protected $options = array();
-    
+
+    /**
+     * Настройки плагина
+     *
+     * @var GeneralOptions
+     */
+    protected GeneralOptions $commonOptions;
+    /**
+     * Настройки плагина
+     *
+     * @var NotificationOptions
+     */
+    protected NotificationOptions $notificationOptions;
+
     /**
      * Все настройки плагина
      *
@@ -83,28 +108,29 @@ class Core {
         self::OPTIONS_MARKETING => [],
         self::OPTIONS_DESIGN_FORM => [],
     ];
-    
+
     /**
      * Singletone
      * @return Core
      */
     public static function getInstance()
     {
-        
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
     }
-    
-    public function __clone() {
-        throw new \Exception('Forbiden instance __clone');
+
+    public function __clone()
+    {
+        throw new Exception('Forbiden instance __clone');
     }
-    
-    public function __wakeup() {
-        throw new \Exception('Forbiden instance __wakeup');
+
+    public function __wakeup()
+    {
+        throw new Exception('Forbiden instance __wakeup');
     }
-    
+
     /**
      * Конструктор класса
      */
@@ -120,13 +146,23 @@ class Core {
         // todo сделать настройку
         add_action('woocommerce_email_before_order_table', [$service, 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', [$this, 'jsVariableHead']);
-        add_action('init', [\Coderun\BuyOneClick\Ajax::class, 'getInstance']);
-//        add_action('woocommerce_before_order_object_save', function(\WC_Order $data, \WC_Data_Store $store) {
-//        }, 10, 2);
-        
+        // Обработчики запросов
+        add_action('init', static function () {
+            (new OrderController())->init();
+        });
+        add_action('init', static function () {
+            (new FormController())->init();
+        });
+        add_action('init', static function () {
+            (new CartController())->init();
+        });
+        add_action('init', static function () {
+            (new AdminController())->init();
+        });
+
         $this->initAdminPages();
     }
-    
+
     public function initAction()
     {
         $buyoptions = $this->options['buyoptions'];
@@ -134,7 +170,7 @@ class Core {
             $position = $buyoptions['positionbutton']; //Позиция кнопки
             if (self::$variation) {
                 $strPosition = VariationsAddition::getInstance()->getPositionButton();
-                if ($strPosition !== FALSE) {
+                if ($strPosition !== false) {
                     $position = $strPosition;
                 }
             }
@@ -149,19 +185,19 @@ class Core {
                 add_action($position_category, array($this, 'scriptAddFrontPage')); //Скрипты фронта
             }
             // Положение для кнопки "Товара нет в наличие"
-            
+
             $position = $buyoptions['positionbutton_out_stock'];
-            
+
             if (strlen($position) > 5) {
                 add_filter('woocommerce_get_stock_html', function ($html) {
                     global $product;
-                    if (is_object($product) && $product instanceof \WC_Product && \method_exists('WC_Product','get_availability')) {
+                    if (is_object($product) && $product instanceof WC_Product && method_exists('WC_Product', 'get_availability')) {
                         $this->styleAddFrontPage();
                         $this->scriptAddFrontPage();
                         $availability = $product->get_availability();
                         // Товар имеет статус не в наличие
-                        if(strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
-                            if(!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
+                        if (strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
+                            if (!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
                                 $html .= BuyFunction::viewBuyButton(true);
                             }
                         }
@@ -171,14 +207,20 @@ class Core {
             }
         }
     }
-    
+
+    /**
+     * Инициализация настроек, настройка объектов
+     * @return void
+     */
     public function initOptions()
     {
         $help = Help::getInstance();
         $this->options = $help->get_options();
+        $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
+        $this->notificationOptions = new NotificationOptions(get_option(OptionsType::NOTIFICATIONS, []));
     }
-    
-    
+
+
     /**
      * Поздняя инициализация дополнений
      */
@@ -191,41 +233,41 @@ class Core {
             self::$variation = $help->module_variation;
         }
     }
-    
+
     protected function initAdminPages()
     {
         add_action('admin_menu', [$this, 'adminOptions']);
         add_filter('plugin_action_links', [$this, 'pluginLinkSetting'], 10, 2); //Настройка на странице плагинов
     }
-    
+
     /**
      * Создаёт переменные в шапке, одна из них это обработчик ajax
      */
-    public function jsVariableHead() {
-        
+    public function jsVariableHead()
+    {
         $buyoptions = $this->options['buyoptions'];
-        
+
         $variables = array('ajaxurl' => admin_url('admin-ajax.php'));
         if (self::$variation) {
             $variables['variation'] = 1;
         } else {
             $variables['variation'] = 0;
         }
-        
-        //Формат телефона 
-        
+
+        //Формат телефона
+
         if (isset($buyoptions['fon_format_input']) && strlen($buyoptions['fon_format_input']) > 3) {
             $buyoptions['fon_format_input'] = str_replace(['\'', '"'], [], $buyoptions['fon_format_input']);
             $variables['tel_mask'] = $buyoptions['fon_format_input'];
         }
-        
+
         //Режим работы плагина
         if (isset($buyoptions['plugin_work_mode'])) {
             $variables['work_mode'] = intval($buyoptions['plugin_work_mode']);
         } else {
             $variables['work_mode'] = 0;
         }
-        
+
         if (isset($buyoptions['success_action'])) {
             $variables['success_action'] = intval($buyoptions['success_action']);
             if (!empty($buyoptions['success_action_close'])) {
@@ -237,7 +279,7 @@ class Core {
             if (!empty($buyoptions['success_action_redirect'])) {
                 $variables['after_submit_form'] = $buyoptions['success_action_redirect']; // 4  Редирект на страницу после нажатия на кнопку в форме
             }
-            
+
             if (!empty($buyoptions['success'])) {
                 $variables['after_message_form'] = $buyoptions['success'];
             }
@@ -248,8 +290,8 @@ class Core {
         if ($this->getOption('successful_form_submission', self::OPTIONS_MARKETING)) {
             $variables['callback_successful_form_submission'] = $this->getOption('successful_form_submission', self::OPTIONS_MARKETING);
         }
-        
-        
+
+
         $str = '';
         $str .= "<script type=\"text/javascript\">\n";
         $str .= " /* <![CDATA[ */\n";
@@ -259,70 +301,75 @@ class Core {
         $str .= "</script>\n";
         echo $str;
     }
-    
+
     /**
      * Операции выполняемые при деактивации плагина
      */
-    public function deactivationPlugin() {
+    public function deactivationPlugin()
+    {
         remove_shortcode('viewBuyButton');
     }
-    
+
     /**
      * Добавление опций в базу Wordpress при активации
      */
-    public function addOptions() {
+    public function addOptions()
+    {
         add_option('buyoptions', array()); //массив настроек плагина
         add_option('buynotification', array()); //Массив настроек уведомлений
         PluginUpdate::createOrderTable();
     }
-    
+
     /**
      * Меню или суб меню плагина
      */
-    public function adminOptions() {
+    public function adminOptions()
+    {
         //Подключается если есть менюя от Woocommerce
         $page_option = add_submenu_page('woocommerce', self::NAME_SUB_MENU, self::NAME_SUB_MENU, 'manage_woocommerce', self::URL_SUB_MENU, array($this, 'showSettingPage'));
         add_action('admin_print_styles-' . $page_option, array($this, 'styleAddPage')); //загружаем стили только для страницы плагина
         add_action('admin_print_scripts-' . $page_option, array($this, 'scriptAddPage')); //Скрипты
     }
-    
+
     /**
      * Стили для страницы плагина
      */
-    public function styleAddPage() {
+    public function styleAddPage()
+    {
         wp_register_style('buybootstrapcss1', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/css/bootstrap.css');
         wp_enqueue_style('buybootstrapcss1');
         wp_register_style('buyadmincss2', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'css/admin.css');
         wp_enqueue_style('buyadmincss2');
     }
-    
+
     /**
      * Скрипты для страницы плагина
      */
-    public function scriptAddPage() {
+    public function scriptAddPage()
+    {
         wp_enqueue_script('buybootstrapjs1', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/js/bootstrap.js', ['jquery'], self::VERSION);
         wp_enqueue_script('buyorder', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js', ['jquery'], self::VERSION);
-        
-        
+
+
         wp_localize_script('buyorder', 'buyadminnonce', array(//Установка проверочного кода
                                                               'url' => admin_url(plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js'),
                                                               'nonce' => wp_create_nonce('superKey')
         ));
-        wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-builder.min.js',plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
-        wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-render.min.js',plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
+        wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-builder.min.js', plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
+        wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-render.min.js', plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
     }
-    
+
     /**
      * Стили для фронтэнда
      */
-    public function styleAddFrontPage() {
-        
+    public function styleAddFrontPage()
+    {
         foreach ($this->getStylesFront() as $styleName => $styleParams) {
             wp_register_style($styleName, $styleParams['url'], $styleParams['deps']);
             wp_enqueue_style($styleName);
         }
     }
-    
+
     /**
      * Стили для фронта
      * @return array [][url,path,deps]
@@ -355,8 +402,8 @@ class Core {
                 'deps' => [],
             ];
         }
-        
-        
+
+
         if (file_exists($wp_uploads_dir['basedir'] . '/' . self::PATCH_PLUGIN . '/css/form_' . $numForm . '.css')) {
             $styles['buyonclickcss2'] = [
                 'url' =>   $wp_uploads_dir['baseurl'] . '/' . self::PATCH_PLUGIN . '/css/form_' . $numForm . '.css',
@@ -376,7 +423,7 @@ class Core {
                 'deps' => ['buyonclickfront-general'],
             ];
         }
-        
+
         if (file_exists($wp_uploads_dir['basedir'] . '/' . self::PATCH_PLUGIN . '/css/formmessage.css')) {
             $styles['buyonclickfrontcss3'] = [
                 'url' =>   $wp_uploads_dir['baseurl'] . '/' . self::PATCH_PLUGIN . '/css/formmessage.css',
@@ -396,7 +443,7 @@ class Core {
                 'deps' => ['buyonclickfront-general'],
             ];
         }
-        
+
         $styles['loading'] = [
             'url' =>   plugins_url() . '/' . self::PATCH_PLUGIN . '/css/loading-btn/loading.css',
             'path' => CODERUN_ONECLICKWOO_PLUGIN_DIR . '/css/loading-btn/loading.css',
@@ -407,78 +454,81 @@ class Core {
             'path' => CODERUN_ONECLICKWOO_PLUGIN_DIR . '/css/loading-btn/loading-btn.css',
             'deps' => [],
         ];
-        
+
         return $styles;
-        
     }
-    
+
     /**
      * Скрипты для фронтэнда
      */
-    public function scriptAddFrontPage() {
+    public function scriptAddFrontPage()
+    {
         wp_enqueue_script('buyonclickfrontjs', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/form.js', ['jquery', 'buymaskedinput'], self::VERSION);
         wp_enqueue_script('buymaskedinput', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/jquery.maskedinput.min.js', ['jquery'], self::VERSION);
     }
-    
+
     /**
      * Страница плагина
      */
-    public function showSettingPage() {
+    public function showSettingPage()
+    {
         include_once WP_PLUGIN_DIR . '/' . self::PATCH_PLUGIN . '/' . self::OPTIONS_NAME_PAGE;
     }
-    
+
     /**
      * Активная вкладка в админпанели плагина
      * @return string css Класс для активной вкладки
      */
-    public function adminActiveTab($tab_name = null, $tab = null) {
-        
-        if (isset($_GET['tab']) && !$tab)
+    public function adminActiveTab($tab_name = null, $tab = null)
+    {
+        if (isset($_GET['tab']) && !$tab) {
             $tab = $_GET['tab'];
-        else
+        } else {
             $tab = 'general';
-        
+        }
+
         $output = '';
         if (isset($tab_name) && $tab_name) {
-            if ($tab_name == $tab)
+            if ($tab_name == $tab) {
                 $output = ' nav-tab-active';
+            }
         }
         echo $output;
     }
-    
+
     /**
      * Подключает нужную страницу исходя из вкладки на страницы настроек плагина
      * @result include_once tab{номер вкладки}-option1.php
      */
     public function showPage()
     {
-    
         $pages = $this->getTabs();
         $tab = $_GET['tab'] ?? 'default';
-        if(\array_key_exists($tab, $pages) && \file_exists($pages[$tab])) {
+        if (\array_key_exists($tab, $pages) && \file_exists($pages[$tab])) {
             include_once $pages[$tab];
         }
     }
-    
+
     public function getTabs()
     {
         $path = WP_PLUGIN_DIR.DIRECTORY_SEPARATOR.self::PATCH_PLUGIN.DIRECTORY_SEPARATOR.'page';
         $pages = [
-            'default' => sprintf('%s/tab1-option1.php',$path),
-            'general' => sprintf('%s/tab1-option1.php',$path),
-            'notification' => sprintf('%s/tab2-option1.php',$path),
-            'orders' => sprintf('%s/tab3-option1.php',$path),
-            'help' => sprintf('%s/tab4-option1.php',$path),
-            'marketing' => sprintf('%s/tab5-option1.php',$path),
-            'design_form' => sprintf('%s/tab6-option1.php',$path),
+            'default' => sprintf('%s/tab1-option1.php', $path),
+            'general' => sprintf('%s/tab1-option1.php', $path),
+            'notification' => sprintf('%s/tab2-option1.php', $path),
+            'orders' => sprintf('%s/tab3-option1.php', $path),
+            'help' => sprintf('%s/tab4-option1.php', $path),
+            'marketing' => sprintf('%s/tab5-option1.php', $path),
+            'design_form' => sprintf('%s/tab6-option1.php', $path),
         ];
         return $pages;
     }
-    
+
     /**
      * Добавляет пункт настроек на странице активированных плагинов
      */
-    public function pluginLinkSetting($links, $file) {
+    public function pluginLinkSetting($links, $file)
+    {
         $this_plugin = self::PATCH_PLUGIN . '/' . self::INDEX_NAME_FILE;
         if ($file == $this_plugin) {
             $settings_link1 = '<a href="admin.php?page=' . self::URL_SUB_MENU . '">' . __("Settings", "default") . '</a>';
@@ -486,11 +536,12 @@ class Core {
         }
         return $links;
     }
-    
-    public static function get_template_path() {
+
+    public static function get_template_path()
+    {
         return self::PATCH_PLUGIN;
     }
-    
+
     /**
      * Вернёт нужную настройку
      * @param        $key Ключ опции относящийся к $optionsBush
@@ -498,25 +549,24 @@ class Core {
      * @param string $defaultValue значение по умолчанию, если нет опции
      *
      * @return mixed|string
-     * @throws \Exception
+     * @throws Exception
      */
     public function getOption($key, $optionsBush = 'buyoptions', $defaultValue = '')
     {
-        
         if (!\array_key_exists($optionsBush, $this->optionsPull) || empty($optionsBush)) {
-            throw new \Exception(sprintf('Invalid settings key: %s', $optionsBush));
+            throw new Exception(sprintf('Invalid settings key: %s', $optionsBush));
         }
-        
+
         if (empty($this->optionsPull[$optionsBush])) {
             $this->optionsPull[$optionsBush] = \get_option($optionsBush, []);
         }
-        
+
         if (isset($this->optionsPull[$optionsBush][$key])) {
             return $this->optionsPull[$optionsBush][$key];
         }
         return $defaultValue;
     }
-    
+
     /**
      * Указываем WordPress опции с которыми работает плагин
      */
@@ -527,7 +577,7 @@ class Core {
             'type'              => 'array',
             'group'             => \sprintf('%s_options', self::OPTIONS_DESIGN_FORM),
             'description'       => '',
-            'sanitize_callback' => function($forms) {
+            'sanitize_callback' => function ($forms) {
                 if (\is_array($forms)) {
                     foreach ($forms as $key => $value) {
                         $forms[$key] = \trim($value);
@@ -538,13 +588,13 @@ class Core {
             'show_in_rest'      => false,
             'default' => [],
         ]);
-        
+
         // Tab5
         \register_setting(sprintf('%s_options', self::OPTIONS_MARKETING), self::OPTIONS_MARKETING, [
             'type'              => 'array',
             'group'             => sprintf('%s_options', self::OPTIONS_MARKETING),
             'description'       => '',
-            'sanitize_callback' => function($forms) {
+            'sanitize_callback' => function ($forms) {
                 if (\is_array($forms)) {
                     foreach ($forms as $key => $value) {
                         $forms[$key] = \trim($value);
@@ -560,7 +610,7 @@ class Core {
             'type'              => 'array',
             'group'             => sprintf('%s_options', self::OPTIONS_GENERAL),
             'description'       => '',
-            'sanitize_callback' => function($forms) {
+            'sanitize_callback' => function ($forms) {
                 return $forms;
             },
             'show_in_rest'      => false,
@@ -571,13 +621,27 @@ class Core {
             'type'              => 'array',
             'group'             => sprintf('%s_options', self::OPTIONS_NOTIFICATIONS),
             'description'       => '',
-            'sanitize_callback' => function($forms) {
+            'sanitize_callback' => function ($forms) {
                 return $forms;
             },
             'show_in_rest'      => false,
             'default' => [],
         ]);
-        
     }
-    
+
+    /**
+     * @return GeneralOptions
+     */
+    public function getCommonOptions(): GeneralOptions
+    {
+        return $this->commonOptions;
+    }
+
+    /**
+     * @return NotificationOptions
+     */
+    public function getNotificationOptions(): NotificationOptions
+    {
+        return $this->notificationOptions;
+    }
 }

@@ -2,18 +2,17 @@
 
 namespace Coderun\BuyOneClick;
 
-
-class ReCaptcha{
-
+class ReCaptcha
+{
     protected static $_instance = null;
 
     /**
      * Вывод капчи
      * @param $plugin
      */
-    public function view($plugin) {
-
-        if($plugin==='advanced_nocaptcha_recaptcha') {
+    public function view($plugin)
+    {
+        if ($plugin==='advanced_nocaptcha_recaptcha') {
             $this->viewPluginAnrCaptcha();
         }
     }
@@ -23,17 +22,18 @@ class ReCaptcha{
      * @param $plugin
      * @return array check и message
      */
-    public function check($plugin) {
+    public function check($plugin)
+    {
         $result=[
             'check'=>false,
-            'message'=>_e('Captcha failed','coderun-oneclickwoo')
+            'message'=>_e('Captcha failed', 'coderun-oneclickwoo')
         ];
-        if($plugin==='advanced_nocaptcha_recaptcha') {
-            if(!$this->isSupportPluginAnrCaptcha()) {
+        if ($plugin==='advanced_nocaptcha_recaptcha') {
+            if (!$this->isSupportPluginAnrCaptcha()) {
                 return $result;
             }
-            $result['check']=(boolean)\anr_verify_captcha();
-            $result['message']=\anr_get_option( 'error_message', '' );
+            $result['check']=(bool)\anr_verify_captcha();
+            $result['message']=\anr_get_option('error_message', '');
         }
         ob_end_clean();
         return $result;
@@ -47,7 +47,8 @@ class ReCaptcha{
      * contributors - Автор в репозитарии WP
      * @return array
      */
-    public function isSupported() {
+    public function isSupported()
+    {
         $result=[];
 
 
@@ -67,49 +68,49 @@ class ReCaptcha{
      * Contributors: shamim51
      * Url: https://ru.wordpress.org/plugins/advanced-nocaptcha-recaptcha/
      */
-    protected function viewPluginAnrCaptcha() {
-
-        if(!$this->isSupportPluginAnrCaptcha()) {
+    protected function viewPluginAnrCaptcha()
+    {
+        if (!$this->isSupportPluginAnrCaptcha()) {
             return;
         }
 
-        $version = \anr_get_option( 'captcha_version', 'v2_checkbox' );
+        $version = \anr_get_option('captcha_version', 'v2_checkbox');
 
-        if ( 'v2_checkbox' === $version ) {
+        if ('v2_checkbox' === $version) {
             \anr_captcha_class::init()->v2_checkbox_script();
-        } elseif ( 'v2_invisible' === $version ) {
+        } elseif ('v2_invisible' === $version) {
             \anr_captcha_class::init()->v2_invisible_script();
-        } elseif ( 'v3' === $version ) {
+        } elseif ('v3' === $version) {
             \anr_captcha_class::init()->v3_script();
         }
 
         \anr_captcha_class::init()->form_field();
-
     }
 
-    protected function isSupportPluginAnrCaptcha() {
-        if(!function_exists('\anr_get_option')) {
+    protected function isSupportPluginAnrCaptcha()
+    {
+        if (!function_exists('\anr_get_option')) {
             return false;
         }
-        if(!function_exists('\anr_verify_captcha')) {
+        if (!function_exists('\anr_verify_captcha')) {
             return false;
         }
-        if ( !class_exists( '\anr_captcha_class' ) ) {
+        if (!class_exists('\anr_captcha_class')) {
             return false;
         }
-        if ( !method_exists( '\anr_captcha_class','init' ) ) {
+        if (!method_exists('\anr_captcha_class', 'init')) {
             return false;
         }
-        if ( !method_exists( '\anr_captcha_class','v2_checkbox_script' ) ) {
+        if (!method_exists('\anr_captcha_class', 'v2_checkbox_script')) {
             return false;
         }
-        if ( !method_exists( '\anr_captcha_class','v2_invisible_script' ) ) {
+        if (!method_exists('\anr_captcha_class', 'v2_invisible_script')) {
             return false;
         }
-        if ( !method_exists( '\anr_captcha_class','v3_script' ) ) {
+        if (!method_exists('\anr_captcha_class', 'v3_script')) {
             return false;
         }
-        if ( !method_exists( '\anr_captcha_class','form_field' ) ) {
+        if (!method_exists('\anr_captcha_class', 'form_field')) {
             return false;
         }
 
@@ -120,25 +121,25 @@ class ReCaptcha{
      * Singletone
      * @return self
      */
-    public static function getInstance() {
-
+    public static function getInstance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
     }
 
-    protected function __construct() {
-
-
+    protected function __construct()
+    {
     }
 
-    public function __clone() {
+    public function __clone()
+    {
         throw new \Exception('Forbiden instance __clone');
     }
 
-    public function __wakeup() {
+    public function __wakeup()
+    {
         throw new \Exception('Forbiden instance __wakeup');
     }
-
 }

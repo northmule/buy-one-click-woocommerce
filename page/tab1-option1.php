@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Help;
+
 ?>
     <h3><?php _e('General add-on settings', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
     <p><?php _e('Do not forget to press the save button after changing the settings in each tab.', 'coderun-oneclickwoo'); ?></p>
@@ -508,7 +509,7 @@ $buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Мас�
                     <th scope="row"><?php _e('Enable recaptcha in the order form', 'coderun-oneclickwoo'); ?></th>
                     <td>
                         <p>
-                            <?php _e('Do not use in the order form','coderun-oneclickwoo'); ?>
+                            <?php _e('Do not use in the order form', 'coderun-oneclickwoo'); ?>
                             <input
                                     name="<?php echo Core::OPTIONS_GENERAL; ?>[recaptcha_order_form]"
                                     type="radio"
@@ -524,7 +525,7 @@ $buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Мас�
                                         type="radio"
                                         value="<?php echo $key_recapcha; ?>"
                                     <?php checked(Core::getInstance()->getOption('recaptcha_order_form', Core::OPTIONS_GENERAL), $key_recapcha, 1); ?>
-                                >  -  <?php _e('Tested with the "I am not a robot" captcha in V2, but it may also work with other options','coderun-oneclickwoo'); ?>
+                                >  -  <?php _e('Tested with the "I am not a robot" captcha in V2, but it may also work with other options', 'coderun-oneclickwoo'); ?>
                             </p>
 
 
@@ -546,7 +547,7 @@ $buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Мас�
                                     type="checkbox"
                                     value="on"
                                 <?php checked(Core::getInstance()->getOption('style_insert_html', 'buyoptions', ''), 'on', 1); ?>
-                            >  -  <?php _e('The styles will be added to the html page','coderun-oneclickwoo'); ?>
+                            >  -  <?php _e('The styles will be added to the html page', 'coderun-oneclickwoo'); ?>
                         </p>
                         <p>
                             <span class="description"><?php _e('This option is not needed in 99% of cases. When enabled, all plugin styles are embedded in the html page content. You don\'t need to turn it on just like that.', 'coderun-oneclickwoo'); ?></span>
@@ -585,7 +586,7 @@ $buyoptions = Help::getInstance()->get_options(Core::OPTIONS_GENERAL); //Мас�
                 <tbody>
                 <tr>
                     <td class="active"><?php _e('Element', 'coderun-oneclickwoo'); ?></td>
-                    <td class="success">[viewBuyButton id="<?php _e('Optional parameter of the real product ID','coderun-oneclickwoo'); ?>"]</td>
+                    <td class="success">[viewBuyButton id="<?php _e('Optional parameter of the real product ID', 'coderun-oneclickwoo'); ?>"]</td>
                     <td class="warning">
                         1. <?php _e('Button shortcode must be inserted in product output cycles, where it is possible to get the product ID. Wherein
                          The shortcode loads styles and scripts for itself, and the "buy" button will be shown if there is a tick "Enable the display of the shortcode button"', 'coderun-oneclickwoo'); ?>

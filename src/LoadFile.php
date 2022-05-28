@@ -2,58 +2,57 @@
 
 namespace Coderun\BuyOneClick;
 
-
-class LoadFile {
-    
+class LoadFile
+{
     protected static $_instance = null;
     protected $folder = array();
     protected $errors = [];
-    
+
     /**
      * Информация о файле
      */
     protected $files = array();
-    
+
     /**
      * Singletone
      * @return LoadFile
      */
-    public static function getInstance() {
-        
+    public static function getInstance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
     }
-    
+
     /**
      * Загрузка файла
      * Вернут массив message,url,error
-     * @return string
+     *
+     * @return array
      */
-    public function load() {
-        
+    public function load(): array
+    {
         $result = array();
-        
+
         try {
-            
             if ($this->is_multi_form()) {
                 $this->files = $this->compose_files_structure(true);
             } else {
                 $this->files = $this->compose_files_structure(false);
             }
-            
-            
+
+
             $this->check_restriction();
         } catch (\Exception $ex) {
             $this->errors[] = array(
                 'message' => $ex->getMessage(),
             );
-            return;
+            return $result;
         }
-        
+
         $path = $this->get_load_folder_path()['path'] . '/';
-        
+
         foreach ($this->files as $num_file => $file) {
             $img = $file['name'];
             $tmp = $file['tmp_name'];
@@ -68,21 +67,24 @@ class LoadFile {
                 );
             }
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Пересоборка файла/файлов в одну структуру
      * @param type $multi
-     * @return type
+     * @return array
      */
-    protected function compose_files_structure($multi = false) {
-        
-        $result = array();
-        
-        $file_list = $_FILES['files'];
-        
+    protected function compose_files_structure($multi = false): array
+    {
+        $result = [];
+
+        $file_list = $_FILES['files'] ?? null;
+        if ($file_list == null) {
+            return $result;
+        }
+
         if ($multi) {
             foreach ($file_list['name'] as $key_file => $value) {
                 $result[$key_file]['name'] = $value;
@@ -93,75 +95,79 @@ class LoadFile {
             }
         } else {
             $key_file = 0;
-            $result[$key_file]['name'] = $file_list['name'];
-            $result[$key_file]['type'] = $file_list['type'];
-            $result[$key_file]['tmp_name'] = $file_list['tmp_name'];
-            $result[$key_file]['error'] = $file_list['error'];
-            $result[$key_file]['size'] = $file_list['size'];
+            $result[$key_file]['name'] = $file_list['name'] ?? null;
+            $result[$key_file]['type'] = $file_list['type'] ?? null;
+            $result[$key_file]['tmp_name'] = $file_list['tmp_name'] ?? null;
+            $result[$key_file]['error'] = $file_list['error'] ?? null;
+            $result[$key_file]['size'] = $file_list['size'] ?? null;
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Вернёт true -если используется multinput
      * @return type
      */
-    protected function is_multi_form() {
+    protected function is_multi_form()
+    {
         return (isset($_FILES['files']['name'][0]) ? true : false);
     }
-    
+
     /**
      * Проверка файлов на ограничение
      * @throws Exception
      */
-    protected function check_restriction() {
-        
+    protected function check_restriction()
+    {
         if (empty($this->files) || empty($this->files[0]['name'])) {
             throw new \Exception(__('No file to download', 'coderun-oneclickwoo'), 200);
         }
-        
+
         foreach ($this->files as $file) {
-            
             if (empty($file['tmp_name']) || empty($file['name'])) {
                 throw new \Exception(__('No file to download', 'coderun-oneclickwoo'), 200);
             }
-            
+
             $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            
+
             if (!in_array($ext, $this->get_valid_extension())) {
                 throw new \Exception(__('Invalid file extension', 'coderun-oneclickwoo') . ' .'.$ext, 200);
             }
-            
+
             if ($file['size'] > $this->get_valid_size()) {
                 throw new \Exception(__('Invalid file size', 'coderun-oneclickwoo'). ' :'.$file['size'], 200);
             }
-            
+
             if (!in_array($file['type'], $this->get_valid_mime_types())) {
                 throw new \Exception(__('Invalid file type', 'coderun-oneclickwoo'). ' - '.$file['type'], 200);
             }
         }
     }
-    
-    protected function get_load_folder_path() {
+
+    protected function get_load_folder_path()
+    {
         $folder = $this->folder;
         $result = array('path' => $folder['path'], 'url' => $folder['url']);
         return apply_filters('coderun_oneclickwoo_file_load_folder_path', $result);
     }
-    
-    protected function get_new_name($name) {
+
+    protected function get_new_name($name)
+    {
         $salt = apply_filters('coderun_oneclickwoo_file_salt_name', ('buy_file_' . rand(100, 10000)));
-        $name = str_replace(' ','_', $name);
+        $name = str_replace(' ', '_', $name);
         return $salt . '_' . $name;
     }
-    
-    protected function get_valid_extension() {
+
+    protected function get_valid_extension()
+    {
         $result = array('jpeg', 'jpg', 'png', 'gif', 'bmp', 'pdf', 'doc', 'ppt');
-        
+
         return apply_filters('coderun_oneclickwoo_file_valid_extension', $result);
     }
-    
-    protected function get_valid_mime_types() {
+
+    protected function get_valid_mime_types()
+    {
         $result = array(
             'image/gif',
             'image/jpeg',
@@ -192,28 +198,32 @@ class LoadFile {
             'application/xml',
             'application/msword',
         );
-        
+
         return apply_filters('coderun_oneclickwoo_file_valid_mime_types', $result);
     }
-    
-    protected function get_valid_size() {
+
+    protected function get_valid_size()
+    {
         $result = 10485760; //10Mb
-        
+
         return apply_filters('coderun_oneclickwoo_file_valid_size', $result);
     }
-    
-    protected function __construct() {
+
+    protected function __construct()
+    {
         $this->folder = wp_upload_dir();
     }
-    
-    public function __clone() {
+
+    public function __clone()
+    {
         throw new \Exception('Forbiden instance __clone');
     }
-    
-    public function __wakeup() {
+
+    public function __wakeup()
+    {
         throw new \Exception('Forbiden instance __wakeup');
     }
-    
+
     /**
      * Get errors
      *
@@ -223,7 +233,4 @@ class LoadFile {
     {
         return $this->errors;
     }
-    
-    
-    
 }

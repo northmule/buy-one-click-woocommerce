@@ -3,12 +3,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 use Coderun\BuyOneClick\Core;
+
 ?>
 <h3><?php _e('Information on', 'coderun-oneclickwoo'); ?>  <?php echo Core::NAME_PLUGIN; ?></h3>
 <table class="table">
     <tbody>
         <tr>
             <td>
+                <p>
+                    <span class="dashicons dashicons-format-chat"></span><span><?php _e('Plugin page on GitHub', 'coderun-oneclickwoo'); ?> <a href="https://github.com/northmule/buy-one-click-woocommerce" target="_blank"><?php _e('Link', 'coderun-oneclickwoo'); ?></a></span><br>
+                </p>
                 <p>
                     <span class="dashicons dashicons-format-chat"></span><span><?php _e('Plugin page, discussions, suggestions, suggestions', 'coderun-oneclickwoo'); ?> <a href="http://www.zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html" target="_blank"><?php _e('Link', 'coderun-oneclickwoo'); ?></a></span><br>
                 </p>   

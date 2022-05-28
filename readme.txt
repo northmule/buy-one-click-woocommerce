@@ -3,11 +3,11 @@ Contributors: northmule
 Donate link: https://yoomoney.ru/to/41001746944171
 Tags: woocommerce, ecommerce, mode catalog, buy one click, buy now, add to cart, buy now button, buttons
 Requires at least: 5.0
-Tested up to: 5.9
+Tested up to: 6.1
 Stable tag: 5.7
-Requires PHP: 7.1
+Requires PHP: 7.4
 WC requires at least: 4.7
-WC tested up to: 5.9
+WC tested up to: 6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,11 +15,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Description ==
 
 The plugin adds a buy button in one click to your WooCommerce
-[You can view the work of the plugin on the test site](https://tastewp.com/new?pre-installed-plugin-slug=woocommerce%2Cbuy-one-click-woocommerce&redirect=plugins.php&ni=true)
 
 This is the best solution for WooCommere to easily add a quick order button to the site.
 
 = Some advantages of the plugin: =
+* PHP >= 7.4
 * You only need WooCommere
 * Several modes of operation
 * Several styles for the form directly from the plugin settings
@@ -73,6 +73,10 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.0.0 =
+* Refactoring the code structure
+* PHP below 7.4 is no longer supported, the plugin will cause fatal errors
+* Generating a translation file
 = 1.18.0 =
 * Обновил вкладку для установки целей Метрик
 * Добавлена справка по настройке целей

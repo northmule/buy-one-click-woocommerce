@@ -2,19 +2,18 @@
 
 namespace Coderun\BuyOneClick;
 
-
 /**
  * Description of Help
  *
  * @author djo
  */
-class Help {
-
+class Help
+{
     protected static $_instance = null;
 
     /**
      * Настройки плагина
-     * @var type 
+     * @var type
      */
     protected $options_plugin = [];
 
@@ -29,8 +28,8 @@ class Help {
      * @param string $key ключ массива
      * @return array|mixed|string
      */
-    public function get_value_field($data, $key) {
-
+    public function get_value_field($data, $key)
+    {
         $result = '';
 
         if (is_array($data)) {
@@ -47,16 +46,17 @@ class Help {
 
         return $result;
     }
-    
-    public function isset_woo_order($orderId) {
+
+    public function isset_woo_order($orderId)
+    {
         $order = \wc_get_order($orderId);
-        if(!$order instanceof \WC_Order) {
+        if (!$order instanceof \WC_Order) {
             return false;
         }
-        if(empty($order->get_id())) {
-           return false;
+        if (empty($order->get_id())) {
+            return false;
         }
-        if($order->get_status()==='trash'){
+        if ($order->get_status()==='trash') {
             return false;
         }
         return true;
@@ -65,7 +65,8 @@ class Help {
     /**
      * Для совместимости данных формы в виде массива name -> value
      */
-    public function get_form_data_legacy($form) {
+    public function get_form_data_legacy($form)
+    {
         $result = array();
 
         if (!is_array($form)) {
@@ -85,7 +86,8 @@ class Help {
      * @deprecated
      * @return array
      */
-    public function get_options($name = null) {
+    public function get_options($name = null)
+    {
         if ($name === null) {
             return $this->options_plugin;
         } else {
@@ -97,8 +99,8 @@ class Help {
      * Singletone
      * @return Help
      */
-    public static function getInstance() {
-
+    public static function getInstance()
+    {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
@@ -110,7 +112,8 @@ class Help {
      * @param type $files
      * @return array Description
      */
-    public function get_message_files($files) {
+    public function get_message_files($files)
+    {
         $result = array();
         foreach ($files as $file) {
             $result[] = $file['url'];
@@ -123,7 +126,8 @@ class Help {
      * @param type $files
      * @return string
      */
-    public function get_message_files_url($files) {
+    public function get_message_files_url($files)
+    {
         $result = '';
 
         $name = __('File', 'coderun-oneclickwoo');
@@ -142,7 +146,8 @@ class Help {
         return $result;
     }
 
-    protected function __construct() {
+    protected function __construct()
+    {
 
         // todo - убрать
         $this->options_plugin = array(
@@ -151,12 +156,13 @@ class Help {
         );
     }
 
-    public function __clone() {
+    public function __clone()
+    {
         throw new \Exception('Forbiden instance __clone');
     }
 
-    public function __wakeup() {
+    public function __wakeup()
+    {
         throw new \Exception('Forbiden instance __wakeup');
     }
-
 }
