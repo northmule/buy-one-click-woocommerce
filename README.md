@@ -8,3 +8,5 @@
 * PHP >= 7.4 (From plugin version 2.0.0)
 * A little patience to configure the plugin :)
 
+License URI: http://www.apache.org/licenses/
+
