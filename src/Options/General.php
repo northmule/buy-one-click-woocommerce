@@ -484,7 +484,7 @@ class General extends Base
         $this->messageAfterSubmittingForm = $options['success_action_message']
             ?? '';
         $this->urlRedirectAddress = $options['success_action_redirect'] ?? null;
-        $this->formStyle = $options['form_style_color'] ?? null;
+        $this->formStyle = $options['form_style_color'] ?? '';
         $this->formSubmissionLimit = intval(
             $options['time_limit_send_form'] ?? 10
         );
@@ -498,7 +498,7 @@ class General extends Base
         $this->recaptchaEnabled = boolval(
             $options['recaptcha_order_form'] ?? false
         );
-        $this->captchaProvider = $options['recaptcha_order_form'] ?? null;
+        $this->captchaProvider = $options['recaptcha_order_form'] ?? '';
         $this->styleInsertHtml = boolval(
             $options['style_insert_html'] ?? false
         );
@@ -1322,7 +1322,7 @@ class General extends Base
     /**
      * @return string
      */
-    public function getCaptchaProvider(): ?string
+    public function getCaptchaProvider(): string
     {
         return $this->captchaProvider;
     }
