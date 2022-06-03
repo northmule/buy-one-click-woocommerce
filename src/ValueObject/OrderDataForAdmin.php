@@ -66,6 +66,13 @@ class OrderDataForAdmin
      * @var bool
      */
     protected bool $productIsVariable = false;
+    
+    /**
+     * Ссылки на файлы
+     *
+     * @var array
+     */
+    protected array $files = [];
 
     /**
      * @param array|null $data
@@ -156,6 +163,16 @@ class OrderDataForAdmin
     {
         return $this->productIsVariable;
     }
+    
+    /**
+     * @return array<int, string>
+     */
+    public function getFiles(): array
+    {
+        return $this->files;
+    }
+    
+    
 
 
 
@@ -193,5 +210,6 @@ class OrderDataForAdmin
         $this->productLinkAdmin = $data->getProductLinkAdmin();
         $this->variationData = $data->getVariationData();
         $this->productIsVariable = $data->isProductIsVariable();
+        $this->files = $data->getFilesUrlCollection() ?? [];
     }
 }

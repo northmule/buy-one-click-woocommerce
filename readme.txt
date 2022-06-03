@@ -73,6 +73,11 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.0.2 =
+* Fixed loading of multiple files
+* Fixed the display of links to files in the plugin's order table
+= 2.0.1 =
+* Fixed a fatal error due to lack of configuration
 = 2.0.0 =
 * Refactoring the code structure
 * PHP below 7.4 is no longer supported, the plugin will cause fatal errors

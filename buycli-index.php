@@ -4,7 +4,7 @@
  * Plugin Name: Buy one click WooCommerce
  * Plugin URI: http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 2.0.1
+ * Version: 2.0.2
  * Author: Djo
  * Author URI: https://zixn.ru
  * WC requires at least: 5.2
@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
 
 define('CODERUN_ONECLICKWOO_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)));
 define('CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR', CODERUN_ONECLICKWOO_PLUGIN_DIR . '/templates');
-define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.0.0');
+define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.0.2');
 
 /**
  * Инициализация всего плагина
@@ -56,19 +56,11 @@ function coderun_buy_plugin_init_core()
     );
 
     require_once(CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
-    try {
-        $core = Coderun\BuyOneClick\Core::getInstance();
-        register_deactivation_hook(__FILE__, [$core, 'deactivationPlugin']);
-        register_activation_hook(__FILE__, [$core, 'addOptions']);
-    } catch (Exception $ex) {
-        \Coderun\BuyOneClick\Common\Logger::getInstance()->error($ex->getMessage(), [
-            $ex->getFile(),
-            $ex->getLine(),
-            $ex->getTraceAsString(),
-        ]);
-        throw $ex;
-    }
-
+    
+    $core = Coderun\BuyOneClick\Core::getInstance();
+    register_deactivation_hook(__FILE__, [$core, 'deactivationPlugin']);
+    register_activation_hook(__FILE__, [$core, 'addOptions']);
+    
     /** сервисные операции */
     if (get_option('wp_coderun_oneclickwoo_db_version', 0) !=  Coderun\BuyOneClick\PluginUpdate::DB_VERSION) {
         Coderun\BuyOneClick\PluginUpdate::createOrderTable();

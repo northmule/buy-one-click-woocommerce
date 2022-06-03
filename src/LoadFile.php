@@ -57,8 +57,8 @@ class LoadFile
             $img = $file['name'];
             $tmp = $file['tmp_name'];
             $new_name = strtolower($this->get_new_name($img));
-            $path = $path . strtolower($new_name);
-            if (move_uploaded_file($tmp, $path)) {
+            $savePath = $path . strtolower($new_name);
+            if (move_uploaded_file($tmp, $savePath)) {
                 $result[$num_file] = array(
                     'message' => __('File downloaded', 'coderun-oneclickwoo'),
                     'url' => $this->folder['url'] . '/' . $new_name,

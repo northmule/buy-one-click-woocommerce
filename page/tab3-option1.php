@@ -6,6 +6,8 @@ use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\ValueObject\OrderDataForAdmin as OrderDataForAdminValueObject;
 
+use function sprintf;
+
 ?>
 <h3><?php _e('Orders via plugin', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
 <p><?php _e('All orders sent via the button', 'coderun-oneclickwoo'); ?> "<?php echo  Core::getInstance()->getOption('namebutton'); ?>"</p>
@@ -64,7 +66,11 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
                 <br>
                 <?php
                     echo __('Quantity', 'coderun-oneclickwoo') . ': ' . $orderData->getQuantityProduct();
-                ?>
+                
+                    foreach ($orderData->getFiles() as $key => $urlFile) {
+                        echo sprintf('<a href="%s" target="_blank">%s %s</a><br>', $urlFile, __('File' ,'coderun-oneclickwoo'), ++$key);
+                    }
+                    ?>
             </th>
             <th><?php echo $order->getProductPrice(); ?></th>
             <th><?php echo $orderData->getUserComment(); ?></th>
