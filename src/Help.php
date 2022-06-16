@@ -22,31 +22,6 @@ class Help
      */
     public $module_variation = false;
 
-    /**
-     * Проверяют указанное поле и возвращает значение если есть
-     * @param array $data
-     * @param string $key ключ массива
-     * @return array|mixed|string
-     */
-    public function get_value_field($data, $key)
-    {
-        $result = '';
-
-        if (is_array($data)) {
-            if (isset($data[$key])) {
-                if (!is_array($data[$key])) {
-                    $result = wp_specialchars_decode(esc_html($data[$key]), ENT_QUOTES);
-                } else {
-                    $result = $data[$key];
-                }
-            }
-        } else {
-            $result = $data;
-        }
-
-        return $result;
-    }
-
     public function isset_woo_order($orderId)
     {
         $order = \wc_get_order($orderId);
@@ -60,25 +35,6 @@ class Help
             return false;
         }
         return true;
-    }
-
-    /**
-     * Для совместимости данных формы в виде массива name -> value
-     */
-    public function get_form_data_legacy($form)
-    {
-        $result = array();
-
-        if (!is_array($form)) {
-            return $result;
-        }
-        $count = 0;
-        foreach ($form as $key => $value) {
-            $result[$count]['name'] = $key;
-            $result[$count]['value'] = $value;
-            $count++;
-        }
-        return $result;
     }
 
     /**
@@ -107,45 +63,6 @@ class Help
         return self::$_instance;
     }
 
-    /**
-     * Список файлов для сообщения
-     * @param type $files
-     * @return array Description
-     */
-    public function get_message_files($files)
-    {
-        $result = array();
-        foreach ($files as $file) {
-            $result[] = $file['url'];
-        }
-        return $result;
-    }
-
-    /**
-     * Файлы в виде ссылок и строки
-     * @param type $files
-     * @return string
-     */
-    public function get_message_files_url($files)
-    {
-        $result = '';
-
-        $name = __('File', 'coderun-oneclickwoo');
-
-        $count = 1;
-
-        foreach ($this->get_message_files($files) as $url) {
-            if (empty(trim($url))) {
-                continue;
-            }
-            $result .= "<br><a href='{$url}'>{$name} {$count}</a>";
-
-            $count++;
-        }
-
-        return $result;
-    }
-
     protected function __construct()
     {
 
@@ -156,13 +73,4 @@ class Help
         );
     }
 
-    public function __clone()
-    {
-        throw new \Exception('Forbiden instance __clone');
-    }
-
-    public function __wakeup()
-    {
-        throw new \Exception('Forbiden instance __wakeup');
-    }
 }

@@ -76,43 +76,4 @@ class Service
         $html = sprintf('<table><tr><td>%s</td></tr></table>', $htmlItems);
         echo $html;
     }
-
-    public function getUniqueStringToday()
-    {
-        $optionsName = 'coderun_unique_string_today';
-        $value = \get_option($optionsName, []);
-        if (!is_array($value)
-            || !isset($value['dateTime'])
-            || !isset($value['string'])
-            || !$value['dateTime'] instanceof \DateTime) {
-            $value = [
-                'dateTime' => new \DateTime('now'),
-                'string' => $this->getUuidv4(),
-            ];
-            update_option($optionsName, $value);
-            return $value['string'];
-        }
-        $dateTime = new \DateTime('now');
-        $interval = $dateTime->diff($value['dateTime']);
-        if (intval($interval->format('%d')) > 0) {
-            delete_option($optionsName);
-            return $this->getUniqueStringToday();
-        }
-        return $value['string'];
-    }
-
-    public function getUuidv4()
-    {
-        return sprintf(
-            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0x0fff) | 0x4000,
-            mt_rand(0, 0x3fff) | 0x8000,
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff)
-        );
-    }
 }
