@@ -73,6 +73,9 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.1.0 =
+* Added a setting for sending data to the Yandex Metrica E-commerce service
+* A little code optimization
 = 2.0.2 =
 * Fixed loading of multiple files
 * Fixed the display of links to files in the plugin's order table

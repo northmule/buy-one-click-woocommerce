@@ -82,6 +82,52 @@ if (!defined('ABSPATH')) {
             </td>
         </tr>
     </table>
+    <fieldset>
+        <legend><?php _e('Data transfer to Yandex e-commerce event of product purchase', 'coderun-oneclickwoo'); ?></legend>
+        <table class="form-table">
+            <tr valign="top">
+                <th scope="row"></th>
+                <td>
+                    <p>
+                        <span class="description">
+                        <?php _e('When you specify these settings, data will be transmitted to the Yandex Metrica - e-commerce service. This event is a product purchase event.', 'coderun-oneclickwoo'); ?>
+                        <br>
+                    <p><?php _e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://yandex.ru/support/metrica/ecommerce/data.html"><?php _e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
+                        
+                        </span>
+                    </p>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><?php _e('Transmit data', 'coderun-oneclickwoo'); ?></th>
+                <td>
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_MARKETING ?>[transfer_data_to_yandex_commerce]" <?php
+                    checked(Core::getInstance()->getOption('transfer_data_to_yandex_commerce', Core::OPTIONS_MARKETING), 'on', 1);
+                    ?>/>
+                    <span class="description"><?php _e('Enable data transfer to the Yandex e-commerce service', 'coderun-oneclickwoo'); ?></span>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><?php _e('Name of the data container', 'coderun-oneclickwoo'); ?></th>
+                <td>
+                    <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[name_of_yandex_metrica_data_container]" value="<?php
+                    echo Core::getInstance()->getOption('name_of_yandex_metrica_data_container', Core::OPTIONS_MARKETING);
+                    ?>" />
+                    <span class="description"><?php _e('Name of the yandex Metrica data container. The default value is "dataLayer"', 'coderun-oneclickwoo'); ?></span>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><?php _e('Goal ID', 'coderun-oneclickwoo'); ?></th>
+                <td>
+                    <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[goal_id_in_yandex_e_commerce]" value="<?php
+                    echo Core::getInstance()->getOption('goal_id_in_yandex_e_commerce', Core::OPTIONS_MARKETING);
+                    ?>" />
+                    <span class="description"><?php _e('Goal ID. If used, specify it here', 'coderun-oneclickwoo'); ?></span>
+                </td>
+            </tr>
+
+        </table>
+    </fieldset>
     <input type="hidden" name="action" value="update" />
     <p class="submit">
         <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />

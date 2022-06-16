@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Response;
 
+use Coderun\BuyOneClick\Response\ValueObject\Product;
+
 /**
  * Ответ при совершении заказа
  *
@@ -19,6 +21,10 @@ class OrderResponse implements ResponseInterface
     protected string $result = '';
     /** @var string  */
     protected string $redirectUrl = '';
+    /** @var array<int, Product> */
+    protected array $products = [];
+    /** @var string  */
+    protected string $orderUuid = '';
 
     /**
      * @return string
@@ -74,6 +80,44 @@ class OrderResponse implements ResponseInterface
     public function setRedirectUrl(string $redirectUrl): OrderResponse
     {
         $this->redirectUrl = $redirectUrl;
+        return $this;
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function getProducts(): array
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param Product[] $products
+     *
+     * @return OrderResponse
+     */
+    public function setProducts(array $products): OrderResponse
+    {
+        $this->products = $products;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderUuid(): string
+    {
+        return $this->orderUuid;
+    }
+
+    /**
+     * @param string $orderUuid
+     *
+     * @return OrderResponse
+     */
+    public function setOrderUuid(string $orderUuid): OrderResponse
+    {
+        $this->orderUuid = $orderUuid;
         return $this;
     }
 }

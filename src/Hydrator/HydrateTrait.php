@@ -19,6 +19,8 @@ use function floatval;
 use function strval;
 use function intval;
 use function boolval;
+use function is_object;
+use function is_array;
 
 trait HydrateTrait
 {
@@ -34,7 +36,18 @@ trait HydrateTrait
         $options = [];
         /** @var ReflectionProperty $item */
         foreach ($this->getProperty($initialObject) as $item) {
-            $options[$item->getName()] = $item->getValue($initialObject);
+            $propertyValue = $item->getValue($initialObject);
+            if (is_array($propertyValue)) {
+                $extractValue = [];
+                foreach ($propertyValue as $value) {
+                    if (is_object($value)) {
+                        $value = $this->extractToArray($value);
+                    }
+                    $extractValue[] = $value;
+                }
+                $propertyValue = $extractValue;
+            }
+            $options[$item->getName()] = $propertyValue;
         }
         return $options;
     }

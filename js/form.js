@@ -45,22 +45,14 @@ function buyone_click_body_scroll() {
 
 
 jQuery(document).ready(function () {
-
-
     /**
      * Отправит форму с заказом
      */
     jQuery(document).on('submit', '#buyoneclick_form_order', function (e) {
         e.preventDefault();
-
-        var self = this;
-
         jQuery('#buyoneclick_form_order .buyButtonOkForm').prop('disabled', 'disabled');
-
-        var root_selector = '#buyoneclick_form_order';
-
+        let root_selector = '#buyoneclick_form_order';
         jQuery('#buyoneclick_form_order .buyButtonOkForm').addClass('running');
-
         jQuery.ajax({
             url: getAjaxUrl(),
             type: "POST",
@@ -73,12 +65,20 @@ jQuery(document).ready(function () {
                 jQuery("#buyoneclick_form_order .form-message-result").html('');
             }, 3000);
 
-            var obj = response;
-
-            if (!obj.success) {
-                jQuery(root_selector + " .form-message-result").html(obj.data.message)
+            if (!response.success) {
+                jQuery(root_selector + " .form-message-result").html(response.data.message)
                 return false;
             }
+            if (buyone_ajax.yandex_metrica.transfer_data_to_yandex_commerce) {
+                let yandexMetrica = new BuyOneClickYandexMetrica();
+                yandexMetrica.ecommercePurchase(
+                  buyone_ajax.yandex_metrica.data_layer,
+                  response.data.products,
+                  buyone_ajax.yandex_metrica.goal_id,
+                  response.data.orderUuid
+                );
+            }
+
             if (buyone_ajax.success_action === 1) { //Действие по умолчанию
                 jQuery(root_selector + " .form-message-result").html(buyone_ajax.after_message_form)
             } else if (buyone_ajax.success_action === 2) { // Закрытие формы через action мил сек
@@ -90,7 +90,6 @@ jQuery(document).ready(function () {
                 jQuery('#formOrderOneClick .close_order').trigger('click');
                 jQuery('#formOrderOneClick .popummessage, #formOrderOneClick .overlay_message').css('opacity', '1');
                 jQuery('#formOrderOneClick .popummessage, #formOrderOneClick .overlay_message').css('visibility', 'visible');
-
             } else if (buyone_ajax.success_action === 4) { // Сделать редирект action
                 jQuery("#buyoneclick_form_order .form-message-result").html(buyone_ajax.after_message_form)
                 window.location.href = buyone_ajax.after_submit_form;
@@ -105,15 +104,11 @@ jQuery(document).ready(function () {
                 callback();
             }
         }).fail(function (response) {
-            console.log(response);
             jQuery(root_selector + " .form-message-result").html('server error 500');
-
         }).always(function () {
             jQuery('#buyoneclick_form_order .buyButtonOkForm').prop("disabled", false);
             jQuery('#buyoneclick_form_order .buyButtonOkForm').removeClass('running');
         });
-
-
     });
 
     /**

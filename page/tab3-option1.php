@@ -6,8 +6,6 @@ use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\ValueObject\OrderDataForAdmin as OrderDataForAdminValueObject;
 
-use function sprintf;
-
 ?>
 <h3><?php _e('Orders via plugin', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
 <p><?php _e('All orders sent via the button', 'coderun-oneclickwoo'); ?> "<?php echo  Core::getInstance()->getOption('namebutton'); ?>"</p>
@@ -42,16 +40,16 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
                 echo '<br>'.__('Plugin Order №', 'coderun-oneclickwoo').": {$order->getId()}";
                 ?>
                 <?php
+              
+                $orderData = new OrderDataForAdminValueObject(
+                    json_decode($order->getForm(), true)
+                );
                 if ($order->getWooOrderId()) {
                     echo '<br>'.__('Woo Order №', 'coderun-oneclickwoo').": <a href='/wp-admin/post.php?post={$order->getWooOrderId()}&action=edit'>{$order->getWooOrderId()}</a>";
                 }
-
-
-                $sms = json_decode($order->getSmsLog(), true);
-                $orderData = new OrderDataForAdminValueObject(
-                    json_decode($order->getForm(), true)
-                )
-
+                if ($orderData->getUuid()) {
+                   echo sprintf('<p>Uuid: %s</p>', $orderData->getUuid());
+                }
                 ?>
             </th>
             <th><?php echo $order->getDateCreate()->format('d.m.Y H:i:s'); ?></th>
@@ -76,8 +74,12 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
             <th><?php echo $orderData->getUserComment(); ?></th>
             <th><?php echo $orderData->getProductLinkAdmin(); ?></th>
             <th><?php
-                if (!empty($sms['sms_log']) && is_array($sms['sms_log'])) {
-                    echo 'id:' . $sms[0] . '</br>' . __('Count.sms', 'coderun-oneclickwoo') . ':' . $sms[1] . '</br>' . __('Cost of', 'coderun-oneclickwoo') . ':' . $sms[2] . '</br>' . __('Balance', 'coderun-oneclickwoo') . ':' . $sms[3];
+                $sms = json_decode($order->getSmsLog(), true);
+                if (!empty($sms) && is_array($sms)) {
+                    echo 'id:' . $sms[0] . '</br>' . __('Count sms', 'coderun-oneclickwoo') . ':' . $sms[1] . '</br>' . __('Cost of', 'coderun-oneclickwoo') . ':' . $sms[2] . '</br>' . __('Balance', 'coderun-oneclickwoo') . ':' . $sms[3];
+                    if (isset($sms['debud'])) {
+                        echo sprintf('<p>Debug: %s</p>', $sms['debud']);
+                    }
                 }
                 ?></th>
             <th><a orderstat="<?php

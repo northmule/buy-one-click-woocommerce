@@ -7,6 +7,7 @@ namespace Coderun\BuyOneClick\ValueObject;
 use Coderun\BuyOneClick\LoadFile;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Coderun\BuyOneClick\Repository\Order;
+use Coderun\BuyOneClick\Utils\Uuid as UuidUtils;
 use Coderun\BuyOneClick\VariationsAddition;
 use WC_Data_Exception;
 
@@ -80,6 +81,13 @@ class OrderForm
     protected string $filesLink = '';
 
     /**
+     * uuid4 автогенерируемый
+     *
+     * @var string
+     */
+    protected string $orderUuid = '';
+
+    /**
      * @param array<string, mixed> $formData
      *
      * @throws WC_Data_Exception
@@ -120,6 +128,8 @@ class OrderForm
         foreach ($this->filesUrlCollection as $fileUrl) {
             $this->filesLink = sprintf('</br> %s', $this->collectLinkToProductForUser($fileUrl));
         }
+
+        $this->orderUuid = UuidUtils::uuidGenerator();
     }
 
     /**
@@ -755,6 +765,25 @@ class OrderForm
     public function setProductIsVariable(bool $productIsVariable): OrderForm
     {
         $this->productIsVariable = $productIsVariable;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderUuid(): string
+    {
+        return $this->orderUuid;
+    }
+
+    /**
+     * @param string $orderUuid
+     *
+     * @return OrderForm
+     */
+    public function setOrderUuid(string $orderUuid): OrderForm
+    {
+        $this->orderUuid = $orderUuid;
         return $this;
     }
 }
