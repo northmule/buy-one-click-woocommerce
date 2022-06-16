@@ -21,6 +21,7 @@ use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\ReCaptcha;
 use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
+use Coderun\BuyOneClick\Response\ValueObject\Product;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
 use Coderun\BuyOneClick\ValueObject\OrderForm;
 use WC_Order;
@@ -163,6 +164,8 @@ class OrderController extends Controller
             $orderResponse = new OrderResponse();
             $orderResponse->setMessage(__('The order has been sent', 'coderun-oneclickwoo'));
             $orderResponse->setResult($commonOptions->getSubmittingFormMessageSuccess());
+            $orderResponse->setProducts([new Product($orderForm)]);
+            $orderResponse->setOrderUuid($orderForm->getOrderUuid());
             if ($wooOrderId) {
                 $wcOrder = wc_get_order($wooOrderId);
                 if ($wcOrder instanceof WC_Order) {

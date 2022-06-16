@@ -66,13 +66,20 @@ class OrderDataForAdmin
      * @var bool
      */
     protected bool $productIsVariable = false;
-    
+
     /**
      * Ссылки на файлы
      *
      * @var array
      */
     protected array $files = [];
+
+    /**
+     * Внутренний UUID заказа
+     *
+     * @var string
+     */
+    protected string $uuid = '';
 
     /**
      * @param array|null $data
@@ -163,7 +170,7 @@ class OrderDataForAdmin
     {
         return $this->productIsVariable;
     }
-    
+
     /**
      * @return array<int, string>
      */
@@ -171,8 +178,16 @@ class OrderDataForAdmin
     {
         return $this->files;
     }
-    
-    
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+
 
 
 
@@ -211,5 +226,6 @@ class OrderDataForAdmin
         $this->variationData = $data->getVariationData();
         $this->productIsVariable = $data->isProductIsVariable();
         $this->files = $data->getFilesUrlCollection() ?? [];
+        $this->uuid = $data->getOrderUuid() ?? '';
     }
 }

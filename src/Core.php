@@ -8,6 +8,7 @@ use Coderun\BuyOneClick\Controller\FormController;
 use Coderun\BuyOneClick\Controller\OrderController;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
+use Coderun\BuyOneClick\Options\Marketing as MarketingOptions;
 use Exception;
 use WC_Product;
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
@@ -97,6 +98,13 @@ class Core
      * @var NotificationOptions
      */
     protected NotificationOptions $notificationOptions;
+
+    /**
+     * Настройки плагина
+     *
+     * @var MarketingOptions
+     */
+    protected MarketingOptions $marketingOptions;
 
     /**
      * Все настройки плагина
@@ -218,6 +226,7 @@ class Core
         $this->options = $help->get_options();
         $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
         $this->notificationOptions = new NotificationOptions(get_option(OptionsType::NOTIFICATIONS, []));
+        $this->marketingOptions = new MarketingOptions(get_option(OptionsType::MARKETING, []));
     }
 
 
@@ -290,6 +299,11 @@ class Core
         if ($this->getOption('successful_form_submission', self::OPTIONS_MARKETING)) {
             $variables['callback_successful_form_submission'] = $this->getOption('successful_form_submission', self::OPTIONS_MARKETING);
         }
+        $variables['yandex_metrica'] = [
+            'transfer_data_to_yandex_commerce' => $this->marketingOptions->isTransferDataToYandexCommerce(),
+            'data_layer' => $this->marketingOptions->getNameOfYandexMetricaDataContainer(),
+            'goal_id' => $this->marketingOptions->getGoalIdInYandexECommerce(),
+        ];
 
 
         $str = '';
@@ -297,7 +311,12 @@ class Core
         $str .= " /* <![CDATA[ */\n";
         $str .= "var buyone_ajax = " . json_encode($variables) . "; \n";
         $str .= " /* ]]> */\n";
-        // $str .=
+        $str .= sprintf(
+            'window.%s = window.%s || [];%s',
+            $this->marketingOptions->getNameOfYandexMetricaDataContainer(),
+            $this->marketingOptions->getNameOfYandexMetricaDataContainer(),
+            "\n"
+        );
         $str .= "</script>\n";
         echo $str;
     }
@@ -350,11 +369,14 @@ class Core
         wp_enqueue_script('buybootstrapjs1', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/js/bootstrap.js', ['jquery'], self::VERSION);
         wp_enqueue_script('buyorder', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js', ['jquery'], self::VERSION);
 
-
-        wp_localize_script('buyorder', 'buyadminnonce', array(//Установка проверочного кода
-                                                              'url' => admin_url(plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js'),
-                                                              'nonce' => wp_create_nonce('superKey')
-        ));
+        wp_localize_script(
+            'buyorder',
+            'buyadminnonce',
+            [
+                'url' => admin_url(plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js'),
+                'nonce' => wp_create_nonce('superKey')
+            ]
+        );
         wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-builder.min.js', plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
         wp_enqueue_script('form-builder', sprintf('%s/%s/js/formBuilder/form-render.min.js', plugins_url(), self::PATCH_PLUGIN), ['jquery'], self::VERSION);
     }
@@ -463,6 +485,12 @@ class Core
      */
     public function scriptAddFrontPage()
     {
+        wp_enqueue_script(
+            'buy-one-click-yandex-metrica',
+            sprintf('%s/%s/js/BuyOneClickYandexMetrica.js', plugins_url(), self::PATCH_PLUGIN),
+            ['jquery'],
+            self::VERSION
+        );
         wp_enqueue_script('buyonclickfrontjs', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/form.js', ['jquery', 'buymaskedinput'], self::VERSION);
         wp_enqueue_script('buymaskedinput', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/jquery.maskedinput.min.js', ['jquery'], self::VERSION);
     }

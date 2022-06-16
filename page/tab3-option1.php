@@ -42,16 +42,16 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
                 echo '<br>'.__('Plugin Order №', 'coderun-oneclickwoo').": {$order->getId()}";
                 ?>
                 <?php
-                if ($order->getWooOrderId()) {
-                    echo '<br>'.__('Woo Order №', 'coderun-oneclickwoo').": <a href='/wp-admin/post.php?post={$order->getWooOrderId()}&action=edit'>{$order->getWooOrderId()}</a>";
-                }
-
-
                 $sms = json_decode($order->getSmsLog(), true);
                 $orderData = new OrderDataForAdminValueObject(
                     json_decode($order->getForm(), true)
-                )
-
+                );
+                if ($order->getWooOrderId()) {
+                    echo '<br>'.__('Woo Order №', 'coderun-oneclickwoo').": <a href='/wp-admin/post.php?post={$order->getWooOrderId()}&action=edit'>{$order->getWooOrderId()}</a>";
+                }
+                if ($orderData->getUuid()) {
+                   echo sprintf('<p>Uuid: %s</p>', $orderData->getUuid());
+                }
                 ?>
             </th>
             <th><?php echo $order->getDateCreate()->format('d.m.Y H:i:s'); ?></th>
