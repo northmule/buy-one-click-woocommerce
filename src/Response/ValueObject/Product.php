@@ -91,7 +91,7 @@ class Product
      */
     protected function findProductSku(int $productId): string
     {
-        $product = new WC_Product($productId);
+        $product = wc_get_product($productId);
         return $product->get_sku();
     }
 
@@ -125,12 +125,11 @@ class Product
      */
     protected function findProductVariant(int $productId): string
     {
-        $product = new WC_Product($productId);
-        if (!$product->is_type('variable')) {
+        $product = wc_get_product($productId);
+        if (!$product instanceof WC_Product_Variation) {
             return '';
         }
-        $variation = new WC_Product_Variation($product->get_id());
-        return $variation->get_name();
+        return $product->get_name();
     }
 
     /**

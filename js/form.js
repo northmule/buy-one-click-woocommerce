@@ -105,13 +105,10 @@ jQuery(document).ready(function () {
             }
         }).fail(function (response) {
             jQuery(root_selector + " .form-message-result").html('server error 500');
-
         }).always(function () {
             jQuery('#buyoneclick_form_order .buyButtonOkForm').prop("disabled", false);
             jQuery('#buyoneclick_form_order .buyButtonOkForm').removeClass('running');
         });
-
-
     });
 
     /**

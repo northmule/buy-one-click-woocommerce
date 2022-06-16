@@ -6,8 +6,6 @@ use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\ValueObject\OrderDataForAdmin as OrderDataForAdminValueObject;
 
-use function sprintf;
-
 ?>
 <h3><?php _e('Orders via plugin', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
 <p><?php _e('All orders sent via the button', 'coderun-oneclickwoo'); ?> "<?php echo  Core::getInstance()->getOption('namebutton'); ?>"</p>
