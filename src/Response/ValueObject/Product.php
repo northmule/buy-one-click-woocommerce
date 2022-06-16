@@ -104,16 +104,15 @@ class Product
      */
     protected function findProductCategories(int $productId): string
     {
-        $categories = get_the_terms($productId, 'product_cat');
-        if (!is_array($categories)) {
-            return '';
+        $product = wc_get_product($productId);
+        $categoryNames = [];
+        foreach ($product->get_category_ids() as $categoryId) {
+            $category = get_term($categoryId, 'product_cat');
+            if ($category && !is_wp_error($category)) {
+                $categoryNames[] = $category->name;
+            }
         }
-        $result = [];
-        foreach ($categories as $category) {
-            $result[] = $category->name;
-        }
-
-        return implode(',', $result);
+        return implode('/', $categoryNames);
     }
 
     /**
