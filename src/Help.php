@@ -72,5 +72,4 @@ class Help
             'buynotification' => \get_option('buynotification', [])
         );
     }
-
 }

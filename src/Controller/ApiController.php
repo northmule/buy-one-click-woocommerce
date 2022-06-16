@@ -11,7 +11,6 @@ namespace Coderun\BuyOneClick\Controller;
  */
 class ApiController extends Controller
 {
-    
     /**
      * @inheritDoc
      */
@@ -19,5 +18,4 @@ class ApiController extends Controller
     {
         // TODO: Implement init() method.
     }
-    
 }
