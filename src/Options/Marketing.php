@@ -49,7 +49,7 @@ class Marketing extends Base
      *
      * @var string
      */
-    protected string $nameOfYandexMetricaDataContainer = '';
+    protected string $nameOfYandexMetricaDataContainer = 'dataLayer';
 
     /**
      * ИД цели в яндекс электронная коммерция
@@ -58,7 +58,7 @@ class Marketing extends Base
      *
      * @var string
      */
-    protected string $goalIdInYandexECommerce = '';
+    protected string $goalIdInYandexECommerce = '1';
 
     /**
      * Настройки из WordPress в св-ва
