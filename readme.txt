@@ -73,6 +73,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.1.1 =
+* The value for the e-commerce option that corrects the button error
 = 2.1.0 =
 * Added a setting for sending data to the Yandex Metrica E-commerce service
 * A little code optimization
