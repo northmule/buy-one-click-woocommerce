@@ -140,9 +140,9 @@ class OrderForm
      */
     private function fillInPriceWithTax(): void
     {
-        $wcOrder = Order::getInstance()->create_order(['product_id' => $this->productId]);
+        $wcOrder = Order::getInstance()->createWooCommerceOrderWithoutSaving($this->productId);
         $this->productPriceWithTax = (float)Order::getInstance()->calculate_order_totals($wcOrder);
-        $wcOrder->delete(true); // todo переделать
+        $wcOrder->delete();
         unset($wcOrder);
     }
 

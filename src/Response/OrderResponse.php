@@ -23,8 +23,27 @@ class OrderResponse implements ResponseInterface
     protected string $redirectUrl = '';
     /** @var array<int, Product> */
     protected array $products = [];
-    /** @var string  */
+    
+    /**
+     * UUID заказа плагина
+     *
+     * @var string
+     */
     protected string $orderUuid = '';
+    
+    /**
+     * WooCommerce ID
+     *
+     * @var int
+     */
+    protected int $orderId = 1;
+    
+    /**
+     * Номер заказа, формируется сторонними плагинами
+     *
+     * @var string
+     */
+    protected string $orderNumber = '';
 
     /**
      * @return string
@@ -120,4 +139,45 @@ class OrderResponse implements ResponseInterface
         $this->orderUuid = $orderUuid;
         return $this;
     }
+    
+    /**
+     * @return int
+     */
+    public function getOrderId(): int
+    {
+        return $this->orderId;
+    }
+    
+    /**
+     * @param int $orderId
+     *
+     * @return OrderResponse
+     */
+    public function setOrderId(int $orderId): OrderResponse
+    {
+        $this->orderId = $orderId;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getOrderNumber(): string
+    {
+        return $this->orderNumber;
+    }
+    
+    /**
+     * @param string $orderNumber
+     *
+     * @return OrderResponse
+     */
+    public function setOrderNumber(string $orderNumber): OrderResponse
+    {
+        $this->orderNumber = $orderNumber;
+        return $this;
+    }
+    
+    
+    
 }

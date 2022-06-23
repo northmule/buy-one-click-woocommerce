@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Options;
 
+use Coderun\BuyOneClick\Constant\Options\ButtonPosition;
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
+
+use function boolval;
+use function intval;
 
 /**
  * Class General
@@ -19,9 +23,9 @@ class General extends Base
      *
      * @wpOptionsName plugin_work_mode
      *
-     * @var string|null
+     * @var int
      */
-    protected ?string $pluginWorkMode;
+    protected int $pluginWorkMode = 0;
 
     /**
      * Включить/отключить кнопку
@@ -30,7 +34,7 @@ class General extends Base
      *
      * @var bool
      */
-    protected bool $enableButton;
+    protected bool $enableButton = false;
 
     /**
      * Включить/отключить кнопку шорткод
@@ -55,18 +59,18 @@ class General extends Base
      *
      * @wpOptionsName positionbutton
      *
-     * @var string|null
+     * @var string
      */
-    protected ?string $positionButton;
+    protected string $positionButton = ButtonPosition::WOOCOMMERCE_AFTER_ADD_TO_CART_BUTTON;
 
     /**
      * Позиция кнопки для товара которого нет в наличие
      *
      * @wpOptionsName positionbutton_out_stock
      *
-     * @var string|null
+     * @var string
      */
-    protected ?string $positionButtonOutStock;
+    protected string $positionButtonOutStock = '';
 
     /**
      * Записывать заказы в таблицу WooCommerce
@@ -75,7 +79,7 @@ class General extends Base
      *
      * @var bool
      */
-    protected bool $addAnOrderToWooCommerce;
+    protected bool $addAnOrderToWooCommerce = false;
 
     /**
      * Включить кнопку в категории
@@ -91,9 +95,9 @@ class General extends Base
      *
      * @wpOptionsName positionbutton_category
      *
-     * @var string|null
+     * @var string
      */
-    protected ?string $buttonPositionInCategory;
+    protected string $buttonPositionInCategory = ButtonPosition::WOOCOMMERCE_AFTER_SHOP_LOOP_ITEM;
 
     /**
      * Включить информацию о товаре на форму
@@ -269,11 +273,11 @@ class General extends Base
     /**
      * Маска ввода номера телефона
      *
-     * @wpOptionsName fon_format
+     * @wpOptionsName fon_format_input
      *
      * @var string
      */
-    protected string $phoneNumberInputMask;
+    protected string $phoneNumberInputMask = '';
 
     /**
      * Включить взаимодействие с механизмом остатков в WooCommerce
@@ -310,7 +314,7 @@ class General extends Base
      *
      * @var int
      */
-    protected int $actionAfterSubmittingForm;
+    protected int $actionAfterSubmittingForm = 0;
 
     /**
      * Закрыть форму через N сек.
@@ -319,7 +323,7 @@ class General extends Base
      *
      * @var int
      */
-    protected int $secondsBeforeClosingForm;
+    protected int $secondsBeforeClosingForm = 0;
 
     /**
      * Доп. сообщение после отправки
@@ -328,7 +332,7 @@ class General extends Base
      *
      * @var string
      */
-    protected string $messageAfterSubmittingForm;
+    protected string $messageAfterSubmittingForm = '';
 
     /**
      * URL адрес перенаправления (произвольный)
@@ -344,9 +348,9 @@ class General extends Base
      *
      * @wpOptionsName form_style_color
      *
-     * @var string
+     * @var int
      */
-    protected string $formStyle;
+    protected int $formStyle = 1;
 
     /**
      * Лимит на отправку формы
@@ -418,15 +422,15 @@ class General extends Base
      */
     public function __construct(array $options)
     {
-        $this->pluginWorkMode = $options['plugin_work_mode'] ?? null;
+        $this->pluginWorkMode = intval($options['plugin_work_mode'] ?? 0);
         $this->enableButton = boolval($options['enable_button'] ?? false);
         $this->enableButtonShortcode = boolval(
             $options['enable_button_shortcod'] ?? false
         );
         $this->nameButton = $options['namebutton'] ?? null;
-        $this->positionButton = $options['positionbutton'] ?? null;
+        $this->positionButton = $options['positionbutton'] ?? ButtonPosition::WOOCOMMERCE_AFTER_ADD_TO_CART_BUTTON;
         $this->positionButtonOutStock = $options['positionbutton_out_stock'] ??
-            null;
+            '';
         $this->addAnOrderToWooCommerce = boolval(
             $options['add_tableorder_woo'] ?? false
         );
@@ -434,7 +438,7 @@ class General extends Base
             $options['enable_button_category'] ?? false
         );
         $this->buttonPositionInCategory = $options['positionbutton_category'] ??
-            null;
+            ButtonPosition::WOOCOMMERCE_AFTER_SHOP_LOOP_ITEM;
         $this->enableProductInformation = boolval(
             $options['infotovar_chek'] ?? false
         );
@@ -470,7 +474,7 @@ class General extends Base
         $this->fieldFilesIsRequired = boolval(
             $options['upload_input_file_verifi'] ?? false
         );
-        $this->phoneNumberInputMask = $options['fon_format'] ?? '';
+        $this->phoneNumberInputMask = $options['fon_format_input'] ?? '';
         $this->enableWorkWithRemainingItems = boolval(
             $options['woo_stock_status_enable'] ?? false
         );
@@ -479,12 +483,12 @@ class General extends Base
         $this->submittingFormMessageSuccess = $options['success'] ?? '';
         $this->actionAfterSubmittingForm = intval($options['success_action'] ?? 0);
         $this->secondsBeforeClosingForm = intval(
-            $options['success_action_close'] ?? 5
+            $options['success_action_close'] ?? 0
         );
         $this->messageAfterSubmittingForm = $options['success_action_message']
             ?? '';
         $this->urlRedirectAddress = $options['success_action_redirect'] ?? null;
-        $this->formStyle = $options['form_style_color'] ?? '';
+        $this->formStyle = intval($options['form_style_color'] ?? 1);
         $this->formSubmissionLimit = intval(
             $options['time_limit_send_form'] ?? 10
         );
@@ -505,19 +509,19 @@ class General extends Base
     }
 
     /**
-     * @return string|null
+     * @return int
      */
-    public function getPluginWorkMode(): ?string
+    public function getPluginWorkMode(): int
     {
         return $this->pluginWorkMode;
     }
 
     /**
-     * @param string|null $pluginWorkMode
+     * @param int $pluginWorkMode
      *
      * @return General
      */
-    public function setPluginWorkMode(?string $pluginWorkMode): General
+    public function setPluginWorkMode(int $pluginWorkMode): General
     {
         $this->pluginWorkMode = $pluginWorkMode;
         return $this;
@@ -580,36 +584,36 @@ class General extends Base
         $this->nameButton = $nameButton;
         return $this;
     }
-
+    
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPositionButton(): ?string
+    public function getPositionButton(): string
     {
         return $this->positionButton;
     }
-
+    
     /**
-     * @param string|null $positionButton
+     * @param string $positionButton
      *
      * @return General
      */
-    public function setPositionButton($positionButton): General
+    public function setPositionButton($positionButton)
     {
         $this->positionButton = $positionButton;
         return $this;
     }
-
+    
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPositionButtonOutStock(): ?string
+    public function getPositionButtonOutStock(): string
     {
         return $this->positionButtonOutStock;
     }
-
+    
     /**
-     * @param string|null $positionButtonOutStock
+     * @param string $positionButtonOutStock
      *
      * @return General
      */
@@ -618,6 +622,10 @@ class General extends Base
         $this->positionButtonOutStock = $positionButtonOutStock;
         return $this;
     }
+
+
+
+ 
 
     /**
      * @return bool
@@ -657,26 +665,27 @@ class General extends Base
         $this->enableButtonCategory = $enableButtonCategory;
         return $this;
     }
-
+    
     /**
-     * @return string|null
+     * @return string
      */
-    public function getButtonPositionInCategory(): ?string
+    public function getButtonPositionInCategory(): string
     {
         return $this->buttonPositionInCategory;
     }
-
+    
     /**
-     * @param string|null $buttonPositionInCategory
+     * @param string $buttonPositionInCategory
      *
      * @return General
      */
-    public function setButtonPositionInCategory(
-        $buttonPositionInCategory
-    ): General {
+    public function setButtonPositionInCategory($buttonPositionInCategory): General
+    {
         $this->buttonPositionInCategory = $buttonPositionInCategory;
         return $this;
     }
+
+
 
     /**
      * @return bool
@@ -1203,25 +1212,26 @@ class General extends Base
         $this->urlRedirectAddress = $urlRedirectAddress;
         return $this;
     }
-
+    
     /**
-     * @return string
+     * @return int
      */
-    public function getFormStyle()
+    public function getFormStyle(): int
     {
         return $this->formStyle;
     }
-
+    
     /**
-     * @param string $formStyle
+     * @param int $formStyle
      *
      * @return General
      */
-    public function setFormStyle(string $formStyle): General
+    public function setFormStyle(int $formStyle): General
     {
         $this->formStyle = $formStyle;
         return $this;
     }
+
 
     /**
      * @return int

@@ -73,6 +73,11 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.1.2 =
+* The order number for yandex.metrica is taken from WooCommerce
+* Old code removed
+* The full price is calculated using WooCommerce mechanisms without saving the order. This bug led to the creation of duplicates in CRM systems due to the occurrence of events in WooCommerce
+* Solved the problem with creating two orders in WooCommerce
 = 2.1.1 =
 * The value for the e-commerce option that corrects the button error
 = 2.1.0 =

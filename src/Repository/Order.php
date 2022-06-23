@@ -5,6 +5,9 @@ namespace Coderun\BuyOneClick\Repository;
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
 use Coderun\BuyOneClick\BuyHookPlugin;
+use WC_Order;
+use WC_Order_Item;
+use WC_Order_Item_Product;
 
 class Order
 {
@@ -34,7 +37,7 @@ class Order
      * Создаёт необходимый объект заказа
      * @param $params
      *
-     * @return \WC_Order|\WP_Error
+     * @return WC_Order|\WP_Error
      * @throws \WC_Data_Exception
      */
     public function create_order($params)
@@ -59,7 +62,7 @@ class Order
 
         $params = wp_parse_args($params, $default_params);
         $product = wc_get_product($params['product_id']);
-        $order = wc_create_order(); //создаём новый заказ
+        $order = wc_create_order($params); //создаём новый заказ
         $product_params = array(
             'name' => $product->get_name(),
             'tax_class' => $product->get_tax_class(),
@@ -96,15 +99,35 @@ class Order
         $order->set_customer_id(get_current_user_id());
         return $order;
     }
+    
+    /**
+     * Объект заказа WooCommerce для расчёта цены за 1-у еденицу
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return WC_Order
+     * @throws \WC_Data_Exception
+     */
+    public function createWooCommerceOrderWithoutSaving(int $productId): WC_Order
+    {
+   
+        $product = wc_get_product($productId);
+        $order = new WC_Order(); //создаём новый заказ
+        $productItem = new WC_Order_Item_Product();
+        $productItem->set_product($product);
+        $productItem->set_quantity(1);
+        $order->add_item($productItem);
+        return $order;
+    }
 
     /**
-     * Расчёт стоимости заказа без сохранения заказа
-     * @param \WC_Order $order
+     * Расчёт стоимости за 1-у позицию
+     * @param WC_Order $order
      * @see \WC_Abstract_Order
      * @return float
      * @throws \WC_Data_Exception
      */
-    public function calculate_order_totals(\WC_Order $order)
+    public function calculate_order_totals(WC_Order $order)
     {
         $cart_subtotal     = 0;
         $cart_total        = 0;
@@ -136,7 +159,7 @@ class Order
 
             $fee_total += $item->get_total();
         }
-        $order->calculate_taxes();
+        // $order->calculate_taxes();
 
         foreach ($order->get_items() as $item) {
             $cart_subtotal_tax += $item->get_subtotal_tax();

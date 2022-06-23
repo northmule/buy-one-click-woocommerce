@@ -8,7 +8,7 @@ msgstr ""
 "Language: ru_RU\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-16 13:15+0000\n"
-"PO-Revision-Date: 2022-05-28 18:49+0000\n"
+"PO-Revision-Date: 2022-06-23 19:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: Русский\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
@@ -61,7 +61,7 @@ msgstr "Поле дополнительной информации"
 msgid "Additional settings"
 msgstr "Дополнительные настройки"
 
-#: src/Utils/Email.php:97
+#: src/Utils/Email.php:99
 msgid "Additionally"
 msgstr "Дополнительно"
 
@@ -111,7 +111,7 @@ msgstr "Спросить телефон"
 msgid "Author"
 msgstr "автор"
 
-#: page/tab3-option1.php:74
+#: page/tab3-option1.php:79
 msgid "Balance"
 msgstr "Остаток средств"
 
@@ -156,7 +156,7 @@ msgstr ""
 "Купить в один клик для WooCommerce. Лучший плагин который добавляет в ваш "
 "интернет магазин кнопку покупки товара в один клик"
 
-#: src/BuyFunction.php:259
+#: src/BuyFunction.php:225
 msgid "Buy on click"
 msgstr "Купить по клику"
 
@@ -184,7 +184,7 @@ msgstr "Код для использования"
 msgid "Consent to the processing of personal data"
 msgstr "Согласие на обработку персональных данных"
 
-#: page/tab3-option1.php:74
+#: page/tab3-option1.php:79
 msgid "Cost of"
 msgstr "Стоимость"
 
@@ -192,11 +192,13 @@ msgstr "Стоимость"
 msgid "Couldn't create WooCommerce order"
 msgstr "Не удалось создать заказ WooCommerce"
 
-#: page/tab3-option1.php:74
-msgid "Count.sms"
+#: page/tab3-option1.php:79
+#, fuzzy
+#| msgid "Count.sms"
+msgid "Count sms"
 msgstr "Count.sms"
 
-#: src/Utils/Email.php:92
+#: src/Utils/Email.php:94
 msgid "Customer"
 msgstr "Покупатель"
 
@@ -216,7 +218,12 @@ msgstr "Телефон клиента"
 msgid "Customer SMS Template"
 msgstr "Шаблон SMS клиента"
 
-#: src/Utils/Email.php:64
+#: page/tab5-option1.php:86
+msgid "Data transfer to Yandex e-commerce event of product purchase"
+msgstr ""
+"Передача данных в электронную коммерцию Яндекса в случае покупки товара"
+
+#: src/Utils/Email.php:66
 msgid "Date"
 msgstr "Дата"
 
@@ -285,7 +292,7 @@ msgstr ""
 msgid "Element"
 msgstr "Элемент"
 
-#: src/Service.php:59 src/Utils/Email.php:84
+#: src/Service.php:59 src/Utils/Email.php:86
 msgid "Email"
 msgstr "Эл. адрес"
 
@@ -312,6 +319,10 @@ msgstr "Включить отображение кнопок в категори
 #: page/tab1-option1.php:32
 msgid "Enable button display?"
 msgstr "Включить отображение кнопки?"
+
+#: page/tab5-option1.php:107
+msgid "Enable data transfer to the Yandex e-commerce service"
+msgstr "Включить передачу данных в сервис электронной коммерции Яндекса"
 
 #: page/tab2-option1.php:228
 msgid "Enable debug mode. Debub is off by default."
@@ -379,7 +390,7 @@ msgstr ""
 
 #: page/tab2-option1.php:167
 msgid "Encoding"
-msgstr "кодировка"
+msgstr "Кодировка"
 
 #: page/tab5-option1.php:17
 msgid "Event after clicking the button"
@@ -390,7 +401,7 @@ msgid "Event after successful form submission"
 msgstr "Событие после успешной отправки формы"
 
 #: page/tab2-option1.php:23 page/tab2-option1.php:32 page/tab1-option1.php:461
-#: page/tab5-option1.php:14
+#: page/tab5-option1.php:14 page/tab5-option1.php:95
 msgid "Example"
 msgstr "пример"
 
@@ -406,7 +417,7 @@ msgstr "Поле \"Загрузить файл\""
 msgid "Field add. information from the form"
 msgstr "Поле доп. информация из формы"
 
-#: src/Help.php:133 src/ValueObject/OrderForm.php:258
+#: page/tab3-option1.php:69 src/ValueObject/OrderForm.php:268
 msgid "File"
 msgstr "Файл"
 
@@ -414,7 +425,7 @@ msgstr "Файл"
 msgid "File downloaded"
 msgstr "Загруженный файл"
 
-#: src/Controller/OrderController.php:106
+#: src/Controller/OrderController.php:111
 msgid "File upload error"
 msgstr "Ошибка при загрузке файла"
 
@@ -489,7 +500,7 @@ msgstr ""
 "для быстрого заказа кнопки. Если галочка установлена — смс уведомления будут "
 "работать."
 
-#: templates/forms/order_form.php:63
+#: templates/forms/order_form.php:64
 msgid "Format"
 msgstr "Формат"
 
@@ -508,6 +519,14 @@ msgstr "Главные"
 #: page/tab1-option1.php:10
 msgid "General add-on settings"
 msgstr "Общие настройки дополнений"
+
+#: page/tab5-option1.php:120
+msgid "Goal ID"
+msgstr "ИД цели"
+
+#: page/tab5-option1.php:125
+msgid "Goal ID. If used, specify it here"
+msgstr "Идентификатор цели. Если используется, укажите его здесь"
 
 #: page/tab1-option1.php:484
 msgid "Green"
@@ -605,7 +624,7 @@ msgstr "Номер предмета"
 msgid "Link"
 msgstr "Ссылка на сайт"
 
-#: src/Utils/Email.php:68
+#: src/Utils/Email.php:70
 msgid "Link to the product"
 msgstr "Ссылка на товар"
 
@@ -617,7 +636,7 @@ msgstr "Ссылки на файлы"
 msgid "Login"
 msgstr "Авторизоваться"
 
-#: src/ValueObject/OrderForm.php:172
+#: src/ValueObject/OrderForm.php:182
 msgid "Look"
 msgstr "Посмотрите"
 
@@ -658,12 +677,12 @@ msgstr "Режим"
 
 #: page/tab1-option1.php:448
 msgid "ms"
-msgstr "Миз"
+msgstr "мс"
 
-#: src/Service.php:53 src/Utils/Email.php:76 templates/forms/order_form.php:25
-#: templates/forms/order_form.php:39
+#: src/Service.php:53 src/Utils/Email.php:78 templates/forms/order_form.php:26
+#: templates/forms/order_form.php:40
 msgid "Name"
-msgstr "название"
+msgstr "Название"
 
 #: page/tab1-option1.php:264
 msgid "Name field"
@@ -685,6 +704,16 @@ msgstr "Название кнопки в форме"
 msgid "Name of the button on the site"
 msgstr "Название кнопки на сайте"
 
+#: page/tab5-option1.php:111
+msgid "Name of the data container"
+msgstr "Имя контейнера данных"
+
+#: page/tab5-option1.php:116
+msgid ""
+"Name of the yandex Metrica data container. The default value is \"dataLayer\""
+msgstr ""
+"Имя контейнера данных яндекс Метрики. Значение по умолчанию - \"dataLayer\"."
+
 #: page/tab1-option1.php:608
 msgid "New order event"
 msgstr "Событие нового заказа"
@@ -693,7 +722,7 @@ msgstr "Событие нового заказа"
 msgid "No file to download"
 msgstr "Нет файла для загрузки"
 
-#: page/tab3-option1.php:86
+#: page/tab3-option1.php:94
 msgid "NOT"
 msgstr "Нет"
 
@@ -705,7 +734,7 @@ msgstr "Не показывать"
 msgid "Nothing to do"
 msgstr "Нечего делать"
 
-#: templates/forms/order_form.php:116
+#: templates/forms/order_form.php:117
 msgid "Notification"
 msgstr "уведомление"
 
@@ -727,7 +756,7 @@ msgstr ""
 msgid "Obligatory field?"
 msgstr "Обязательное поле?"
 
-#: page/tab3-option1.php:88
+#: page/tab3-option1.php:96
 msgid "OK"
 msgstr "Ок"
 
@@ -735,11 +764,11 @@ msgstr "Ок"
 msgid "Online Store Owners Phone"
 msgstr "Интернет-магазин владельцев телефонов"
 
-#: page/tab3-option1.php:99
+#: page/tab3-option1.php:107
 msgid "OnlyPlugin"
 msgstr "Только плагин"
 
-#: page/tab3-option1.php:104
+#: page/tab3-option1.php:112
 msgid "OnlyWoo"
 msgstr "Только Woo"
 
@@ -791,7 +820,7 @@ msgstr "пароль"
 msgid "Phone"
 msgstr "Телефон"
 
-#: src/Utils/Email.php:88
+#: src/Utils/Email.php:90
 msgid "Phone number"
 msgstr "Номер телефона"
 
@@ -799,9 +828,9 @@ msgstr "Номер телефона"
 msgid "Phone number entry format"
 msgstr "Формат ввода номера телефона"
 
-#: templates/forms/order_form.php:32 templates/forms/order_form.php:46
+#: templates/forms/order_form.php:33 templates/forms/order_form.php:47
 msgid "Picture"
-msgstr "Картина"
+msgstr "Изображение"
 
 #: page/tab1-option1.php:472
 msgid ""
@@ -851,8 +880,8 @@ msgstr "Положение кнопки в карточке для продук�
 msgid "Position of the button in the category"
 msgstr "Положение кнопки в категории"
 
-#: page/tab3-option1.php:27 src/Utils/Email.php:72
-#: templates/forms/order_form.php:28 templates/forms/order_form.php:42
+#: page/tab3-option1.php:27 src/Utils/Email.php:74
+#: templates/forms/order_form.php:29 templates/forms/order_form.php:43
 msgid "Price"
 msgstr "Цена"
 
@@ -880,12 +909,12 @@ msgstr "Продукты"
 msgid "purchase quantity (number)"
 msgstr "количество покупки (количество)"
 
-#: page/tab1-option1.php:236 page/tab3-option1.php:66 src/Utils/Email.php:80
+#: page/tab1-option1.php:236 page/tab3-option1.php:66 src/Utils/Email.php:82
 #: templates/forms/quantity.php:6
 msgid "Quantity"
 msgstr "Количество"
 
-#: src/Repository/Order.php:55 src/Controller/OrderController.php:141
+#: src/Repository/Order.php:58 src/Controller/OrderController.php:146
 msgid "Quick order form"
 msgstr "Форма быстрого заказа"
 
@@ -899,7 +928,7 @@ msgstr "Случайная информация"
 
 #: page/tab1-option1.php:483
 msgid "Red"
-msgstr "красный"
+msgstr "Красный"
 
 #: page/tab1-option1.php:454
 msgid "Redirect to page"
@@ -909,7 +938,7 @@ msgstr "Перенаправить на страницу"
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/Controller/OrderController.php:190
+#: src/Controller/OrderController.php:200
 msgid "request error"
 msgstr "ошибка запроса"
 
@@ -999,9 +1028,13 @@ msgstr "Укажите цену, включая налог"
 msgid "Status"
 msgstr "Статус"
 
-#: page/tab5-option1.php:14
+#: page/tab5-option1.php:14 page/tab5-option1.php:95
 msgid "Switching to another site"
 msgstr "Переход на другой сайт"
+
+#: src/Core.php:600
+msgid "Telegram"
+msgstr "Telegram"
 
 #: page/tab1-option1.php:284
 msgid "Telephone box"
@@ -1080,7 +1113,7 @@ msgstr ""
 "Опция включает или отключает отображение кнопки заказа в один клик в "
 "категориях товаров. Вы можете выбрать позицию отображения дальше."
 
-#: src/Controller/OrderController.php:164
+#: src/Controller/OrderController.php:169
 msgid "The order has been sent"
 msgstr "Заказ отправлен"
 
@@ -1153,6 +1186,10 @@ msgstr ""
 msgid "Tick off the boxes to be sent."
 msgstr "Отметьте галочками поля для отправки."
 
+#: page/tab5-option1.php:102
+msgid "Transmit data"
+msgstr "Передача данных"
+
 #: page/tab1-option1.php:93
 msgid "Under the full information about the product"
 msgstr "Под полной информацией о товаре"
@@ -1201,6 +1238,14 @@ msgstr "Следите за обновлениями через"
 msgid "What to do after pressing the button"
 msgstr "Что делать после нажатия кнопки"
 
+#: page/tab5-option1.php:93
+msgid ""
+"When you specify these settings, data will be transmitted to the Yandex "
+"Metrica - e-commerce service. This event is a product purchase event."
+msgstr ""
+"Когда вы укажете эти настройки, данные будут переданы в сервис электронной "
+"коммерции Яндекс Метрика. Это событие является событием покупки продукта."
+
 #: page/tab1-option1.php:187
 msgid ""
 "Will the product information be displayed in a modal window or not? The tick "
@@ -1209,7 +1254,7 @@ msgstr ""
 "Будет ли информация о продукте отображаться в модальном окне или нет? "
 "Галочка того стоит - будет отображаться"
 
-#: page/tab3-option1.php:44
+#: page/tab3-option1.php:48
 msgid "Woo Order №"
 msgstr "Заказ Woo №"
 

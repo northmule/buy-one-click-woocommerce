@@ -23,7 +23,7 @@ class BuyOneClickYandexMetrica {
       "ecommerce": {
         "purchase": {
           "actionField": {
-            "id" : "OneClick#" + purchaseId,
+            "id" : purchaseId,
             "goal_id": goalId,
           },
           "products": products

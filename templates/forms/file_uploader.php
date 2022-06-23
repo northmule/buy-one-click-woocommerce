@@ -7,6 +7,8 @@ if (!defined('ABSPATH')) {
 /**
  * Форма загрузки файла
  */
+
+/** @var \Coderun\BuyOneClick\Templates\Elements\Files $render */
 ?>
 
 
@@ -15,7 +17,7 @@ if (!defined('ABSPATH')) {
         <input  id="upload_file_form" class="input-file" type="file" multiple accept="*" name="files[]" />
         <label for="upload_file_form" class="btn btn-tertiary js-labelFile">
             <i class="icon fa fa-check"></i>
-            <span class="js-fileName"><?php echo $options['upload_input_file_descript']; ?></span>
+            <span class="js-fileName"><?php echo $render->getCommonOptions()->getDescriptionForFieldFiles(); ?></span>
         </label>
     </div>
 </div>

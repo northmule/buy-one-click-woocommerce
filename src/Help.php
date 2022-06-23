@@ -21,8 +21,15 @@ class Help
      * Использование дополнение вариаций
      */
     public $module_variation = false;
-
-    public function isset_woo_order($orderId)
+    
+    /**
+     *
+     *
+     * @param $orderId
+     *
+     * @return bool
+     */
+    public function isset_woo_order($orderId): bool
     {
         $order = \wc_get_order($orderId);
         if (!$order instanceof \WC_Order) {

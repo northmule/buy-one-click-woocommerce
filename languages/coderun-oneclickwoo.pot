@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Buy one click WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-28 18:36+0000\n"
+"POT-Creation-Date: 2022-06-23 19:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Additional settings"
 msgstr ""
 
-#: src/Utils/Email.php:97
+#: src/Utils/Email.php:99
 msgid "Additionally"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: page/tab3-option1.php:74
+#: page/tab3-option1.php:79
 msgid "Balance"
 msgstr ""
 
@@ -145,7 +145,7 @@ msgid ""
 "store purchase button in one click"
 msgstr ""
 
-#: src/BuyFunction.php:259
+#: src/BuyFunction.php:225
 msgid "Buy on click"
 msgstr ""
 
@@ -173,7 +173,7 @@ msgstr ""
 msgid "Consent to the processing of personal data"
 msgstr ""
 
-#: page/tab3-option1.php:74
+#: page/tab3-option1.php:79
 msgid "Cost of"
 msgstr ""
 
@@ -181,11 +181,11 @@ msgstr ""
 msgid "Couldn't create WooCommerce order"
 msgstr ""
 
-#: page/tab3-option1.php:74
-msgid "Count.sms"
+#: page/tab3-option1.php:79
+msgid "Count sms"
 msgstr ""
 
-#: src/Utils/Email.php:92
+#: src/Utils/Email.php:94
 msgid "Customer"
 msgstr ""
 
@@ -205,7 +205,11 @@ msgstr ""
 msgid "Customer SMS Template"
 msgstr ""
 
-#: src/Utils/Email.php:64
+#: page/tab5-option1.php:86
+msgid "Data transfer to Yandex e-commerce event of product purchase"
+msgstr ""
+
+#: src/Utils/Email.php:66
 msgid "Date"
 msgstr ""
 
@@ -268,7 +272,7 @@ msgstr ""
 msgid "Element"
 msgstr ""
 
-#: src/Service.php:59 src/Utils/Email.php:84
+#: src/Service.php:59 src/Utils/Email.php:86
 msgid "Email"
 msgstr ""
 
@@ -294,6 +298,10 @@ msgstr ""
 
 #: page/tab1-option1.php:32
 msgid "Enable button display?"
+msgstr ""
+
+#: page/tab5-option1.php:107
+msgid "Enable data transfer to the Yandex e-commerce service"
 msgstr ""
 
 #: page/tab2-option1.php:228
@@ -365,7 +373,7 @@ msgid "Event after successful form submission"
 msgstr ""
 
 #: page/tab2-option1.php:23 page/tab2-option1.php:32 page/tab1-option1.php:461
-#: page/tab5-option1.php:14
+#: page/tab5-option1.php:14 page/tab5-option1.php:95
 msgid "Example"
 msgstr ""
 
@@ -381,7 +389,7 @@ msgstr ""
 msgid "Field add. information from the form"
 msgstr ""
 
-#: src/Help.php:133 src/ValueObject/OrderForm.php:258
+#: page/tab3-option1.php:69 src/ValueObject/OrderForm.php:268
 msgid "File"
 msgstr ""
 
@@ -389,7 +397,7 @@ msgstr ""
 msgid "File downloaded"
 msgstr ""
 
-#: src/Controller/OrderController.php:106
+#: src/Controller/OrderController.php:111
 msgid "File upload error"
 msgstr ""
 
@@ -459,7 +467,7 @@ msgstr ""
 msgid "for quick order button. If ticked - SMS notifications will work"
 msgstr ""
 
-#: templates/forms/order_form.php:63
+#: templates/forms/order_form.php:64
 msgid "Format"
 msgstr ""
 
@@ -477,6 +485,14 @@ msgstr ""
 
 #: page/tab1-option1.php:10
 msgid "General add-on settings"
+msgstr ""
+
+#: page/tab5-option1.php:120
+msgid "Goal ID"
+msgstr ""
+
+#: page/tab5-option1.php:125
+msgid "Goal ID. If used, specify it here"
 msgstr ""
 
 #: page/tab1-option1.php:484
@@ -562,7 +578,7 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: src/Utils/Email.php:68
+#: src/Utils/Email.php:70
 msgid "Link to the product"
 msgstr ""
 
@@ -574,7 +590,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: src/ValueObject/OrderForm.php:172
+#: src/ValueObject/OrderForm.php:182
 msgid "Look"
 msgstr ""
 
@@ -614,8 +630,8 @@ msgstr ""
 msgid "ms"
 msgstr ""
 
-#: src/Service.php:53 src/Utils/Email.php:76 templates/forms/order_form.php:25
-#: templates/forms/order_form.php:39
+#: src/Service.php:53 src/Utils/Email.php:78 templates/forms/order_form.php:26
+#: templates/forms/order_form.php:40
 msgid "Name"
 msgstr ""
 
@@ -639,6 +655,15 @@ msgstr ""
 msgid "Name of the button on the site"
 msgstr ""
 
+#: page/tab5-option1.php:111
+msgid "Name of the data container"
+msgstr ""
+
+#: page/tab5-option1.php:116
+msgid ""
+"Name of the yandex Metrica data container. The default value is \"dataLayer\""
+msgstr ""
+
 #: page/tab1-option1.php:608
 msgid "New order event"
 msgstr ""
@@ -647,7 +672,7 @@ msgstr ""
 msgid "No file to download"
 msgstr ""
 
-#: page/tab3-option1.php:86
+#: page/tab3-option1.php:94
 msgid "NOT"
 msgstr ""
 
@@ -659,7 +684,7 @@ msgstr ""
 msgid "Nothing to do"
 msgstr ""
 
-#: templates/forms/order_form.php:116
+#: templates/forms/order_form.php:117
 msgid "Notification"
 msgstr ""
 
@@ -679,7 +704,7 @@ msgstr ""
 msgid "Obligatory field?"
 msgstr ""
 
-#: page/tab3-option1.php:88
+#: page/tab3-option1.php:96
 msgid "OK"
 msgstr ""
 
@@ -687,11 +712,11 @@ msgstr ""
 msgid "Online Store Owners Phone"
 msgstr ""
 
-#: page/tab3-option1.php:99
+#: page/tab3-option1.php:107
 msgid "OnlyPlugin"
 msgstr ""
 
-#: page/tab3-option1.php:104
+#: page/tab3-option1.php:112
 msgid "OnlyWoo"
 msgstr ""
 
@@ -743,7 +768,7 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: src/Utils/Email.php:88
+#: src/Utils/Email.php:90
 msgid "Phone number"
 msgstr ""
 
@@ -751,7 +776,7 @@ msgstr ""
 msgid "Phone number entry format"
 msgstr ""
 
-#: templates/forms/order_form.php:32 templates/forms/order_form.php:46
+#: templates/forms/order_form.php:33 templates/forms/order_form.php:47
 msgid "Picture"
 msgstr ""
 
@@ -799,8 +824,8 @@ msgstr ""
 msgid "Position of the button in the category"
 msgstr ""
 
-#: page/tab3-option1.php:27 src/Utils/Email.php:72
-#: templates/forms/order_form.php:28 templates/forms/order_form.php:42
+#: page/tab3-option1.php:27 src/Utils/Email.php:74
+#: templates/forms/order_form.php:29 templates/forms/order_form.php:43
 msgid "Price"
 msgstr ""
 
@@ -828,12 +853,12 @@ msgstr ""
 msgid "purchase quantity (number)"
 msgstr ""
 
-#: page/tab1-option1.php:236 page/tab3-option1.php:66 src/Utils/Email.php:80
+#: page/tab1-option1.php:236 page/tab3-option1.php:66 src/Utils/Email.php:82
 #: templates/forms/quantity.php:6
 msgid "Quantity"
 msgstr ""
 
-#: src/Repository/Order.php:55 src/Controller/OrderController.php:141
+#: src/Repository/Order.php:58 src/Controller/OrderController.php:146
 msgid "Quick order form"
 msgstr ""
 
@@ -857,7 +882,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: src/Controller/OrderController.php:190
+#: src/Controller/OrderController.php:200
 msgid "request error"
 msgstr ""
 
@@ -939,8 +964,12 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: page/tab5-option1.php:14
+#: page/tab5-option1.php:14 page/tab5-option1.php:95
 msgid "Switching to another site"
+msgstr ""
+
+#: src/Core.php:600
+msgid "Telegram"
 msgstr ""
 
 #: page/tab1-option1.php:284
@@ -1006,7 +1035,7 @@ msgid ""
 "in product categories. You can select a display position further."
 msgstr ""
 
-#: src/Controller/OrderController.php:164
+#: src/Controller/OrderController.php:169
 msgid "The order has been sent"
 msgstr ""
 
@@ -1067,6 +1096,10 @@ msgstr ""
 msgid "Tick off the boxes to be sent."
 msgstr ""
 
+#: page/tab5-option1.php:102
+msgid "Transmit data"
+msgstr ""
+
 #: page/tab1-option1.php:93
 msgid "Under the full information about the product"
 msgstr ""
@@ -1115,13 +1148,19 @@ msgstr ""
 msgid "What to do after pressing the button"
 msgstr ""
 
+#: page/tab5-option1.php:93
+msgid ""
+"When you specify these settings, data will be transmitted to the Yandex "
+"Metrica - e-commerce service. This event is a product purchase event."
+msgstr ""
+
 #: page/tab1-option1.php:187
 msgid ""
 "Will the product information be displayed in a modal window or not? The tick "
 "is worth it - will be displayed"
 msgstr ""
 
-#: page/tab3-option1.php:44
+#: page/tab3-option1.php:48
 msgid "Woo Order №"
 msgstr ""
 

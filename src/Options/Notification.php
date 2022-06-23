@@ -6,6 +6,8 @@ namespace Coderun\BuyOneClick\Options;
 
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
 
+use function boolval;
+
 /**
  * Настройки уведомлений, вкладка настроек
  *

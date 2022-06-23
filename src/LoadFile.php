@@ -214,16 +214,6 @@ class LoadFile
         $this->folder = wp_upload_dir();
     }
 
-    public function __clone()
-    {
-        throw new \Exception('Forbiden instance __clone');
-    }
-
-    public function __wakeup()
-    {
-        throw new \Exception('Forbiden instance __wakeup');
-    }
-
     /**
      * Get errors
      *

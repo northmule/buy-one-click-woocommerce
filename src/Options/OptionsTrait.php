@@ -9,6 +9,8 @@ use ReflectionClass;
 use ReflectionProperty;
 use Generator;
 
+use function preg_match_all;
+
 trait OptionsTrait
 {
     /**

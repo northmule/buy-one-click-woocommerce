@@ -9,6 +9,7 @@ if (!defined('ABSPATH')) {
  */
 /** @var array $options */
 /** @var array $field */
+/** @var \Coderun\BuyOneClick\Templates\QuickOrderForm $render */
 ?>
 <div id="formOrderOneClick">
     <div class="overlay" title="окно"></div>

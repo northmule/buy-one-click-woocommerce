@@ -23,6 +23,7 @@ use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
 use Coderun\BuyOneClick\Response\ValueObject\Product;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
+use Coderun\BuyOneClick\Utils\Sms as SmsUtils;
 use Coderun\BuyOneClick\ValueObject\OrderForm;
 use WC_Order;
 use WC_Session_Handler;
@@ -54,11 +55,14 @@ class OrderController extends Controller
             [$this, 'sendingOrderFromFormAction']
         );
     }
-
+    
     /**
      * Функция выполняется после нажатия на кнопку в форме заказа
+     *
+     * @return void
+     * @throws \WC_Data_Exception
      */
-    public function sendingOrderFromFormAction()
+    public function sendingOrderFromFormAction(): void
     {
         try {
             if (empty($_POST)) {
@@ -91,14 +95,14 @@ class OrderController extends Controller
             if ($notificationOptions->isEnableSendingSmsToClient()) {
                 $smsLog = $smsGateway->send_sms(
                     $orderForm->getUserPhone(),
-                    BuyFunction::composeSms($notificationOptions->getSmsClientTemplate(), $orderForm)
+                    SmsUtils::composeSms($notificationOptions->getSmsClientTemplate(), $orderForm)
                 );
             }
             //Отправка СМС продавцу
             if ($notificationOptions->isEnableSendingSmsToSeller()) {
                 $smsLog = $smsGateway->send_sms(
                     $notificationOptions->getSellerPhoneNumber(),
-                    BuyFunction::composeSms($notificationOptions->getSmsSellerTemplate(), $orderForm)
+                    SmsUtils::composeSms($notificationOptions->getSmsSellerTemplate(), $orderForm)
                 );
             }
 
@@ -166,9 +170,12 @@ class OrderController extends Controller
             $orderResponse->setResult($commonOptions->getSubmittingFormMessageSuccess());
             $orderResponse->setProducts([new Product($orderForm)]);
             $orderResponse->setOrderUuid($orderForm->getOrderUuid());
+            $orderResponse->setOrderId(intval($wooOrderId));
+            
             if ($wooOrderId) {
                 $wcOrder = wc_get_order($wooOrderId);
                 if ($wcOrder instanceof WC_Order) {
+                    $orderResponse->setOrderNumber($this->getOrderNumber($wcOrder));
                     $wcOrder->update_status('processing', 'Quick order form');
                     if ($commonOptions->getActionAfterSubmittingForm() == ActionsForm::SEND_TO_ORDER_PAGE) {
                         $orderResponse->setRedirectUrl($wcOrder->get_checkout_order_received_url());
@@ -256,5 +263,22 @@ class OrderController extends Controller
                 throw LimitOnSendingFormsException::error($commonOptions->getFormSubmissionLimitMessage());
             }
         }
+    }
+    
+    /**
+     * Номер заказа
+     * Номер заказа возможен в совместимых плагинах, таких как custom-order-numbers-for-woocommerce
+     *
+     * @param WC_Order $order
+     *
+     * @return string
+     */
+    protected function getOrderNumber(WC_Order $order):string
+    {
+        if (method_exists($order, 'get_order_number')) {
+            return $order->get_order_number(); // plugin: custom-order-numbers-for-woocommerce
+        }
+        
+        return '';
     }
 }

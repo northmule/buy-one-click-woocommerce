@@ -2,7 +2,8 @@
 
 namespace Coderun\BuyOneClick;
 
-use Coderun\BuyOneClick\ValueObject\OrderForm;
+use Coderun\BuyOneClick\Templates\Elements\Factory\FilesFactory;
+use Coderun\BuyOneClick\Templates\Elements\Factory\QuantityFactory;
 
 /**
  * Некоторый функционал плагина
@@ -10,24 +11,7 @@ use Coderun\BuyOneClick\ValueObject\OrderForm;
  */
 class BuyFunction
 {
-    /**
-     * Собирает тело сообщения SMS
-     * @param string $options Текст смс сообщения
-     * @param OrderForm $orderForm
-     *
-     */
-    public static function composeSms($options, OrderForm $orderForm)
-    {
-        return strtr($options, [
-            '%FIO%' => $orderForm->getUserName(),
-            '%FON%' => $orderForm->getUserPhone(),
-            '%EMAIL%' => $orderForm->getUserEmail(),
-            '%DOPINFO%' => $orderForm->getOrderAdminComment(),
-            '%TPRICE%' => $orderForm->getProductPrice(),
-            '%TNAME%' => $orderForm->getProductName(),
-        ]);
-    }
-
+    
     /**
      * Форма для быстрого заказа
      */
@@ -173,38 +157,20 @@ class BuyFunction
      * Вернёт форму загрузки файлов
      * @return type
      */
-    protected static function get_from_upload_file()
+    protected static function get_from_upload_file(): string
     {
-        $options = Help::getInstance()->get_options('buyoptions');
-        if (!empty($options['upload_input_file_chek'])) {
-            ob_start();
-            include_once CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR . '/forms/file_uploader.php';
-            $form = ob_get_contents();
-            ob_end_clean();
-
-            return apply_filters('coderun_oneclickwoo_order_form_html', $form);
-        }
-
-        return '';
+        $files = (new FilesFactory())->create();
+        return $files->render();
     }
-
+    
     /**
      * Форма с количеством
      * @return string
      */
     protected static function getQuantityForm()
     {
-        $options = Help::getInstance()->get_options('buyoptions');
-        if (!empty($options['add_quantity_form'])) {
-            ob_start();
-            include_once CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR . '/forms/quantity.php';
-            $form = ob_get_contents();
-            ob_end_clean();
-
-            return apply_filters('coderun_oneclickwoo_quantity_form_html', $form);
-        }
-
-        return '';
+        $quantity = (new QuantityFactory())->create();
+        return $quantity->render();
     }
 
 

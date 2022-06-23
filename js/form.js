@@ -69,13 +69,20 @@ jQuery(document).ready(function () {
                 jQuery(root_selector + " .form-message-result").html(response.data.message)
                 return false;
             }
+            let orderIdenty = response.data.orderUuid;
+            if (buyone_ajax.add_an_order_to_woo_commerce) {
+                orderIdenty = response.data.orderId;
+                if (response.data.orderNumber.length > 0) {
+                    orderIdenty = response.data.orderNumber;
+                }
+            }
             if (buyone_ajax.yandex_metrica.transfer_data_to_yandex_commerce) {
                 let yandexMetrica = new BuyOneClickYandexMetrica();
                 yandexMetrica.ecommercePurchase(
                   buyone_ajax.yandex_metrica.data_layer,
                   response.data.products,
                   buyone_ajax.yandex_metrica.goal_id,
-                  response.data.orderUuid
+                  orderIdenty
                 );
             }
 
@@ -164,7 +171,7 @@ jQuery(document).ready(function () {
                 jQuery('.popup, .overlay').css('opacity', '1');
                 jQuery('.popup, .overlay').css('visibility', 'visible');
 
-                if (typeof buyone_ajax.tel_mask != 'undefined') {
+                if (buyone_ajax.tel_mask.length > 3) {
                     jQuery('#buyoneclick_form_order [name="txtphone"]').mask(buyone_ajax.tel_mask);
                 }
                 jQuery(button).removeClass('running');

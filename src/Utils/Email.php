@@ -53,6 +53,8 @@ class Email
                 $orderForm->getFilesLink()
             );
         }
+    
+        $costOfGoods = $orderForm->getProductPriceWithTax();
 
         $message = '
 <table style="height: 255px; border-color: #1b0dd9;" border="2" width="579">
@@ -70,7 +72,7 @@ class Email
 </tr>
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Price', 'coderun-oneclickwoo') . ': </td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getProductPriceWithTax() . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $costOfGoods . '</td>
 </tr>
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Name', 'coderun-oneclickwoo') . '</td>
