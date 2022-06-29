@@ -359,7 +359,7 @@ class General extends Base
      *
      * @var int
      */
-    protected int $formSubmissionLimit;
+    protected int $formSubmissionLimit = 10;
 
     /**
      * Сообщение при лимите

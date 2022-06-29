@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Controller;
 
 use BuySMSC;
-use Coderun\BuyOneClick\BuyFunction;
 use Coderun\BuyOneClick\BuyHookPlugin;
-use Coderun\BuyOneClick\Common\Logger;
 use Coderun\BuyOneClick\Constant\Options\ActionsForm;
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Exceptions\DependenciesException;
@@ -22,11 +20,11 @@ use Coderun\BuyOneClick\ReCaptcha;
 use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
 use Coderun\BuyOneClick\Response\ValueObject\Product;
+use Coderun\BuyOneClick\Service\SessionStorage;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
 use Coderun\BuyOneClick\Utils\Sms as SmsUtils;
 use Coderun\BuyOneClick\ValueObject\OrderForm;
 use WC_Order;
-use WC_Session_Handler;
 
 use function get_current_user_id;
 use function wc_get_order;
@@ -252,17 +250,23 @@ class OrderController extends Controller
      */
     protected function checkLimitSendForm(int $product_id): void
     {
-        /** @var WC_Session_Handler $session */
-        $session = WC()->session;
         $commonOptions = Core::getInstance()->getCommonOptions();
-        $key = sprintf('buy_one_click_woocommerce_%s_%s', $product_id, $session->get_customer_unique_id());
-        if (!$session->get($key, false)) {//Установка
-            $session->set($key, time());
+        $uniqueId = $this->getCustomerUniqueId();
+        if (empty($uniqueId) || $commonOptions->getFormSubmissionLimit() == 0) {
+            return;
+        }
+        $storage = new SessionStorage();
+        $key = sprintf('buy_one_%s_%s', $product_id, $uniqueId);
+        if ($storage->getSessionValue($key) == null) {//Установка
+            $storage->setSessionValue($key, (time() + $commonOptions->getFormSubmissionLimit()));
         } else {
-            if (($session->get($key, 0) + $commonOptions->getFormSubmissionLimit()) > time()) {
+            if ($storage->getSessionValue($key, 0) > time()) {
                 throw LimitOnSendingFormsException::error($commonOptions->getFormSubmissionLimitMessage());
+            } else {
+                $storage->deleteSessionKey($key);
             }
         }
+        return;
     }
     
     /**
@@ -281,4 +285,23 @@ class OrderController extends Controller
         
         return '';
     }
+
+    /**
+     * Уникальный ИД текущего пользователя
+     *
+     * @return string
+     */
+    protected function getCustomerUniqueId(): string
+    {
+        $session = serialize(WC()->session);
+        preg_match('/(wp_woocommerce_session_[a-zA-Z\d]+)"/i', $session, $matches);
+        $uniqueString = $matches[1] ?? '';
+        if (strlen($uniqueString) > 0) {
+            $uniqueString = md5($uniqueString);
+        } else if(is_user_logged_in()) {
+            $uniqueString = (string)get_current_user_id();
+        }
+        return $uniqueString;
+    }
+
 }

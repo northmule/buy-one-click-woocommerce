@@ -73,6 +73,9 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.1.3 =
+* Fixed the get_customer_unique_id call for older versions of WooCommerce
+* Checking the restrictions on sending the form redone in the session
 = 2.1.2 =
 * The order number for yandex.metrica is taken from WooCommerce
 * Old code removed

@@ -143,6 +143,11 @@ class Core
         // todo сделать настройку
         add_action('woocommerce_email_before_order_table', [Service::getInstance(), 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', [$this, 'frontVariables']);
+        add_action('init', static function() {
+            if (!session_id()) {
+                session_start();
+            }
+        });
         // Обработчики запросов
         $this->initController();
 
