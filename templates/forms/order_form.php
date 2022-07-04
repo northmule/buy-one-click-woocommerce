@@ -7,17 +7,17 @@ if (!defined('ABSPATH')) {
 /**
  * Шаблон формы быстрого заказа
  */
-/** @var array $options */
-/** @var array $field */
+/** @var \Coderun\BuyOneClick\SimpleDataObjects\FieldsOfOrderForm $fields */
 /** @var \Coderun\BuyOneClick\Templates\QuickOrderForm $render */
+$commonOptions = $render->getCommonOptions();
 ?>
 <div id="formOrderOneClick">
     <div class="overlay" title="окно"></div>
     <div class="popup">
-        <div class="close_order <?php echo($field['is_template_style'] ? 'button' : '') ?>">x</div>
+        <div class="close_order <?php echo $fields->templateStyle ? 'button' : '' ?>">x</div>
         <form id="buyoneclick_form_order" class="b1c-form" method="post" action="#">
-            <h2><?php echo $options['buyoptions']['namebutton']; ?></h2>
-            <?php if (!empty($options['buyoptions']['infotovar_chek'])) { ?>
+            <h2><?php echo $commonOptions->getNameButton(); ?></h2>
+            <?php if ($commonOptions->isEnableProductInformation()) { ?>
                 <div class="table-wrap">
                     <table>
                         <thead>
@@ -28,7 +28,7 @@ if (!defined('ABSPATH')) {
                             <th>
                                 <span class="description"><?php _e('Price', 'coderun-oneclickwoo'); ?></span>
                             </th>
-                            <?php if (!empty($field['product_img'])) { ?>
+                            <?php if (!empty($fields->productImg)) { ?>
                                 <th>
                                     <span class="description"><?php _e('Picture', 'coderun-oneclickwoo'); ?></span>
                                 </th>
@@ -38,14 +38,14 @@ if (!defined('ABSPATH')) {
                         <tbody>
                         <tr valign="top">
                             <td data-label="<?php _e('Name', 'coderun-oneclickwoo'); ?>" scope="row">
-                                <span class="description"> <?php echo $field['product_name']; ?></span>
+                                <span class="description"> <?php echo $fields->productName; ?></span>
                             </td>
                             <td data-label="<?php _e('Price', 'coderun-oneclickwoo'); ?>">
-                                <span class="description"><?php echo $field['product_price']; ?></span>
+                                <span class="description"><?php echo $fields->productPrice; ?></span>
                             </td>
-                            <?php if (!empty($field['product_img'])) { ?>
+                            <?php if (!empty($fields->productImg)) { ?>
                                 <td data-label="<?php _e('Picture', 'coderun-oneclickwoo'); ?>">
-                                    <span class="description"><?php echo $field['product_src_img']; ?></span>
+                                    <span class="description"><?php echo $fields->productSrcImg; ?></span>
                                 </td>
                             <?php } ?>
                         </tr>
@@ -54,46 +54,46 @@ if (!defined('ABSPATH')) {
                 </div>
             <?php } ?>
             
-            <?php if (!empty($options['buyoptions']['fio_chek'])) { ?>
-                <input class="buyvalide <?php echo($field['is_template_style'] ? 'input-text' : '') ?>" type="text" <?php ?> placeholder="<?php echo $options['buyoptions']['fio_descript']; ?>" name="txtname">
+            <?php if ($commonOptions->isEnableFieldWithName()) { ?>
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?>" type="text" <?php ?> placeholder="<?php echo $commonOptions->getDescriptionForFieldName(); ?>" name="txtname">
             <?php } ?>
-            <?php if (!empty($options['buyoptions']['fon_chek'])) { ?>
-                <input class="buyvalide <?php echo($field['is_template_style'] ? 'input-text' : '') ?> " type="tel" <?php ?> placeholder="<?php echo $options['buyoptions']['fon_descript']; ?>" name="txtphone">
+            <?php if ($commonOptions->isEnableFieldWithPhone()) { ?>
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="tel" <?php ?> placeholder="<?php echo $commonOptions->getDescriptionForFieldPhone(); ?>" name="txtphone">
                 <p class="phoneFormat"><?php
-                    if (!empty($options['buyoptions']['fon_format'])) {
-                        echo __('Format', 'coderun-oneclickwoo') . ' ' . $options['buyoptions']['fon_format'];
+                    if (!empty($commonOptions->getDescriptionForFieldFormatPhone())) {
+                        echo __('Format', 'coderun-oneclickwoo') . ' ' . $commonOptions->getDescriptionForFieldFormatPhone();
                     }
                     ?></p>
             <?php } ?>
-            <?php if (!empty($options['buyoptions']['email_chek'])) { ?>
-                <input class="buyvalide <?php echo($field['is_template_style'] ? 'input-text' : '') ?> " type="email" <?php ?> placeholder="<?php echo $options['buyoptions']['email_descript']; ?>" name="txtemail">
+            <?php if ($commonOptions->isEnableFieldWithEmail()) { ?>
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="email" <?php ?> placeholder="<?php echo $commonOptions->getDescriptionForFieldEmail(); ?>" name="txtemail">
             <?php } ?>
-            <?php if (!empty($options['buyoptions']['dopik_chek'])) { ?>
-                <textarea class="buymessage buyvalide" <?php ?> name="message" placeholder="<?php echo $options['buyoptions']['dopik_descript']; ?>" rows="2" value=""></textarea>
+            <?php if ($commonOptions->isEnableFieldWithComment()) { ?>
+                <textarea class="buymessage buyvalide" <?php ?> name="message" placeholder="<?php echo $commonOptions->getDescriptionForFieldComment(); ?>" rows="2" value=""></textarea>
             <?php } ?>
             
-            <?php if (!empty($options['buyoptions']['conset_personal_data_enabled'])) { ?>
+            <?php if ($commonOptions->isConsentToProcessing()) { ?>
                 <p>
                     <input type="checkbox" name="conset_personal_data">
-                    <?php echo $options['buyoptions']['conset_personal_data_text']; ?>
+                    <?php echo $commonOptions->getDescriptionConsentToProcessing(); ?>
                 </p>
             <?php } ?>
             
-            <?php echo $field['html_form_quantity']; ?>
+            <?php echo $fields->formWithQuantity; ?>
             
             <?php wp_nonce_field('one_click_send', '_coderun_nonce'); ?>
-            <input type="hidden" name="nametovar" value="<?php echo $field['product_name']; ?>" />
-            <input type="hidden" name="pricetovar" value="<?php echo $field['product_price']; ?>" />
-            <input type="hidden" name="idtovar" value="<?php echo $field['product_id']; ?>" />
+            <input type="hidden" name="nametovar" value="<?php echo $fields->productName; ?>" />
+            <input type="hidden" name="pricetovar" value="<?php echo $fields->productPrice; ?>" />
+            <input type="hidden" name="idtovar" value="<?php echo $fields->productId; ?>" />
             <input type="hidden" name="action" value="coderun_send_form_buy_one_click_buybuttonform" />
-            <input type="hidden" name="custom" value="<?php echo $field['form_custom']; ?>"/>
+            <input type="hidden" name="custom" value="<?php echo $fields->shortCode; ?>"/>
             
             <?php
             //Форма файлов
-            echo $field['html_form_file_upload'];
-
-            if (!empty($options['buyoptions']['recaptcha_order_form'])) {
-                Coderun\BuyOneClick\ReCaptcha::getInstance()->view($options['buyoptions']['recaptcha_order_form']);
+            echo $fields->formWithFiles;
+            
+            if ($commonOptions->isRecaptchaEnabled()) {
+                Coderun\BuyOneClick\ReCaptcha::getInstance()->view($commonOptions->getCaptchaProvider());
             }
 
             ?>
@@ -104,7 +104,7 @@ if (!defined('ABSPATH')) {
                 type="submit"
                 class="button alt buyButtonOkForm ld-ext-left"
                 name="btnsend">
-                <span> <?php echo $options['buyoptions']['butform_descript']; ?></span>
+                <span> <?php echo $commonOptions->getDescriptionForFieldOrderButton(); ?></span>
                 <div style="font-size:14px" class="ld ld-ring ld-cycle"></div>
             </button>
         
@@ -112,12 +112,12 @@ if (!defined('ABSPATH')) {
     
     </div>
     <?php
-    if (!empty($options['buyoptions']['success_action'])) {
+    if ($commonOptions->getActionAfterSubmittingForm() > 0) {
         ?>
         <div class = "overlay_message" title = "<?php _e('Notification', 'coderun-oneclickwoo'); ?>"></div>
         <div class = "popummessage">
             <div class="close_message">x</div>
-            <?php echo $options['buyoptions']['success_action_message']; ?>
+            <?php echo $commonOptions->getMessageAfterSubmittingForm();  ?>
         </div>
         <?php
     }

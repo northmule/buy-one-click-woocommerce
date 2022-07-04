@@ -1,11 +1,15 @@
 <?php
 
-namespace Coderun\BuyOneClick;
+declare(strict_types=1);
+
+namespace Coderun\BuyOneClick\Utils;
 
 /**
- * События
+ * Class Hooks
+ *
+ * @package Coderun\BuyOneClick\Utils
  */
-class BuyHookPlugin
+class Hooks
 {
     /**
      * Плагин загружен
@@ -14,7 +18,7 @@ class BuyHookPlugin
     {
         do_action('buy_click_load');
     }
-
+    
     /**
      * Вызывается после создания нового заказа
      * @param array $arResult результат функции с заказом
@@ -24,7 +28,7 @@ class BuyHookPlugin
     {
         do_action('buy_click_new_order', $arResult, $arLog);
     }
-
+    
     /**
      * Вызывается после сохранения в таблицу данных о заказе
      */

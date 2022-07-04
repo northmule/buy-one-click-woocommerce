@@ -4,7 +4,7 @@ namespace Coderun\BuyOneClick\Repository;
 
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
-use Coderun\BuyOneClick\BuyHookPlugin;
+use Coderun\BuyOneClick\Utils\Hooks;
 use WC_Order;
 use WC_Order_Item;
 use WC_Order_Item_Product;
@@ -217,7 +217,7 @@ class Order
 
         $order = array_merge($default_field, $order);
         $wpdb->insert($this->order_table, $order);
-        BuyHookPlugin::saveOrderToTable($wpdb->insert_id);
+        Hooks::saveOrderToTable($wpdb->insert_id);
         if ($wpdb->last_error) {
         }
         return $wpdb->insert_id;

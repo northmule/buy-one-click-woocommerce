@@ -2,13 +2,15 @@
 
 namespace Coderun\BuyOneClick;
 
-use Coderun\BuyOneClick\Controller\AdminController;
-use Coderun\BuyOneClick\Controller\CartController;
-use Coderun\BuyOneClick\Controller\FormController;
-use Coderun\BuyOneClick\Controller\OrderController;
+use Coderun\BuyOneClick\Controller\Factory\AdminControllerFactory;
+use Coderun\BuyOneClick\Controller\Factory\CartControllerFactory;
+use Coderun\BuyOneClick\Controller\Factory\FormControllerFactory;
+use Coderun\BuyOneClick\Controller\Factory\OrderControllerFactory;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Coderun\BuyOneClick\Options\Marketing as MarketingOptions;
+use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
+use Coderun\BuyOneClick\Utils\Hooks;
 use Exception;
 use WC_Product;
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
@@ -138,7 +140,7 @@ class Core
         add_action('init', [$this, 'initializeAdditions']);
         add_action('init', [$this, 'initAction']);
         add_action('admin_init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
-        add_action('init', [\Coderun\BuyOneClick\BuyHookPlugin::class, 'load']);
+        add_action('init', [Hooks::class, 'load']);
         add_action('init', [\Coderun\BuyOneClick\ShortCodes::class, 'getInstance']);
         // todo сделать настройку
         add_action('woocommerce_email_before_order_table', [Service::getInstance(), 'modificationOrderTemplateWooCommerce'], 10, 3);
@@ -162,16 +164,16 @@ class Core
     protected function initController(): void
     {
         add_action('init', static function () {
-            (new OrderController())->init();
+            ((new OrderControllerFactory())->create())->init();
         });
         add_action('init', static function () {
-            (new FormController())->init();
+            ((new FormControllerFactory())->create())->init();
         });
         add_action('init', static function () {
-            (new CartController())->init();
+            ((new CartControllerFactory())->create())->init();
         });
         add_action('init', static function () {
-            (new AdminController())->init();
+            ((new AdminControllerFactory())->create())->init();
         });
     }
     
@@ -193,11 +195,15 @@ class Core
             }
             add_action($locationInProductCard, [$this, 'styleAddFrontPage']); //Стили фронта
             add_action($locationInProductCard, [$this, 'scriptAddFrontPage']); //Скрипты фронта
-            add_action($locationInProductCard, [BuyFunction::class, 'viewBuyButton']); //Кнопка заказать
+            add_action($locationInProductCard, static function(): void {
+                echo ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
+            }); //Кнопка заказать
             //Положение в категории товаров
             if ($this->commonOptions->isEnableButtonCategory()) {
                 $locationInCategory = $this->commonOptions->getButtonPositionInCategory(); //Позиция кнопки
-                add_action($locationInCategory, [BuyFunction::class, 'viewBuyButton']); //Кнопка заказать
+                add_action($locationInCategory, static function(): void {
+                    echo ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
+                }); //Кнопка заказать
                 add_action($locationInCategory, [$this, 'styleAddFrontPage']); //Стили фронта
                 add_action($locationInCategory, [$this, 'scriptAddFrontPage']); //Скрипты фронта
             }
@@ -212,7 +218,7 @@ class Core
                             // Товар имеет статус не в наличие
                             if (strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
                                 if (!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
-                                    $html .= BuyFunction::viewBuyButton(true);
+                                    $html .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
                                 }
                             }
                         }
@@ -224,9 +230,10 @@ class Core
 
     /**
      * Инициализация настроек, настройка объектов
+     *
      * @return void
      */
-    public function initOptions()
+    public function initOptions(): void
     {
         $help = Help::getInstance();
         $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));

@@ -2,8 +2,7 @@
 
 namespace Coderun\BuyOneClick;
 
-use Coderun\BuyOneClick\Help;
-use Coderun\BuyOneClick\Core;
+use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
 
 class ShortCodes
 {
@@ -57,7 +56,7 @@ class ShortCodes
             if (Help::getInstance()->module_variation) {
                 $content = \Coderun\BuyOneClick\VariationsAddition::getInstance()->shortCode();
             }
-            $content .= BuyFunction::viewBuyButton(true, $params);
+            $content .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons($params);
             return $content;
         } else {
             return '';
@@ -81,7 +80,7 @@ class ShortCodes
             $core = Core::getInstance();
             $core->styleAddFrontPage();
             $core->scriptAddFrontPage();
-            return BuyFunction::viewBuyButtonCustrom($arParams);
+            return ((new ButtonServiceFactory())->create())->getHtmlOrderButtonsCustom($arParams);
         } else {
             return '';
         }

@@ -1,0 +1,136 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Coderun\BuyOneClick\Service;
+
+use Coderun\BuyOneClick\Core;
+use Coderun\BuyOneClick\Options\General as GeneralOptions;
+use Coderun\BuyOneClick\SimpleDataObjects\CustomOrderButton as CustomOrderButtonDataObject;
+use Coderun\BuyOneClick\SimpleDataObjects\OrderButton as OrderButtonDataObject;
+use Coderun\BuyOneClick\Templates\OrderButton;
+use Coderun\BuyOneClick\Utils\Product as ProductUtils;
+use Exception;
+
+use function file_get_contents;
+
+/**
+ * Class Button
+ *
+ * @package Coderun\BuyOneClick\Service
+ */
+class Button
+{
+    
+    /**
+     * Настройки плагина
+     *
+     * @var GeneralOptions
+     */
+    protected GeneralOptions $commonOptions;
+    
+    /**
+     * @param GeneralOptions $commonOptions
+     */
+    public function __construct(GeneralOptions $commonOptions)
+    {
+        $this->commonOptions = $commonOptions;
+    }
+    
+    
+    /**
+     * Возвращает HTML кнопки "Купить в один клик"
+     *
+     * @param $params<int, mixed>
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function getHtmlOrderButtons($params = []): string
+    {
+       
+        if ($this->commonOptions->getPositionButton()) {
+            $name = self::getButtonName();
+            $productId = ProductUtils::getProductId();
+            if (isset($params['id']) && !empty($params['id'])) {
+                $productId = $params['id'];
+            }
+            if (empty($productId)) {
+                return '';// ИД текущего товара не удалось узнать, покупать нечего
+            }
+            $scripts = '';
+            $style = '';
+            if ($this->commonOptions->isStyleInsertHtml()) {
+                $scripts .= file_get_contents(sprintf('%s/js/form.js', CODERUN_ONECLICKWOO_PLUGIN_DIR));
+                $scripts .= file_get_contents(sprintf('%s/js/jquery.maskedinput.min.js', CODERUN_ONECLICKWOO_PLUGIN_DIR));
+                foreach (Core::getInstance()->getStylesFront() as $styleParam) {
+                    if (!empty($styleParam['path']) && \file_exists($styleParam['path'])) {
+                        $style .= file_get_contents($styleParam['path']);
+                    }
+                }
+            }
+            
+            return (new OrderButton())->render(new OrderButtonDataObject([
+                'productId' => $productId,
+                'buttonName' => $name,
+                'variationId' => 0,
+                'inlineStyle' => $style,
+                'inlineScript' => $scripts,
+            ]));
+        }
+        return '';
+    }
+    
+    /**
+     * HTML Кнопка заказа в один клик через Шорткод
+     *
+     * @param array $params
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function getHtmlOrderButtonsCustom(array $params): string
+    {
+        if ($this->commonOptions->getNameButton() and $this->commonOptions->getPositionButton()) {
+            return (new OrderButton())->render(new CustomOrderButtonDataObject([
+                'productId' => $params['id'],
+                'productPrice' => $params['price'],
+                'productCount' => $params['count'],
+                'productName' => $params['name'],
+                'buttonName' => $this->commonOptions->getNameButton(),
+                'inlineStyle' => '',
+                'inlineScript' => '',
+            ]));
+        }
+        
+        return '';
+    }
+    
+    /**
+     * Формирует имя кнопки
+     *
+     * @return string
+     */
+    protected function getButtonName(): string
+    {
+        $defaultName = __('Buy on click', 'coderun-oneclickwoo');
+        if (!$this->commonOptions->getNameButton()) {
+            return $defaultName;
+        }
+        $name = '';
+        $defaultName = $this->commonOptions->getNameButton();
+        if ($this->commonOptions->getDescriptionOfPreOrderButton()) {
+            $name = $this->commonOptions->getDescriptionOfPreOrderButton();
+        }
+        
+        if (ProductUtils::getProductId() === 0 || !$this->commonOptions->isEnableWorkWithRemainingItems()) {
+            return $defaultName;
+        }
+        $stockStatus = get_post_meta(ProductUtils::getProductId(), '_stock_status', true);
+        //outofstock - нет в наличие
+        //instock - в наличие
+        //onbackorder - в не выполненом заказе
+
+        return $stockStatus === 'outofstock' ? $name : $defaultName;
+    }
+}

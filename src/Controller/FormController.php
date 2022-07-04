@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Controller;
 
-use Coderun\BuyOneClick\BuyFunction;
+use Coderun\BuyOneClick\Help;
+use Coderun\BuyOneClick\SimpleDataObjects\FieldsOfOrderForm;
+use Coderun\BuyOneClick\Templates\Elements\Factory\FilesFactory;
+use Coderun\BuyOneClick\Templates\Elements\Factory\QuantityFactory;
+use Coderun\BuyOneClick\Templates\QuickOrderFormFactory;
+
+use Coderun\BuyOneClick\Utils\Product as ProductUtils;
 
 use function add_action;
 use function intval;
@@ -49,33 +55,49 @@ class FormController extends Controller
      */
     public function viewFormOrder(): void
     {
-        $productId = intval($_POST['productid']);
+        $productId = $_POST['productid'];
         $variationId = intval($_POST['variation_selected']);
 
         if ($variationId > 0) {
             $productId = $variationId;
         }
-        $form = BuyFunction::get_product_param($productId);
-        $form['custom'] = 0;
-        echo BuyFunction::viewBuyForm($form);
-        die();
+        $params = ProductUtils::getProductParam(intval($productId));
+        $fields = new FieldsOfOrderForm([
+            'productId' => $params['article'] ?? '',
+            'productName' => $params['name'] ?? '',
+            'productPrice' => $params['amount'] ?? '',
+            'shortCode' => 0,
+            'productImg' => $params['imageurl'] ?? '',
+            'productSrcImg' => sprintf('<img src="%s" width="80" height="80">', $params['imageurl'] ?? ''),
+            'variationPlugin' => Help::getInstance()->module_variation,
+            'templateStyle' => $this->commonOptions->isStyleInsertHtml(),
+            'formWithFiles' => ((new FilesFactory())->create())->render(),
+            'formWithQuantity' => ((new QuantityFactory())->create())->render()
+        ]);
+        
+        echo ((new QuickOrderFormFactory())->create())->render($fields);
     }
 
     /**
-     * Рисуте форму заказа (кастомную)
+     * Рисует форму заказа (из шорткода)
      *
      * @return void
      */
     public function viewFormOrderCustom()
     {
-        echo BuyFunction::viewBuyForm([
-            'article' =>  $_POST['productid'],
-            'name' => $_POST['name'],
-            'imageurl' => '',
-            'amount' => $_POST['price'],
-            'quantity' => $_POST['count'],
-            'custom' => 1,
+        $fields = new FieldsOfOrderForm([
+            'productId' => $_POST['productid'] ?? '',
+            'productName' => $_POST['name'] ?? '',
+            'productPrice' => $_POST['price'] ?? '',
+            'productCount' => $_POST['count'] ?? '',
+            'shortCode' => 1,
+            'productImg' => '',
+            'productSrcImg' => '',
+            'variationPlugin' => Help::getInstance()->module_variation,
+            'templateStyle' => $this->commonOptions->isStyleInsertHtml(),
+            'formWithFiles' => ((new FilesFactory())->create())->render(),
+            'formWithQuantity' => ((new QuantityFactory())->create())->render()
         ]);
-        die();
+        echo ((new QuickOrderFormFactory())->create())->render($fields);
     }
 }

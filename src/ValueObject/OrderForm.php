@@ -86,6 +86,14 @@ class OrderForm
      * @var string
      */
     protected string $orderUuid = '';
+    
+    /**
+     * Является товаром WooCommerce
+     * Товар может быть с произвольным ИД, не являясь товаром WooCommerce
+     *
+     * @var bool
+     */
+    protected bool $isWooCommerceProduct = false;
 
     /**
      * @param array<string, mixed> $formData
@@ -104,7 +112,8 @@ class OrderForm
         $this->userComment = $this->formDateParse('message');
         $this->orderComment = $this->formDateParse('message');
         $this->productId = (int)$this->formDateParse('idtovar');
-        $this->productUrl = get_the_permalink($this->productId);
+        $this->isWooCommerceProduct = boolval(wc_get_product($this->productId));
+        $this->productUrl = strval(get_the_permalink($this->productId));
         $this->productName = $this->formDateParse('nametovar');
         $this->productOriginalName = $this->formDateParse('nametovar');
         $this->productPrice = (float)$this->formDateParse('pricetovar');
@@ -140,6 +149,9 @@ class OrderForm
      */
     private function fillInPriceWithTax(): void
     {
+        if (!$this->isWooCommerceProduct) {
+            return;
+        }
         $wcOrder = Order::getInstance()->createWooCommerceOrderWithoutSaving($this->productId);
         $this->productPriceWithTax = (float)Order::getInstance()->calculate_order_totals($wcOrder);
         $wcOrder->delete();
@@ -786,4 +798,25 @@ class OrderForm
         $this->orderUuid = $orderUuid;
         return $this;
     }
+    
+    /**
+     * @return bool
+     */
+    public function isWooCommerceProduct(): bool
+    {
+        return $this->isWooCommerceProduct;
+    }
+    
+    /**
+     * @param bool $isWooCommerceProduct
+     *
+     * @return OrderForm
+     */
+    public function setIsWooCommerceProduct(bool $isWooCommerceProduct
+    ): OrderForm {
+        $this->isWooCommerceProduct = $isWooCommerceProduct;
+        return $this;
+    }
+    
+    
 }
