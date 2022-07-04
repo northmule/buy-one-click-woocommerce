@@ -73,6 +73,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.1.4 =
+* Fixing the zero price in the plugin's email template
 = 2.1.3 =
 * Fixed the get_customer_unique_id call for older versions of WooCommerce
 * Checking the restrictions on sending the form redone in the session
