@@ -55,6 +55,9 @@ class Email
         }
     
         $costOfGoods = $orderForm->getProductPriceWithTax();
+        if ($costOfGoods == 0) {
+            $costOfGoods = $orderForm->getProductPrice();
+        }
 
         $message = '
 <table style="height: 255px; border-color: #1b0dd9;" border="2" width="579">
