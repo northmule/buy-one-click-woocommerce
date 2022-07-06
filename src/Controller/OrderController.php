@@ -11,15 +11,16 @@ use Coderun\BuyOneClick\Exceptions\DependenciesException;
 use Coderun\BuyOneClick\Exceptions\LimitOnSendingFormsException;
 use Coderun\BuyOneClick\Exceptions\RequestException;
 use Coderun\BuyOneClick\Exceptions\RequireFieldException;
+use Coderun\BuyOneClick\Exceptions\UploadingFilesException;
 use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
-use Coderun\BuyOneClick\LoadFile;
 use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\ReCaptcha;
 use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
 use Coderun\BuyOneClick\Response\ValueObject\Product;
 use Coderun\BuyOneClick\Service\SessionStorage;
+use Coderun\BuyOneClick\Service\UploadingFiles;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
 use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Sms as SmsUtils;
@@ -78,11 +79,16 @@ class OrderController extends Controller
                     throw DependenciesException::captchaVerificationPluginError($check_recaptcha['message'] ?? '');
                 }
             }
-
+            $files = [];
+            if ($this->commonOptions->isEnableFieldWithFiles()) {
+                $files = (new UploadingFiles())->download();
+            }
+            
             $orderForm = new OrderForm(
                 $_POST,
                 $notificationOptions,
-                $help->module_variation
+                $help->module_variation,
+                $files
             );
             $this->checkRequireField($orderForm);
             $this->checkLimitSendForm($orderForm->getProductId());
@@ -101,12 +107,6 @@ class OrderController extends Controller
                     $notificationOptions->getSellerPhoneNumber(),
                     SmsUtils::composeSms($notificationOptions->getSmsSellerTemplate(), $orderForm)
                 );
-            }
-
-            if ($this->commonOptions->isEnableFieldWithFiles()) {
-                if (!empty(LoadFile::getInstance()->getErrors())) {
-                    $this->logger->error(__('File upload error', 'coderun-oneclickwoo'), LoadFile::getInstance()->getErrors());
-                }
             }
 
             if (!$this->commonOptions->isAddAnOrderToWooCommerce()
@@ -197,7 +197,7 @@ class OrderController extends Controller
             $errorResponse->setMessage(__('request error', 'coderun-oneclickwoo'));
             $this->logger->error($ex->getMessage());
             wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
-        } catch (DependenciesException|RequireFieldException|LimitOnSendingFormsException $ex) {
+        } catch (DependenciesException|RequireFieldException|LimitOnSendingFormsException|UploadingFilesException $ex) {
             $errorResponse = new ErrorResponse();
             $errorResponse->setMessage($ex->getMessage());
             $this->logger->error($ex->getMessage());

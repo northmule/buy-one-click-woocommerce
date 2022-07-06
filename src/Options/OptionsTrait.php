@@ -42,7 +42,7 @@ trait OptionsTrait
             preg_match_all('/@(\w+)\s+(.*)\r?\n/m', $com, $matches);
             $annotations = array_combine($matches[1], $matches[2]);
             if (!isset($annotations[self::DOC_OPTIONS_NAME])) {
-                VariablesException::valueIsNotDefined(self::DOC_OPTIONS_NAME);
+               throw VariablesException::valueIsNotDefined(self::DOC_OPTIONS_NAME);
             }
             $optionsName = $annotations[self::DOC_OPTIONS_NAME];
             $options[$optionsName] = $item->getValue($this);

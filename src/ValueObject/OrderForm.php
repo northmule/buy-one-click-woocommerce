@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\ValueObject;
 
-use Coderun\BuyOneClick\LoadFile;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Coderun\BuyOneClick\Repository\Order;
+use Coderun\BuyOneClick\SimpleDataObjects\DownloadedFile;
 use Coderun\BuyOneClick\Utils\Uuid as UuidUtils;
 use Coderun\BuyOneClick\VariationsAddition;
 use WC_Data_Exception;
@@ -103,7 +103,8 @@ class OrderForm
     public function __construct(
         array $formData,
         NotificationOptions $notificationOptions,
-        bool $variationEnable = false
+        bool $variationEnable = false,
+        array $files = []
     ) {
         $this->formData = $formData;
         $this->userName = $this->formDateParse('txtname');
@@ -132,8 +133,7 @@ class OrderForm
         if ($variationEnable) {
             $this->fillingWithVariations();
         }
-        $dataAboutUploadedFiles = LoadFile::getInstance()->load();
-        $this->filesUrlCollection = $this->collectUrlToUploadedFiles($dataAboutUploadedFiles);
+        $this->filesUrlCollection = $this->collectUrlToUploadedFiles($files);
         foreach ($this->filesUrlCollection as $fileUrl) {
             $this->filesLink = sprintf('</br> %s', $this->collectLinkToProductForUser($fileUrl));
         }
@@ -247,7 +247,7 @@ class OrderForm
 
 
     /**
-     * @param array $files
+     * @param array<int, DownloadedFile> $files
      *
      * @return array<string,mixed>
      */
@@ -255,34 +255,9 @@ class OrderForm
     {
         $result = [];
         foreach ($files as $file) {
-            $result[] = $file['url'] ?? null;
+            $result[] = $file->url;
         }
         return array_filter($result);
-    }
-
-    /**
-     * Файлы в виде ссылок и строки
-     * @param array $files
-     * @return string
-     */
-    private function collectLinksToUploadedFiles(array $files): string
-    {
-        $result = '';
-        $count = 1;
-        foreach ($this->collectUrlToUploadedFiles($files) as $url) {
-            $url = trim($url);
-            if (strlen($url) == 0) {
-                continue;
-            }
-            $result .=sprintf(
-                '<br><a href="%s">%s %s</a>',
-                $url,
-                __('File', 'coderun-oneclickwoo'),
-                $count++
-            );
-        }
-
-        return $result;
     }
 
     /**

@@ -10,3 +10,5 @@
 
 License URI: http://www.apache.org/licenses/
 
+**Фильтры плагина**
+coderun_oneclickwoo_file_valid_size - для установки своего ограничения на размер загружаемого файла (число в байтах)
