@@ -74,7 +74,9 @@ class Product
     public function __construct(OrderForm $orderForm)
     {
         $this->id = $orderForm->getProductId();
-        $this->name = $orderForm->getProductName();
+        $this->name = htmlspecialchars(
+            str_replace(['"',"\n","\r"],'', $orderForm->getProductName())
+        );
         $this->sku = $this->findProductSku($orderForm->getProductId());
         $this->quantity = $orderForm->getQuantityProduct();
         $this->price = $orderForm->getProductPrice();
