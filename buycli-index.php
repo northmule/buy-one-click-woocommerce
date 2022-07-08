@@ -60,10 +60,6 @@ function coderun_buy_plugin_init_core()
     $core = Coderun\BuyOneClick\Core::getInstance();
     register_deactivation_hook(__FILE__, [$core, 'deactivationPlugin']);
     register_activation_hook(__FILE__, [$core, 'addOptions']);
-    
-    /** сервисные операции */
-    if (get_option('wp_coderun_oneclickwoo_db_version', 0) !=  Coderun\BuyOneClick\PluginUpdate::DB_VERSION) {
-        Coderun\BuyOneClick\PluginUpdate::createOrderTable();
-    }
+
 }
 coderun_buy_plugin_init_core();

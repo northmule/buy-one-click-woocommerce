@@ -10,5 +10,13 @@
 
 License URI: http://www.apache.org/licenses/
 
-**Фильтры плагина**
-coderun_oneclickwoo_file_valid_size - для установки своего ограничения на размер загружаемого файла (число в байтах)
+### Filters plugins
+
+* Allow uploading via the zip file extension form
+```php 
+add_filter('coderun_oneclickwoo_file_valid_extension', 
+        static function (array $item): array {
+                $item[] = 'zip';
+                return $item;
+        });
+```

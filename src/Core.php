@@ -10,6 +10,7 @@ use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Coderun\BuyOneClick\Options\Marketing as MarketingOptions;
 use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
+use Coderun\BuyOneClick\Service\Factory\ShortCodesFactory;
 use Coderun\BuyOneClick\Utils\Hooks;
 use Exception;
 use WC_Product;
@@ -141,7 +142,9 @@ class Core
         add_action('init', [$this, 'initAction']);
         add_action('admin_init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
         add_action('init', [Hooks::class, 'load']);
-        add_action('init', [\Coderun\BuyOneClick\ShortCodes::class, 'getInstance']);
+        add_action('init', static function(): void {
+            (new ShortCodesFactory())->create();
+        });
         // todo сделать настройку
         add_action('woocommerce_email_before_order_table', [Service::getInstance(), 'modificationOrderTemplateWooCommerce'], 10, 3);
         add_action('wp_head', [$this, 'frontVariables']);
