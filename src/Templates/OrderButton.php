@@ -25,9 +25,9 @@ class OrderButton implements TemplateInterface
         $render = $this;
         ob_start();
         if ($fields instanceof OrderButtonDataObject) {
-            include_once sprintf('%s/forms/orderButton.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
+            require sprintf('%s/forms/orderButton.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
         } else if ($fields instanceof CustomOrderButtonDataObject) {
-            include_once sprintf('%s/forms/customOrderButton.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
+            require sprintf('%s/forms/customOrderButton.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
         }
         $form = ob_get_contents();
         ob_end_clean();

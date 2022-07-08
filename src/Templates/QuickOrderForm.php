@@ -42,7 +42,7 @@ class QuickOrderForm implements TemplateInterface
     {
         $render = $this;
         ob_start();
-        include_once sprintf('%s/forms/order_form.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
+        require sprintf('%s/forms/order_form.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
         $form = ob_get_contents();
         ob_end_clean();
         
