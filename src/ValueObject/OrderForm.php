@@ -375,7 +375,7 @@ class OrderForm
     }
 
     /**
-     * @return array|string
+     * @return string
      */
     public function getProductName()
     {

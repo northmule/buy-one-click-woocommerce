@@ -32,8 +32,6 @@ class BuySMSC
 
     public function _smsc_send_cmd($cmd, $arg = "", $files = array())
     {
-        $options = Help::getInstance()->get_options();
-
         $url = (Core::getInstance()->getOption('sms_https', Core::OPTIONS_NOTIFICATIONS) ? "https" : "http")
             . "://smsc.ru/sys/$cmd.php?login=" . urlencode(Core::getInstance()->getOption('sms_login', Core::OPTIONS_NOTIFICATIONS))
             . "&psw=" . urlencode(Core::getInstance()->getOption('sms_password', Core::OPTIONS_NOTIFICATIONS))

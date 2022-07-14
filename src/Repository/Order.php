@@ -5,6 +5,7 @@ namespace Coderun\BuyOneClick\Repository;
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
 use Coderun\BuyOneClick\Utils\Hooks;
+use Exception;
 use WC_Order;
 use WC_Order_Item;
 use WC_Order_Item_Product;
@@ -229,25 +230,34 @@ class Order
         $order_id = intval($order_id);
         return $wpdb->get_row("select * from {$this->order_table} where id={$order_id}", ARRAY_A);
     }
-
+    
     /**
-     * Вернуть заказ под ИД WooCommere заказа
-     * @param $order_id
+     * Вернуть заказ по ИД WooCommere заказа
      *
-     * @return array|object|void|null
+     * @param int $orderId
+     *
+     * @return OrderEntity|null
+     * @throws Exception
      */
-    public function get_wc_order($order_id)
+    public function findOneOrderByOrderWooCommerceId(int $orderId): ?OrderEntity
     {
         global $wpdb;
-        $order_id = intval($order_id);
-        return $wpdb->get_row("select * from {$this->order_table} where woo_order_id={$order_id}", ARRAY_A);
+    
+        $row = $wpdb->get_row(
+            sprintf('select * from %s where woo_order_id = %s', $this->order_table, $orderId),
+            ARRAY_A
+        );
+        if (!is_array($row)) {
+            return null;
+        }
+        return (new CommonHydrator())->hydrateArrayToObject($row, new OrderEntity());
     }
 
     /**
      * Список заказов
      *
      * @return array<int, OrderEntity>
-     * @throws \Exception
+     * @throws Exception
      */
     public function getOrders(): array
     {
@@ -288,11 +298,11 @@ class Order
 
     public function __clone()
     {
-        throw new \Exception('Forbiden instance __clone');
+        throw new Exception('Forbiden instance __clone');
     }
 
     public function __wakeup()
     {
-        throw new \Exception('Forbiden instance __wakeup');
+        throw new Exception('Forbiden instance __wakeup');
     }
 }

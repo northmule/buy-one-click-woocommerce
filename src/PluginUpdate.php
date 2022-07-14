@@ -8,7 +8,12 @@ namespace Coderun\BuyOneClick;
 class PluginUpdate
 {
     public const DB_VERSION = 2;
-
+    
+    /**
+     * Создание БД при необходимости
+     *
+     * @return void
+     */
     public static function createOrderTable()
     {
         global $wpdb;
