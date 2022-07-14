@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Controller;
 
 use BuySMSC;
+use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Constant\Options\ActionsForm;
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Exceptions\DependenciesException;
@@ -12,7 +13,6 @@ use Coderun\BuyOneClick\Exceptions\LimitOnSendingFormsException;
 use Coderun\BuyOneClick\Exceptions\RequestException;
 use Coderun\BuyOneClick\Exceptions\RequireFieldException;
 use Coderun\BuyOneClick\Exceptions\UploadingFilesException;
-use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
 use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\ReCaptcha;
@@ -20,6 +20,7 @@ use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
 use Coderun\BuyOneClick\Response\ValueObject\Product;
 use Coderun\BuyOneClick\Service\SessionStorage;
+use Coderun\BuyOneClick\Service\Sms\Factory\SmsCenterFactory;
 use Coderun\BuyOneClick\Service\UploadingFiles;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
 use Coderun\BuyOneClick\Utils\Hooks;
@@ -71,7 +72,6 @@ class OrderController extends Controller
                 throw RequestException::nonceError();
             }
 
-            $help = Help::getInstance();
             $notificationOptions = Core::getInstance()->getNotificationOptions();
             if ($this->commonOptions->isRecaptchaEnabled()) {
                 $check_recaptcha = ReCaptcha::getInstance()->check($this->commonOptions->getCaptchaProvider());
@@ -87,23 +87,23 @@ class OrderController extends Controller
             $orderForm = new OrderForm(
                 $_POST,
                 $notificationOptions,
-                $help->module_variation,
+                ObjectWithConstantState::getInstance()->isVariations(),
                 $files
             );
             $this->checkRequireField($orderForm);
             $this->checkLimitSendForm($orderForm->getProductId());
 
-            $smsGateway = new BuySMSC();
+            $smsGateway = new SmsCenterFactory();
             $smsLog = [];
             if ($notificationOptions->isEnableSendingSmsToClient()) {
-                $smsLog = $smsGateway->send_sms(
+                $smsLog = $smsGateway->create()->send_sms(
                     $orderForm->getUserPhone(),
                     SmsUtils::composeSms($notificationOptions->getSmsClientTemplate(), $orderForm)
                 );
             }
             //Отправка СМС продавцу
             if ($notificationOptions->isEnableSendingSmsToSeller()) {
-                $smsLog = $smsGateway->send_sms(
+                $smsLog = $smsGateway->create()->send_sms(
                     $notificationOptions->getSellerPhoneNumber(),
                     SmsUtils::composeSms($notificationOptions->getSmsSellerTemplate(), $orderForm)
                 );

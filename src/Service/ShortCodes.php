@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Service;
 
+use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
@@ -65,7 +66,7 @@ class ShortCodes
         $core = Core::getInstance();
         $core->styleAddFrontPage();
         $core->scriptAddFrontPage();
-        if (Help::getInstance()->module_variation) {
+        if (ObjectWithConstantState::getInstance()->isVariations()) {
             $content = \Coderun\BuyOneClick\VariationsAddition::getInstance()->shortCode();
         }
         $content .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons($params);

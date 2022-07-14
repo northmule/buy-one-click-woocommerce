@@ -2,6 +2,7 @@
 
 namespace Coderun\BuyOneClick;
 
+use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Controller\Factory\AdminControllerFactory;
 use Coderun\BuyOneClick\Controller\Factory\CartControllerFactory;
 use Coderun\BuyOneClick\Controller\Factory\FormControllerFactory;
@@ -18,7 +19,6 @@ use WC_Product;
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
 
 use function array_key_exists;
-use function class_exists;
 use function file_exists;
 use function method_exists;
 use function get_option;
@@ -81,12 +81,6 @@ class Core
      * @var Core|null
      */
     protected static ?Core $_instance = null;
-
-    /**
-     * Работа с вариативными товарами
-     * @var type
-     */
-    public static $variation = false;
 
     /**
      * Настройки плагина
@@ -196,7 +190,7 @@ class Core
     {
         if ($this->commonOptions->isEnableButton()) {
             $locationInProductCard = $this->commonOptions->getPositionButton(); //Позиция кнопки
-            if (self::$variation) {
+            if (ObjectWithConstantState::getInstance()->isVariations()) {
                 $positionInVariations = VariationsAddition::getInstance()->getPositionButton();
                 if ($positionInVariations !== false) {
                     $locationInProductCard = $positionInVariations;
@@ -244,7 +238,6 @@ class Core
      */
     public function initOptions(): void
     {
-        $help = Help::getInstance();
         $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
         $this->notificationOptions = new NotificationOptions(get_option(OptionsType::NOTIFICATIONS, []));
         $this->marketingOptions = new MarketingOptions(get_option(OptionsType::MARKETING, []));
@@ -258,12 +251,8 @@ class Core
      */
     public function initializeAdditions(): void
     {
-        $help = Help::getInstance();
         do_action('buy_one_click_woocommerce_start_load_core');
-        if (class_exists('\Coderun\BuyOneClick\VariationsAddition')) {
-            $help->module_variation = true;
-            self::$variation = $help->module_variation;
-        }
+        ObjectWithConstantState::getInstance();
     }
     
     /**
@@ -285,7 +274,7 @@ class Core
     public function frontVariables(): void
     {
         $variables = ['ajaxurl' => admin_url('admin-ajax.php')];
-        $variables['variation'] = self::$variation ? 1 : 0;
+        $variables['variation'] = ObjectWithConstantState::getInstance()->isVariations() ? 1 : 0;
         $variables['tel_mask'] = str_replace(['\'', '"'], [], $this->commonOptions->getPhoneNumberInputMask());
         $variables['work_mode'] = $this->commonOptions->getPluginWorkMode();
         $variables['success_action'] = $this->commonOptions->getActionAfterSubmittingForm();

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Controller;
 
-use Coderun\BuyOneClick\Help;
+use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\SimpleDataObjects\FieldsOfOrderForm;
 use Coderun\BuyOneClick\Templates\Elements\Factory\FilesFactory;
 use Coderun\BuyOneClick\Templates\Elements\Factory\QuantityFactory;
@@ -69,7 +69,7 @@ class FormController extends Controller
             'shortCode' => 0,
             'productImg' => $params['imageurl'] ?? '',
             'productSrcImg' => sprintf('<img src="%s" width="80" height="80">', $params['imageurl'] ?? ''),
-            'variationPlugin' => Help::getInstance()->module_variation,
+            'variationPlugin' => ObjectWithConstantState::getInstance()->isVariations(),
             'templateStyle' => $this->commonOptions->isStyleInsertHtml(),
             'formWithFiles' => ((new FilesFactory())->create())->render(),
             'formWithQuantity' => ((new QuantityFactory())->create())->render()
@@ -93,7 +93,7 @@ class FormController extends Controller
             'shortCode' => 1,
             'productImg' => '',
             'productSrcImg' => '',
-            'variationPlugin' => Help::getInstance()->module_variation,
+            'variationPlugin' => ObjectWithConstantState::getInstance()->isVariations(),
             'templateStyle' => $this->commonOptions->isStyleInsertHtml(),
             'formWithFiles' => ((new FilesFactory())->create())->render(),
             'formWithQuantity' => ((new QuantityFactory())->create())->render()

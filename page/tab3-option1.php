@@ -3,7 +3,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 use Coderun\BuyOneClick\Core;
-use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\ValueObject\OrderDataForAdmin as OrderDataForAdminValueObject;
 use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 

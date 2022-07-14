@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Controller;
 
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
-use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 use WC_Order;
