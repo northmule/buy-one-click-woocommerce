@@ -119,7 +119,7 @@ class Core
      * Singletone
      * @return Core
      */
-    public static function getInstance()
+    public static function getInstance(): Core
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
@@ -148,11 +148,6 @@ class Core
             10, 3);
     
         add_action('wp_head', [$this, 'frontVariables']);
-        add_action('init', static function() {
-            if (!session_id()) {
-                session_start();
-            }
-        });
         // Обработчики запросов
         $this->initController();
 
