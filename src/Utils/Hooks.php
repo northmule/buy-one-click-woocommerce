@@ -74,7 +74,7 @@ class Hooks
     }
     
     /**
-     * Расширения загружаемых файлов
+     * Имя формируемых файлов
      *
      * @param string $newName
      * @param string $name
@@ -88,6 +88,7 @@ class Hooks
     
     /**
      * Путь к папке с фалами
+     *
      * @param array<string,string>{"path","url"} $path
      *
      * @return mixed|void
