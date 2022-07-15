@@ -11,6 +11,8 @@ use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Uuid as UuidUtils;
 use Exception;
 
+use function strlen;
+
 /**
  * Загружает файлы из _FILES
  *
@@ -91,6 +93,9 @@ class UploadingFiles
         $result = [];
         if ($this->isMultiForm()) {
             foreach ($fileList['name'] as $number => $value) {
+                if (strlen($value) == 0) {
+                    continue;
+                }
                 $file = new DownloadableFile([
                     'name' => strtolower($value),
                     'type' => $fileList['type'][$number] ?? '',
@@ -132,14 +137,7 @@ class UploadingFiles
      */
     protected function checkRestriction()
     {
-        if (empty($this->files)) {
-            throw UploadingFilesException::noFilesToDownload();
-        }
-        
         foreach ($this->files as $file) {
-            if (empty($file->temporaryName) || empty($file->name)) {
-                throw UploadingFilesException::noFilesToDownload();
-            }
             if (!in_array($file->extension, $this->getValidExtension())) {
                 throw UploadingFilesException::invalidFileExtension($file->extension);
             }

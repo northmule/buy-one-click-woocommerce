@@ -420,7 +420,7 @@ $commonOptions = $this->commonOptions;
                                     name="<?php echo Core::OPTIONS_GENERAL; ?>[recaptcha_order_form]"
                                     type="radio"
                                     value="0"
-                                <?php checked($commonOptions->isRecaptchaEnabled()); ?>
+                                <?php checked($commonOptions->isRecaptchaEnabled(), false); ?>
                             >
                         </p>
                         <?php foreach (\Coderun\BuyOneClick\ReCaptcha::getInstance()->isSupported() as $key_recapcha=>$item) { ?>
@@ -512,5 +512,13 @@ $commonOptions = $this->commonOptions;
                 </tbody>
 
             </table>
+            <div>
+                <p>
+                    <a href="https://github.com/northmule/buy-one-click-woocommerce/blob/master/README.md" target="_blank">GitHub</a> |
+                    <a href="https://t.me/coderunphp">Telegram</a> |
+                    <a href="https://www.donationalerts.com/r/northmule">Donationalerts</a>
+                </p>
+                
+            </div>
         </div>
     </fieldset>

@@ -126,7 +126,7 @@ class OrderForm
         $this->formsField = $this->formDateLegacyParse();
         $this->orderTime = current_time('mysql');
         $this->custom = (int)$this->formDateParse('custom');
-        $this->files = array_map('array_filter', $_FILES['files'] ?? []);
+        $this->files = $files;
         $this->quantityProduct = $this->formDateParse('quantity_product') == ''
             ? 1 : intval($this->formDateParse('quantity_product'));
         $this->fillInPriceWithTax();
@@ -167,7 +167,8 @@ class OrderForm
     {
         $pluginVariations = VariationsAddition::getInstance();
         $this->variationData = $pluginVariations->getVariableProductInfo($this->getFormsField());
-        if (($variation_id = $pluginVariations->getVariationId($this->getFormsField())) > 0) {
+        $variation_id = $pluginVariations->getVariationId($this->getFormsField());
+        if ($variation_id > 0) {
             $this->productIsVariable = true;
             $this->productId = (int)$variation_id;
         }
@@ -623,9 +624,9 @@ class OrderForm
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    public function getFiles(): ?array
+    public function getFiles(): array
     {
         return $this->files;
     }
@@ -635,7 +636,7 @@ class OrderForm
      *
      * @return OrderForm
      */
-    public function setFiles(?array $files): OrderForm
+    public function setFiles(array $files): OrderForm
     {
         $this->files = $files;
         return $this;

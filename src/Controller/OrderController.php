@@ -25,6 +25,7 @@ use Coderun\BuyOneClick\Service\UploadingFiles;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
 use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Sms as SmsUtils;
+use Coderun\BuyOneClick\ValueObject\FieldNameViaType;
 use Coderun\BuyOneClick\ValueObject\OrderForm;
 use WC_Order;
 
@@ -81,7 +82,7 @@ class OrderController extends Controller
             }
             $files = [];
             if ($this->commonOptions->isEnableFieldWithFiles()) {
-                $files = (new UploadingFiles())->download();
+                $files = (new UploadingFiles())->download(); // прослушивает входящие файлы
             }
             
             $orderForm = new OrderForm(
@@ -90,7 +91,7 @@ class OrderController extends Controller
                 ObjectWithConstantState::getInstance()->isVariations(),
                 $files
             );
-            $this->checkRequireField($orderForm);
+            $this->checkRequireField($orderForm, new FieldNameViaType($this->commonOptions));
             $this->checkLimitSendForm($orderForm->getProductId());
 
             $smsGateway = new SmsCenterFactory();
@@ -204,38 +205,36 @@ class OrderController extends Controller
             wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
         }
     }
-
+    
     /**
      * Проверка обязательных полей
      *
-     * @param $orderForm OrderForm
+     * @param                  $orderForm OrderForm
+     * @param FieldNameViaType $translatingFields
      *
      * @return void
-     * @throws RequireFieldException
      */
-    protected function checkRequireField(OrderForm $orderForm): void
+    protected function checkRequireField(OrderForm $orderForm, FieldNameViaType $translatingFields): void
     {
         if ($this->commonOptions->isFieldEmailIsRequired() && !$orderForm->getUserEmail()) {
-            throw RequireFieldException::fieldIsRequired('email');
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserEmail());
         }
         if ($this->commonOptions->isFieldNameIsRequired() && !$orderForm->getUserName()) {
-            throw RequireFieldException::fieldIsRequired('name');
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserName());
         }
         if ($this->commonOptions->isFieldPhoneIsRequired() && !$orderForm->getUserPhone()) {
-            throw RequireFieldException::fieldIsRequired('phone');
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserPhone());
         }
         if ($this->commonOptions->isFieldCommentIsRequired() && !$orderForm->getUserComment()) {
-            throw RequireFieldException::fieldIsRequired('message');
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserComment());
         }
         if ($this->commonOptions->isConsentToProcessing() && !$orderForm->isConset()) {
-            throw RequireFieldException::fieldIsRequired('consent');
+            throw RequireFieldException::fieldIsRequired($translatingFields->getConsent());
         }
-        $files = array_filter($orderForm->getFiles()['name'] ?? []); // todo тут ошибка
-
         if ($this->commonOptions->isEnableFieldWithFiles()
             && $this->commonOptions->isFieldFilesIsRequired()
-            && count($files) == 0) {
-            throw  RequireFieldException::fieldIsRequired('files');
+            && count($orderForm->getFiles()) == 0) {
+            throw  RequireFieldException::fieldIsRequired($translatingFields->getFiles());
         }
     }
 

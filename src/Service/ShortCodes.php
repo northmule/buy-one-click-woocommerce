@@ -40,7 +40,7 @@ class ShortCodes
     
         foreach (ShortCodesConst::all() as $code) {
             if (!shortcode_exists($code)) {
-                add_shortcode('viewBuyButton', [$this, $this->shortCodeFunctionMap[$code]]);
+                add_shortcode($code, [$this, $this->shortCodeFunctionMap[$code]]);
             }
         }
     }
@@ -56,11 +56,12 @@ class ShortCodes
      * @return string
      * @throws Exception
      */
-    public function viewBuyButton(array $params): string
+    public function viewBuyButton($params): string
     {
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
+        $params = array_filter((array)$params);
         $content = '';
         $params = shortcode_atts(['id' => 0], $params);
         $core = Core::getInstance();
@@ -78,7 +79,7 @@ class ShortCodes
      *  Кнопка с возможностью передать параметры
      *
      *  id - код товара, name- наименование, count-количество,price- цена(число)
-     * @param array<string, mixed> $params
+     * @param array<string, mixed>|string $params
      *
      *
      * @throws Exception
@@ -88,6 +89,7 @@ class ShortCodes
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
+        $params = array_filter((array)$params);
         $params = shortcode_atts([
             'id' => '1',
             'name' => 'noname',

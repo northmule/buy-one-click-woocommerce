@@ -3,6 +3,7 @@
 namespace Coderun\BuyOneClick;
 
 use Coderun\BuyOneClick\Common\ObjectWithConstantState;
+use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
 use Coderun\BuyOneClick\Controller\Factory\AdminControllerFactory;
 use Coderun\BuyOneClick\Controller\Factory\CartControllerFactory;
 use Coderun\BuyOneClick\Controller\Factory\FormControllerFactory;
@@ -150,7 +151,6 @@ class Core
         add_action('wp_head', [$this, 'frontVariables']);
         // Обработчики запросов
         $this->initController();
-
         $this->initAdminPages();
     }
     
@@ -205,25 +205,27 @@ class Core
                 add_action($locationInCategory, [$this, 'styleAddFrontPage']); //Стили фронта
                 add_action($locationInCategory, [$this, 'scriptAddFrontPage']); //Скрипты фронта
             }
-            if (strlen($this->commonOptions->getPositionButtonOutStock()) > 5) {
-                add_filter('woocommerce_get_stock_html',
-                    function ($html) {
-                        global $product;
-                        if ($product instanceof WC_Product && method_exists('WC_Product', 'get_availability')) {
+        }
+        // Для товаров которых нет в наличие
+        add_filter('woocommerce_get_stock_html',
+            function ($html) {
+                if ($this->commonOptions->isEnableButton() && strlen($this->commonOptions->getPositionButtonOutStock()) < 5) {
+                    return;
+                }
+                global $product;
+                if ($product instanceof WC_Product && method_exists('WC_Product', 'get_availability')) {
+                    $availability = $product->get_availability();
+                    // Товар имеет статус не в наличие
+                    if (strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
+                        if (!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
                             $this->styleAddFrontPage();
                             $this->scriptAddFrontPage();
-                            $availability = $product->get_availability();
-                            // Товар имеет статус не в наличие
-                            if (strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
-                                if (!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
-                                    $html .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
-                                }
-                            }
+                            $html .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
                         }
-                        return $html;
-                    });
-            }
-        }
+                    }
+                }
+                return $html;
+            });
     }
 
     /**
@@ -319,7 +321,10 @@ class Core
      */
     public function deactivationPlugin(): void
     {
-        remove_shortcode('viewBuyButton');
+        foreach (ShortCodesConst::all() as $code) {
+            remove_shortcode($code);
+        }
+
     }
 
     /**
