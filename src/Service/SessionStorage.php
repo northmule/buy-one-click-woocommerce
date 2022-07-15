@@ -22,7 +22,7 @@ class SessionStorage
      */
     public function setSessionValue(string $key, $value): void
     {
-        $_SESSION[self::SESSION_KEY][$key] = $value;
+        wp_cache_set($key, $value, self::SESSION_KEY);
     }
     
     /**
@@ -35,7 +35,7 @@ class SessionStorage
      */
     public function getSessionValue(string $key, $default = null)
     {
-        return $_SESSION[self::SESSION_KEY][$key] ?? $default;
+        wp_cache_get($key, self::SESSION_KEY);
     }
     
     /**
@@ -47,8 +47,6 @@ class SessionStorage
      */
     public function deleteSessionKey(string $key): void
     {
-        if (isset($_SESSION[self::SESSION_KEY][$key])) {
-            unset($_SESSION[self::SESSION_KEY][$key]);
-        }
+        wp_cache_delete($key, self::SESSION_KEY);
     }
 }

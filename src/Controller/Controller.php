@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Controller;
 
 use Coderun\BuyOneClick\Common\Logger;
+use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use WC_Logger;
 
 /**
@@ -19,12 +20,20 @@ abstract class Controller implements ControllerInterface
      * @var Logger
      */
     protected Logger $logger;
+    
+    /**
+     * Настройки плагина
+     *
+     * @var GeneralOptions
+     */
+    protected GeneralOptions $commonOptions;
 
     /**
      *
      */
-    public function __construct()
+    public function __construct(GeneralOptions $commonOptions)
     {
         $this->logger = Logger::getInstance();
+        $this->commonOptions = $commonOptions;
     }
 }

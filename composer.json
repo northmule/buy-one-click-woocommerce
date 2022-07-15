@@ -19,8 +19,7 @@
   "autoload": {
     "psr-4": {
       "Coderun\\BuyOneClick\\": "src"
-    },
-    "files": ["src/smsc-class.php"]
+    }
   },
   "config": {
     "platform-check": false

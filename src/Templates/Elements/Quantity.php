@@ -35,7 +35,7 @@ class Quantity implements ElementInterface
         if ($this->commonOptions->isEnableFieldWithQuantity()) {
             ob_start();
             $render = $this;
-            include_once CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR . '/forms/quantity.php';
+            include_once sprintf('%s/forms/quantity.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
             $form = ob_get_contents();
             ob_end_clean();
             return apply_filters('coderun_oneclickwoo_quantity_form_html', $form);

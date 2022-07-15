@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 use Coderun\BuyOneClick\Core;
-use Coderun\BuyOneClick\Help;
 use Coderun\BuyOneClick\ValueObject\OrderDataForAdmin as OrderDataForAdminValueObject;
+use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 
 ?>
 <h3><?php _e('Orders via plugin', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
@@ -106,7 +106,7 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
                 <a class="removeorder" id="<?php echo $order->getId(); ?>" href="<?php echo $url_tab; ?>#id=<?php echo $order->getId(); ?>">
                     <span class="glyphicon glyphicon-remove-circle"><?php _e('OnlyPlugin', 'coderun-oneclickwoo'); ?></span>
                 </a>
-                <?php if (!empty($order->getWooOrderId()) && Help::getInstance()->isset_woo_order($order->getWooOrderId())) { ?>
+                <?php if (UtilsOrder::thereIsAWooCommerceOrder($order->getWooOrderId() ?? 0)) { ?>
                     <br><br>
                     <a class="removeorder_woo" data-plugin_id="<?php echo $order->getId(); ?>" data-woo_id="<?php echo $order->getWooOrderId(); ?>" href="<?php echo $url_tab; ?>#id=<?php echo $order->getWooOrderId(); ?>">
                         <span class="glyphicon glyphicon-remove-circle"><?php _e('OnlyWoo', 'coderun-oneclickwoo'); ?></span>

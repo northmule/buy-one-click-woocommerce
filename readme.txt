@@ -32,8 +32,6 @@ This is the best solution for WooCommere to easily add a quick order button to t
 
 * [Telegram Group @coderunphp](https://t.me/coderunphp)
 
-* [On the plugin page](http://www.zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html)
-
 * [GitHub](https://github.com/northmule/buy-one-click-woocommerce)
 
 = Required Plugins =
@@ -48,7 +46,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 ![JetBrains](https://zixn.ru/wp-content/uploads/jetbrains-logo-wordpress.jpg)
 
 = Donate link: =
-<a href="https://yoomoney.ru/to/41001746944171" target="_blank">Visa / MasterCard / Mir / YandexMoney</a>
+<a href="https://yoomoney.ru/to/41001746944171" target="_blank">Visa(RU) / MasterCard(RU) / Mir / YandexMoney</a>
+<a href="https://www.donationalerts.com/r/northmule" target="_blank">The whole world</a>
 
 == Installation ==
 
@@ -73,6 +72,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.2.0 =
+* Global plugin update. The plugin was created anew, the entire code was redesigned.
 = 2.1.4 =
 * Fixing the zero price in the plugin's email template
 = 2.1.3 =

@@ -34,11 +34,10 @@ class Files implements ElementInterface
      */
     public function render(): string
     {
-        // todo - в подключаемом файле нет прокинутой настройки
         if ($this->commonOptions->isEnableFieldWithFiles()) {
             ob_start();
             $render = $this;
-            include_once CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR . '/forms/file_uploader.php';
+            include_once sprintf('%s/forms/file_uploader.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
             $form = ob_get_contents();
             ob_end_clean();
             return apply_filters('coderun_oneclickwoo_order_form_html', $form);

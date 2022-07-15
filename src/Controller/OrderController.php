@@ -5,24 +5,27 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Controller;
 
 use BuySMSC;
-use Coderun\BuyOneClick\BuyHookPlugin;
+use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Constant\Options\ActionsForm;
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Exceptions\DependenciesException;
 use Coderun\BuyOneClick\Exceptions\LimitOnSendingFormsException;
 use Coderun\BuyOneClick\Exceptions\RequestException;
 use Coderun\BuyOneClick\Exceptions\RequireFieldException;
-use Coderun\BuyOneClick\Help;
+use Coderun\BuyOneClick\Exceptions\UploadingFilesException;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
-use Coderun\BuyOneClick\LoadFile;
 use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\ReCaptcha;
 use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
 use Coderun\BuyOneClick\Response\ValueObject\Product;
 use Coderun\BuyOneClick\Service\SessionStorage;
+use Coderun\BuyOneClick\Service\Sms\Factory\SmsCenterFactory;
+use Coderun\BuyOneClick\Service\UploadingFiles;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
+use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Sms as SmsUtils;
+use Coderun\BuyOneClick\ValueObject\FieldNameViaType;
 use Coderun\BuyOneClick\ValueObject\OrderForm;
 use WC_Order;
 
@@ -70,47 +73,44 @@ class OrderController extends Controller
                 throw RequestException::nonceError();
             }
 
-            $help = Help::getInstance();
-            $commonOptions = Core::getInstance()->getCommonOptions();
             $notificationOptions = Core::getInstance()->getNotificationOptions();
-            if ($commonOptions->isRecaptchaEnabled()) {
-                $check_recaptcha = ReCaptcha::getInstance()->check($commonOptions->getCaptchaProvider());
+            if ($this->commonOptions->isRecaptchaEnabled()) {
+                $check_recaptcha = ReCaptcha::getInstance()->check($this->commonOptions->getCaptchaProvider());
                 if ($check_recaptcha['check'] !== true) {
                     throw DependenciesException::captchaVerificationPluginError($check_recaptcha['message'] ?? '');
                 }
             }
-
+            $files = [];
+            if ($this->commonOptions->isEnableFieldWithFiles()) {
+                $files = (new UploadingFiles())->download(); // прослушивает входящие файлы
+            }
+            
             $orderForm = new OrderForm(
                 $_POST,
                 $notificationOptions,
-                $help->module_variation
+                ObjectWithConstantState::getInstance()->isVariations(),
+                $files
             );
-            $this->checkRequireField($orderForm);
+            $this->checkRequireField($orderForm, new FieldNameViaType($this->commonOptions));
             $this->checkLimitSendForm($orderForm->getProductId());
 
-            $smsGateway = new BuySMSC();
+            $smsGateway = new SmsCenterFactory();
             $smsLog = [];
             if ($notificationOptions->isEnableSendingSmsToClient()) {
-                $smsLog = $smsGateway->send_sms(
+                $smsLog = $smsGateway->create()->send_sms(
                     $orderForm->getUserPhone(),
                     SmsUtils::composeSms($notificationOptions->getSmsClientTemplate(), $orderForm)
                 );
             }
             //Отправка СМС продавцу
             if ($notificationOptions->isEnableSendingSmsToSeller()) {
-                $smsLog = $smsGateway->send_sms(
+                $smsLog = $smsGateway->create()->send_sms(
                     $notificationOptions->getSellerPhoneNumber(),
                     SmsUtils::composeSms($notificationOptions->getSmsSellerTemplate(), $orderForm)
                 );
             }
 
-            if ($commonOptions->isEnableFieldWithFiles()) {
-                if (!empty(LoadFile::getInstance()->getErrors())) {
-                    $this->logger->error(__('File upload error', 'coderun-oneclickwoo'), LoadFile::getInstance()->getErrors());
-                }
-            }
-
-            if (!$commonOptions->isAddAnOrderToWooCommerce()
+            if (!$this->commonOptions->isAddAnOrderToWooCommerce()
                 && $orderForm->getUserEmail() && $notificationOptions->isEnableOrderInformation()) {
                 EmailUtils::sendAnEmail(
                     $orderForm->getUserEmail(),
@@ -126,7 +126,7 @@ class OrderController extends Controller
 
             $wooOrderId = 0;
             //В таблицу Woo
-            if ($commonOptions->isAddAnOrderToWooCommerce() and $orderForm->getCustom() == 0) {
+            if ($this->commonOptions->isAddAnOrderToWooCommerce() and $orderForm->getCustom() == 0) {
                 $wooOrderId = Order::getInstance()->set_order(
                     [
                         'first_name' => $orderForm->getUserName(),
@@ -165,7 +165,7 @@ class OrderController extends Controller
             );
             $orderResponse = new OrderResponse();
             $orderResponse->setMessage(__('The order has been sent', 'coderun-oneclickwoo'));
-            $orderResponse->setResult($commonOptions->getSubmittingFormMessageSuccess());
+            $orderResponse->setResult($this->commonOptions->getSubmittingFormMessageSuccess());
             $orderResponse->setProducts([new Product($orderForm)]);
             $orderResponse->setOrderUuid($orderForm->getOrderUuid());
             $orderResponse->setOrderId(intval($wooOrderId));
@@ -175,9 +175,9 @@ class OrderController extends Controller
                 if ($wcOrder instanceof WC_Order) {
                     $orderResponse->setOrderNumber($this->getOrderNumber($wcOrder));
                     $wcOrder->update_status('processing', 'Quick order form');
-                    if ($commonOptions->getActionAfterSubmittingForm() == ActionsForm::SEND_TO_ORDER_PAGE) {
+                    if ($this->commonOptions->getActionAfterSubmittingForm() == ActionsForm::SEND_TO_ORDER_PAGE) {
                         $orderResponse->setRedirectUrl($wcOrder->get_checkout_order_received_url());
-                    } elseif ($commonOptions->getActionAfterSubmittingForm() == ActionsForm::SEND_TO_ORDER_PAYMENT_PAGE) {
+                    } elseif ($this->commonOptions->getActionAfterSubmittingForm() == ActionsForm::SEND_TO_ORDER_PAYMENT_PAGE) {
                         $wcOrder->update_status('wc-pending');
                         $orderResponse->setRedirectUrl($wcOrder->get_checkout_payment_url());
                     }
@@ -185,7 +185,7 @@ class OrderController extends Controller
                     throw DependenciesException::orderCreationErrorWoo();
                 }
             }
-            BuyHookPlugin::buyClickNewrder(
+            Hooks::buyClickNewrder(
                 (new CommonHydrator())->extractToArray($orderResponse),
                 $order_field
             );
@@ -198,47 +198,43 @@ class OrderController extends Controller
             $errorResponse->setMessage(__('request error', 'coderun-oneclickwoo'));
             $this->logger->error($ex->getMessage());
             wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
-        } catch (DependenciesException|RequireFieldException|LimitOnSendingFormsException $ex) {
+        } catch (DependenciesException|RequireFieldException|LimitOnSendingFormsException|UploadingFilesException $ex) {
             $errorResponse = new ErrorResponse();
             $errorResponse->setMessage($ex->getMessage());
             $this->logger->error($ex->getMessage());
             wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
         }
     }
-
+    
     /**
      * Проверка обязательных полей
      *
-     * @param $orderForm OrderForm
+     * @param                  $orderForm OrderForm
+     * @param FieldNameViaType $translatingFields
      *
      * @return void
-     * @throws RequireFieldException
      */
-    protected function checkRequireField(OrderForm $orderForm): void
+    protected function checkRequireField(OrderForm $orderForm, FieldNameViaType $translatingFields): void
     {
-        $commonOptions = Core::getInstance()->getCommonOptions();
-
-        if ($commonOptions->isFieldEmailIsRequired() && !$orderForm->getUserEmail()) {
-            throw RequireFieldException::fieldIsRequired('email');
+        if ($this->commonOptions->isFieldEmailIsRequired() && !$orderForm->getUserEmail()) {
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserEmail());
         }
-        if ($commonOptions->isFieldNameIsRequired() && !$orderForm->getUserName()) {
-            throw RequireFieldException::fieldIsRequired('name');
+        if ($this->commonOptions->isFieldNameIsRequired() && !$orderForm->getUserName()) {
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserName());
         }
-        if ($commonOptions->isFieldPhoneIsRequired() && !$orderForm->getUserPhone()) {
-            throw RequireFieldException::fieldIsRequired('phone');
+        if ($this->commonOptions->isFieldPhoneIsRequired() && !$orderForm->getUserPhone()) {
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserPhone());
         }
-        if ($commonOptions->isFieldCommentIsRequired() && !$orderForm->getUserComment()) {
-            throw RequireFieldException::fieldIsRequired('message');
+        if ($this->commonOptions->isFieldCommentIsRequired() && !$orderForm->getUserComment()) {
+            throw RequireFieldException::fieldIsRequired($translatingFields->getUserComment());
         }
-        if ($commonOptions->isConsentToProcessing() && !$orderForm->isConset()) {
-            throw RequireFieldException::fieldIsRequired('consent');
+        if ($this->commonOptions->isConsentToProcessing() && !$orderForm->isConset()) {
+            throw RequireFieldException::fieldIsRequired($translatingFields->getConsent());
         }
-        $files = array_filter($orderForm->getFiles()['name'] ?? []); // todo тут ошибка
-
-        if ($commonOptions->isEnableFieldWithFiles()
-            && $commonOptions->isFieldFilesIsRequired()
-            && count($files) == 0) {
-            throw  RequireFieldException::fieldIsRequired('files');
+        if ($this->commonOptions->isEnableFieldWithFiles()
+            && $this->commonOptions->isFieldFilesIsRequired()
+            && count($orderForm->getFiles()) == 0) {
+            throw  RequireFieldException::fieldIsRequired($translatingFields->getFiles());
         }
     }
 
@@ -250,23 +246,21 @@ class OrderController extends Controller
      */
     protected function checkLimitSendForm(int $product_id): void
     {
-        $commonOptions = Core::getInstance()->getCommonOptions();
         $uniqueId = $this->getCustomerUniqueId();
-        if (empty($uniqueId) || $commonOptions->getFormSubmissionLimit() == 0) {
+        if (empty($uniqueId) || $this->commonOptions->getFormSubmissionLimit() == 0) {
             return;
         }
         $storage = new SessionStorage();
         $key = sprintf('buy_one_%s_%s', $product_id, $uniqueId);
         if ($storage->getSessionValue($key) == null) {//Установка
-            $storage->setSessionValue($key, (time() + $commonOptions->getFormSubmissionLimit()));
+            $storage->setSessionValue($key, (time() + $this->commonOptions->getFormSubmissionLimit()));
         } else {
             if ($storage->getSessionValue($key, 0) > time()) {
-                throw LimitOnSendingFormsException::error($commonOptions->getFormSubmissionLimitMessage());
+                throw LimitOnSendingFormsException::error($this->commonOptions->getFormSubmissionLimitMessage());
             } else {
                 $storage->deleteSessionKey($key);
             }
         }
-        return;
     }
     
     /**

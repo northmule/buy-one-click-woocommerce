@@ -66,6 +66,13 @@ class OrderDataForAdmin
      * @var bool
      */
     protected bool $productIsVariable = false;
+    
+    /**
+     * Название товара
+     *
+     * @var string
+     */
+    protected string $productName = '';
 
     /**
      * Ссылки на файлы
@@ -186,10 +193,14 @@ class OrderDataForAdmin
     {
         return $this->uuid;
     }
-
-
-
-
+    
+    /**
+     * @return string
+     */
+    public function getProductName(): string
+    {
+        return $this->productName;
+    }
 
     /**
      * Старые данные
@@ -206,6 +217,7 @@ class OrderDataForAdmin
         $this->quantityProduct = $form['quantity_product'] ?? '';
         $this->userComment = $form['user_cooment'] ?? '';
         $this->productLinkAdmin = $form['product_link_admin'] ?? '';
+        $this->productName = $form['product_name'] ?? '';
     }
 
     /**
@@ -227,5 +239,6 @@ class OrderDataForAdmin
         $this->productIsVariable = $data->isProductIsVariable();
         $this->files = $data->getFilesUrlCollection() ?? [];
         $this->uuid = $data->getOrderUuid() ?? '';
+        $this->productName = $data->getProductName();
     }
 }

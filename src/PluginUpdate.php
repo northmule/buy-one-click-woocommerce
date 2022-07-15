@@ -7,40 +7,39 @@ namespace Coderun\BuyOneClick;
  */
 class PluginUpdate
 {
+    /** @var int  */
     public const DB_VERSION = 2;
-
+    
+    /**
+     * Создание БД при необходимости
+     *
+     * @return void
+     */
     public static function createOrderTable()
     {
         global $wpdb;
-        $query = <<<EOT
-                        CREATE TABLE `wp_coderun_oneclickwoo_orders` (
-                            `id` BIGINT(10) NOT NULL AUTO_INCREMENT,
-                            `plugin_version` VARCHAR(50) NOT NULL DEFAULT '0',
-                            `active` TINYINT(1) NULL DEFAULT '1',
-                            `status` TINYINT(1) NULL DEFAULT '2',
-                            `product_id` INT(11) NULL DEFAULT '0',
-                            `product_name` VARCHAR(300) NULL DEFAULT NULL,
-                            `product_meta` TEXT(65535) NULL DEFAULT NULL,
-                            `product_price` DOUBLE(10,2) NULL DEFAULT '0.00',
-                            `product_quantity` INT(11) NULL DEFAULT NULL,
-                            `form` LONGTEXT NULL DEFAULT NULL,
-                            `sms_log` VARCHAR(400) NULL DEFAULT '',
-                            `woo_order_id` BIGINT(20) NULL DEFAULT '0',
-                            `user_id` BIGINT(20) NULL DEFAULT '0',
-                            `date_update` DATETIME NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-                            `date_create` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-                            PRIMARY KEY (`id`) USING BTREE
-                        )
-                        COMMENT='Заказы плагина Buy one click WooCommerce'
-                        COLLATE='utf8_general_ci'
-                        ENGINE=InnoDB
-                        AUTO_INCREMENT=1;
-
-
-EOT;
-        if ($wpdb->get_var("SHOW TABLES LIKE 'wp_coderun_oneclickwoo_orders'") != 'wp_coderun_oneclickwoo_orders') {
-            $wpdb->query($query);
-            update_option('wp_coderun_oneclickwoo_db_version', self::DB_VERSION);
-        }
+        $createTable = "CREATE TABLE IF NOT EXISTS `wp_coderun_oneclickwoo_orders` (
+                      `id` bigint(10) NOT NULL AUTO_INCREMENT,
+                      `plugin_version` varchar(50) NOT NULL DEFAULT '0',
+                      `active` tinyint(1) DEFAULT '1',
+                      `status` tinyint(1) DEFAULT '2',
+                      `product_id` int(11) DEFAULT '0',
+                      `product_name` varchar(300) DEFAULT NULL,
+                      `product_meta` mediumtext,
+                      `product_price` double(10,2) DEFAULT '0.00',
+                      `product_quantity` int(11) DEFAULT NULL,
+                      `form` longtext,
+                      `sms_log` varchar(400) DEFAULT '',
+                      `woo_order_id` bigint(20) DEFAULT '0',
+                      `user_id` bigint(20) DEFAULT '0',
+                      `date_update` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                      `date_create` datetime DEFAULT CURRENT_TIMESTAMP,
+                      PRIMARY KEY (`id`) USING BTREE,
+                      KEY `wp_coderun_oneclickwoo_orders_product_id_IDX` (`product_id`) USING BTREE,
+                      KEY `wp_coderun_oneclickwoo_orders_woo_order_id_IDX` (`woo_order_id`) USING BTREE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Orders from the plugin in One Click';";
+        
+        $wpdb->query($createTable);
+        update_option('wp_coderun_oneclickwoo_db_version', self::DB_VERSION);
     }
 }

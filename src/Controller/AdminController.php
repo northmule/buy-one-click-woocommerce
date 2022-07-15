@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Controller;
 
-use Coderun\BuyOneClick\Help;
+use Coderun\BuyOneClick\Entity\Order as OrderEntity;
 use Coderun\BuyOneClick\Repository\Order;
+use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
+use WC_Order;
 
 /**
  * Class AdminController
@@ -53,14 +55,14 @@ class AdminController extends Controller
             Order::getInstance()->deactive_order($order_id);
             wp_send_json_success();
         } elseif (!empty($_POST['orderId']) && !empty($_POST['pluginId'])) { //Удаление заказа
-            $order_id = $_POST['orderId'];
-            $order = Order::getInstance()->get_wc_order($order_id);
-            if (!empty($order['woo_order_id'])) {
-                if (!Help::getInstance()->isset_woo_order($order['woo_order_id'])) {
+            $order_id = intval($_POST['orderId']);
+            $pluginOrder = Order::getInstance()->findOneOrderByOrderWooCommerceId($order_id);
+            if ($pluginOrder instanceof OrderEntity) {
+                if (!UtilsOrder::thereIsAWooCommerceOrder($pluginOrder->getWooOrderId() ?? 0)) {
                     wp_send_json_error();
                 }
-                $order = new \WC_Order($order['woo_order_id']);
-                if ($order instanceof \WC_Order && $order->delete()) {
+                $order = new WC_Order($pluginOrder->getWooOrderId());
+                if ($order instanceof WC_Order && $order->delete()) {
                     wp_send_json_success();
                 }
             }

@@ -74,14 +74,18 @@ class Product
     public function __construct(OrderForm $orderForm)
     {
         $this->id = $orderForm->getProductId();
-        $this->name = htmlspecialchars(
-            str_replace(['"',"\n","\r"],'', $orderForm->getProductName())
-        );
-        $this->sku = $this->findProductSku($orderForm->getProductId());
+        $this->name = $orderForm->getProductName();
+        if ($orderForm->isWooCommerceProduct()) {
+            $this->sku = $this->findProductSku($orderForm->getProductId());
+        }
         $this->quantity = $orderForm->getQuantityProduct();
         $this->price = $orderForm->getProductPrice();
-        $this->category = $this->findProductCategories($orderForm->getProductId());
-        $this->variant = $this->findProductVariant($orderForm->getProductId());
+        if ($orderForm->isWooCommerceProduct()) {
+            $this->category = $this->findProductCategories($orderForm->getProductId());
+        }
+        if ($orderForm->isWooCommerceProduct()) {
+            $this->variant = $this->findProductVariant($orderForm->getProductId());
+        }
     }
 
     /**

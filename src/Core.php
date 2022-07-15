@@ -2,19 +2,24 @@
 
 namespace Coderun\BuyOneClick;
 
-use Coderun\BuyOneClick\Controller\AdminController;
-use Coderun\BuyOneClick\Controller\CartController;
-use Coderun\BuyOneClick\Controller\FormController;
-use Coderun\BuyOneClick\Controller\OrderController;
+use Coderun\BuyOneClick\Common\ObjectWithConstantState;
+use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
+use Coderun\BuyOneClick\Controller\Factory\AdminControllerFactory;
+use Coderun\BuyOneClick\Controller\Factory\CartControllerFactory;
+use Coderun\BuyOneClick\Controller\Factory\FormControllerFactory;
+use Coderun\BuyOneClick\Controller\Factory\OrderControllerFactory;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Coderun\BuyOneClick\Options\Marketing as MarketingOptions;
+use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
+use Coderun\BuyOneClick\Service\Factory\EmailTemplateFactory;
+use Coderun\BuyOneClick\Service\Factory\ShortCodesFactory;
+use Coderun\BuyOneClick\Utils\Hooks;
 use Exception;
 use WC_Product;
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
 
 use function array_key_exists;
-use function class_exists;
 use function file_exists;
 use function method_exists;
 use function get_option;
@@ -79,12 +84,6 @@ class Core
     protected static ?Core $_instance = null;
 
     /**
-     * Работа с вариативными товарами
-     * @var type
-     */
-    public static $variation = false;
-
-    /**
      * Настройки плагина
      *
      * @var GeneralOptions
@@ -121,7 +120,7 @@ class Core
      * Singletone
      * @return Core
      */
-    public static function getInstance()
+    public static function getInstance(): Core
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
@@ -138,19 +137,20 @@ class Core
         add_action('init', [$this, 'initializeAdditions']);
         add_action('init', [$this, 'initAction']);
         add_action('admin_init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
-        add_action('init', [\Coderun\BuyOneClick\BuyHookPlugin::class, 'load']);
-        add_action('init', [\Coderun\BuyOneClick\ShortCodes::class, 'getInstance']);
-        // todo сделать настройку
-        add_action('woocommerce_email_before_order_table', [Service::getInstance(), 'modificationOrderTemplateWooCommerce'], 10, 3);
-        add_action('wp_head', [$this, 'frontVariables']);
-        add_action('init', static function() {
-            if (!session_id()) {
-                session_start();
-            }
+        add_action('init', [Hooks::class, 'load']);
+        add_action('init', static function(): void {
+            (new ShortCodesFactory())->create();
         });
+    
+        add_action('woocommerce_email_before_order_table',
+            static function($order, $sent_to_admin, $plain_text): void {
+                echo (new EmailTemplateFactory())->create()->modificationOrderTemplateWooCommerce($order);
+            },
+            10, 3);
+    
+        add_action('wp_head', [$this, 'frontVariables']);
         // Обработчики запросов
         $this->initController();
-
         $this->initAdminPages();
     }
     
@@ -162,16 +162,16 @@ class Core
     protected function initController(): void
     {
         add_action('init', static function () {
-            (new OrderController())->init();
+            ((new OrderControllerFactory())->create())->init();
         });
         add_action('init', static function () {
-            (new FormController())->init();
+            ((new FormControllerFactory())->create())->init();
         });
         add_action('init', static function () {
-            (new CartController())->init();
+            ((new CartControllerFactory())->create())->init();
         });
         add_action('init', static function () {
-            (new AdminController())->init();
+            ((new AdminControllerFactory())->create())->init();
         });
     }
     
@@ -185,7 +185,7 @@ class Core
     {
         if ($this->commonOptions->isEnableButton()) {
             $locationInProductCard = $this->commonOptions->getPositionButton(); //Позиция кнопки
-            if (self::$variation) {
+            if (ObjectWithConstantState::getInstance()->isVariations()) {
                 $positionInVariations = VariationsAddition::getInstance()->getPositionButton();
                 if ($positionInVariations !== false) {
                     $locationInProductCard = $positionInVariations;
@@ -193,42 +193,48 @@ class Core
             }
             add_action($locationInProductCard, [$this, 'styleAddFrontPage']); //Стили фронта
             add_action($locationInProductCard, [$this, 'scriptAddFrontPage']); //Скрипты фронта
-            add_action($locationInProductCard, [BuyFunction::class, 'viewBuyButton']); //Кнопка заказать
+            add_action($locationInProductCard, static function(): void {
+                echo ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
+            }); //Кнопка заказать
             //Положение в категории товаров
             if ($this->commonOptions->isEnableButtonCategory()) {
                 $locationInCategory = $this->commonOptions->getButtonPositionInCategory(); //Позиция кнопки
-                add_action($locationInCategory, [BuyFunction::class, 'viewBuyButton']); //Кнопка заказать
+                add_action($locationInCategory, static function(): void {
+                    echo ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
+                }); //Кнопка заказать
                 add_action($locationInCategory, [$this, 'styleAddFrontPage']); //Стили фронта
                 add_action($locationInCategory, [$this, 'scriptAddFrontPage']); //Скрипты фронта
             }
-            if (strlen($this->commonOptions->getPositionButtonOutStock()) > 5) {
-                add_filter('woocommerce_get_stock_html',
-                    function ($html) {
-                        global $product;
-                        if ($product instanceof WC_Product && method_exists('WC_Product', 'get_availability')) {
+        }
+        // Для товаров которых нет в наличие
+        add_filter('woocommerce_get_stock_html',
+            function ($html) {
+                if ($this->commonOptions->isEnableButton() && strlen($this->commonOptions->getPositionButtonOutStock()) < 5) {
+                    return;
+                }
+                global $product;
+                if ($product instanceof WC_Product && method_exists('WC_Product', 'get_availability')) {
+                    $availability = $product->get_availability();
+                    // Товар имеет статус не в наличие
+                    if (strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
+                        if (!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
                             $this->styleAddFrontPage();
                             $this->scriptAddFrontPage();
-                            $availability = $product->get_availability();
-                            // Товар имеет статус не в наличие
-                            if (strlen($html) > 1 && isset($availability['class']) && $availability['class'] === 'out-of-stock') {
-                                if (!$product->is_type('variable')) { // Не показывать в вариативных, Woo по умолчанию оставляет обычную кнопку
-                                    $html .= BuyFunction::viewBuyButton(true);
-                                }
-                            }
+                            $html .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
                         }
-                        return $html;
-                    });
-            }
-        }
+                    }
+                }
+                return $html;
+            });
     }
 
     /**
      * Инициализация настроек, настройка объектов
+     *
      * @return void
      */
-    public function initOptions()
+    public function initOptions(): void
     {
-        $help = Help::getInstance();
         $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
         $this->notificationOptions = new NotificationOptions(get_option(OptionsType::NOTIFICATIONS, []));
         $this->marketingOptions = new MarketingOptions(get_option(OptionsType::MARKETING, []));
@@ -242,12 +248,8 @@ class Core
      */
     public function initializeAdditions(): void
     {
-        $help = Help::getInstance();
         do_action('buy_one_click_woocommerce_start_load_core');
-        if (class_exists('\Coderun\BuyOneClick\VariationsAddition')) {
-            $help->module_variation = true;
-            self::$variation = $help->module_variation;
-        }
+        ObjectWithConstantState::getInstance();
     }
     
     /**
@@ -269,7 +271,7 @@ class Core
     public function frontVariables(): void
     {
         $variables = ['ajaxurl' => admin_url('admin-ajax.php')];
-        $variables['variation'] = self::$variation ? 1 : 0;
+        $variables['variation'] = ObjectWithConstantState::getInstance()->isVariations() ? 1 : 0;
         $variables['tel_mask'] = str_replace(['\'', '"'], [], $this->commonOptions->getPhoneNumberInputMask());
         $variables['work_mode'] = $this->commonOptions->getPluginWorkMode();
         $variables['success_action'] = $this->commonOptions->getActionAfterSubmittingForm();
@@ -319,7 +321,10 @@ class Core
      */
     public function deactivationPlugin(): void
     {
-        remove_shortcode('viewBuyButton');
+        foreach (ShortCodesConst::all() as $code) {
+            remove_shortcode($code);
+        }
+
     }
 
     /**
@@ -566,7 +571,7 @@ class Core
         $pages = $this->getTabs();
         $tab = $_GET['tab'] ?? 'default';
         if (array_key_exists($tab, $pages) && file_exists($pages[$tab])) {
-            include_once $pages[$tab];
+            require $pages[$tab];
         }
     }
     
