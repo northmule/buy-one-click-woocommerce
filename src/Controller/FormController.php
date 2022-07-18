@@ -9,7 +9,6 @@ use Coderun\BuyOneClick\SimpleDataObjects\FieldsOfOrderForm;
 use Coderun\BuyOneClick\Templates\Elements\Factory\FilesFactory;
 use Coderun\BuyOneClick\Templates\Elements\Factory\QuantityFactory;
 use Coderun\BuyOneClick\Templates\QuickOrderFormFactory;
-
 use Coderun\BuyOneClick\Utils\Product as ProductUtils;
 
 use function add_action;
@@ -62,20 +61,22 @@ class FormController extends Controller
             $productId = $variationId;
         }
         $params = ProductUtils::getProductParam(intval($productId));
-        $fields = new FieldsOfOrderForm([
-            'productId' => $params['article'] ?? '',
-            'productName' => $params['name'] ?? '',
-            'productPrice' => $params['amount'] ?? '',
-            'shortCode' => 0,
-            'productImg' => $params['imageurl'] ?? '',
-            'productSrcImg' => sprintf('<img src="%s" width="80" height="80">', $params['imageurl'] ?? ''),
-            'variationPlugin' => ObjectWithConstantState::getInstance()->isVariations(),
-            'templateStyle' => $this->commonOptions->isStyleInsertHtml(),
-            'formWithFiles' => ((new FilesFactory())->create())->render(),
-            'formWithQuantity' => ((new QuantityFactory())->create())->render()
-        ]);
-        
-        echo ((new QuickOrderFormFactory())->create())->render($fields);
+        $fields = new FieldsOfOrderForm(
+            [
+                'productId'        => $params['article'] ?? '',
+                'productName'      => $params['name'] ?? '',
+                'productPrice'     => $params['amount'] ?? '',
+                'shortCode'        => 0,
+                'productImg'       => $params['imageurl'] ?? '',
+                'productSrcImg'    => sprintf('<img src="%s" width="80" height="80">', $params['imageurl'] ?? ''),
+                'variationPlugin'  => ObjectWithConstantState::getInstance()->isVariations(),
+                'templateStyle'    => $this->commonOptions->isStyleInsertHtml(),
+                'formWithFiles'    => ((new FilesFactory())->create())->render(),
+                'formWithQuantity' => ((new QuantityFactory())->create())->render(),
+            ]
+        );
+
+        echo((new QuickOrderFormFactory())->create())->render($fields);
     }
 
     /**
@@ -85,19 +86,21 @@ class FormController extends Controller
      */
     public function viewFormOrderCustom()
     {
-        $fields = new FieldsOfOrderForm([
-            'productId' => $_POST['productid'] ?? '',
-            'productName' => $_POST['name'] ?? '',
-            'productPrice' => $_POST['price'] ?? '',
-            'productCount' => $_POST['count'] ?? '',
-            'shortCode' => 1,
-            'productImg' => '',
-            'productSrcImg' => '',
-            'variationPlugin' => ObjectWithConstantState::getInstance()->isVariations(),
-            'templateStyle' => $this->commonOptions->isStyleInsertHtml(),
-            'formWithFiles' => ((new FilesFactory())->create())->render(),
-            'formWithQuantity' => ((new QuantityFactory())->create())->render()
-        ]);
-        echo ((new QuickOrderFormFactory())->create())->render($fields);
+        $fields = new FieldsOfOrderForm(
+            [
+                'productId'        => $_POST['productid'] ?? '',
+                'productName'      => $_POST['name'] ?? '',
+                'productPrice'     => $_POST['price'] ?? '',
+                'productCount'     => $_POST['count'] ?? '',
+                'shortCode'        => 1,
+                'productImg'       => '',
+                'productSrcImg'    => '',
+                'variationPlugin'  => ObjectWithConstantState::getInstance()->isVariations(),
+                'templateStyle'    => $this->commonOptions->isStyleInsertHtml(),
+                'formWithFiles'    => ((new FilesFactory())->create())->render(),
+                'formWithQuantity' => ((new QuantityFactory())->create())->render(),
+            ]
+        );
+        echo((new QuickOrderFormFactory())->create())->render($fields);
     }
 }

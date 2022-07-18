@@ -13,41 +13,34 @@ namespace Coderun\BuyOneClick\SimpleDataObjects;
  */
 class OrderButton extends DataTransferObject
 {
-    
     /**
      * Ид товара
      *
-     * @var int
+     * @var integer
      */
     public int $productId;
-    
     /**
      * Имя кнопки
      *
      * @var string
      */
     public string $buttonName;
-    
     /**
      * Ид вариации
      *
-     * @var int
+     * @var integer
      */
     public int $variationId;
-    
     /**
      * Css
      *
      * @var string
      */
     public string $inlineStyle;
-    
     /**
      * Js
      *
      * @var string
      */
     public string $inlineScript;
-    
-    
 }

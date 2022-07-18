@@ -48,7 +48,6 @@ class AdminController extends Controller
      */
     public function deleteOrderById(): void
     {
-
         // Удаление записи журнала плагина
         if (!empty($_POST['text'])) {
             $order_id = intval($_POST['text']);
@@ -72,8 +71,8 @@ class AdminController extends Controller
     }
 
     /**
-     *
      * Удаляет все заказы из таблицы
+     *
      * @return void
      */
     public function deleteAllOrders(): void

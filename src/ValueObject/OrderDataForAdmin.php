@@ -20,67 +20,64 @@ class OrderDataForAdmin
 {
     /**
      * Покупатель
+     *
      * @var string
      */
     protected string $userName = '';
-
     /**
      * Телефон
+     *
      * @var string
      */
     protected string $userPhone = '';
-
     /**
      * Email
+     *
      * @var string
      */
     protected string $userEmail = '';
-
     /**
      * Количество
+     *
      * @var string
      */
     protected string $quantityProduct = '';
-
     /**
      * Ссылка на товар
+     *
      * @var string
      */
     protected string $productLinkAdmin;
-
     /**
      * Данные по вариативному товару
      *
      * @var string
      */
     protected string $variationData = '';
-
     /**
      * Вся прочая информация(комментарий, вариации и т.д)
+     *
      * @var string
      */
     protected string $userComment;
-
     /**
      * Вариативный?
-     * @var bool
+     *
+     * @var boolean
      */
     protected bool $productIsVariable = false;
-    
     /**
      * Название товара
      *
      * @var string
      */
     protected string $productName = '';
-
     /**
      * Ссылки на файлы
      *
      * @var array
      */
     protected array $files = [];
-
     /**
      * Внутренний UUID заказа
      *
@@ -103,7 +100,7 @@ class OrderDataForAdmin
                 $data,
                 new OrderFormValueObject()
             );
-        } catch (VariablesException|ObjectException $e) {
+        } catch (VariablesException | ObjectException $e) {
             $order = null;
         }
         if (!$order instanceof OrderFormValueObject) {
@@ -193,7 +190,7 @@ class OrderDataForAdmin
     {
         return $this->uuid;
     }
-    
+
     /**
      * @return string
      */

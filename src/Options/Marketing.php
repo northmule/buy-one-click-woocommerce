@@ -25,7 +25,6 @@ class Marketing extends Base
      * @var string
      */
     protected string $afterClickingOnButton = '';
-
     /**
      * Событие после успешной отправки формы
      *
@@ -34,16 +33,14 @@ class Marketing extends Base
      * @var string
      */
     protected string $successfulFormSubmission = '';
-
     /**
      * Передача данных в яндекс электронная коммерция
      *
      * @wpOptionsName transfer_data_to_yandex_commerce
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $transferDataToYandexCommerce = false;
-
     /**
      * Имя контейнера данных в яндекс электронная коммерция
      *
@@ -52,7 +49,6 @@ class Marketing extends Base
      * @var string
      */
     protected string $nameOfYandexMetricaDataContainer = 'dataLayer';
-
     /**
      * ИД цели в яндекс электронная коммерция
      *

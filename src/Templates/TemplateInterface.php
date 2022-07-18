@@ -9,7 +9,6 @@ use Coderun\BuyOneClick\SimpleDataObjects\FieldsOfOrderForm;
 
 interface TemplateInterface
 {
-    
     /**
      * Создаёт html форму
      *

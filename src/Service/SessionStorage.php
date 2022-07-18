@@ -9,14 +9,16 @@ namespace Coderun\BuyOneClick\Service;
  */
 class SessionStorage
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected const SESSION_KEY = 'buy_session_storage';
-    
+
     /**
      * Установка ключа и значения
      *
      * @param string $key
-     * @param        $value
+     * @param $value
      *
      * @return void
      */
@@ -24,12 +26,12 @@ class SessionStorage
     {
         wp_cache_set($key, $value, self::SESSION_KEY);
     }
-    
+
     /**
      * Получить значение
      *
-     * @param string $key
-     * @param        $default
+     * @param string  $key
+     * @param $default
      *
      * @return mixed|null
      */
@@ -37,7 +39,7 @@ class SessionStorage
     {
         wp_cache_get($key, self::SESSION_KEY);
     }
-    
+
     /**
      * Удалить ключ
      *

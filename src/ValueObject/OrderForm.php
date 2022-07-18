@@ -24,21 +24,18 @@ class OrderForm
      * @var string
      */
     protected string $userName = '';
-
     /**
      * Телефон
      *
      * @var string
      */
     protected string $userPhone = '';
-
     /**
      * Email
      *
      * @var string
      */
     protected string $userEmail = '';
-
     /**
      * Комментарий, доп. поле
      *
@@ -49,7 +46,6 @@ class OrderForm
     protected int $productId = 0;
     protected bool $productIsVariable = false;
     protected string $productName = '';
-
     /**
      * Информация о вариации
      *
@@ -64,12 +60,11 @@ class OrderForm
     protected string $companyName = '';
     protected string $orderAdminComment = '';
     protected bool $conset = true;
-    protected array $formsField  = [];
-    protected string $orderTime  = '';
+    protected array $formsField = [];
+    protected string $orderTime = '';
     protected int $custom = 10;
     protected array $files = [];
     protected int $quantityProduct = 1;
-
     /**
      * URL на товар
      *
@@ -79,19 +74,17 @@ class OrderForm
     protected array $formData = [];
     protected array $filesUrlCollection = [];
     protected string $filesLink = '';
-
     /**
      * uuid4 автогенерируемый
      *
      * @var string
      */
     protected string $orderUuid = '';
-    
     /**
      * Является товаром WooCommerce
      * Товар может быть с произвольным ИД, не являясь товаром WooCommerce
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $isWooCommerceProduct = false;
 
@@ -112,20 +105,20 @@ class OrderForm
         $this->userEmail = sanitize_email($this->formDateParse('txtemail'));
         $this->userComment = $this->formDateParse('message');
         $this->orderComment = $this->formDateParse('message');
-        $this->productId = (int)$this->formDateParse('idtovar');
+        $this->productId = (int) $this->formDateParse('idtovar');
         $this->isWooCommerceProduct = boolval(wc_get_product($this->productId));
         $this->productUrl = strval(get_the_permalink($this->productId));
         $this->productName = $this->formDateParse('nametovar');
         $this->productOriginalName = $this->formDateParse('nametovar');
-        $this->productPrice = (float)$this->formDateParse('pricetovar');
+        $this->productPrice = (float) $this->formDateParse('pricetovar');
         $this->productLinkAdmin = $this->collectLinkToProductForAdministrator();
         $this->productLinkUser = $this->collectLinkToProductForUser($this->productUrl);
         $this->companyName = $notificationOptions->getOrganizationName();
         $this->orderAdminComment = $notificationOptions->getAdditionalFieldMessage();
-        $this->conset = (bool)$this->formDateParse('conset_personal_data');
+        $this->conset = (bool) $this->formDateParse('conset_personal_data');
         $this->formsField = $this->formDateLegacyParse();
         $this->orderTime = current_time('mysql');
-        $this->custom = (int)$this->formDateParse('custom');
+        $this->custom = (int) $this->formDateParse('custom');
         $this->files = $files;
         $this->quantityProduct = $this->formDateParse('quantity_product') == ''
             ? 1 : intval($this->formDateParse('quantity_product'));
@@ -153,7 +146,7 @@ class OrderForm
             return;
         }
         $wcOrder = Order::getInstance()->createWooCommerceOrderWithoutSaving($this->productId);
-        $this->productPriceWithTax = (float)Order::getInstance()->calculate_order_totals($wcOrder);
+        $this->productPriceWithTax = (float) Order::getInstance()->calculate_order_totals($wcOrder);
         $wcOrder->delete();
         unset($wcOrder);
     }
@@ -170,7 +163,7 @@ class OrderForm
         $variation_id = $pluginVariations->getVariationId($this->getFormsField());
         if ($variation_id > 0) {
             $this->productIsVariable = true;
-            $this->productId = (int)$variation_id;
+            $this->productId = (int) $variation_id;
         }
     }
 
@@ -209,8 +202,10 @@ class OrderForm
 
     /**
      * Проверяют указанное поле и возвращает значение если есть
-     * @param array<string, mixed> $data
-     * @param string $key ключ массива
+     *
+     * @param  array<string, mixed> $data
+     * @param  string               $key  ключ
+     *                                    массива
      * @return array|string
      */
     private function arrayParse(array $data, string $key)
@@ -774,7 +769,7 @@ class OrderForm
         $this->orderUuid = $orderUuid;
         return $this;
     }
-    
+
     /**
      * @return bool
      */
@@ -782,17 +777,16 @@ class OrderForm
     {
         return $this->isWooCommerceProduct;
     }
-    
+
     /**
      * @param bool $isWooCommerceProduct
      *
      * @return OrderForm
      */
-    public function setIsWooCommerceProduct(bool $isWooCommerceProduct
+    public function setIsWooCommerceProduct(
+        bool $isWooCommerceProduct
     ): OrderForm {
         $this->isWooCommerceProduct = $isWooCommerceProduct;
         return $this;
     }
-    
-    
 }

@@ -14,7 +14,6 @@ use function __;
  */
 class UploadingFilesException extends BaseException implements ExceptionInterface
 {
-    
     /**
      * @return UploadingFilesException
      */
@@ -22,7 +21,7 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
     {
         return new self(__('No file to download', 'coderun-oneclickwoo'));
     }
-    
+
     /**
      * @param string $extension
      *
@@ -37,7 +36,7 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
             )
         );
     }
-    
+
     /**
      * @param string $size
      *
@@ -52,7 +51,7 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
             )
         );
     }
-    
+
     /**
      * @param string $type
      *
@@ -67,5 +66,4 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
             )
         );
     }
-    
 }

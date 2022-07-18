@@ -7,9 +7,11 @@ namespace Coderun\BuyOneClick;
  */
 class PluginUpdate
 {
-    /** @var int  */
+    /**
+     * @var int
+     */
     public const DB_VERSION = 2;
-    
+
     /**
      * Создание БД при необходимости
      *
@@ -38,7 +40,7 @@ class PluginUpdate
                       KEY `wp_coderun_oneclickwoo_orders_product_id_IDX` (`product_id`) USING BTREE,
                       KEY `wp_coderun_oneclickwoo_orders_woo_order_id_IDX` (`woo_order_id`) USING BTREE
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Orders from the plugin in One Click';";
-        
+
         $wpdb->query($createTable);
         update_option('wp_coderun_oneclickwoo_db_version', self::DB_VERSION);
     }

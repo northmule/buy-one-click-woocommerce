@@ -53,7 +53,7 @@ class Email
                 $orderForm->getFilesLink()
             );
         }
-    
+
         $costOfGoods = $orderForm->getProductPriceWithTax();
         if ($costOfGoods == 0) {
             $costOfGoods = $orderForm->getProductPrice();
@@ -63,7 +63,7 @@ class Email
 <table style="height: 255px; border-color: #1b0dd9;" border="2" width="579">
 <tbody>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;" colspan="2">' .$orderForm->getCompanyName() . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;" colspan="2">' . $orderForm->getCompanyName() . '</td>
 </tr>
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Date', 'coderun-oneclickwoo') . ': </td>
@@ -79,11 +79,11 @@ class Email
 </tr>
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Name', 'coderun-oneclickwoo') . '</td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getProductName() . '<br>'.$orderForm->getVariationData().'</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getProductName() . '<br>' . $orderForm->getVariationData() . '</td>
 </tr>
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Quantity', 'coderun-oneclickwoo') . '</td>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getQuantityProduct(). '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getQuantityProduct() . '</td>
 </tr>
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Email', 'coderun-oneclickwoo') . '</td>
@@ -97,7 +97,7 @@ class Email
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Customer', 'coderun-oneclickwoo') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getUserName() . '</td>
 </tr>
-'.$filesMessage.'
+' . $filesMessage . '
 <tr>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Additionally', 'coderun-oneclickwoo') . ' </td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . $orderForm->getUserComment() . ' </td>

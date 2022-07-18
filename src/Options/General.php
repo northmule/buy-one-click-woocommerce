@@ -15,7 +15,9 @@ use function intval;
  */
 class General extends Base
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected const ROOT_KEY = OptionsType::GENERAL;
 
     /**
@@ -23,28 +25,25 @@ class General extends Base
      *
      * @wpOptionsName plugin_work_mode
      *
-     * @var int
+     * @var integer
      */
     protected int $pluginWorkMode = 0;
-
     /**
      * Включить/отключить кнопку
      *
      * @wpOptionsName enable_button
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableButton = false;
-
     /**
      * Включить/отключить кнопку шорткод
      *
      * @wpOptionsName enable_button_shortcod
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableButtonShortcode;
-
     /**
      * Имя кнопки
      *
@@ -53,7 +52,6 @@ class General extends Base
      * @var string|null
      */
     protected ?string $nameButton;
-
     /**
      * Позиция кнопки
      *
@@ -62,7 +60,6 @@ class General extends Base
      * @var string
      */
     protected string $positionButton = ButtonPosition::WOOCOMMERCE_AFTER_ADD_TO_CART_BUTTON;
-
     /**
      * Позиция кнопки для товара которого нет в наличие
      *
@@ -71,25 +68,22 @@ class General extends Base
      * @var string
      */
     protected string $positionButtonOutStock = '';
-
     /**
      * Записывать заказы в таблицу WooCommerce
      *
      * @wpOptionsName add_tableorder_woo
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $addAnOrderToWooCommerce = false;
-
     /**
      * Включить кнопку в категории
      *
      * @wpOptionsName enable_button_category
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableButtonCategory;
-
     /**
      * Позиция кнопки в категории
      *
@@ -98,70 +92,62 @@ class General extends Base
      * @var string
      */
     protected string $buttonPositionInCategory = ButtonPosition::WOOCOMMERCE_AFTER_SHOP_LOOP_ITEM;
-
     /**
      * Включить информацию о товаре на форму
      *
      * @wpOptionsName infotovar_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableProductInformation;
-
     /**
      * Включить поле с именем на форму
      *
      * @wpOptionsName fio_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableFieldWithName;
-
     /**
      * Включить поле с телефоном на форму
      *
      * @wpOptionsName fon_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableFieldWithPhone;
-
     /**
      * Включить поле с email на форму
      *
      * @wpOptionsName email_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableFieldWithEmail;
-
     /**
      * Включить поле с комментарием на форму
      *
      * @wpOptionsName dopik_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableFieldWithComment;
-
     /**
      * Включить поле с количеством на форму
      *
      * @wpOptionsName add_quantity_form
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableFieldWithQuantity;
-
     /**
      * Включить поле с файлами на форму
      *
      * @wpOptionsName upload_input_file_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableFieldWithFiles;
-
     /**
      * Описание для поля Имя
      *
@@ -170,7 +156,6 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldName;
-
     /**
      * Описание для поля Телефон
      *
@@ -179,7 +164,6 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldPhone;
-
     /**
      * Описание для поля Формат телефон
      *
@@ -188,7 +172,6 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldFormatPhone;
-
     /**
      * Описание для поля Email
      *
@@ -197,7 +180,6 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldEmail;
-
     /**
      * Описание для поля Комментарий
      *
@@ -206,7 +188,6 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldComment;
-
     /**
      * Описание для поля Файлы
      *
@@ -215,7 +196,6 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldFiles;
-
     /**
      * Название кнопки на форме быстрого заказа
      *
@@ -224,52 +204,46 @@ class General extends Base
      * @var string
      */
     protected string $descriptionForFieldOrderButton;
-
     /**
      * Является обязательным поле Имя
      *
      * @wpOptionsName fio_verifi
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $fieldNameIsRequired;
-
     /**
      * Является обязательным поле Телефон
      *
      * @wpOptionsName fon_verifi
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $fieldPhoneIsRequired;
-
     /**
      * Является обязательным поле Email
      *
      * @wpOptionsName email_verifi
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $fieldEmailIsRequired;
-
     /**
      * Является обязательным поле Комментарий
      *
      * @wpOptionsName dopik_verifi
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $fieldCommentIsRequired;
-
     /**
      * Является обязательным поле Файлы
      *
      * @wpOptionsName upload_input_file_verifi
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $fieldFilesIsRequired;
-
     /**
      * Маска ввода номера телефона
      *
@@ -278,16 +252,14 @@ class General extends Base
      * @var string
      */
     protected string $phoneNumberInputMask = '';
-
     /**
      * Включить взаимодействие с механизмом остатков в WooCommerce
      *
      * @wpOptionsName woo_stock_status_enable
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableWorkWithRemainingItems;
-
     /**
      * Описание для кнопки предзаказа (при упралвении остатками)
      *
@@ -296,7 +268,6 @@ class General extends Base
      * @var string
      */
     protected string $descriptionOfPreOrderButton;
-
     /**
      * Сообщение в форме после отправки
      *
@@ -305,26 +276,22 @@ class General extends Base
      * @var string
      */
     protected string $submittingFormMessageSuccess;
-
     /**
      * Действие после отправки
      *
      * @wpOptionsName success_action
      *
-     *
-     * @var int
+     * @var integer
      */
     protected int $actionAfterSubmittingForm = 0;
-
     /**
      * Закрыть форму через N сек.
      *
      * @wpOptionsName success_action_close
      *
-     * @var int
+     * @var integer
      */
     protected int $secondsBeforeClosingForm = 0;
-
     /**
      * Доп. сообщение после отправки
      *
@@ -333,7 +300,6 @@ class General extends Base
      * @var string
      */
     protected string $messageAfterSubmittingForm = '';
-
     /**
      * URL адрес перенаправления (произвольный)
      *
@@ -342,25 +308,22 @@ class General extends Base
      * @var ?string
      */
     protected ?string $urlRedirectAddress;
-
     /**
      * Стиль формы
      *
      * @wpOptionsName form_style_color
      *
-     * @var int
+     * @var integer
      */
     protected int $formStyle = 1;
-
     /**
      * Лимит на отправку формы
      *
      * @wpOptionsName time_limit_send_form
      *
-     * @var int
+     * @var integer
      */
     protected int $formSubmissionLimit = 10;
-
     /**
      * Сообщение при лимите
      *
@@ -369,16 +332,14 @@ class General extends Base
      * @var string
      */
     protected string $formSubmissionLimitMessage;
-
     /**
      * Согласие на обработку
      *
      * @wpOptionsName conset_personal_data_enabled
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $consentToProcessing;
-
     /**
      * Согласие на обработку текст
      *
@@ -387,16 +348,14 @@ class General extends Base
      * @var string
      */
     protected string $descriptionConsentToProcessing;
-
     /**
      * Использовать Капчу
      *
      * @wpOptionsName recaptcha_order_form
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $recaptchaEnabled;
-
     /**
      * Плагин предоставляющий капчу
      *
@@ -405,13 +364,12 @@ class General extends Base
      * @var string
      */
     protected string $captchaProvider;
-
     /**
      * Добавить css в форму
      *
      * @wpOptionsName style_insert_html
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $styleInsertHtml;
 
@@ -584,7 +542,7 @@ class General extends Base
         $this->nameButton = $nameButton;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -592,7 +550,7 @@ class General extends Base
     {
         return $this->positionButton;
     }
-    
+
     /**
      * @param string $positionButton
      *
@@ -603,7 +561,7 @@ class General extends Base
         $this->positionButton = $positionButton;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -611,7 +569,7 @@ class General extends Base
     {
         return $this->positionButtonOutStock;
     }
-    
+
     /**
      * @param string $positionButtonOutStock
      *
@@ -625,7 +583,7 @@ class General extends Base
 
 
 
- 
+
 
     /**
      * @return bool
@@ -665,7 +623,7 @@ class General extends Base
         $this->enableButtonCategory = $enableButtonCategory;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -673,7 +631,7 @@ class General extends Base
     {
         return $this->buttonPositionInCategory;
     }
-    
+
     /**
      * @param string $buttonPositionInCategory
      *
@@ -1212,7 +1170,7 @@ class General extends Base
         $this->urlRedirectAddress = $urlRedirectAddress;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -1220,7 +1178,7 @@ class General extends Base
     {
         return $this->formStyle;
     }
-    
+
     /**
      * @param int $formStyle
      *

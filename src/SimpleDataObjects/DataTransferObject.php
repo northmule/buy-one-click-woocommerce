@@ -15,7 +15,6 @@ use ReflectionClass;
  */
 abstract class DataTransferObject implements DataTransferObjectInterface
 {
-    
     /**
      * @param array<string, scalar> $parameters
      *
@@ -29,9 +28,9 @@ abstract class DataTransferObject implements DataTransferObjectInterface
             $this->{$property} = $this->leadToType($parameters[$property] ?? '', $reflectionProperty);
         }
     }
-    
+
     /**
-     * @param     mixed              $value
+     * @param mixed              $value
      * @param ReflectionProperty $property
      *
      * @return bool|DateTime|float|int|string|null
@@ -62,11 +61,10 @@ abstract class DataTransferObject implements DataTransferObjectInterface
                 case 'null':
                     return null;
                 case 'array':
-                    return (array)$value;
+                    return (array) $value;
                 default:
                     throw VariablesException::variableWasNotExpected();
             }
         }
     }
-   
 }

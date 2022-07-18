@@ -21,14 +21,13 @@ use function file_get_contents;
  */
 class Button
 {
-    
     /**
      * Настройки плагина
      *
      * @var GeneralOptions
      */
     protected GeneralOptions $commonOptions;
-    
+
     /**
      * @param GeneralOptions $commonOptions
      */
@@ -36,8 +35,8 @@ class Button
     {
         $this->commonOptions = $commonOptions;
     }
-    
-    
+
+
     /**
      * Возвращает HTML кнопки "Купить в один клик"
      *
@@ -48,7 +47,6 @@ class Button
      */
     public function getHtmlOrderButtons($params = []): string
     {
-       
         if ($this->commonOptions->getPositionButton()) {
             $name = self::getButtonName();
             $productId = ProductUtils::getProductId();
@@ -69,18 +67,22 @@ class Button
                     }
                 }
             }
-            
-            return (new OrderButton())->render(new OrderButtonDataObject([
-                'productId' => $productId,
-                'buttonName' => $name,
-                'variationId' => 0,
-                'inlineStyle' => $style,
-                'inlineScript' => $scripts,
-            ]));
+
+            return (new OrderButton())->render(
+                new OrderButtonDataObject(
+                    [
+                        'productId'    => $productId,
+                        'buttonName'   => $name,
+                        'variationId'  => 0,
+                        'inlineStyle'  => $style,
+                        'inlineScript' => $scripts,
+                    ]
+                )
+            );
         }
         return '';
     }
-    
+
     /**
      * HTML Кнопка заказа в один клик через Шорткод
      *
@@ -92,20 +94,24 @@ class Button
     public function getHtmlOrderButtonsCustom(array $params): string
     {
         if ($this->commonOptions->getNameButton() and $this->commonOptions->getPositionButton()) {
-            return (new OrderButton())->render(new CustomOrderButtonDataObject([
-                'productId' => $params['id'],
-                'productPrice' => $params['price'],
-                'productCount' => $params['count'],
-                'productName' => $params['name'],
-                'buttonName' => $this->commonOptions->getNameButton(),
-                'inlineStyle' => '',
-                'inlineScript' => '',
-            ]));
+            return (new OrderButton())->render(
+                new CustomOrderButtonDataObject(
+                    [
+                        'productId'    => $params['id'],
+                        'productPrice' => $params['price'],
+                        'productCount' => $params['count'],
+                        'productName'  => $params['name'],
+                        'buttonName'   => $this->commonOptions->getNameButton(),
+                        'inlineStyle'  => '',
+                        'inlineScript' => '',
+                    ]
+                )
+            );
         }
-        
+
         return '';
     }
-    
+
     /**
      * Формирует имя кнопки
      *
@@ -122,7 +128,7 @@ class Button
         if ($this->commonOptions->getDescriptionOfPreOrderButton()) {
             $name = $this->commonOptions->getDescriptionOfPreOrderButton();
         }
-        
+
         if (ProductUtils::getProductId() === 0 || !$this->commonOptions->isEnableWorkWithRemainingItems()) {
             return $defaultName;
         }

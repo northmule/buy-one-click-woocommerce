@@ -11,7 +11,9 @@ namespace Coderun\BuyOneClick\Response;
  */
 class ErrorResponse implements ResponseInterface
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected string $message = '';
 
     /**

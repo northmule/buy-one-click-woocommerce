@@ -21,42 +21,37 @@ class FieldNameViaType
      * @var string
      */
     protected string $userName = '';
-    
     /**
      * Телефон
      *
      * @var string
      */
     protected string $userPhone = '';
-    
     /**
      * Email
      *
      * @var string
      */
     protected string $userEmail = '';
-    
     /**
      * Комментарий, доп. поле
      *
      * @var string
      */
     protected string $userComment = '';
-    
     /**
      * Согласие
      *
      * @var string
      */
     protected string $consent = '';
-    
     /**
      * Файлы
      *
      * @var string
      */
     protected string $files = '';
-    
+
     /**
      * @param GeneralOptions $commonOptions
      */
@@ -69,7 +64,7 @@ class FieldNameViaType
         $this->consent = $commonOptions->getDescriptionConsentToProcessing();
         $this->files = $commonOptions->getDescriptionForFieldFiles();
     }
-    
+
     /**
      * @return string
      */
@@ -77,7 +72,7 @@ class FieldNameViaType
     {
         return $this->userName;
     }
-    
+
     /**
      * @return string
      */
@@ -85,7 +80,7 @@ class FieldNameViaType
     {
         return $this->userPhone;
     }
-    
+
     /**
      * @return string
      */
@@ -93,7 +88,7 @@ class FieldNameViaType
     {
         return $this->userEmail;
     }
-    
+
     /**
      * @return string
      */
@@ -101,7 +96,7 @@ class FieldNameViaType
     {
         return $this->userComment;
     }
-    
+
     /**
      * @return string
      */
@@ -109,7 +104,7 @@ class FieldNameViaType
     {
         return $this->consent;
     }
-    
+
     /**
      * @return string
      */
@@ -117,5 +112,4 @@ class FieldNameViaType
     {
         return $this->files;
     }
-    
 }

@@ -19,7 +19,7 @@ class LimitOnSendingFormsException extends BaseException implements ExceptionInt
     public static function error(?string $message = null): LimitOnSendingFormsException
     {
         if ($message == null) {
-            $message =  __('You have already sent an order!', 'coderun-oneclickwoo');
+            $message = __('You have already sent an order!', 'coderun-oneclickwoo');
         }
         return new self(
             $message,

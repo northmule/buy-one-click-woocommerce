@@ -8,32 +8,34 @@ class ReCaptcha
 
     /**
      * Вывод капчи
+     *
      * @param $plugin
      */
     public function view($plugin)
     {
-        if ($plugin==='advanced_nocaptcha_recaptcha') {
+        if ($plugin === 'advanced_nocaptcha_recaptcha') {
             $this->viewPluginAnrCaptcha();
         }
     }
 
     /**
      * Провека капчи
-     * @param $plugin
+     *
+     * @param  $plugin
      * @return array check и message
      */
     public function check($plugin)
     {
-        $result=[
-            'check'=>false,
-            'message'=>_e('Captcha failed', 'coderun-oneclickwoo')
+        $result = [
+            'check'   => false,
+            'message' => _e('Captcha failed', 'coderun-oneclickwoo'),
         ];
-        if ($plugin==='advanced_nocaptcha_recaptcha') {
+        if ($plugin === 'advanced_nocaptcha_recaptcha') {
             if (!$this->isSupportPluginAnrCaptcha()) {
                 return $result;
             }
-            $result['check']=(bool)\anr_verify_captcha();
-            $result['message']=\anr_get_option('error_message', '');
+            $result['check'] = (bool) \anr_verify_captcha();
+            $result['message'] = \anr_get_option('error_message', '');
         }
         ob_end_clean();
         return $result;
@@ -45,17 +47,18 @@ class ReCaptcha
      * name - Имя плагина
      * url - страница в WP
      * contributors - Автор в репозитарии WP
+     *
      * @return array
      */
     public function isSupported()
     {
-        $result=[];
+        $result = [];
 
 
-        $result['advanced_nocaptcha_recaptcha']=[
-                'name'=>'Advanced noCaptcha & invisible Captcha (v2 & v3)',
-                'url'=>'https://ru.wordpress.org/plugins/advanced-nocaptcha-recaptcha/',
-                'contributors'=>'shamim51',
+        $result['advanced_nocaptcha_recaptcha'] = [
+            'name'         => 'Advanced noCaptcha & invisible Captcha (v2 & v3)',
+            'url'          => 'https://ru.wordpress.org/plugins/advanced-nocaptcha-recaptcha/',
+            'contributors' => 'shamim51',
         ];
 
 
@@ -119,6 +122,7 @@ class ReCaptcha
 
     /**
      * Singletone
+     *
      * @return self
      */
     public static function getInstance()

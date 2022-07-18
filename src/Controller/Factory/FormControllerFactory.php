@@ -13,7 +13,6 @@ use Coderun\BuyOneClick\Controller\FormController;
  */
 class FormControllerFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -23,5 +22,4 @@ class FormControllerFactory implements FactoryInterface
     {
         return new FormController(Core::getInstance()->getCommonOptions());
     }
-    
 }

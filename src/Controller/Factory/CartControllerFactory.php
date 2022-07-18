@@ -13,7 +13,6 @@ use Coderun\BuyOneClick\Controller\CartController;
  */
 class CartControllerFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -23,5 +22,4 @@ class CartControllerFactory implements FactoryInterface
     {
         return new CartController(Core::getInstance()->getCommonOptions());
     }
-    
 }

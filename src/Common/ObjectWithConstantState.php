@@ -15,30 +15,24 @@ use function class_exists;
  */
 class ObjectWithConstantState
 {
-    
     /**
      * @var ObjectWithConstantState|null
      */
     protected static $_instance;
-    
-    
     /**
      * Наличие плагина вариаций в системе
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $variations = false;
-    
-    /**
-     *
-     */
+
     protected function __construct()
     {
         if (class_exists('\Coderun\BuyOneClick\VariationsAddition')) {
             $this->variations = true;
         }
     }
-    
+
     /**
      * @return ObjectWithConstantState
      */
@@ -49,7 +43,7 @@ class ObjectWithConstantState
         }
         return self::$_instance;
     }
-    
+
     /**
      * @return bool
      */
@@ -57,6 +51,4 @@ class ObjectWithConstantState
     {
         return $this->variations;
     }
-    
-    
 }

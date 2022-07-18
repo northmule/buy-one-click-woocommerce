@@ -13,19 +13,16 @@ namespace Coderun\BuyOneClick\SimpleDataObjects;
  */
 class DownloadedFile extends DataTransferObject
 {
-    
     /**
      * URL до файла
      *
      * @var string
      */
     public string $url;
-    
     /**
      * Путь до файла
      *
      * @var string
      */
     public string $path;
-   
 }

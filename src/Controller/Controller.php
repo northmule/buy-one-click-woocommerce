@@ -13,14 +13,15 @@ use WC_Logger;
  */
 abstract class Controller implements ControllerInterface
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     public const REQUEST_KEY = 'coderun_send_form_buy_one_click';
 
     /**
      * @var Logger
      */
     protected Logger $logger;
-    
     /**
      * Настройки плагина
      *
@@ -28,9 +29,6 @@ abstract class Controller implements ControllerInterface
      */
     protected GeneralOptions $commonOptions;
 
-    /**
-     *
-     */
     public function __construct(GeneralOptions $commonOptions)
     {
         $this->logger = Logger::getInstance();

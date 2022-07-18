@@ -21,31 +21,29 @@ use function sprintf;
  */
 class EmailTemplate
 {
-   
     /**
      * Настройки плагина
      *
      * @var NotificationOptions
      */
     protected NotificationOptions $notificationOptions;
-    
     /**
      * @var OrderRepository
      */
     protected OrderRepository $orderRepository;
-    
+
     /**
      * @param OrderRepository     $orderRepository
      * @param NotificationOptions $notificationOptions
      */
     public function __construct(
         OrderRepository $orderRepository,
-        NotificationOptions $notificationOptions)
-    {
+        NotificationOptions $notificationOptions
+    ) {
         $this->orderRepository = $orderRepository;
         $this->notificationOptions = $notificationOptions;
     }
-    
+
     /**
      * Шаблон Письма для WooCommerce
      *
@@ -56,8 +54,7 @@ class EmailTemplate
      */
     public function modificationOrderTemplateWooCommerce(
         WC_Order $order
-    ): string
-    {
+    ): string {
         if (!$this->notificationOptions->isEnableOrderInformationToTemplateWoo()) {
             return '';
         }
@@ -74,7 +71,7 @@ class EmailTemplate
         if (!$form instanceof OrderDataForAdmin) {
             return '';
         }
-        $htmlItems = '<h2>'.__('In one click', 'coderun-oneclickwoo').'</h2>';
+        $htmlItems = '<h2>' . __('In one click', 'coderun-oneclickwoo') . '</h2>';
         if ($form->getUserName()) {
             $htmlItems .= sprintf('<p>%s: %s</p>', __('Name', 'coderun-oneclickwoo'), $form->getUserName());
         }
@@ -87,7 +84,7 @@ class EmailTemplate
         if ($form->getProductName()) {
             $htmlItems .= sprintf('<p>%s: %s</p>', __('Products', 'coderun-oneclickwoo'), $form->getProductName());
         }
-        
+
         if ($this->notificationOptions->isEnableFileLinks()) {
             foreach ($form->getFiles() as $url) {
                 $htmlItems .= sprintf('<p>%s: %s</p>', __('File url', 'coderun-oneclickwoo'), $url);

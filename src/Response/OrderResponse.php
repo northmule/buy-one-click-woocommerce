@@ -15,29 +15,34 @@ use Coderun\BuyOneClick\Response\ValueObject\Product;
  */
 class OrderResponse implements ResponseInterface
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected string $message = '';
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected string $result = '';
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected string $redirectUrl = '';
-    /** @var array<int, Product> */
+    /**
+     * @var array<int, Product>
+     */
     protected array $products = [];
-    
     /**
      * UUID заказа плагина
      *
      * @var string
      */
     protected string $orderUuid = '';
-    
     /**
      * WooCommerce ID
      *
-     * @var int
+     * @var integer
      */
     protected int $orderId = 1;
-    
     /**
      * Номер заказа, формируется сторонними плагинами
      *
@@ -139,7 +144,7 @@ class OrderResponse implements ResponseInterface
         $this->orderUuid = $orderUuid;
         return $this;
     }
-    
+
     /**
      * @return int
      */
@@ -147,7 +152,7 @@ class OrderResponse implements ResponseInterface
     {
         return $this->orderId;
     }
-    
+
     /**
      * @param int $orderId
      *
@@ -158,7 +163,7 @@ class OrderResponse implements ResponseInterface
         $this->orderId = $orderId;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -166,7 +171,7 @@ class OrderResponse implements ResponseInterface
     {
         return $this->orderNumber;
     }
-    
+
     /**
      * @param string $orderNumber
      *
@@ -177,7 +182,4 @@ class OrderResponse implements ResponseInterface
         $this->orderNumber = $orderNumber;
         return $this;
     }
-    
-    
-    
 }

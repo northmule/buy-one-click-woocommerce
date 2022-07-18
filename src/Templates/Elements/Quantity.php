@@ -13,14 +13,13 @@ use Coderun\BuyOneClick\Options\General as GeneralOptions;
  */
 class Quantity implements ElementInterface
 {
-    
     /**
      * Настройки плагина
      *
      * @var GeneralOptions
      */
     protected GeneralOptions $commonOptions;
-    
+
     public function __construct(GeneralOptions $commonOptions)
     {
         $this->commonOptions = $commonOptions;
@@ -40,7 +39,7 @@ class Quantity implements ElementInterface
             ob_end_clean();
             return apply_filters('coderun_oneclickwoo_quantity_form_html', $form);
         }
-    
+
         return '';
     }
 }
