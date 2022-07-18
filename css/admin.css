@@ -51,3 +51,14 @@ legend {
 .buy-message-block-admin span,.buy-message-block-admin a {
     color: #c51b17;
 }
+
+fieldset {
+    position: relative;
+}
+
+.admin-link-block.top-left {
+    position: absolute;
+    right: 10px;
+    top: -40px;
+
+}
