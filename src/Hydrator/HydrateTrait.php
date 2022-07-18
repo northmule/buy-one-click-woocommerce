@@ -70,17 +70,15 @@ trait HydrateTrait
                 throw VariablesException::valueIsNumeric();
             }
             $propertyName = ManipulationsWithStrings::snakeInCamelCase($propertyName);
-            /**
- * @var ReflectionType $propertyType
-*/
+            /** @var ReflectionType $propertyType */
             $propertyType = $propertyMap[$propertyName] ?? null;
             if ($propertyType == null) {
                 throw VariablesException::valueIsNotDefined($propertyName);
             }
             $setter = sprintf('set%s', ucfirst($propertyName));
-            if (!method_exists($entity, $setter)) {
-                throw ObjectException::methodDoesNotExist($setter, $entity);
-            }
+//            if (!method_exists($entity, $setter)) {
+//                throw ObjectException::methodDoesNotExist($setter, $entity);
+//            }
             $propertyValue = $this->typeConversions($propertyValue, $propertyType);
             $entity->{$setter}($propertyValue);
         }

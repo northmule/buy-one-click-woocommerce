@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\ValueObject;
 
+use Coderun\BuyOneClick\Exceptions\ObjectException;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\SimpleDataObjects\DownloadedFile;
@@ -60,7 +61,6 @@ class OrderForm
     protected string $companyName = '';
     protected string $orderAdminComment = '';
     protected bool $conset = true;
-    
     /**
      * Поля формы
      *
@@ -263,42 +263,22 @@ class OrderForm
     }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getUserName()
+    public function getUserName(): string
     {
         return $this->userName;
     }
 
-    /**
-     * @param array|string $userName
-     *
-     * @return OrderForm
-     */
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
-        return $this;
-    }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getUserPhone()
+    public function getUserPhone(): string
     {
         return $this->userPhone;
     }
 
-    /**
-     * @param array|string $userPhone
-     *
-     * @return OrderForm
-     */
-    public function setUserPhone($userPhone)
-    {
-        $this->userPhone = $userPhone;
-        return $this;
-    }
 
     /**
      * @return string
@@ -308,54 +288,24 @@ class OrderForm
         return $this->userEmail;
     }
 
-    /**
-     * @param string $userEmail
-     *
-     * @return OrderForm
-     */
-    public function setUserEmail(string $userEmail): OrderForm
-    {
-        $this->userEmail = $userEmail;
-        return $this;
-    }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getUserComment()
+    public function getUserComment():string
     {
         return $this->userComment;
     }
 
-    /**
-     * @param array|string $userComment
-     *
-     * @return OrderForm
-     */
-    public function setUserComment($userComment)
-    {
-        $this->userComment = $userComment;
-        return $this;
-    }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getOrderComment()
+    public function getOrderComment(): string
     {
         return $this->orderComment;
     }
 
-    /**
-     * @param string $orderComment
-     *
-     * @return OrderForm
-     */
-    public function setOrderComment(string $orderComment): OrderForm
-    {
-        $this->orderComment = $orderComment;
-        return $this;
-    }
 
     /**
      * @return int
@@ -365,16 +315,6 @@ class OrderForm
         return $this->productId;
     }
 
-    /**
-     * @param int $productId
-     *
-     * @return OrderForm
-     */
-    public function setProductId(int $productId): OrderForm
-    {
-        $this->productId = $productId;
-        return $this;
-    }
 
     /**
      * @return string
@@ -384,16 +324,6 @@ class OrderForm
         return $this->productName;
     }
 
-    /**
-     * @param string $productName
-     *
-     * @return OrderForm
-     */
-    public function setProductName(string $productName): OrderForm
-    {
-        $this->productName = $productName;
-        return $this;
-    }
 
     /**
      * @return string
@@ -403,16 +333,6 @@ class OrderForm
         return $this->variationData;
     }
 
-    /**
-     * @param string $variationData
-     *
-     * @return OrderForm
-     */
-    public function setVariationData(string $variationData): OrderForm
-    {
-        $this->variationData = $variationData;
-        return $this;
-    }
 
     /**
      * @return string
@@ -422,16 +342,6 @@ class OrderForm
         return $this->productOriginalName;
     }
 
-    /**
-     * @param string $productOriginalName
-     *
-     * @return OrderForm
-     */
-    public function setProductOriginalName(string $productOriginalName): OrderForm
-    {
-        $this->productOriginalName = $productOriginalName;
-        return $this;
-    }
 
     /**
      * @return float
@@ -441,16 +351,6 @@ class OrderForm
         return $this->productPrice;
     }
 
-    /**
-     * @param float $productPrice
-     *
-     * @return OrderForm
-     */
-    public function setProductPrice(float $productPrice): OrderForm
-    {
-        $this->productPrice = $productPrice;
-        return $this;
-    }
 
     /**
      * @return float
@@ -460,17 +360,6 @@ class OrderForm
         return $this->productPriceWithTax;
     }
 
-    /**
-     * @param float $productPriceWithTax
-     *
-     * @return OrderForm
-     */
-    public function setProductPriceWithTax(
-        float $productPriceWithTax
-    ): OrderForm {
-        $this->productPriceWithTax = $productPriceWithTax;
-        return $this;
-    }
 
     /**
      * @return string
@@ -480,16 +369,6 @@ class OrderForm
         return $this->productLinkAdmin;
     }
 
-    /**
-     * @param string $productLinkAdmin
-     *
-     * @return OrderForm
-     */
-    public function setProductLinkAdmin(string $productLinkAdmin): OrderForm
-    {
-        $this->productLinkAdmin = $productLinkAdmin;
-        return $this;
-    }
 
     /**
      * @return string
@@ -499,16 +378,6 @@ class OrderForm
         return $this->productLinkUser;
     }
 
-    /**
-     * @param string $productLinkUser
-     *
-     * @return OrderForm
-     */
-    public function setProductLinkUser(string $productLinkUser): OrderForm
-    {
-        $this->productLinkUser = $productLinkUser;
-        return $this;
-    }
 
     /**
      * @return string
@@ -518,16 +387,6 @@ class OrderForm
         return $this->companyName;
     }
 
-    /**
-     * @param string $companyName
-     *
-     * @return OrderForm
-     */
-    public function setCompanyName(string $companyName): OrderForm
-    {
-        $this->companyName = $companyName;
-        return $this;
-    }
 
     /**
      * @return string
@@ -537,16 +396,6 @@ class OrderForm
         return $this->orderAdminComment;
     }
 
-    /**
-     * @param string $orderAdminComment
-     *
-     * @return OrderForm
-     */
-    public function setOrderAdminComment(string $orderAdminComment): OrderForm
-    {
-        $this->orderAdminComment = $orderAdminComment;
-        return $this;
-    }
 
     /**
      * @return bool
@@ -557,17 +406,6 @@ class OrderForm
     }
 
     /**
-     * @param bool $conset
-     *
-     * @return OrderForm
-     */
-    public function setConset(bool $conset): OrderForm
-    {
-        $this->conset = $conset;
-        return $this;
-    }
-
-    /**
      * @return array<int, array<string,string>>
      */
     public function getFormsField(): array
@@ -575,16 +413,6 @@ class OrderForm
         return $this->formsField;
     }
 
-    /**
-     * @param array<int, array<string,string>> $formsField
-     *
-     * @return OrderForm
-     */
-    public function setFormsField(array $formsField): OrderForm
-    {
-        $this->formsField = $formsField;
-        return $this;
-    }
 
     /**
      * @return string
@@ -594,16 +422,6 @@ class OrderForm
         return $this->orderTime;
     }
 
-    /**
-     * @param string $orderTime
-     *
-     * @return OrderForm
-     */
-    public function setOrderTime(string $orderTime)
-    {
-        $this->orderTime = $orderTime;
-        return $this;
-    }
 
     /**
      * @return int
@@ -613,16 +431,6 @@ class OrderForm
         return $this->custom;
     }
 
-    /**
-     * @param int $custom
-     *
-     * @return OrderForm
-     */
-    public function setCustom(int $custom): OrderForm
-    {
-        $this->custom = $custom;
-        return $this;
-    }
 
     /**
      * @return array<int,string>
@@ -631,17 +439,8 @@ class OrderForm
     {
         return $this->files;
     }
-    
-    /**
-     * @param array<int, string> $files
-     *
-     * @return OrderForm
-     */
-    public function setFiles(array $files): OrderForm
-    {
-        $this->files = $files;
-        return $this;
-    }
+
+
 
     /**
      * @return int
@@ -651,16 +450,7 @@ class OrderForm
         return $this->quantityProduct;
     }
 
-    /**
-     * @param int $quantityProduct
-     *
-     * @return OrderForm
-     */
-    public function setQuantityProduct(int $quantityProduct): OrderForm
-    {
-        $this->quantityProduct = $quantityProduct;
-        return $this;
-    }
+
 
     /**
      * @return string
@@ -670,16 +460,7 @@ class OrderForm
         return $this->productUrl;
     }
 
-    /**
-     * @param string $productUrl
-     *
-     * @return OrderForm
-     */
-    public function setProductUrl(string $productUrl): OrderForm
-    {
-        $this->productUrl = $productUrl;
-        return $this;
-    }
+
 
     /**
      * @return array|mixed[]
@@ -689,16 +470,6 @@ class OrderForm
         return $this->formData;
     }
 
-    /**
-     * @param array|mixed[] $formData
-     *
-     * @return OrderForm
-     */
-    public function setFormData(array $formData): OrderForm
-    {
-        $this->formData = $formData;
-        return $this;
-    }
 
     /**
      * @return array|mixed[]
@@ -716,27 +487,7 @@ class OrderForm
         return $this->filesLink;
     }
 
-    /**
-     * @param array|mixed[] $filesUrlCollection
-     *
-     * @return OrderForm
-     */
-    public function setFilesUrlCollection(array $filesUrlCollection): OrderForm
-    {
-        $this->filesUrlCollection = $filesUrlCollection;
-        return $this;
-    }
 
-    /**
-     * @param string $filesLink
-     *
-     * @return OrderForm
-     */
-    public function setFilesLink(string $filesLink): OrderForm
-    {
-        $this->filesLink = $filesLink;
-        return $this;
-    }
 
     /**
      * @return bool
@@ -746,16 +497,6 @@ class OrderForm
         return $this->productIsVariable;
     }
 
-    /**
-     * @param bool $productIsVariable
-     *
-     * @return OrderForm
-     */
-    public function setProductIsVariable(bool $productIsVariable): OrderForm
-    {
-        $this->productIsVariable = $productIsVariable;
-        return $this;
-    }
 
     /**
      * @return string
@@ -765,16 +506,6 @@ class OrderForm
         return $this->orderUuid;
     }
 
-    /**
-     * @param string $orderUuid
-     *
-     * @return OrderForm
-     */
-    public function setOrderUuid(string $orderUuid): OrderForm
-    {
-        $this->orderUuid = $orderUuid;
-        return $this;
-    }
 
     /**
      * @return bool
@@ -784,15 +515,21 @@ class OrderForm
         return $this->isWooCommerceProduct;
     }
 
+
     /**
-     * @param bool $isWooCommerceProduct
+     * Для правильной гидрации (только сеттеры)
      *
-     * @return OrderForm
+     * @param string            $name
+     * @param  array<int, mixed> $arguments
+     *
+     * @return void
      */
-    public function setIsWooCommerceProduct(
-        bool $isWooCommerceProduct
-    ): OrderForm {
-        $this->isWooCommerceProduct = $isWooCommerceProduct;
-        return $this;
+    public function __call(string $name, $arguments)
+    {
+        if (substr($name, 0, 3) !== 'set') {
+            throw ObjectException::setterDoesNotExist($name, self::class);
+        }
+        $property = lcfirst(substr($name, 3));
+        $this->{$property} = $arguments[0] ?? '';
     }
 }
