@@ -60,6 +60,12 @@ class OrderForm
     protected string $companyName = '';
     protected string $orderAdminComment = '';
     protected bool $conset = true;
+    
+    /**
+     * Поля формы
+     *
+     * @var array<int,array>
+     */
     protected array $formsField = [];
     protected string $orderTime = '';
     protected int $custom = 10;
@@ -341,11 +347,11 @@ class OrderForm
     }
 
     /**
-     * @param array|string $orderComment
+     * @param string $orderComment
      *
      * @return OrderForm
      */
-    public function setOrderComment($orderComment)
+    public function setOrderComment(string $orderComment): OrderForm
     {
         $this->orderComment = $orderComment;
         return $this;
@@ -379,11 +385,11 @@ class OrderForm
     }
 
     /**
-     * @param array|string $productName
+     * @param string $productName
      *
      * @return OrderForm
      */
-    public function setProductName($productName)
+    public function setProductName(string $productName): OrderForm
     {
         $this->productName = $productName;
         return $this;
@@ -409,19 +415,19 @@ class OrderForm
     }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getProductOriginalName()
+    public function getProductOriginalName(): string
     {
         return $this->productOriginalName;
     }
 
     /**
-     * @param array|string $productOriginalName
+     * @param string $productOriginalName
      *
      * @return OrderForm
      */
-    public function setProductOriginalName($productOriginalName)
+    public function setProductOriginalName(string $productOriginalName): OrderForm
     {
         $this->productOriginalName = $productOriginalName;
         return $this;
@@ -505,38 +511,38 @@ class OrderForm
     }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getCompanyName()
+    public function getCompanyName(): string
     {
         return $this->companyName;
     }
 
     /**
-     * @param array|string $companyName
+     * @param string $companyName
      *
      * @return OrderForm
      */
-    public function setCompanyName($companyName)
+    public function setCompanyName(string $companyName): OrderForm
     {
         $this->companyName = $companyName;
         return $this;
     }
 
     /**
-     * @return array|string
+     * @return string
      */
-    public function getOrderAdminComment()
+    public function getOrderAdminComment(): string
     {
         return $this->orderAdminComment;
     }
 
     /**
-     * @param array|string $orderAdminComment
+     * @param string $orderAdminComment
      *
      * @return OrderForm
      */
-    public function setOrderAdminComment($orderAdminComment)
+    public function setOrderAdminComment(string $orderAdminComment): OrderForm
     {
         $this->orderAdminComment = $orderAdminComment;
         return $this;
@@ -562,7 +568,7 @@ class OrderForm
     }
 
     /**
-     * @return array
+     * @return array<int, array<string,string>>
      */
     public function getFormsField(): array
     {
@@ -570,7 +576,7 @@ class OrderForm
     }
 
     /**
-     * @param array $formsField
+     * @param array<int, array<string,string>> $formsField
      *
      * @return OrderForm
      */
@@ -581,19 +587,19 @@ class OrderForm
     }
 
     /**
-     * @return int|string
+     * @return string
      */
-    public function getOrderTime()
+    public function getOrderTime(): string
     {
         return $this->orderTime;
     }
 
     /**
-     * @param int|string $orderTime
+     * @param string $orderTime
      *
      * @return OrderForm
      */
-    public function setOrderTime($orderTime)
+    public function setOrderTime(string $orderTime)
     {
         $this->orderTime = $orderTime;
         return $this;
@@ -619,15 +625,15 @@ class OrderForm
     }
 
     /**
-     * @return array
+     * @return array<int,string>
      */
     public function getFiles(): array
     {
         return $this->files;
     }
-
+    
     /**
-     * @param array|null $files
+     * @param array<int, string> $files
      *
      * @return OrderForm
      */
@@ -657,19 +663,19 @@ class OrderForm
     }
 
     /**
-     * @return false|string|\WP_Error
+     * @return string
      */
-    public function getProductUrl()
+    public function getProductUrl(): string
     {
         return $this->productUrl;
     }
 
     /**
-     * @param false|string|\WP_Error $productUrl
+     * @param string $productUrl
      *
      * @return OrderForm
      */
-    public function setProductUrl($productUrl)
+    public function setProductUrl(string $productUrl): OrderForm
     {
         $this->productUrl = $productUrl;
         return $this;
