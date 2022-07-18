@@ -13,7 +13,6 @@ use Coderun\BuyOneClick\Templates\Elements\Files as ElementFiles;
  */
 class FilesFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -23,5 +22,4 @@ class FilesFactory implements FactoryInterface
     {
         return new ElementFiles(Core::getInstance()->getCommonOptions());
     }
-    
 }

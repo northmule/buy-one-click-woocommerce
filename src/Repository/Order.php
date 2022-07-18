@@ -13,12 +13,11 @@ use WC_Order_Item_Product;
 class Order
 {
     protected static $_instance = null;
-
     protected $order_table = 'wp_coderun_oneclickwoo_orders';
-
 
     /**
      * Singletone
+     *
      * @return Order
      */
     public static function getInstance()
@@ -34,8 +33,8 @@ class Order
     }
 
     /**
-     *
      * Создаёт необходимый объект заказа
+     *
      * @param $params
      *
      * @return WC_Order|\WP_Error
@@ -43,37 +42,37 @@ class Order
      */
     public function create_order($params)
     {
-        $default_params = array(
-            'first_name' => '',
-            'last_name' => '',
-            'company' => '',
-            'email' => '',
-            'phone' => '',
-            'address_1' => '',
-            'address_2' => '',
-            'city' => '',
-            'state' => '',
-            'postcode' => '',
-            'country' => '',
-            'order_status' => 'processing', //Статус заказа который будет установлен
+        $default_params = [
+            'first_name'          => '',
+            'last_name'           => '',
+            'company'             => '',
+            'email'               => '',
+            'phone'               => '',
+            'address_1'           => '',
+            'address_2'           => '',
+            'city'                => '',
+            'state'               => '',
+            'postcode'            => '',
+            'country'             => '',
+            'order_status'        => 'processing', //Статус заказа который будет установлен
             'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
-            'qty' => 1,
-            'product_id' => 0, //ИД товара Woo или ИД вариации
-        );
+            'qty'                 => 1,
+            'product_id'          => 0, //ИД товара Woo или ИД вариации
+        ];
 
         $params = wp_parse_args($params, $default_params);
         $product = wc_get_product($params['product_id']);
         $order = wc_create_order($params); //создаём новый заказ
-        $product_params = array(
-            'name' => $product->get_name(),
-            'tax_class' => $product->get_tax_class(),
-            'product_id' => $product->is_type('variation') ? $product->get_parent_id() : $product->get_id(),
+        $product_params = [
+            'name'         => $product->get_name(),
+            'tax_class'    => $product->get_tax_class(),
+            'product_id'   => $product->is_type('variation') ? $product->get_parent_id() : $product->get_id(),
             'variation_id' => $params['product_id'],
-            'variation' => $product->is_type('variation') ? $product->get_attributes() : array(),
-            'subtotal' => wc_get_price_excluding_tax($product, array('qty' => $params['qty'])),
-            'total' => wc_get_price_excluding_tax($product, array('qty' => $params['qty'])),
-            'quantity' => $params['qty'],
-        );
+            'variation'    => $product->is_type('variation') ? $product->get_attributes() : [],
+            'subtotal'     => wc_get_price_excluding_tax($product, ['qty' => $params['qty']]),
+            'total'        => wc_get_price_excluding_tax($product, ['qty' => $params['qty']]),
+            'quantity'     => $params['qty'],
+        ];
         $order->add_product($product, $params['qty'], $product_params);
         $order->set_billing_first_name($params['first_name']);
         $order->set_billing_last_name($params['last_name']);
@@ -100,7 +99,7 @@ class Order
         $order->set_customer_id(get_current_user_id());
         return $order;
     }
-    
+
     /**
      * Объект заказа WooCommerce для расчёта цены за 1-у еденицу
      *
@@ -111,7 +110,6 @@ class Order
      */
     public function createWooCommerceOrderWithoutSaving(int $productId): WC_Order
     {
-   
         $product = wc_get_product($productId);
         $order = new WC_Order(); //создаём новый заказ
         $productItem = new WC_Order_Item_Product();
@@ -123,23 +121,24 @@ class Order
 
     /**
      * Расчёт стоимости за 1-у позицию
-     * @param WC_Order $order
-     * @see \WC_Abstract_Order
+     *
+     * @param  WC_Order $order
+     * @see    \WC_Abstract_Order
      * @return float
      * @throws \WC_Data_Exception
      */
     public function calculate_order_totals(WC_Order $order)
     {
-        $cart_subtotal     = 0;
-        $cart_total        = 0;
-        $fee_total         = 0;
-        $shipping_total    = 0;
+        $cart_subtotal = 0;
+        $cart_total = 0;
+        $fee_total = 0;
+        $shipping_total = 0;
         $cart_subtotal_tax = 0;
-        $cart_total_tax    = 0;
+        $cart_total_tax = 0;
 
         foreach ($order->get_items() as $item) {
             $cart_subtotal += round($item->get_subtotal(), wc_get_price_decimals());
-            $cart_total    += round($item->get_total(), wc_get_price_decimals());
+            $cart_total += round($item->get_total(), wc_get_price_decimals());
         }
         foreach ($order->get_shipping_methods() as $shipping) {
             $shipping_total += round($shipping->get_total(), wc_get_price_decimals());
@@ -164,7 +163,7 @@ class Order
 
         foreach ($order->get_items() as $item) {
             $cart_subtotal_tax += $item->get_subtotal_tax();
-            $cart_total_tax    += $item->get_total_tax();
+            $cart_total_tax += $item->get_total_tax();
         }
 
         $order->set_discount_total($cart_subtotal - $cart_total);
@@ -178,6 +177,7 @@ class Order
 
     /**
      * Создаёт заказ в WooCommerce
+     *
      * @param array $params массив параметров аналогичный $default_params
      */
     public function set_order($params)
@@ -202,18 +202,18 @@ class Order
         global $wpdb;
 
         $default_field = [
-            'active'=>1,
-            'plugin_version' => CODERUN_ONECLICKWOO_PLUGIN_VERSION,
-            'status'=>1,
-            'product_id'=>null,
-            'product_name'=>null,
-            'product_meta'=>null,
-            'product_price'=>null,
-            'product_quantity'=>1,
-            'form'=>null,
-            'sms_log'=>null,
-            'woo_order_id'=>null,
-            'user_id'=>null,
+            'active'           => 1,
+            'plugin_version'   => CODERUN_ONECLICKWOO_PLUGIN_VERSION,
+            'status'           => 1,
+            'product_id'       => null,
+            'product_name'     => null,
+            'product_meta'     => null,
+            'product_price'    => null,
+            'product_quantity' => 1,
+            'form'             => null,
+            'sms_log'          => null,
+            'woo_order_id'     => null,
+            'user_id'          => null,
         ];
 
         $order = array_merge($default_field, $order);
@@ -230,7 +230,7 @@ class Order
         $order_id = intval($order_id);
         return $wpdb->get_row("select * from {$this->order_table} where id={$order_id}", ARRAY_A);
     }
-    
+
     /**
      * Вернуть заказ по ИД WooCommere заказа
      *
@@ -242,7 +242,7 @@ class Order
     public function findOneOrderByOrderWooCommerceId(int $orderId): ?OrderEntity
     {
         global $wpdb;
-    
+
         $row = $wpdb->get_row(
             sprintf('select * from %s where woo_order_id = %s', $this->order_table, $orderId),
             ARRAY_A
@@ -293,7 +293,7 @@ class Order
     public function update_status($order_id, $status)
     {
         global $wpdb;
-        $wpdb->update($this->order_table, ['status'=>$status], ['id'=>$order_id]);
+        $wpdb->update($this->order_table, ['status' => $status], ['id' => $order_id]);
     }
 
     public function __clone()

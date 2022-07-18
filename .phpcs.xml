@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<ruleset name="CodeRun_CodeStyle">
+    <description>Code Development Standard.</description>
+    <file>src</file>
+    <arg value="p"/>
+    <arg name="colors"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.Formatting.SpaceAfterNot">
+        <properties>
+            <property name="spacing" value="0"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.EmptyStatement">
+        <exclude name="Generic.CodeAnalysis.EmptyStatement.DetectedCatch"/>
+    </rule>
+    <rule ref="Generic.Formatting.SpaceAfterCast">
+        <properties>
+            <property name="spacing" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.Strings.UnnecessaryStringConcat">
+        <properties>
+            <property name="allowMultiline" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.RequireStrictTypes"/>
+    <rule ref="Generic.PHP.SAPIUsage"/>
+    <rule ref="Squiz.Functions.GlobalFunction"/>
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="false"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.PHP.LowercasePHPFunctions"/>
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1" />
+            <property name="ignoreNewlines" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.Strings.DoubleQuoteUsage"/>
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.ContainsVar">
+        <message>Variable "%s" not allowed in double quoted string; use sprintf() or concatenation instead</message>
+    </rule>
+    <rule ref="Squiz.Strings.EchoedStrings"/>
+    <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
+    <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+    <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+    <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
+    <rule ref="Generic.Formatting.MultipleStatementAlignment">
+        <properties>
+            <property name="maxPadding" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.Arrays.ArrayIndent"/>
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+    <rule ref="Squiz.Arrays.ArrayDeclaration">
+        <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed"/>
+        <exclude name="Squiz.Arrays.ArrayDeclaration.ValueNotAligned"/>
+    </rule>
+    <rule ref="Squiz.Commenting.ClassComment">
+        <exclude name="Squiz.Commenting.ClassComment.TagNotAllowed"/>
+    </rule>
+    <rule ref="Squiz.Commenting.DocCommentAlignment">
+        <exclude name="Squiz.Commenting.DocCommentAlignment.SpaceAfterStar"/>
+    </rule>
+    <rule ref="Squiz.Commenting.FunctionComment">
+        <exclude name="Squiz.Commenting.FunctionComment.EmptyThrows"/>
+        <exclude name="Squiz.Commenting.FunctionComment.IncorrectParamVarName"/>
+        <exclude name="Squiz.Commenting.FunctionComment.IncorrectTypeHint"/>
+        <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
+        <exclude name="Squiz.Commenting.FunctionComment.InvalidReturnNotVoid"/>
+        <exclude name="Squiz.Commenting.FunctionComment.InvalidTypeHint"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ParamCommentNotCapital"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ParamNameNoMatch"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing"/>
+        <exclude name="Squiz.Commenting.FunctionComment.ThrowsNotCapital"/>
+        <exclude name="Squiz.Commenting.FunctionComment.TypeHintMissing"/>
+    </rule>
+    <rule ref="Squiz.Commenting.VariableComment">
+        <exclude name="Squiz.Commenting.VariableComment.TagNotAllowed"/>
+    </rule>
+    <rule ref="PSR12">
+        <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+    <rule ref="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+    <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing">
+        <properties>
+            <property name="linesCountBetweenMembers" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.PropertySpacing">
+        <properties>
+            <property name="minLinesCountBeforeWithComment" value="0"/>
+            <property name="maxLinesCountBeforeWithComment" value="0"/>
+            <property name="minLinesCountBeforeWithoutComment" value="0"/>
+            <property name="maxLinesCountBeforeWithoutComment" value="0"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.ConstantSpacing">
+        <properties>
+            <property name="minLinesCountBeforeWithComment" value="0"/>
+            <property name="maxLinesCountBeforeWithComment" value="0"/>
+            <property name="minLinesCountBeforeWithoutComment" value="0"/>
+            <property name="maxLinesCountBeforeWithoutComment" value="0"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.TraitUseSpacing">
+        <properties>
+            <property name="linesCountBeforeFirstUseWhenFirstInClass" value="0"/>
+        </properties>
+    </rule>
+</ruleset>

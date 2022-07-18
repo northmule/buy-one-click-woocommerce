@@ -15,15 +15,13 @@ use Coderun\BuyOneClick\SimpleDataObjects\FieldsOfOrderForm as FieldsOfOrderForm
  */
 class QuickOrderForm implements TemplateInterface
 {
-    
-    
     /**
      * Настройки плагина
      *
      * @var GeneralOptions
      */
     protected GeneralOptions $commonOptions;
-    
+
     /**
      * @param GeneralOptions $commonOptions
      */
@@ -31,8 +29,8 @@ class QuickOrderForm implements TemplateInterface
     {
         $this->commonOptions = $commonOptions;
     }
-    
-    
+
+
     /**
      * @param FieldsOfOrderFormDataObject $fields
      *
@@ -42,13 +40,13 @@ class QuickOrderForm implements TemplateInterface
     {
         $render = $this;
         ob_start();
-        require sprintf('%s/forms/order_form.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
+        include sprintf('%s/forms/order_form.php', CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR);
         $form = ob_get_contents();
         ob_end_clean();
-        
+
         return apply_filters('coderun_oneclickwoo_order_form_html', $form);
     }
-    
+
     /**
      * @return GeneralOptions
      */
@@ -56,6 +54,4 @@ class QuickOrderForm implements TemplateInterface
     {
         return $this->commonOptions;
     }
-    
-    
 }

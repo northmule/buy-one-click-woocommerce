@@ -13,7 +13,6 @@ use Coderun\BuyOneClick\Service\ShortCodes;
  */
 class ShortCodesFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -23,5 +22,4 @@ class ShortCodesFactory implements FactoryInterface
     {
         return new ShortCodes(Core::getInstance()->getCommonOptions());
     }
-    
 }

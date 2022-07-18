@@ -14,7 +14,6 @@ use Coderun\BuyOneClick\Service\EmailTemplate;
  */
 class EmailTemplateFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -27,5 +26,4 @@ class EmailTemplateFactory implements FactoryInterface
             Core::getInstance()->getNotificationOptions(),
         );
     }
-    
 }

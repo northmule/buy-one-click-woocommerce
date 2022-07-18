@@ -11,14 +11,24 @@ namespace Coderun\BuyOneClick\Constant\Options;
  */
 class Type
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     public const MARKETING = 'buyoptions_marketing';
-    /** @var string  */
+    /**
+     * @var string
+     */
     public const GENERAL = 'buyoptions';
-    /** @var string  */
+    /**
+     * @var string
+     */
     public const DESIGN_FORM = 'buyoptions_design_form';
-    /** @var string  */
+    /**
+     * @var string
+     */
     public const NOTIFICATIONS = 'buynotification';
-    /** @var string  */
+    /**
+     * @var string
+     */
     public const SMS = 'buysmscoptions';
 }

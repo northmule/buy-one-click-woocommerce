@@ -6,7 +6,6 @@ namespace Coderun\BuyOneClick\Response\ValueObject;
 
 use Coderun\BuyOneClick\ValueObject\OrderForm;
 use WC_Product;
-
 use WC_Product_Variation;
 
 use function is_array;
@@ -20,45 +19,39 @@ class Product
     /**
      * ИД товара или вариации
      *
-     * @var int
+     * @var integer
      */
     protected int $id = 0;
-
     /**
      *  Название
      *
      * @var string
      */
     protected string $name = '';
-
     /**
      * Артикул
      *
      * @var string
      */
     protected string $sku = '';
-
     /**
      * Количестов
      *
-     * @var int
+     * @var integer
      */
     protected int $quantity = 1;
-
     /**
      * Цена за еденицу
      *
      * @var float
      */
     protected float $price = 0.00;
-
     /**
      * Категория
      *
      * @var string
      */
     protected string $category = '';
-
     /**
      * Разновидность товара
      *

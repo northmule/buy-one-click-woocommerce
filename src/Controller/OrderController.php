@@ -56,7 +56,7 @@ class OrderController extends Controller
             [$this, 'sendingOrderFromFormAction']
         );
     }
-    
+
     /**
      * Функция выполняется после нажатия на кнопку в форме заказа
      *
@@ -84,7 +84,7 @@ class OrderController extends Controller
             if ($this->commonOptions->isEnableFieldWithFiles()) {
                 $files = (new UploadingFiles())->download(); // прослушивает входящие файлы
             }
-            
+
             $orderForm = new OrderForm(
                 $_POST,
                 $notificationOptions,
@@ -110,8 +110,10 @@ class OrderController extends Controller
                 );
             }
 
-            if (!$this->commonOptions->isAddAnOrderToWooCommerce()
-                && $orderForm->getUserEmail() && $notificationOptions->isEnableOrderInformation()) {
+            if (
+                !$this->commonOptions->isAddAnOrderToWooCommerce()
+                && $orderForm->getUserEmail() && $notificationOptions->isEnableOrderInformation()
+            ) {
                 EmailUtils::sendAnEmail(
                     $orderForm->getUserEmail(),
                     $orderForm
@@ -129,35 +131,35 @@ class OrderController extends Controller
             if ($this->commonOptions->isAddAnOrderToWooCommerce() and $orderForm->getCustom() == 0) {
                 $wooOrderId = Order::getInstance()->set_order(
                     [
-                        'first_name' => $orderForm->getUserName(),
-                        'last_name' => '',
-                        'company' => '',
-                        'email' => $orderForm->getUserEmail(),
-                        'phone' => $orderForm->getUserPhone(),
-                        'address_1' => $orderForm->getOrderComment(),
-                        'address_2' => '',
-                        'city' => '',
-                        'state' => '',
-                        'postcode' => '',
-                        'country' => '',
-                        'order_status' => 'processing', //Статус заказа который будет установлен
+                        'first_name'          => $orderForm->getUserName(),
+                        'last_name'           => '',
+                        'company'             => '',
+                        'email'               => $orderForm->getUserEmail(),
+                        'phone'               => $orderForm->getUserPhone(),
+                        'address_1'           => $orderForm->getOrderComment(),
+                        'address_2'           => '',
+                        'city'                => '',
+                        'state'               => '',
+                        'postcode'            => '',
+                        'country'             => '',
+                        'order_status'        => 'processing', //Статус заказа который будет установлен
                         'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
-                        'qty' => $orderForm->getQuantityProduct() ?: 1,
-                        'product_id' => $orderForm->getProductId(), //ИД товара Woo
+                        'qty'                 => $orderForm->getQuantityProduct() ?: 1,
+                        'product_id'          => $orderForm->getProductId(), //ИД товара Woo
                     ]
                 );
             }
 
             $order_field = [
-                'product_id' => $orderForm->getProductId(),
-                'product_name' => $orderForm->getProductName(),
-                'product_meta' => null,
-                'product_price' => $orderForm->getProductPrice(),
-                'product_quantity'=> $orderForm->getQuantityProduct(),
-                'form' => wp_json_encode((new CommonHydrator())->extractToArray($orderForm)),
-                'sms_log' => wp_json_encode($smsLog),
-                'woo_order_id' => $wooOrderId,
-                'user_id' => get_current_user_id(),
+                'product_id'       => $orderForm->getProductId(),
+                'product_name'     => $orderForm->getProductName(),
+                'product_meta'     => null,
+                'product_price'    => $orderForm->getProductPrice(),
+                'product_quantity' => $orderForm->getQuantityProduct(),
+                'form'             => wp_json_encode((new CommonHydrator())->extractToArray($orderForm)),
+                'sms_log'          => wp_json_encode($smsLog),
+                'woo_order_id'     => $wooOrderId,
+                'user_id'          => get_current_user_id(),
             ];
 
             Order::getInstance()->save_order(
@@ -169,7 +171,7 @@ class OrderController extends Controller
             $orderResponse->setProducts([new Product($orderForm)]);
             $orderResponse->setOrderUuid($orderForm->getOrderUuid());
             $orderResponse->setOrderId(intval($wooOrderId));
-            
+
             if ($wooOrderId) {
                 $wcOrder = wc_get_order($wooOrderId);
                 if ($wcOrder instanceof WC_Order) {
@@ -198,19 +200,19 @@ class OrderController extends Controller
             $errorResponse->setMessage(__('request error', 'coderun-oneclickwoo'));
             $this->logger->error($ex->getMessage());
             wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
-        } catch (DependenciesException|RequireFieldException|LimitOnSendingFormsException|UploadingFilesException $ex) {
+        } catch (DependenciesException | RequireFieldException | LimitOnSendingFormsException | UploadingFilesException $ex) {
             $errorResponse = new ErrorResponse();
             $errorResponse->setMessage($ex->getMessage());
             $this->logger->error($ex->getMessage());
             wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
         }
     }
-    
+
     /**
      * Проверка обязательных полей
      *
-     * @param                  $orderForm OrderForm
-     * @param FieldNameViaType $translatingFields
+     * @param $orderForm         OrderForm
+     * @param FieldNameViaType            $translatingFields
      *
      * @return void
      */
@@ -231,9 +233,11 @@ class OrderController extends Controller
         if ($this->commonOptions->isConsentToProcessing() && !$orderForm->isConset()) {
             throw RequireFieldException::fieldIsRequired($translatingFields->getConsent());
         }
-        if ($this->commonOptions->isEnableFieldWithFiles()
+        if (
+            $this->commonOptions->isEnableFieldWithFiles()
             && $this->commonOptions->isFieldFilesIsRequired()
-            && count($orderForm->getFiles()) == 0) {
+            && count($orderForm->getFiles()) == 0
+        ) {
             throw  RequireFieldException::fieldIsRequired($translatingFields->getFiles());
         }
     }
@@ -241,7 +245,7 @@ class OrderController extends Controller
     /**
      * Ограничение на отправку формы раз в N секунд
      *
-     * @param int $product_id ИД товара
+     * @param  int $product_id ИД товара
      * @throws LimitOnSendingFormsException
      */
     protected function checkLimitSendForm(int $product_id): void
@@ -262,7 +266,7 @@ class OrderController extends Controller
             }
         }
     }
-    
+
     /**
      * Номер заказа
      * Номер заказа возможен в совместимых плагинах, таких как custom-order-numbers-for-woocommerce
@@ -271,12 +275,12 @@ class OrderController extends Controller
      *
      * @return string
      */
-    protected function getOrderNumber(WC_Order $order):string
+    protected function getOrderNumber(WC_Order $order): string
     {
         if (method_exists($order, 'get_order_number')) {
             return $order->get_order_number(); // plugin: custom-order-numbers-for-woocommerce
         }
-        
+
         return '';
     }
 
@@ -292,10 +296,9 @@ class OrderController extends Controller
         $uniqueString = $matches[1] ?? '';
         if (strlen($uniqueString) > 0) {
             $uniqueString = md5($uniqueString);
-        } else if(is_user_logged_in()) {
-            $uniqueString = (string)get_current_user_id();
+        } elseif (is_user_logged_in()) {
+            $uniqueString = (string) get_current_user_id();
         }
         return $uniqueString;
     }
-
 }

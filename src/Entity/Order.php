@@ -14,99 +14,85 @@ use DateTime;
 class Order implements EntityInterface
 {
     /**
-     * @var int
+     * @var integer
      */
     protected int $id;
-
     /**
      * Версия плагина
      *
      * @var string|null
      */
     protected ?string $pluginVersion;
-
     /**
      * Активность
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $active;
-
     /**
      * Статус заказа
      *
-     * @var int
+     * @var integer
      */
     protected int $status;
-
     /**
      * ИД товара WooCommerce
      *
-     * @var int|null
+     * @var integer|null
      */
     protected ?int $productId;
-
     /**
      * Имя товара WooCommerce
      *
      * @var string
      */
     protected ?string $productName;
-
     /**
      * ХЗ
      *
      * @var string
      */
     protected ?string $productMeta;
-
     /**
      * Цена товара WooCommerce
      *
      * @var float
      */
     protected ?float $productPrice;
-
     /**
      * Заказанное количество
      *
-     * @var int
+     * @var integer
      */
     protected int $productQuantity;
-
     /**
      * Вся форма заказа
      *
      * @var string|null
      */
     protected ?string $form;
-
     /**
      * СМС лог от сервиса СМС
      *
      * @var string|null
      */
     protected ?string $smsLog;
-
     /**
      * ID Заказ WooCommerce
      *
-     * @var int|null
+     * @var integer|null
      */
     protected ?int $wooOrderId;
-
     /**
      * Покупатель
      *
-     * @var int
+     * @var integer
      */
     protected ?int $userId;
-
     /**
      * @var DateTime|null
      */
     protected ?DateTime $dateUpdate;
-
     /**
      * @var DateTime
      */

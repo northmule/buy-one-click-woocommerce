@@ -11,7 +11,6 @@ use DateTime;
 use ReflectionClass;
 use ReflectionProperty;
 use Generator;
-
 use ReflectionType;
 
 use function is_numeric;
@@ -34,7 +33,9 @@ trait HydrateTrait
     public function extractToArray(object $initialObject): array
     {
         $options = [];
-        /** @var ReflectionProperty $item */
+        /**
+ * @var ReflectionProperty $item
+*/
         foreach ($this->getProperty($initialObject) as $item) {
             $propertyValue = $item->getValue($initialObject);
             if (is_array($propertyValue)) {
@@ -75,9 +76,9 @@ trait HydrateTrait
                 throw VariablesException::valueIsNotDefined($propertyName);
             }
             $setter = sprintf('set%s', ucfirst($propertyName));
-            if (!method_exists($entity, $setter)) {
-                throw ObjectException::methodDoesNotExist($setter, $entity);
-            }
+//            if (!method_exists($entity, $setter)) {
+//                throw ObjectException::methodDoesNotExist($setter, $entity);
+//            }
             $propertyValue = $this->typeConversions($propertyValue, $propertyType);
             $entity->{$setter}($propertyValue);
         }
@@ -113,7 +114,9 @@ trait HydrateTrait
     private function getPropertyTypes(object $object): array
     {
         $typesMap = [];
-        /** @var ReflectionProperty $item */
+        /**
+ * @var ReflectionProperty $item
+*/
         foreach ($this->getProperty($object) as $item) {
             $typeData = $item->getType();
             if ($typeData == null) {
@@ -128,7 +131,7 @@ trait HydrateTrait
      * Преобразование строковых переменных в нужный тип
      * для значения сеттеров
      *
-     * @param string|null $variable
+     * @param string|null    $variable
      * @param ReflectionType $type
      *
      * @return mixed

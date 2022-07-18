@@ -6,7 +6,6 @@ namespace Coderun\BuyOneClick\Common;
 
 interface FactoryInterface
 {
-    
     /**
      * Создаёт экземпляр класса с необходимыми зависимостями
      *

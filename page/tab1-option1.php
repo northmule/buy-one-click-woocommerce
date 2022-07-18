@@ -17,6 +17,9 @@ $commonOptions = $this->commonOptions;
         <?php wp_nonce_field('update-options'); ?>
         <?php settings_fields(sprintf('%s_options', Core::OPTIONS_GENERAL)); ?>
         <fieldset>
+            <div class="admin-link-block top-left">
+                <?php require 'admin-link-block.php'; ?>
+            </div>
             <legend><?php _e('Are common', 'coderun-oneclickwoo'); ?></legend>
             <table class="form-table">
                 <tr valign="top">
@@ -512,13 +515,8 @@ $commonOptions = $this->commonOptions;
                 </tbody>
 
             </table>
-            <div>
-                <p>
-                    <a href="https://github.com/northmule/buy-one-click-woocommerce/blob/master/README.md" target="_blank">GitHub</a> |
-                    <a href="https://t.me/coderunphp">Telegram</a> |
-                    <a href="https://www.donationalerts.com/r/northmule">Donationalerts</a>
-                </p>
-                
+            <div class="admin-link-block bottom-right">
+                <?php require 'admin-link-block.php'; ?>
             </div>
         </div>
     </fieldset>

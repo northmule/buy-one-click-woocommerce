@@ -23,5 +23,10 @@
   },
   "config": {
     "platform-check": false
+  },
+  "scripts": {
+    "cs-check": "tools/vendor/bin/phpcs",
+    "cs-fix": "tools/vendor/bin/phpcbf",
+    "phpstan": "tools/vendor/bin/phpstan analyze -c phpstan.neon"
   }
 }

@@ -35,4 +35,21 @@ class ObjectException extends BaseException implements ExceptionInterface
     {
         return new self('the property type is not defined');
     }
+    
+    /**
+     * @param string $setter
+     * @param string $className
+     *
+     * @return ObjectException
+     */
+    public static function setterDoesNotExist(string $setter, string $className): ObjectException
+    {
+        return new self(
+            sprintf(
+                'The setter %s does not exist: %s',
+                $setter,
+                $className
+            ),
+        );
+    }
 }

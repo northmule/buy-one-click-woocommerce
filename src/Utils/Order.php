@@ -15,7 +15,6 @@ use function wc_get_order;
  */
 class Order
 {
-    
     /**
      * Проверка существования заказа WooCommerce по переданному ИД
      *

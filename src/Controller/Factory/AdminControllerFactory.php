@@ -13,7 +13,6 @@ use Coderun\BuyOneClick\Controller\AdminController;
  */
 class AdminControllerFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -23,5 +22,4 @@ class AdminControllerFactory implements FactoryInterface
     {
         return new AdminController(Core::getInstance()->getCommonOptions());
     }
-    
 }

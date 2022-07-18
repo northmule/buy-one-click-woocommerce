@@ -21,30 +21,28 @@ class ShortCodes
      * @var GeneralOptions
      */
     protected GeneralOptions $commonOptions;
-    
     /**
      * @var array<string, string>
      */
     protected $shortCodeFunctionMap = [
-        ShortCodesConst::VIEW_BUY_BUTTON => 'viewBuyButton',
+        ShortCodesConst::VIEW_BUY_BUTTON        => 'viewBuyButton',
         ShortCodesConst::VIEW_BUY_BUTTON_CUSTOM => 'viewBuyButtonCustom',
     ];
-    
-    
+
     /**
      * @param GeneralOptions $commonOptions
      */
     public function __construct(GeneralOptions $commonOptions)
     {
         $this->commonOptions = $commonOptions;
-    
+
         foreach (ShortCodesConst::all() as $code) {
             if (!shortcode_exists($code)) {
                 add_shortcode($code, [$this, $this->shortCodeFunctionMap[$code]]);
             }
         }
     }
-    
+
     /**
      * Кластическая кнопка покупки в один клик.
      * Используется везде где можно получить ИД товара из Объекта WP.
@@ -61,7 +59,7 @@ class ShortCodes
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
-        $params = array_filter((array)$params);
+        $params = array_filter((array) $params);
         $content = '';
         $params = shortcode_atts(['id' => 0], $params);
         $core = Core::getInstance();
@@ -72,15 +70,14 @@ class ShortCodes
         }
         $content .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons($params);
         return $content;
-        
     }
-    
+
     /**
      *  Кнопка с возможностью передать параметры
      *
      *  id - код товара, name- наименование, count-количество,price- цена(число)
-     * @param array<string, mixed>|string $params
      *
+     * @param array<string, mixed>|string $params
      *
      * @throws Exception
      */
@@ -89,17 +86,19 @@ class ShortCodes
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
-        $params = array_filter((array)$params);
-        $params = shortcode_atts([
-            'id' => '1',
-            'name' => 'noname',
-            'count' => 1,
-            'price' => 5,
-        ], $params);
+        $params = array_filter((array) $params);
+        $params = shortcode_atts(
+            [
+                'id'    => '1',
+                'name'  => 'noname',
+                'count' => 1,
+                'price' => 5,
+            ],
+            $params
+        );
         $core = Core::getInstance();
         $core->styleAddFrontPage();
         $core->scriptAddFrontPage();
         return ((new ButtonServiceFactory())->create())->getHtmlOrderButtonsCustom($params);
-        
     }
 }

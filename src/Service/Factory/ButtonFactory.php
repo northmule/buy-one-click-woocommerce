@@ -13,7 +13,6 @@ use Coderun\BuyOneClick\Service\Button;
  */
 class ButtonFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -23,5 +22,4 @@ class ButtonFactory implements FactoryInterface
     {
         return new Button(Core::getInstance()->getCommonOptions());
     }
-    
 }

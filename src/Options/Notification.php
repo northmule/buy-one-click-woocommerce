@@ -17,7 +17,9 @@ use function boolval;
  */
 class Notification extends Base
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected const ROOT_KEY = OptionsType::NOTIFICATIONS;
 
     /**
@@ -28,7 +30,6 @@ class Notification extends Base
      * @var string
      */
     protected string $organizationName;
-
     /**
      * Email в поле от кого
      *
@@ -37,7 +38,6 @@ class Notification extends Base
      * @var string
      */
     protected string $emailFromWhom;
-
     /**
      * Email скрытая копия
      *
@@ -46,34 +46,30 @@ class Notification extends Base
      * @var string
      */
     protected string $emailBcc;
-
     /**
      * Информация о заказе
      *
      * @wpOptionsName infozakaz_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableOrderInformation;
-
     /**
      * Дополнительное поле из настроек
      *
      * @wpOptionsName dopiczakaz_chek
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableAdditionalField;
-
     /**
      * Ссылки на файлы
      *
      * @wpOptionsName links_to_files
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableFileLinks;
-
     /**
      * Сообщение из доп. поля настроек
      *
@@ -82,25 +78,22 @@ class Notification extends Base
      * @var string
      */
     protected string $additionalFieldMessage;
-
     /**
      * Включить уведомление смс клиенту
      *
      * @wpOptionsName sms_enable_smsc
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableSendingSmsToClient;
-
     /**
      * Включить уведомление смс продавцу
      *
      * @wpOptionsName sms_enable_smsc_saller
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableSendingSmsToSeller;
-
     /**
      * Номер телефона продавца
      *
@@ -109,7 +102,6 @@ class Notification extends Base
      * @var string
      */
     protected string $sellerPhoneNumber;
-
     /**
      * Логин сервис смс
      *
@@ -118,7 +110,6 @@ class Notification extends Base
      * @var string
      */
     protected string $smsServiceLogin;
-
     /**
      * Пароль сервис смс
      *
@@ -127,25 +118,22 @@ class Notification extends Base
      * @var string
      */
     protected string $smsServicePassword;
-
     /**
      * Sms POST
      *
      * @wpOptionsName sms_methodpost
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableSmsServicePostProtocol;
-
     /**
      * Sms https
      *
      * @wpOptionsName sms_https
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableSmsServiceHttpsProtocol;
-
     /**
      * Sms кодировка символов
      *
@@ -154,7 +142,6 @@ class Notification extends Base
      * @var string
      */
     protected string $smsCharacterEncoding;
-
     /**
      * Sms шаблон клиента
      *
@@ -163,7 +150,6 @@ class Notification extends Base
      * @var string
      */
     protected string $smsClientTemplate;
-
     /**
      * Sms шаблон продавца
      *
@@ -172,31 +158,28 @@ class Notification extends Base
      * @var string
      */
     protected string $smsSellerTemplate;
-
     /**
      * sms debug
      *
      * @wpOptionsName sms_debug
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableSmsDebug;
-
     /**
      * Цена с учётом налога
      *
      * @wpOptionsName price_including_tax
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enablePriceWithTax;
-
     /**
      * Включить информацию о заказе в шаблон WooCommerce
      *
      * @wpOptionsName modificationOrderTemplate
      *
-     * @var bool
+     * @var boolean
      */
     protected bool $enableOrderInformationToTemplateWoo;
 
@@ -215,7 +198,7 @@ class Notification extends Base
         $this->enableFileLinks = boolval($options['links_to_files'] ?? false);
         $this->additionalFieldMessage = $options['dopiczakaz'] ?? '';
         $this->enableSendingSmsToClient = boolval($options['sms_enable_smsc'] ?? false);
-        $this->enableSendingSmsToSeller =  boolval($options['sms_enable_smsc_saller'] ?? false);
+        $this->enableSendingSmsToSeller = boolval($options['sms_enable_smsc_saller'] ?? false);
         $this->sellerPhoneNumber = $options['sms_phone_saller'] ?? '';
         $this->smsServiceLogin = $options['sms_login'] ?? '';
         $this->smsServicePassword = $options['sms_password'] ?? '';

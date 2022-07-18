@@ -13,20 +13,19 @@ use Coderun\BuyOneClick\Options\General as GeneralOptions;
  */
 class Files implements ElementInterface
 {
-    
     /**
      * Настройки плагина
      *
      * @var GeneralOptions
      */
     protected GeneralOptions $commonOptions;
-    
+
     public function __construct(GeneralOptions $commonOptions)
     {
         $this->commonOptions = $commonOptions;
     }
-    
-    
+
+
     /**
      * @inheritDoc
      *
@@ -42,10 +41,10 @@ class Files implements ElementInterface
             ob_end_clean();
             return apply_filters('coderun_oneclickwoo_order_form_html', $form);
         }
-    
+
         return '';
     }
-    
+
     /**
      * @return GeneralOptions
      */
@@ -53,7 +52,4 @@ class Files implements ElementInterface
     {
         return $this->commonOptions;
     }
-    
-    
-    
 }

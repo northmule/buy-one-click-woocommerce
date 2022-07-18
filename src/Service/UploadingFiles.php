@@ -22,28 +22,25 @@ use function strlen;
  */
 class UploadingFiles
 {
-    
     /**
      * Папка для загрузки файлов
      *
      * @var array
      */
     protected array $pathToDownloadsFolder = [];
-    
     /**
      * Информация о файле
      *
      * @var array<int, DownloadableFile>
      */
     protected array $files = [];
-    
-    
+
     public function __construct()
     {
         $this->pathToDownloadsFolder = wp_upload_dir();
     }
-    
-    
+
+
     /**
      * Загрузка файла
      * Вернут массив message,url,error
@@ -55,8 +52,8 @@ class UploadingFiles
     {
         $this->files = $this->composeFilesStructure();
         $this->checkRestriction();
-    
-        $path = rtrim($this->getLoadFolderPath()['path'],'/') . '/';
+
+        $path = rtrim($this->getLoadFolderPath()['path'], '/') . '/';
         $result = [];
         foreach ($this->files as $number => $file) {
             $newName = sprintf(
@@ -66,16 +63,18 @@ class UploadingFiles
             );
             $savePath = $path . $newName;
             if (move_uploaded_file($file->temporaryName, $savePath)) {
-                $result[$number] = new DownloadedFile([
-                    'url' => $this->pathToDownloadsFolder['url'] . '/' . $newName,
-                    'path' => $savePath,
-                ]);
+                $result[$number] = new DownloadedFile(
+                    [
+                        'url'  => $this->pathToDownloadsFolder['url'] . '/' . $newName,
+                        'path' => $savePath,
+                    ]
+                );
             }
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Пересборка файла/файлов в одну структуру
      *
@@ -96,31 +95,35 @@ class UploadingFiles
                 if (strlen($value) == 0) {
                     continue;
                 }
-                $file = new DownloadableFile([
-                    'name' => strtolower($value),
-                    'type' => $fileList['type'][$number] ?? '',
-                    'temporaryName' => $fileList['tmp_name'][$number] ?? '',
-                    'error' => $fileList['error'][$number] ?? '',
-                    'size' => $fileList['size'][$number] ?? '',
-                    'extension' => $this->getExtension($value),
-                ]);
+                $file = new DownloadableFile(
+                    [
+                        'name'          => strtolower($value),
+                        'type'          => $fileList['type'][$number] ?? '',
+                        'temporaryName' => $fileList['tmp_name'][$number] ?? '',
+                        'error'         => $fileList['error'][$number] ?? '',
+                        'size'          => $fileList['size'][$number] ?? '',
+                        'extension'     => $this->getExtension($value),
+                    ]
+                );
                 $result[] = $file;
             }
         } else {
-            $file = new DownloadableFile([
-                'name' => strtolower($fileList['name'] ?? ''),
-                'type' => $fileList['type'][0] ?? '',
-                'temporaryName' => $fileList['tmp_name'][0] ?? '',
-                'error' => $fileList['error'][0] ?? '',
-                'size' => $fileList['size'][0] ?? '',
-                'extension' => $this->getExtension($fileList['name'] ?? ''),
-            ]);
+            $file = new DownloadableFile(
+                [
+                    'name'          => strtolower($fileList['name'] ?? ''),
+                    'type'          => $fileList['type'][0] ?? '',
+                    'temporaryName' => $fileList['tmp_name'][0] ?? '',
+                    'error'         => $fileList['error'][0] ?? '',
+                    'size'          => $fileList['size'][0] ?? '',
+                    'extension'     => $this->getExtension($fileList['name'] ?? ''),
+                ]
+            );
             $result[] = $file;
         }
-        
+
         return $result;
     }
-    
+
     /**
      * Вернёт true -если используется multinput
      *
@@ -130,9 +133,10 @@ class UploadingFiles
     {
         return isset($_FILES['files']['name'][0]);
     }
-    
+
     /**
      * Проверка файлов на ограничение
+     *
      * @throws Exception
      */
     protected function checkRestriction()
@@ -141,17 +145,17 @@ class UploadingFiles
             if (!in_array($file->extension, $this->getValidExtension())) {
                 throw UploadingFilesException::invalidFileExtension($file->extension);
             }
-            
+
             if ($file->size > $this->getValidSize()) {
                 throw UploadingFilesException::invalidFileSize($file->size);
             }
-            
+
             if (!in_array($file->type, $this->getValidMimeTypes())) {
                 UploadingFilesException::invalidFileType($file->type);
             }
         }
     }
-    
+
     /**
      * Папка для загрузки фалов
      *
@@ -159,12 +163,14 @@ class UploadingFiles
      */
     protected function getLoadFolderPath(): array
     {
-        return Hooks::filterPathToFileFolder([
-            'path' => $this->pathToDownloadsFolder['path'],
-            'url' => $this->pathToDownloadsFolder['url']
-        ]);
+        return Hooks::filterPathToFileFolder(
+            [
+                'path' => $this->pathToDownloadsFolder['path'],
+                'url'  => $this->pathToDownloadsFolder['url'],
+            ]
+        );
     }
-    
+
     /**
      * Новое имя файла
      *
@@ -178,7 +184,7 @@ class UploadingFiles
             $name
         );
     }
-    
+
     /**
      * @param string $name
      *
@@ -191,7 +197,7 @@ class UploadingFiles
         }
         return strtolower(pathinfo($name, PATHINFO_EXTENSION));
     }
-    
+
     /**
      * Разрешенные по умолчанию разрешения файлов
      *
@@ -201,7 +207,7 @@ class UploadingFiles
     {
         return Hooks::filterExtensionsOfUploadedFile(['jpeg', 'jpg', 'png', 'gif', 'bmp', 'pdf', 'doc', 'ppt']);
     }
-    
+
     protected function getValidMimeTypes()
     {
         $types = [
@@ -234,13 +240,12 @@ class UploadingFiles
             'application/xml',
             'application/msword',
         ];
-        
+
         return Hooks::filterMimeTypeOfDownloadedFile($types);
     }
-    
+
     protected function getValidSize()
     {
         return Hooks::filterSizeOfUploadedFile(10485760);
     }
-    
 }

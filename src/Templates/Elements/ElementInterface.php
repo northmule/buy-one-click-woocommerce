@@ -6,7 +6,6 @@ namespace Coderun\BuyOneClick\Templates\Elements;
 
 interface ElementInterface
 {
-    
     /**
      * Создаёт html элемент
      *

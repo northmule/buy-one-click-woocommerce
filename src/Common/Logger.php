@@ -11,14 +11,15 @@ use function sprintf;
 
 class Logger
 {
-    /** @var string  */
+    /**
+     * @var string
+     */
     protected const PREFIX = 'Buy one click WooCommerce plugin';
 
     /**
      * @var ?WC_Logger
      */
     private ?WC_Logger $logger = null;
-
     /**
      * @var Logger|null
      */

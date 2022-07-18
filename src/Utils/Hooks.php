@@ -18,17 +18,19 @@ class Hooks
     {
         do_action('buy_click_load');
     }
-    
+
     /**
      * Вызывается после создания нового заказа
+     *
      * @param array $arResult результат функции с заказом
-     * @param array $arLog лог(журнал плагина)
+     * @param array $arLog    лог(журнал
+     *                        плагина)
      */
     public static function buyClickNewrder($arResult, $arLog)
     {
         do_action('buy_click_new_order', $arResult, $arLog);
     }
-    
+
     /**
      * Вызывается после сохранения в таблицу данных о заказе
      */
@@ -36,7 +38,7 @@ class Hooks
     {
         do_action('buy_click_save_order_to_table', $order_id);
     }
-    
+
     /**
      * Размер загружаемого файла
      *
@@ -46,9 +48,9 @@ class Hooks
      */
     public static function filterSizeOfUploadedFile($size)
     {
-       return apply_filters('coderun_oneclickwoo_file_valid_size', $size);
+        return apply_filters('coderun_oneclickwoo_file_valid_size', $size);
     }
-    
+
     /**
      * Mime типы загружаемых файлов
      *
@@ -60,7 +62,7 @@ class Hooks
     {
         return apply_filters('coderun_oneclickwoo_file_valid_mime_types', $types);
     }
-    
+
     /**
      * Расширения загружаемых файлов
      *
@@ -72,7 +74,7 @@ class Hooks
     {
         return apply_filters('coderun_oneclickwoo_file_valid_extension', $extensions);
     }
-    
+
     /**
      * Имя формируемых файлов
      *
@@ -85,7 +87,7 @@ class Hooks
     {
         return apply_filters('coderun_oneclickwoo_file_name', $newName, $name);
     }
-    
+
     /**
      * Путь к папке с фалами
      *

@@ -13,7 +13,6 @@ use Coderun\BuyOneClick\Templates\Elements\Quantity as ElementQuantity;
  */
 class QuantityFactory implements FactoryInterface
 {
-    
     /**
      * @inheritDoc
      *
@@ -23,5 +22,4 @@ class QuantityFactory implements FactoryInterface
     {
         return new ElementQuantity(Core::getInstance()->getCommonOptions());
     }
-    
 }
