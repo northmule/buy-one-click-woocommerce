@@ -22,7 +22,10 @@
     }
   },
   "config": {
-    "platform-check": false
+    "platform-check": false,
+    "allow-plugins": {
+      "composer/installers": true
+    }
   },
   "scripts": {
     "cs-check": "tools/vendor/bin/phpcs",

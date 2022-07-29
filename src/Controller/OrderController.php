@@ -19,7 +19,7 @@ use Coderun\BuyOneClick\ReCaptcha;
 use Coderun\BuyOneClick\Response\ErrorResponse;
 use Coderun\BuyOneClick\Response\OrderResponse;
 use Coderun\BuyOneClick\Response\ValueObject\Product;
-use Coderun\BuyOneClick\Service\SessionStorage;
+use Coderun\BuyOneClick\Service\CacheStorage;
 use Coderun\BuyOneClick\Service\Sms\Factory\SmsCenterFactory;
 use Coderun\BuyOneClick\Service\UploadingFiles;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
@@ -73,7 +73,7 @@ class OrderController extends Controller
                 throw RequestException::nonceError();
             }
 
-            $notificationOptions = Core::getInstance()->getNotificationOptions();
+            $notificationOptions = $this->notificationOptions;
             if ($this->commonOptions->isRecaptchaEnabled()) {
                 $check_recaptcha = ReCaptcha::getInstance()->check($this->commonOptions->getCaptchaProvider());
                 if ($check_recaptcha['check'] !== true) {
@@ -254,7 +254,7 @@ class OrderController extends Controller
         if (empty($uniqueId) || $this->commonOptions->getFormSubmissionLimit() == 0) {
             return;
         }
-        $storage = new SessionStorage();
+        $storage = new CacheStorage();
         $key = sprintf('buy_one_%s_%s', $product_id, $uniqueId);
         if ($storage->getSessionValue($key) == null) {//Установка
             $storage->setSessionValue($key, (time() + $this->commonOptions->getFormSubmissionLimit()));

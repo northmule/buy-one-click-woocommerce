@@ -20,6 +20,9 @@ class AdminControllerFactory implements FactoryInterface
      */
     public function create(): AdminController
     {
-        return new AdminController(Core::getInstance()->getCommonOptions());
+        return new AdminController(
+            Core::getInstance()->getCommonOptions(),
+            Core::getInstance()->getNotificationOptions()
+        );
     }
 }

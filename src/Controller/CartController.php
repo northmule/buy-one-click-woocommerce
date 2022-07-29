@@ -20,12 +20,12 @@ class CartController extends Controller
     public function init()
     {
         add_action(
-            'wp_ajax_add_to_cart',
+            'wp_ajax_buy_coderun_add_to_cart',
             [$this, 'addToCart']
         );
 
         add_action(
-            'wp_ajax_nopriv_add_to_cart',
+            'wp_ajax_nopriv_buy_coderun_add_to_cart',
             [$this, 'addToCart']
         );
     }
@@ -38,7 +38,7 @@ class CartController extends Controller
      */
     public function addToCart(): void
     {
-        $variation_id = intval($_POST['variation_selected']);
+        $variation_id = intval($_POST['variation_selected'] ?? 0);
         $variations = [];
         $quantity = 1;
         if (isset($_POST['variation_attr'])) {
@@ -63,7 +63,6 @@ class CartController extends Controller
         $productid = intval($_POST['productid']);
         WC()->cart->add_to_cart($productid, $quantity, $variation_id, $variations);
         $url = get_permalink(get_option('woocommerce_checkout_page_id'));
-        echo $url;
-        die();
+        wp_send_json_success($url);
     }
 }

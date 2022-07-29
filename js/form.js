@@ -143,7 +143,7 @@ jQuery(document).ready(function () {
         jQuery(button).addClass('running');
 
         if (typeof buyone_ajax.work_mode !== 'undefined' && buyone_ajax.work_mode == 1) {
-            action = 'add_to_cart';
+            action = 'buy_coderun_add_to_cart';
             variation_selected = jQuery(this).attr('data-variation_id');
             variation_attr = jQuery('.variations_form.cart').serialize();
         } else {
@@ -162,12 +162,15 @@ jQuery(document).ready(function () {
                 variation_attr: variation_attr,
             },
             success: function (response) {
-                if (action === 'add_to_cart') {
-                    window.location.href = response;
+                if (!response.success) {
+                    return;
+                }
+                if (action === 'buy_coderun_add_to_cart') {
+                    window.location.href = response.data;
                     return true;
                 }
                 jQuery('#formOrderOneClick').remove();
-                jQuery(butObj).append(response);
+                jQuery(butObj).append(response.data);
                 jQuery('.popup, .overlay').css('opacity', '1');
                 jQuery('.popup, .overlay').css('visibility', 'visible');
 

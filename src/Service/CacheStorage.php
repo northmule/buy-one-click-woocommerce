@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Service;
 
 /**
- * Class SessionStorage
+ * На основе объектного кеша, для работы требуются дополнительные
+ * плагины работающий с объектным кешем (пример: W3 Total Cache)
+ *
+ * Class CacheStorage
  */
-class SessionStorage
+class CacheStorage
 {
     /**
      * @var string
      */
-    protected const SESSION_KEY = 'buy_session_storage';
+    protected const GROUP_KEY = 'buy_coderun_storage';
 
     /**
      * Установка ключа и значения
@@ -24,7 +27,7 @@ class SessionStorage
      */
     public function setSessionValue(string $key, $value): void
     {
-        wp_cache_set($key, $value, self::SESSION_KEY);
+        wp_cache_set($key, $value, self::GROUP_KEY);
     }
 
     /**
@@ -37,7 +40,11 @@ class SessionStorage
      */
     public function getSessionValue(string $key, $default = null)
     {
-        wp_cache_get($key, self::SESSION_KEY);
+        $value = wp_cache_get($key, self::GROUP_KEY);
+        if ($value === false) {
+            return $default;
+        }
+        return $value;
     }
 
     /**
@@ -49,6 +56,6 @@ class SessionStorage
      */
     public function deleteSessionKey(string $key): void
     {
-        wp_cache_delete($key, self::SESSION_KEY);
+        wp_cache_delete($key, self::GROUP_KEY);
     }
 }

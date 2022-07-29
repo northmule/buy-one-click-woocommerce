@@ -77,9 +77,8 @@ class AdminController extends Controller
      */
     public function deleteAllOrders(): void
     {
-        $nonce = $_POST['nonce']; // Массив URL и NONCE
-        ob_end_clean();
-        if (wp_verify_nonce($nonce['nonce'], 'superKey')) {
+        $nonce = $_POST['nonce'] ?? []; // Массив URL и NONCE
+        if (wp_verify_nonce($nonce['nonce'] ?? '-1', 'superKey')) {
             Order::getInstance()->remove_order_all();
             wp_send_json_success('ok');
         } else {
@@ -94,8 +93,8 @@ class AdminController extends Controller
      */
     public function updateOrderStatus(): void
     {
-        $text = $_POST['text'];
-        $id = $text['id'];
+        $text = $_POST['text'] ?? [];
+        $id = $text['id'] ?? '-1';
         Order::getInstance()->update_status($id, intval($text['status']));
         wp_send_json_success();
     }

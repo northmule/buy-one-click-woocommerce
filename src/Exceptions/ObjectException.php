@@ -35,7 +35,7 @@ class ObjectException extends BaseException implements ExceptionInterface
     {
         return new self('the property type is not defined');
     }
-    
+
     /**
      * @param string $setter
      * @param string $className

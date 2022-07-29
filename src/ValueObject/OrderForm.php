@@ -292,7 +292,7 @@ class OrderForm
     /**
      * @return string
      */
-    public function getUserComment():string
+    public function getUserComment(): string
     {
         return $this->userComment;
     }

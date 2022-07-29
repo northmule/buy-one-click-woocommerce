@@ -20,6 +20,9 @@ class CartControllerFactory implements FactoryInterface
      */
     public function create(): CartController
     {
-        return new CartController(Core::getInstance()->getCommonOptions());
+        return new CartController(
+            Core::getInstance()->getCommonOptions(),
+            Core::getInstance()->getNotificationOptions()
+        );
     }
 }

@@ -51,6 +51,7 @@ class FormController extends Controller
      * Форма заказа
      *
      * @return void
+     * @throws \Exception
      */
     public function viewFormOrder(): void
     {
@@ -75,8 +76,7 @@ class FormController extends Controller
                 'formWithQuantity' => ((new QuantityFactory())->create())->render(),
             ]
         );
-
-        echo((new QuickOrderFormFactory())->create())->render($fields);
+        wp_send_json_success(((new QuickOrderFormFactory())->create())->render($fields));
     }
 
     /**
@@ -101,6 +101,6 @@ class FormController extends Controller
                 'formWithQuantity' => ((new QuantityFactory())->create())->render(),
             ]
         );
-        echo((new QuickOrderFormFactory())->create())->render($fields);
+        wp_send_json_success(((new QuickOrderFormFactory())->create())->render($fields));
     }
 }
