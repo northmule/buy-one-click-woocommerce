@@ -73,7 +73,7 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 == Changelog ==
 = 2.2.0 =
-* Global plugin update. The plugin was created anew, the entire code was redesigned.
+* Deep processing of the code base, rethinking the architecture of the code and bringing it to modern standards. The functionality of the plugin has not changed.
 = 2.1.4 =
 * Fixing the zero price in the plugin's email template
 = 2.1.3 =
