@@ -20,6 +20,9 @@ class FormControllerFactory implements FactoryInterface
      */
     public function create(): FormController
     {
-        return new FormController(Core::getInstance()->getCommonOptions());
+        return new FormController(
+            Core::getInstance()->getCommonOptions(),
+            Core::getInstance()->getNotificationOptions()
+        );
     }
 }

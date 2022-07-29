@@ -20,6 +20,9 @@ class OrderControllerFactory implements FactoryInterface
      */
     public function create(): OrderController
     {
-        return new OrderController(Core::getInstance()->getCommonOptions());
+        return new OrderController(
+            Core::getInstance()->getCommonOptions(),
+            Core::getInstance()->getNotificationOptions()
+        );
     }
 }

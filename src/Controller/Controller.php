@@ -6,6 +6,7 @@ namespace Coderun\BuyOneClick\Controller;
 
 use Coderun\BuyOneClick\Common\Logger;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
+use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use WC_Logger;
 
 /**
@@ -28,10 +29,17 @@ abstract class Controller implements ControllerInterface
      * @var GeneralOptions
      */
     protected GeneralOptions $commonOptions;
+    /**
+     * Настройки плагина
+     *
+     * @var NotificationOptions
+     */
+    protected NotificationOptions $notificationOptions;
 
-    public function __construct(GeneralOptions $commonOptions)
+    public function __construct(GeneralOptions $commonOptions, NotificationOptions $notificationOptions)
     {
         $this->logger = Logger::getInstance();
         $this->commonOptions = $commonOptions;
+        $this->notificationOptions = $notificationOptions;
     }
 }
