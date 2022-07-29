@@ -64,20 +64,34 @@ class OrderForm
     /**
      * Поля формы
      *
-     * @var array<int,array>
+     * @var array<int,array<mixed>>
      */
     protected array $formsField = [];
     protected string $orderTime = '';
     protected int $custom = 10;
+    
+    /**
+     * Файлы
+     *
+     * @var array<int, string>
+     */
     protected array $files = [];
     protected int $quantityProduct = 1;
     /**
      * URL на товар
      *
-     * @var string|false|\WP_Error
+     * @var string
      */
     protected string $productUrl = '';
+    
+    /**
+     * @var array<int, string>
+     */
     protected array $formData = [];
+    
+    /**
+     * @var array<int,string>
+     */
     protected array $filesUrlCollection = [];
     protected string $filesLink = '';
     /**
@@ -93,9 +107,12 @@ class OrderForm
      * @var boolean
      */
     protected bool $isWooCommerceProduct = false;
-
+    
     /**
-     * @param array<string, mixed> $formData
+     * @param array<int, string>              $formData
+     * @param NotificationOptions $notificationOptions
+     * @param bool                $variationEnable
+     * @param array<int, string>  $files
      *
      * @throws WC_Data_Exception
      */
