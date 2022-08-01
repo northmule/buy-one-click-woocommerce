@@ -55,13 +55,14 @@ class FormController extends Controller
      */
     public function viewFormOrder(): void
     {
-        $productId = $_POST['productid'];
+        $productId = $_POST['productid'] ?? 0;
         $variationId = intval($_POST['variation_selected']);
 
         if ($variationId > 0) {
             $productId = $variationId;
         }
-        $params = ProductUtils::getProductParam(intval($productId));
+        $productId = intval($productId);
+        $params = ProductUtils::getProductParam($productId);
         $fields = new FieldsOfOrderForm(
             [
                 'productId'        => $params['article'] ?? '',

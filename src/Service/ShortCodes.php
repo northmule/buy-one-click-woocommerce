@@ -12,6 +12,8 @@ use Coderun\BuyOneClick\Core;
 use Exception;
 
 use function shortcode_atts;
+use function array_filter;
+use function is_numeric;
 
 class ShortCodes
 {
@@ -59,7 +61,18 @@ class ShortCodes
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
-        $params = array_filter((array) $params);
+        $params = array_filter((array) $params,
+            static function($value, $key) {
+                if (is_numeric($key)) {
+                    return false;
+                }
+                if ($key === 'id') {
+                    return is_numeric($value);
+                }
+                return true;
+            },
+            ARRAY_FILTER_USE_BOTH
+        );
         $content = '';
         $params = shortcode_atts(['id' => 0], $params);
         $core = Core::getInstance();
