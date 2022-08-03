@@ -125,7 +125,7 @@ class Notification extends Base
      *
      * @var boolean
      */
-    protected bool $enableSmsServicePostProtocol;
+    protected bool $enableSmsServicePostProtocol = true;
     /**
      * Sms https
      *
@@ -133,7 +133,7 @@ class Notification extends Base
      *
      * @var boolean
      */
-    protected bool $enableSmsServiceHttpsProtocol;
+    protected bool $enableSmsServiceHttpsProtocol = true;
     /**
      * Sms кодировка символов
      *
@@ -165,7 +165,7 @@ class Notification extends Base
      *
      * @var boolean
      */
-    protected bool $enableSmsDebug;
+    protected bool $enableSmsDebug = false;
     /**
      * Цена с учётом налога
      *

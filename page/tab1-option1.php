@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     <h3><?php _e('General add-on settings', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
     <p><?php _e('Do not forget to press the save button after changing the settings in each tab.', 'coderun-oneclickwoo'); ?></p>
 <?php
-$commonOptions = $this->commonOptions;
+$commonOptions = $this->getCommonOptions();
 ?>
     <form method="post" action="options.php">
         <?php wp_nonce_field('update-options'); ?>

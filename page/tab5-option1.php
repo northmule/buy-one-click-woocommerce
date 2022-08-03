@@ -1,10 +1,13 @@
 <?php
-use Coderun\BuyOneClick\Core;
-
 if (!defined('ABSPATH')) {
     exit;
 }
 
+use Coderun\BuyOneClick\Core;
+
+/** @var Core $this */
+
+$marketingOptions = $this->getMarketingOptions();
 ?>
 <form method="post" action="options.php">
     <?php wp_nonce_field('update-options'); ?>
@@ -24,7 +27,7 @@ if (!defined('ABSPATH')) {
                         sprintf('jQuery( function() { wp.codeEditor.initialize( "after_clicking_on_button", %s ); } );', wp_json_encode($codeMirrorSetting))
                     );
                 }
-                \wp_editor(Core::getInstance()->getOption('after_clicking_on_button', Core::OPTIONS_MARKETING), 'after_clicking_on_button', [
+                \wp_editor($marketingOptions->getAfterClickingOnButton(), 'after_clicking_on_button', [
                     'wpautop' => false,
                     'media_buttons' => 0,
                     'textarea_name' => \sprintf('%s[after_clicking_on_button]', Core::OPTIONS_MARKETING),
@@ -58,7 +61,7 @@ if (!defined('ABSPATH')) {
                         sprintf('jQuery( function() { wp.codeEditor.initialize( "successful_form_submission", %s ); } );', wp_json_encode($codeMirrorSetting))
                     );
                 }
-                \wp_editor(Core::getInstance()->getOption('successful_form_submission', Core::OPTIONS_MARKETING), 'successful_form_submission', [
+                \wp_editor($marketingOptions->getSuccessfulFormSubmission(), 'successful_form_submission', [
                     'wpautop' => false,
                     'media_buttons' => 0,
                     'textarea_name' => \sprintf('%s[successful_form_submission]', Core::OPTIONS_MARKETING),
@@ -102,7 +105,7 @@ if (!defined('ABSPATH')) {
                 <th scope="row"><?php _e('Transmit data', 'coderun-oneclickwoo'); ?></th>
                 <td>
                     <input type="checkbox" name="<?php echo Core::OPTIONS_MARKETING ?>[transfer_data_to_yandex_commerce]" <?php
-                    checked(Core::getInstance()->getOption('transfer_data_to_yandex_commerce', Core::OPTIONS_MARKETING), 'on', 1);
+                    checked($marketingOptions->isTransferDataToYandexCommerce());
                     ?>/>
                     <span class="description"><?php _e('Enable data transfer to the Yandex e-commerce service', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -111,7 +114,7 @@ if (!defined('ABSPATH')) {
                 <th scope="row"><?php _e('Name of the data container', 'coderun-oneclickwoo'); ?></th>
                 <td>
                     <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[name_of_yandex_metrica_data_container]" value="<?php
-                    echo Core::getInstance()->getOption('name_of_yandex_metrica_data_container', Core::OPTIONS_MARKETING);
+                    echo $marketingOptions->getNameOfYandexMetricaDataContainer();
                     ?>" />
                     <span class="description"><?php _e('Name of the yandex Metrica data container. The default value is "dataLayer"', 'coderun-oneclickwoo'); ?></span>
                 </td>
@@ -120,7 +123,7 @@ if (!defined('ABSPATH')) {
                 <th scope="row"><?php _e('Goal ID', 'coderun-oneclickwoo'); ?></th>
                 <td>
                     <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[goal_id_in_yandex_e_commerce]" value="<?php
-                    echo Core::getInstance()->getOption('goal_id_in_yandex_e_commerce', Core::OPTIONS_MARKETING);
+                    echo $marketingOptions->getGoalIdInYandexECommerce();
                     ?>" />
                     <span class="description"><?php _e('Goal ID. If used, specify it here', 'coderun-oneclickwoo'); ?></span>
                 </td>

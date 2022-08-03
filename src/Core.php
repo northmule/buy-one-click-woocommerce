@@ -21,8 +21,10 @@ use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
 
 use function array_key_exists;
 use function file_exists;
+use function is_array;
 use function method_exists;
 use function get_option;
+use function register_setting;
 
 /**
  * Базовый класс плагина
@@ -157,19 +159,19 @@ class Core
     {
         add_action(
             'init',
-            static function () {
+            static function (): void {
                 ((new OrderControllerFactory())->create())->init();
             }
         );
         add_action(
             'init',
-            static function () {
+            static function (): void {
                 ((new FormControllerFactory())->create())->init();
             }
         );
         add_action(
             'init',
-            static function () {
+            static function (): void {
                 ((new CartControllerFactory())->create())->init();
             }
         );
@@ -668,7 +670,7 @@ class Core
     public function registeringSettings()
     {
         // Tab6
-        \register_setting(
+        register_setting(
             \sprintf('%s_options', self::OPTIONS_DESIGN_FORM),
             self::OPTIONS_DESIGN_FORM,
             [
@@ -676,7 +678,7 @@ class Core
                 'group'             => \sprintf('%s_options', self::OPTIONS_DESIGN_FORM),
                 'description'       => '',
                 'sanitize_callback' => function ($forms) {
-                    if (\is_array($forms)) {
+                    if (is_array($forms)) {
                         foreach ($forms as $key => $value) {
                             $forms[$key] = \trim($value);
                         }
@@ -689,7 +691,7 @@ class Core
         );
 
         // Tab5
-        \register_setting(
+        register_setting(
             sprintf('%s_options', self::OPTIONS_MARKETING),
             self::OPTIONS_MARKETING,
             [
@@ -697,7 +699,7 @@ class Core
                 'group'             => sprintf('%s_options', self::OPTIONS_MARKETING),
                 'description'       => '',
                 'sanitize_callback' => function ($forms) {
-                    if (\is_array($forms)) {
+                    if (is_array($forms)) {
                         foreach ($forms as $key => $value) {
                             $forms[$key] = \trim($value);
                         }
@@ -709,7 +711,7 @@ class Core
             ]
         );
         // Tab1
-        \register_setting(
+        register_setting(
             sprintf('%s_options', self::OPTIONS_GENERAL),
             self::OPTIONS_GENERAL,
             [
@@ -724,7 +726,7 @@ class Core
             ]
         );
         // Tab2 - Уведомления
-        \register_setting(
+        register_setting(
             sprintf('%s_options', self::OPTIONS_NOTIFICATIONS),
             self::OPTIONS_NOTIFICATIONS,
             [
@@ -755,4 +757,14 @@ class Core
     {
         return $this->notificationOptions;
     }
+    
+    /**
+     * @return MarketingOptions
+     */
+    public function getMarketingOptions(): MarketingOptions
+    {
+        return $this->marketingOptions;
+    }
+    
+    
 }

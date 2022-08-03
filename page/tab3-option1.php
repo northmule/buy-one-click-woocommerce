@@ -6,9 +6,10 @@ use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\ValueObject\OrderDataForAdmin as OrderDataForAdminValueObject;
 use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 
+/** @var Core $this */
 ?>
 <h3><?php _e('Orders via plugin', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
-<p><?php _e('All orders sent via the button', 'coderun-oneclickwoo'); ?> "<?php echo  Core::getInstance()->getOption('namebutton'); ?>"</p>
+<p><?php _e('All orders sent via the button', 'coderun-oneclickwoo'); ?> "<?php echo $this->getCommonOptions()->getNameButton(); ?>"</p>
 <input type="button" class="btn btn-default btn-sm removeallorder" value="<?php _e('Delete history', 'coderun-oneclickwoo'); ?>"/>
 <?php
 $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'), 'admin.php');
