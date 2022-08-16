@@ -119,15 +119,42 @@ class Core
     }
 
     /**
-     * Конструктор класса
+     * Точка входа
+     *
+     * @return void
+     * @throws Exception
      */
-    protected function __construct()
+    public function initializingPlugin(): void
     {
-        add_action('init', [$this, 'initOptions']);
-        add_action('init', [$this, 'initializeAdditions']);
-        add_action('init', [$this, 'initAction']);
-        add_action('admin_init', [$this, 'registeringSettings']); // Инициализация допустимых настроек
-        add_action('init', [Hooks::class, 'load']);
+        // Инициализация настроек
+        add_action(
+            'init',
+            function (): void {
+                $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
+                $this->notificationOptions = new NotificationOptions(get_option(OptionsType::NOTIFICATIONS, []));
+                $this->marketingOptions = new MarketingOptions(get_option(OptionsType::MARKETING, []));
+            }
+        );
+        add_action(
+            'init',
+            function (): void {
+                do_action('buy_one_click_woocommerce_start_load_core');
+                ObjectWithConstantState::getInstance();
+            }
+        );
+        add_action(
+            'init',
+            function (): void {
+                $this->initAction();
+            }
+        );
+        add_action(
+            'admin_init',
+            function (): void {
+                $this->registeringSettings();
+            }
+        );
+        // Инициализация допустимых настроек
         add_action(
             'init',
             static function (): void {
@@ -143,11 +170,23 @@ class Core
             10,
             3
         );
-
-        add_action('wp_head', [$this, 'frontVariables']);
+        add_action(
+            'wp_head',
+            function (): void {
+                $this->frontVariables();
+            }
+        );
         // Обработчики запросов
         $this->initController();
         $this->initAdminPages();
+
+        // Плагин загружен
+        add_action(
+            'init',
+            static function (): void {
+                Hooks::load();
+            }
+        );
     }
 
     /**
@@ -188,8 +227,9 @@ class Core
      * Зацеп для отрисовки кнопок
      *
      * @return void
+     * @throws Exception
      */
-    public function initAction(): void
+    protected function initAction(): void
     {
         if ($this->commonOptions->isEnableButton()) {
             $locationInProductCard = $this->commonOptions->getPositionButton(); //Позиция кнопки
@@ -245,30 +285,6 @@ class Core
     }
 
     /**
-     * Инициализация настроек, настройка объектов
-     *
-     * @return void
-     */
-    public function initOptions(): void
-    {
-        $this->commonOptions = new GeneralOptions(get_option(OptionsType::GENERAL, []));
-        $this->notificationOptions = new NotificationOptions(get_option(OptionsType::NOTIFICATIONS, []));
-        $this->marketingOptions = new MarketingOptions(get_option(OptionsType::MARKETING, []));
-    }
-
-
-    /**
-     * Поздняя инициализация дополнений
-     *
-     * @return void
-     */
-    public function initializeAdditions(): void
-    {
-        do_action('buy_one_click_woocommerce_start_load_core');
-        ObjectWithConstantState::getInstance();
-    }
-
-    /**
      * @return void
      */
     protected function initAdminPages(): void
@@ -284,7 +300,7 @@ class Core
      * @return void
      * @throws Exception
      */
-    public function frontVariables(): void
+    protected function frontVariables(): void
     {
         $variables = ['ajaxurl' => admin_url('admin-ajax.php')];
         $variables['variation'] = ObjectWithConstantState::getInstance()->isVariations() ? 1 : 0;
@@ -347,7 +363,7 @@ class Core
      *
      * @return void
      */
-    public function addOptions(): void
+    public function activationPlugin(): void
     {
         foreach ($this->optionsPull as $keyOption => $defaultValue) {
             add_option($keyOption, $defaultValue);
@@ -667,7 +683,7 @@ class Core
     /**
      * Указываем WordPress опции с которыми работает плагин
      */
-    public function registeringSettings()
+    protected function registeringSettings()
     {
         // Tab6
         register_setting(
@@ -757,7 +773,7 @@ class Core
     {
         return $this->notificationOptions;
     }
-    
+
     /**
      * @return MarketingOptions
      */
@@ -765,6 +781,4 @@ class Core
     {
         return $this->marketingOptions;
     }
-    
-    
 }

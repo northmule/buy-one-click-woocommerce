@@ -61,8 +61,9 @@ class ShortCodes
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
-        $params = array_filter((array) $params,
-            static function($value, $key) {
+        $params = array_filter(
+            (array) $params,
+            static function ($value, $key) {
                 if (is_numeric($key)) {
                     return false;
                 }

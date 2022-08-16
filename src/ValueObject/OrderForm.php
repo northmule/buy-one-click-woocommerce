@@ -69,7 +69,6 @@ class OrderForm
     protected array $formsField = [];
     protected string $orderTime = '';
     protected int $custom = 10;
-    
     /**
      * Файлы
      *
@@ -83,12 +82,10 @@ class OrderForm
      * @var string
      */
     protected string $productUrl = '';
-    
     /**
      * @var array<int, string>
      */
     protected array $formData = [];
-    
     /**
      * @var array<int,string>
      */
@@ -107,9 +104,9 @@ class OrderForm
      * @var boolean
      */
     protected bool $isWooCommerceProduct = false;
-    
+
     /**
-     * @param array<int, string>              $formData
+     * @param array<int, string>  $formData
      * @param NotificationOptions $notificationOptions
      * @param bool                $variationEnable
      * @param array<int, string>  $files

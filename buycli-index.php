@@ -57,8 +57,11 @@ function coderun_buy_plugin_init_core()
 
     require_once(CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
     
-    register_deactivation_hook(__FILE__, [Coderun\BuyOneClick\Core::getInstance(), 'deactivationPlugin']);
-    register_activation_hook(__FILE__, [Coderun\BuyOneClick\Core::getInstance(), 'addOptions']);
+    $main = Coderun\BuyOneClick\Core::getInstance();
+    $main->initializingPlugin();
+    register_activation_hook(__FILE__, [$main, 'activationPlugin']);
+    register_deactivation_hook(__FILE__, [$main, 'deactivationPlugin']);
+ 
 
 }
 coderun_buy_plugin_init_core();
