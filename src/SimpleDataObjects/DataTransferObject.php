@@ -9,6 +9,7 @@ use DateTime;
 use Exception;
 use ReflectionProperty;
 use ReflectionClass;
+use WC_Product;
 
 /**
  * Class DataTransferObject
@@ -25,7 +26,11 @@ abstract class DataTransferObject implements DataTransferObjectInterface
         $class = new ReflectionClass(static::class);
         foreach ($class->getProperties(ReflectionProperty::IS_PUBLIC) as $reflectionProperty) {
             $property = $reflectionProperty->getName();
-            $this->{$property} = $this->leadToType($parameters[$property] ?? '', $reflectionProperty);
+            if ($parameters[$property] === null) {
+                $this->{$property} = null;
+                continue;
+            }
+            $this->{$property} = $this->leadToType($parameters[$property], $reflectionProperty);
         }
     }
 
@@ -62,6 +67,8 @@ abstract class DataTransferObject implements DataTransferObjectInterface
                     return null;
                 case 'array':
                     return (array) $value;
+                case WC_Product::class:
+                    return $value;
                 default:
                     throw VariablesException::variableWasNotExpected();
             }

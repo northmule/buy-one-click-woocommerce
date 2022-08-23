@@ -208,10 +208,14 @@ jQuery(document).ready(function () {
                 name: name,
                 count: count,
                 price: price,
+                priceHtml: jQuery(butObj).attr('data-priceHtml'),
             },
             success: function (response) {
+                if (!response.success) {
+                    return;
+                }
                 jQuery('#formOrderOneClick').remove();
-                jQuery(butObj).after(response);
+                jQuery(butObj).after(response.data);
                 jQuery('.popup, .overlay').css('opacity', '1');
                 jQuery('.popup, .overlay').css('visibility', 'visible');
                 buyone_click_body_scroll();

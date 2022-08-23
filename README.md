@@ -63,10 +63,10 @@ add_filter('coderun_oneclickwoo_file_valid_mime_types',
 ```
 * The shortcode for your product. The product may not exist in your online store, all product parameters are transmitted via a shortcode
 ```
-[viewBuyButtonCustom id="your product ID" name="your product name" count="the quantity transferred with the purchase" price="price per unit of goods"]
+[viewBuyButtonCustom id="your product ID" name="your product name" count="the quantity transferred with the purchase" price="price per unit of goods" price_with_currency="price with currency to display"]
 // Exemple:
 [viewBuyButtonCustom id="xxx01" name="Elon Reeve Musk Aircraft" count="1" price="9320000"]
-[viewBuyButtonCustom id="code812-323" name="Cucumbers in a jart" count="1" price="600"]
+[viewBuyButtonCustom id="code812-323" name="Cucumbers in a jart" count="1" price="600" price_with_currency="600 USD"]
 ... // Any of your data in the shortcode, sell anything
 ```
 

@@ -72,6 +72,12 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.2.1 =
+* Added currency to the order form
+* Added the ability to specify the status of the created order in WooCommerce
+* Code reorganization
+* Added a shortcode parameter to specify the price with currency
+* Changed the behavior of the form for selecting the quantity, added support for the setting - "Sell individually" in the product
 = 2.2.0 =
 * Deep processing of the code base, rethinking the architecture of the code and bringing it to modern standards. The functionality of the plugin has not changed.
 = 2.1.4 =

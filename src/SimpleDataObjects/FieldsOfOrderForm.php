@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\SimpleDataObjects;
 
+use WC_Product;
+
 /**
  * Форма для оформления заказа
  *
@@ -32,6 +34,12 @@ class FieldsOfOrderForm extends DataTransferObject
      */
     public float $productPrice;
     /**
+     * Цена для отображения
+     *
+     * @var string
+     */
+    public string $productPriceHtml;
+    /**
      * Форма вызвана через шорткод
      *
      * @var boolean
@@ -48,7 +56,7 @@ class FieldsOfOrderForm extends DataTransferObject
      *
      * @var integer
      */
-    public int $productCount = 1;
+    public int $productCount;
     /**
      * HTML ссылка на изображение
      *
@@ -79,4 +87,10 @@ class FieldsOfOrderForm extends DataTransferObject
      * @var string
      */
     public string $formWithQuantity;
+    /**
+     * Товар WooCommerce
+     *
+     * @var WC_Product|null
+     */
+    public ?WC_Product $product;
 }

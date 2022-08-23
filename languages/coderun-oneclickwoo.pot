@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Buy one click WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-23 19:03+0000\n"
+"POT-Creation-Date: 2022-08-23 17:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,90 +15,90 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.0; wp-5.2.1"
 
-#: page/tab1-option1.php:88
+#: page/tab1-option1.php:75
 msgid "Above full product information"
 msgstr ""
 
-#: page/tab1-option1.php:83
+#: page/tab1-option1.php:72
 msgid "Above the product image"
 msgstr ""
 
-#: page/tab1-option1.php:73
+#: page/tab1-option1.php:66
 msgid "Above the quantity button"
 msgstr ""
 
-#: page/tab1-option1.php:423
+#: page/tab1-option1.php:365
 msgid "Actions and notifications"
 msgstr ""
 
-#: page/tab1-option1.php:401
+#: page/tab1-option1.php:347
 msgid "Actions related to setting \"Balance Status\" in WooCommerce"
 msgstr ""
 
-#: page/tab1-option1.php:243
+#: page/tab1-option1.php:217
 msgid "Add a quantity input form"
 msgstr ""
 
-#: page/tab2-option1.php:247
+#: page/tab2-option1.php:241
 msgid "Add order information to a WooCommerce email"
 msgstr ""
 
-#: page/tab1-option1.php:254
+#: page/tab1-option1.php:226
 msgid ""
 "Add the ability to attach a file to the quick order form. Tick is worth - "
 "offer"
 msgstr ""
 
-#: page/tab1-option1.php:25
+#: page/tab1-option1.php:30
 msgid "Add to cart mode"
 msgstr ""
 
-#: page/tab1-option1.php:225
+#: page/tab1-option1.php:203
 msgid "Additional Information Field"
 msgstr ""
 
-#: page/tab5-option1.php:13
+#: page/tab5-option1.php:16
 msgid "Additional settings"
 msgstr ""
 
-#: src/Utils/Email.php:99
+#: src/Utils/Email.php:102
 msgid "Additionally"
 msgstr ""
 
-#: page/tab3-option1.php:11
+#: page/tab3-option1.php:12
 msgid "All orders sent via the button"
 msgstr ""
 
-#: page/tab1-option1.php:610
+#: page/tab1-option1.php:532
 msgid ""
 "An event (hook) occurs when a new order is formed via a plug-in form. As of "
 "arguments takes two arrays 1st function result, 2 - data sent to the plugins "
 "order book"
 msgstr ""
 
-#: page/tab1-option1.php:491
+#: page/tab1-option1.php:422
 msgid "and copy files from there"
 msgstr ""
 
-#: page/tab2-option1.php:88
+#: page/tab2-option1.php:91
 msgid ""
 "Arbitrary information, such as contacts or a wish. It is possible to specify "
 "the HTML tag"
 msgstr ""
 
-#: page/tab1-option1.php:19
+#: page/tab1-option1.php:24
 msgid "Are common"
 msgstr ""
 
-#: page/tab1-option1.php:214
+#: page/tab1-option1.php:194
 msgid "Ask for Email"
 msgstr ""
 
-#: page/tab1-option1.php:192
+#: page/tab1-option1.php:176
 msgid "Ask for full name"
 msgstr ""
 
-#: page/tab1-option1.php:203
+#: page/tab1-option1.php:185
 msgid "Ask phone"
 msgstr ""
 
@@ -106,27 +106,27 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: page/tab3-option1.php:79
+#: page/tab3-option1.php:80
 msgid "Balance"
 msgstr ""
 
-#: page/tab1-option1.php:481
+#: page/tab1-option1.php:412
 msgid "Basic"
 msgstr ""
 
-#: page/tab1-option1.php:24
+#: page/tab1-option1.php:29
 msgid "Basic operation"
 msgstr ""
 
-#: page/tab1-option1.php:398
+#: page/tab1-option1.php:344
 msgid "Behavior and dependencies on some WooCommerce options"
 msgstr ""
 
-#: page/tab1-option1.php:482
+#: page/tab1-option1.php:413
 msgid "Blue"
 msgstr ""
 
-#: page/tab1-option1.php:591
+#: page/tab1-option1.php:513
 msgid ""
 "Button shortcode must be inserted in product output cycles, where it is "
 "possible to get the product ID. Wherein\n"
@@ -135,7 +135,7 @@ msgid ""
 "of the shortcode button\""
 msgstr ""
 
-#: page/tab1-option1.php:599
+#: page/tab1-option1.php:521
 msgid "Buy button in any version"
 msgstr ""
 
@@ -145,7 +145,7 @@ msgid ""
 "store purchase button in one click"
 msgstr ""
 
-#: src/BuyFunction.php:225
+#: src/Service/Button.php:124
 msgid "Buy on click"
 msgstr ""
 
@@ -153,27 +153,27 @@ msgstr ""
 msgid "Buy one click WooCommerce"
 msgstr ""
 
-#: page/tab1-option1.php:609
+#: page/tab1-option1.php:531
 msgid "Call"
 msgstr ""
 
-#: src/ReCaptcha.php:29
+#: src/ReCaptcha.php:31
 msgid "Captcha failed"
 msgstr ""
 
-#: page/tab1-option1.php:444
+#: page/tab1-option1.php:382
 msgid "Close through"
 msgstr ""
 
-#: page/tab1-option1.php:582
+#: page/tab1-option1.php:504
 msgid "Code to use"
 msgstr ""
 
-#: page/tab1-option1.php:499
+#: page/tab1-option1.php:430
 msgid "Consent to the processing of personal data"
 msgstr ""
 
-#: page/tab3-option1.php:79
+#: page/tab3-option1.php:80
 msgid "Cost of"
 msgstr ""
 
@@ -181,51 +181,51 @@ msgstr ""
 msgid "Couldn't create WooCommerce order"
 msgstr ""
 
-#: page/tab3-option1.php:79
+#: page/tab3-option1.php:80
 msgid "Count sms"
 msgstr ""
 
-#: src/Utils/Email.php:94
+#: src/Utils/Email.php:97
 msgid "Customer"
 msgstr ""
 
-#: page/tab2-option1.php:191 page/tab2-option1.php:211
+#: page/tab2-option1.php:189 page/tab2-option1.php:209
 msgid "Customer email"
 msgstr ""
 
-#: page/tab2-option1.php:189 page/tab2-option1.php:209
+#: page/tab2-option1.php:187 page/tab2-option1.php:207
 msgid "Customer name"
 msgstr ""
 
-#: page/tab2-option1.php:190 page/tab2-option1.php:210
+#: page/tab2-option1.php:188 page/tab2-option1.php:208
 msgid "Customer phone"
 msgstr ""
 
-#: page/tab2-option1.php:179
+#: page/tab2-option1.php:177
 msgid "Customer SMS Template"
 msgstr ""
 
-#: page/tab5-option1.php:86
+#: page/tab5-option1.php:89
 msgid "Data transfer to Yandex e-commerce event of product purchase"
 msgstr ""
 
-#: src/Utils/Email.php:66
+#: src/Utils/Email.php:69
 msgid "Date"
 msgstr ""
 
-#: page/tab3-option1.php:21
+#: page/tab3-option1.php:22
 msgid "Date and time of addition"
 msgstr ""
 
-#: page/tab3-option1.php:12
+#: page/tab3-option1.php:13
 msgid "Delete history"
 msgstr ""
 
-#: page/tab1-option1.php:583
+#: page/tab1-option1.php:505
 msgid "Description"
 msgstr ""
 
-#: page/tab1-option1.php:260
+#: page/tab1-option1.php:232
 msgid "Description of form fields"
 msgstr ""
 
@@ -233,179 +233,167 @@ msgstr ""
 msgid "Djo"
 msgstr ""
 
-#: page/tab1-option1.php:11
+#: page/tab1-option1.php:13
 msgid ""
 "Do not forget to press the save button after changing the settings in each "
 "tab."
 msgstr ""
 
-#: page/tab1-option1.php:496
+#: page/tab1-option1.php:427
 msgid "Do not send the order form more often than: (seconds)"
 msgstr ""
 
-#: page/tab2-option1.php:146 page/tab2-option1.php:158
-msgid "Do not use"
-msgstr ""
-
-#: page/tab1-option1.php:512
+#: page/tab1-option1.php:441
 msgid "Do not use in the order form"
 msgstr ""
 
-#: page/tab1-option1.php:232
+#: page/tab1-option1.php:208
 msgid ""
 "Does the buyer have to enter additional information? Tick is worth - offer"
 msgstr ""
 
-#: page/tab1-option1.php:199
+#: page/tab1-option1.php:181
 msgid "Does the buyer have to enter his name? A check mark is to offer"
 msgstr ""
 
-#: page/tab1-option1.php:210
+#: page/tab1-option1.php:190
 msgid "Does the buyer have to enter his phone? Tick is worth - offer"
 msgstr ""
 
-#: page/tab1-option1.php:221
+#: page/tab1-option1.php:199
 msgid "Does the buyer have to enter their email? Tick is worth - offer"
 msgstr ""
 
-#: page/tab1-option1.php:581 page/tab1-option1.php:588
+#: page/tab1-option1.php:503 page/tab1-option1.php:510
 msgid "Element"
 msgstr ""
 
-#: src/Service.php:59 src/Utils/Email.php:86
+#: src/Service/EmailTemplate.php:82 src/Utils/Email.php:89
 msgid "Email"
 msgstr ""
 
-#: page/tab2-option1.php:36
+#: page/tab2-option1.php:39
 msgid "Email copy"
 msgstr ""
 
-#: page/tab1-option1.php:324
+#: page/tab1-option1.php:284
 msgid "Email field"
 msgstr ""
 
-#: page/tab2-option1.php:27
+#: page/tab2-option1.php:30
 msgid "Email From"
 msgstr ""
 
-#: page/tab1-option1.php:542
+#: page/tab1-option1.php:471
 msgid "Embed form styles in html"
 msgstr ""
 
-#: page/tab1-option1.php:139
+#: page/tab1-option1.php:114
 msgid "Enable button display in categories"
 msgstr ""
 
-#: page/tab1-option1.php:32
+#: page/tab1-option1.php:37
 msgid "Enable button display?"
 msgstr ""
 
-#: page/tab5-option1.php:107
+#: page/tab5-option1.php:110
 msgid "Enable data transfer to the Yandex e-commerce service"
 msgstr ""
 
-#: page/tab2-option1.php:228
+#: page/tab2-option1.php:222
 msgid "Enable debug mode. Debub is off by default."
 msgstr ""
 
-#: page/tab1-option1.php:39
+#: page/tab1-option1.php:41
 msgid ""
 "Enable or disable the display of the quick order button on the site. The "
 "tick is - the button is shown"
 msgstr ""
 
-#: page/tab1-option1.php:50
+#: page/tab1-option1.php:49
 msgid ""
 "Enable or disable the display of the quick order button via shortcode. The "
 "tick is - the button is shown"
 msgstr ""
 
-#: page/tab1-option1.php:509
+#: page/tab1-option1.php:438
 msgid "Enable recaptcha in the order form"
 msgstr ""
 
-#: page/tab2-option1.php:98
+#: page/tab2-option1.php:101
 msgid "Enable SMS Customer Notifications"
 msgstr ""
 
-#: page/tab2-option1.php:103
+#: page/tab2-option1.php:106
 msgid "Enable SMS notifications for client via service"
 msgstr ""
 
-#: page/tab2-option1.php:112
+#: page/tab2-option1.php:115
 msgid ""
 "Enable SMS notifications for the seller through the service - If checked, "
 "SMS notifications will work."
 msgstr ""
 
-#: page/tab2-option1.php:107
+#: page/tab2-option1.php:110
 msgid "Enable SMS Notifications Seller"
 msgstr ""
 
-#: page/tab1-option1.php:43
+#: page/tab1-option1.php:45
 msgid "Enable the display of the shortcode button?"
 msgstr ""
 
-#: page/tab1-option1.php:403
+#: page/tab1-option1.php:349
 msgid "Enable this option?"
 msgstr ""
 
-#: page/tab1-option1.php:499
+#: page/tab1-option1.php:430
 msgid "Enable?"
 msgstr ""
 
-#: page/tab2-option1.php:252
+#: page/tab2-option1.php:246
 msgid ""
 "Enabling this setting will add information from the plugin to the "
 "Woocommerce email template."
 msgstr ""
 
-#: page/tab2-option1.php:167
+#: page/tab2-option1.php:165
 msgid "Encoding"
 msgstr ""
 
-#: page/tab5-option1.php:17
+#: page/tab5-option1.php:20
 msgid "Event after clicking the button"
 msgstr ""
 
-#: page/tab5-option1.php:51
+#: page/tab5-option1.php:54
 msgid "Event after successful form submission"
 msgstr ""
 
-#: page/tab2-option1.php:23 page/tab2-option1.php:32 page/tab1-option1.php:461
-#: page/tab5-option1.php:14 page/tab5-option1.php:95
+#: page/tab2-option1.php:26 page/tab2-option1.php:35 page/tab1-option1.php:392
+#: page/tab5-option1.php:17 page/tab5-option1.php:98
 msgid "Example"
 msgstr ""
 
-#: page/tab1-option1.php:344
+#: page/tab1-option1.php:300
 msgid "Field \"Advanced\""
 msgstr ""
 
-#: page/tab1-option1.php:364
+#: page/tab1-option1.php:316
 msgid "Field \"Upload file\""
 msgstr ""
 
-#: page/tab2-option1.php:192 page/tab2-option1.php:212
+#: page/tab2-option1.php:190 page/tab2-option1.php:210
 msgid "Field add. information from the form"
 msgstr ""
 
-#: page/tab3-option1.php:69 src/ValueObject/OrderForm.php:268
+#: page/tab3-option1.php:70
 msgid "File"
 msgstr ""
 
-#: src/LoadFile.php:63
-msgid "File downloaded"
-msgstr ""
-
-#: src/Controller/OrderController.php:111
-msgid "File upload error"
-msgstr ""
-
-#: page/tab1-option1.php:247
+#: page/tab1-option1.php:221
 msgid "File upload field"
 msgstr ""
 
-#: src/Service.php:72
+#: src/Service/EmailTemplate.php:90
 msgid "File url"
 msgstr ""
 
@@ -413,57 +401,57 @@ msgstr ""
 msgid "Files"
 msgstr ""
 
-#: page/tab1-option1.php:489
+#: page/tab1-option1.php:420
 msgid "folder"
 msgstr ""
 
-#: page/tab1-option1.php:309
+#: page/tab1-option1.php:271
 msgid "for example"
 msgstr ""
 
-#: page/tab1-option1.php:62
+#: page/tab1-option1.php:57
 msgid "For example, \"Buy in one click\""
 msgstr ""
 
-#: page/tab1-option1.php:351
+#: page/tab1-option1.php:305
 msgid "For example, \"Delivery Address\""
 msgstr ""
 
-#: page/tab1-option1.php:417
+#: page/tab1-option1.php:359
 msgid "For example, \"Make a pre-order\""
 msgstr ""
 
-#: page/tab1-option1.php:391
+#: page/tab1-option1.php:337
 msgid "For example, \"Order\""
 msgstr ""
 
-#: page/tab1-option1.php:371
+#: page/tab1-option1.php:321
 msgid "For example, \"Upload file\""
 msgstr ""
 
-#: page/tab1-option1.php:331
+#: page/tab1-option1.php:289
 msgid "For example, \"Your email?\""
 msgstr ""
 
-#: page/tab1-option1.php:271
+#: page/tab1-option1.php:241
 msgid "For example, \"Your name?\""
 msgstr ""
 
-#: page/tab1-option1.php:291
+#: page/tab1-option1.php:257
 msgid "For example, \"Your phone?\""
 msgstr ""
 
-#: page/tab1-option1.php:448
+#: page/tab1-option1.php:384
 msgid ""
 "For example: \"2000\". The user will see the message above and the form will "
 "be closed after the specified time."
 msgstr ""
 
-#: page/tab1-option1.php:320
+#: page/tab1-option1.php:280
 msgid "For input formatting used JS plugin jquery.maskedinput. Examples:"
 msgstr ""
 
-#: page/tab2-option1.php:103
+#: page/tab2-option1.php:106
 msgid "for quick order button. If ticked - SMS notifications will work"
 msgstr ""
 
@@ -471,11 +459,11 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: page/tab1-option1.php:302
+#: page/tab1-option1.php:266
 msgid "Format hint"
 msgstr ""
 
-#: page/tab3-option1.php:23
+#: page/tab3-option1.php:24
 msgid "Full name"
 msgstr ""
 
@@ -483,19 +471,19 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: page/tab1-option1.php:10
+#: page/tab1-option1.php:12
 msgid "General add-on settings"
 msgstr ""
 
-#: page/tab5-option1.php:120
+#: page/tab5-option1.php:123
 msgid "Goal ID"
 msgstr ""
 
-#: page/tab5-option1.php:125
+#: page/tab5-option1.php:128
 msgid "Goal ID. If used, specify it here"
 msgstr ""
 
-#: page/tab1-option1.php:484
+#: page/tab1-option1.php:415
 msgid "Green"
 msgstr ""
 
@@ -507,43 +495,43 @@ msgstr ""
 msgid "https://zixn.ru"
 msgstr ""
 
-#: page/tab1-option1.php:522
+#: page/tab1-option1.php:451
 msgid "I use a plugin: "
 msgstr ""
 
-#: page/tab1-option1.php:27
+#: page/tab1-option1.php:32
 msgid ""
 "If \"Add to cart mode\" is selected - When you click on the button, the "
 "product enters the cart and is redirected to the checkout page."
 msgstr ""
 
-#: page/tab1-option1.php:26
+#: page/tab1-option1.php:31
 msgid ""
 "If \"Basic operation mode\" is selected - The classic logic of the plug-in "
 "will work and all the settings below will be relevant."
 msgstr ""
 
-#: page/tab1-option1.php:594
+#: page/tab1-option1.php:516
 msgid ""
 "If the ID of the actual WooCommerce product is specified, then you can "
 "insert the button anywhere on your site."
 msgstr ""
 
-#: page/tab1-option1.php:487
+#: page/tab1-option1.php:418
 msgid ""
 "If you want to change the CSS design of the form, create it in your template "
 "folder or in"
 msgstr ""
 
-#: src/Service.php:50
+#: src/Service/EmailTemplate.php:74
 msgid "In one click"
 msgstr ""
 
-#: page/tab1-option1.php:78
+#: page/tab1-option1.php:69
 msgid "In the item description tab"
 msgstr ""
 
-#: page/tab1-option1.php:533
+#: page/tab1-option1.php:462
 msgid ""
 "Includes support for anti-spam forms based on third-party plugins. Be "
 "careful, as the functionality of third-party plugins may not be predictable."
@@ -553,23 +541,26 @@ msgstr ""
 msgid "Information on"
 msgstr ""
 
-#: page/tab1-option1.php:177
+#: page/tab1-option1.php:163
 msgid "Information on the order form"
 msgstr ""
 
-#: src/LoadFile.php:135
-msgid "Invalid file extension"
+#: src/Exceptions/UploadingFilesException.php:34
+#, php-format
+msgid "Invalid file extension: %s"
 msgstr ""
 
-#: src/LoadFile.php:139
-msgid "Invalid file size"
+#: src/Exceptions/UploadingFilesException.php:49
+#, php-format
+msgid "Invalid file size: %s"
 msgstr ""
 
-#: src/LoadFile.php:143
-msgid "Invalid file type"
+#: src/Exceptions/UploadingFilesException.php:64
+#, php-format
+msgid "Invalid file type: %s"
 msgstr ""
 
-#: page/tab3-option1.php:22
+#: page/tab3-option1.php:23
 msgid "Item Number"
 msgstr ""
 
@@ -578,19 +569,19 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: src/Utils/Email.php:70
+#: src/Utils/Email.php:73
 msgid "Link to the product"
 msgstr ""
 
-#: page/tab2-option1.php:73
+#: page/tab2-option1.php:76
 msgid "Links to files"
 msgstr ""
 
-#: page/tab2-option1.php:125
+#: page/tab2-option1.php:128
 msgid "Login"
 msgstr ""
 
-#: src/ValueObject/OrderForm.php:182
+#: src/ValueObject/OrderForm.php:208
 msgid "Look"
 msgstr ""
 
@@ -598,11 +589,11 @@ msgstr ""
 msgid "Marketing"
 msgstr ""
 
-#: page/tab3-option1.php:28
+#: page/tab3-option1.php:29
 msgid "Message"
 msgstr ""
 
-#: page/tab1-option1.php:433
+#: page/tab1-option1.php:373
 msgid ""
 "Message about the successful registration of the order. For example: "
 "\"Thanks for the order!\". A message appears in the \"One Click\" order form "
@@ -610,77 +601,77 @@ msgid ""
 "be short."
 msgstr ""
 
-#: page/tab1-option1.php:426
+#: page/tab1-option1.php:368
 msgid "Message in the form"
 msgstr ""
 
-#: page/tab1-option1.php:497
+#: page/tab1-option1.php:428
 msgid "Message in the form when re-sending."
 msgstr ""
 
-#: page/tab2-option1.php:8
+#: page/tab2-option1.php:11
 msgid "Methods and notification settings for the client"
 msgstr ""
 
-#: page/tab2-option1.php:219
+#: page/tab2-option1.php:217
 msgid "mode"
 msgstr ""
 
-#: page/tab1-option1.php:448
+#: page/tab1-option1.php:384
 msgid "ms"
 msgstr ""
 
-#: src/Service.php:53 src/Utils/Email.php:78 templates/forms/order_form.php:26
-#: templates/forms/order_form.php:40
+#: src/Service/EmailTemplate.php:76 src/Utils/Email.php:81
+#: templates/forms/order_form.php:26 templates/forms/order_form.php:40
 msgid "Name"
 msgstr ""
 
-#: page/tab1-option1.php:264
+#: page/tab1-option1.php:236
 msgid "Name field"
 msgstr ""
 
-#: page/tab2-option1.php:18
+#: page/tab2-option1.php:21
 msgid "Name from"
 msgstr ""
 
-#: page/tab2-option1.php:194 page/tab2-option1.php:214
+#: page/tab2-option1.php:192 page/tab2-option1.php:212
 msgid "Name of product"
 msgstr ""
 
-#: page/tab1-option1.php:384
+#: page/tab1-option1.php:332
 msgid "Name of the button in the form"
 msgstr ""
 
-#: page/tab1-option1.php:55
+#: page/tab1-option1.php:54
 msgid "Name of the button on the site"
 msgstr ""
 
-#: page/tab5-option1.php:111
+#: page/tab5-option1.php:114
 msgid "Name of the data container"
 msgstr ""
 
-#: page/tab5-option1.php:116
+#: page/tab5-option1.php:119
 msgid ""
 "Name of the yandex Metrica data container. The default value is \"dataLayer\""
 msgstr ""
 
-#: page/tab1-option1.php:608
+#: page/tab1-option1.php:530
 msgid "New order event"
 msgstr ""
 
-#: src/LoadFile.php:124 src/LoadFile.php:129
+#: src/Exceptions/UploadingFilesException.php:22
 msgid "No file to download"
 msgstr ""
 
-#: page/tab3-option1.php:94
+#: page/tab3-option1.php:95
 msgid "NOT"
 msgstr ""
 
-#: page/tab1-option1.php:116
+#: page/tab1-option1.php:95
 msgid "Not show"
 msgstr ""
 
-#: page/tab1-option1.php:443
+#: page/tab1-option1.php:381
 msgid "Nothing to do"
 msgstr ""
 
@@ -692,47 +683,47 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: page/tab2-option1.php:121
+#: page/tab2-option1.php:124
 msgid ""
 "Notifications on new orders will be sent to this phone number. Works when "
 "the daw is set higher"
 msgstr ""
 
-#: page/tab1-option1.php:273 page/tab1-option1.php:293
-#: page/tab1-option1.php:333 page/tab1-option1.php:353
-#: page/tab1-option1.php:373
+#: page/tab1-option1.php:243 page/tab1-option1.php:259
+#: page/tab1-option1.php:291 page/tab1-option1.php:307
+#: page/tab1-option1.php:323
 msgid "Obligatory field?"
 msgstr ""
 
-#: page/tab3-option1.php:96
+#: page/tab3-option1.php:97
 msgid "OK"
 msgstr ""
 
-#: page/tab2-option1.php:116
+#: page/tab2-option1.php:119
 msgid "Online Store Owners Phone"
 msgstr ""
 
-#: page/tab3-option1.php:107
+#: page/tab3-option1.php:108
 msgid "OnlyPlugin"
 msgstr ""
 
-#: page/tab3-option1.php:112
+#: page/tab3-option1.php:113
 msgid "OnlyWoo"
 msgstr ""
 
-#: page/tab2-option1.php:47
+#: page/tab2-option1.php:50
 msgid "Optional Options"
 msgstr ""
 
-#: page/tab1-option1.php:589
+#: page/tab1-option1.php:511
 msgid "Optional parameter of the real product ID"
 msgstr ""
 
-#: page/tab1-option1.php:485
+#: page/tab1-option1.php:416
 msgid "Orange"
 msgstr ""
 
-#: page/tab2-option1.php:54
+#: page/tab2-option1.php:57
 msgid "Ordering information"
 msgstr ""
 
@@ -740,7 +731,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: page/tab3-option1.php:10
+#: page/tab3-option1.php:11
 msgid "Orders via plugin"
 msgstr ""
 
@@ -748,31 +739,31 @@ msgstr ""
 msgid "Other Author Plugins"
 msgstr ""
 
-#: page/tab1-option1.php:495
+#: page/tab1-option1.php:426
 msgid "Other options"
 msgstr ""
 
-#: page/tab2-option1.php:235
+#: page/tab2-option1.php:229
 msgid "Other settings in this section"
 msgstr ""
 
-#: page/tab1-option1.php:158
+#: page/tab1-option1.php:129
 msgid "Over the goods"
 msgstr ""
 
-#: page/tab2-option1.php:134
+#: page/tab2-option1.php:137
 msgid "Password"
 msgstr ""
 
-#: src/Service.php:56 page/tab3-option1.php:24
+#: page/tab3-option1.php:25 src/Service/EmailTemplate.php:79
 msgid "Phone"
 msgstr ""
 
-#: src/Utils/Email.php:90
+#: src/Utils/Email.php:93
 msgid "Phone number"
 msgstr ""
 
-#: page/tab1-option1.php:313
+#: page/tab1-option1.php:275
 msgid "Phone number entry format"
 msgstr ""
 
@@ -780,23 +771,23 @@ msgstr ""
 msgid "Picture"
 msgstr ""
 
-#: page/tab1-option1.php:472
+#: page/tab1-option1.php:403
 msgid ""
 "Please note that in this case, the order will automatically switch to the "
 "\"Waiting for payment\" status.\""
 msgstr ""
 
-#: page/tab5-option1.php:45 page/tab5-option1.php:79
+#: page/tab5-option1.php:48 page/tab5-option1.php:82
 msgid ""
 "Please note that the code may disrupt the normal operation of the plugin. "
 "Always check the changes after saving the settings."
 msgstr ""
 
-#: page/tab1-option1.php:22
+#: page/tab1-option1.php:27
 msgid "Plugin operation mode"
 msgstr ""
 
-#: page/tab3-option1.php:40
+#: page/tab3-option1.php:41
 msgid "Plugin Order №"
 msgstr ""
 
@@ -808,124 +799,124 @@ msgstr ""
 msgid "Plugin page, discussions, suggestions, suggestions"
 msgstr ""
 
-#: page/tab1-option1.php:492
+#: page/tab1-option1.php:423
 msgid "plugin_folder"
 msgstr ""
 
-#: page/tab1-option1.php:66
+#: page/tab1-option1.php:61
 msgid "Position of the button in the card"
 msgstr ""
 
-#: page/tab1-option1.php:109
+#: page/tab1-option1.php:90
 msgid "Position of the button in the card for products that are not available"
 msgstr ""
 
-#: page/tab1-option1.php:150
+#: page/tab1-option1.php:123
 msgid "Position of the button in the category"
 msgstr ""
 
-#: page/tab3-option1.php:27 src/Utils/Email.php:74
+#: page/tab3-option1.php:28 src/Utils/Email.php:77
 #: templates/forms/order_form.php:29 templates/forms/order_form.php:43
 msgid "Price"
 msgstr ""
 
-#: page/tab1-option1.php:600
+#: page/tab1-option1.php:522
 msgid "price (number)"
 msgstr ""
 
-#: page/tab2-option1.php:238
+#: page/tab2-option1.php:232
 msgid "Price in the email"
 msgstr ""
 
-#: page/tab3-option1.php:29
+#: page/tab3-option1.php:30
 msgid "Product"
 msgstr ""
 
-#: page/tab3-option1.php:26
+#: page/tab3-option1.php:27
 msgid "Product Information"
 msgstr ""
 
-#: src/Service.php:62
+#: src/Service/EmailTemplate.php:85
 msgid "Products"
 msgstr ""
 
-#: page/tab1-option1.php:600
+#: page/tab1-option1.php:522
 msgid "purchase quantity (number)"
 msgstr ""
 
-#: page/tab1-option1.php:236 page/tab3-option1.php:66 src/Utils/Email.php:82
-#: templates/forms/quantity.php:6
+#: page/tab1-option1.php:212 page/tab3-option1.php:67 src/Utils/Email.php:85
+#: templates/forms/quantity.php:12
 msgid "Quantity"
 msgstr ""
 
-#: src/Repository/Order.php:58 src/Controller/OrderController.php:146
+#: src/Repository/Order.php:58 src/Controller/OrderController.php:147
 msgid "Quick order form"
 msgstr ""
 
-#: page/tab1-option1.php:480
+#: page/tab1-option1.php:411
 msgid "Quick order forms - styles"
 msgstr ""
 
-#: page/tab2-option1.php:64 page/tab2-option1.php:83
+#: page/tab2-option1.php:67 page/tab2-option1.php:86
 msgid "Random information"
 msgstr ""
 
-#: page/tab1-option1.php:483
+#: page/tab1-option1.php:414
 msgid "Red"
 msgstr ""
 
-#: page/tab1-option1.php:454
+#: page/tab1-option1.php:388
 msgid "Redirect to page"
 msgstr ""
 
-#: page/tab3-option1.php:32
+#: page/tab3-option1.php:33
 msgid "Remove"
 msgstr ""
 
-#: src/Controller/OrderController.php:200
+#: src/Controller/OrderController.php:206
 msgid "request error"
 msgstr ""
 
-#: page/tab2-option1.php:199
+#: page/tab2-option1.php:197
 msgid "Seller SMS Template"
 msgstr ""
 
-#: page/tab2-option1.php:69
+#: page/tab2-option1.php:72
 msgid "Send additional data. You can specify any text."
 msgstr ""
 
-#: page/tab2-option1.php:78
+#: page/tab2-option1.php:81
 msgid "Send links to downloaded files in emails?"
 msgstr ""
 
-#: page/tab2-option1.php:59
+#: page/tab2-option1.php:62
 msgid "Send order data to customer. A tick is worth sending!"
 msgstr ""
 
-#: page/tab1-option1.php:464
+#: page/tab1-option1.php:395
 msgid "Send to the order page WooCommerce"
 msgstr ""
 
-#: page/tab1-option1.php:469
+#: page/tab1-option1.php:400
 msgid "Send to the order payment page"
 msgstr ""
 
-#: page/tab2-option1.php:12
+#: page/tab2-option1.php:15
 msgid "Setting E-mail Notifications"
 msgstr ""
 
-#: page/tab2-option1.php:95
+#: page/tab2-option1.php:98
 msgid "Setting SMS notifications"
 msgstr ""
 
-#: page/tab1-option1.php:135
+#: page/tab1-option1.php:110
 msgid ""
 "Setting the checkbox will enable the mechanism when the orders will get not "
 "only to the table of the plug-in, but also to the menu \"Orders\" - "
 "Woocommerce"
 msgstr ""
 
-#: page/tab1-option1.php:601
+#: page/tab1-option1.php:523
 msgid ""
 "Short code buttons with arbitrary parameters, you can set the \"gag\" is not "
 "tied to real goods.\n"
@@ -936,43 +927,47 @@ msgid ""
 "checkmark \"Enable display of the shortcode button\""
 msgstr ""
 
-#: page/tab1-option1.php:575
+#: page/tab1-option1.php:497
 msgid "Shortcodes and plugin hooks"
 msgstr ""
 
-#: page/tab1-option1.php:449
+#: page/tab1-option1.php:385
 msgid "Show message (html available)"
 msgstr ""
 
-#: page/tab1-option1.php:180
+#: page/tab1-option1.php:166
 msgid "Show product information?"
 msgstr ""
 
-#: page/tab3-option1.php:30
+#: page/tab3-option1.php:31
 msgid "SMS"
 msgstr ""
 
-#: page/tab2-option1.php:174
+#: page/tab2-option1.php:172
 msgid "SMS encoding of messages"
 msgstr ""
 
-#: page/tab2-option1.php:243
+#: page/tab2-option1.php:237
 msgid "Specify the price including tax"
 msgstr ""
 
-#: page/tab3-option1.php:31
+#: page/tab1-option1.php:146
+msgid "Specify the status if necessary"
+msgstr ""
+
+#: page/tab3-option1.php:32
 msgid "Status"
 msgstr ""
 
-#: page/tab5-option1.php:14 page/tab5-option1.php:95
+#: page/tab5-option1.php:17 page/tab5-option1.php:98
 msgid "Switching to another site"
 msgstr ""
 
-#: src/Core.php:600
+#: src/Core.php:647
 msgid "Telegram"
 msgstr ""
 
-#: page/tab1-option1.php:284
+#: page/tab1-option1.php:252
 msgid "Telephone box"
 msgstr ""
 
@@ -980,17 +975,17 @@ msgstr ""
 msgid "Test your hosting with Wordpress plugin"
 msgstr ""
 
-#: page/tab1-option1.php:528
+#: page/tab1-option1.php:457
 msgid ""
 "Tested with the \"I am not a robot\" captcha in V2, but it may also work "
 "with other options"
 msgstr ""
 
-#: page/tab1-option1.php:504
+#: page/tab1-option1.php:433
 msgid "Text (can HTML)"
 msgstr ""
 
-#: page/tab1-option1.php:410
+#: page/tab1-option1.php:354
 msgid "Text on the button if the product is not in stock"
 msgstr ""
 
@@ -999,66 +994,72 @@ msgstr ""
 msgid "The %s field is required"
 msgstr ""
 
-#: page/tab1-option1.php:471
+#: page/tab1-option1.php:402
 msgid ""
 "The buyer will be redirected to the order payment page. This option only "
 "works if orders are placed in the WooCommerce table."
 msgstr ""
 
-#: page/tab1-option1.php:465
+#: page/tab1-option1.php:396
 msgid ""
 "The buyer will be redirected to the WooCommerce completed order page. It "
 "only works if orders are placed in the WooCommerce table"
 msgstr ""
 
-#: page/tab1-option1.php:498
+#: page/tab1-option1.php:156
+msgid ""
+"The created order will be transferred to this status after registration via "
+"the quick order form. It only works when integrated with WooCommerce."
+msgstr ""
+
+#: page/tab1-option1.php:429
 msgid ""
 "The default is 10 seconds. This means if the client will click the button to "
 "send the order from the form more often, the order will not be duplicated."
 msgstr ""
 
-#: page/tab5-option1.php:77
+#: page/tab5-option1.php:80
 msgid ""
 "The JavaScript code that will be called after the successful submission of "
 "the order form."
 msgstr ""
 
-#: page/tab5-option1.php:43
+#: page/tab5-option1.php:46
 msgid ""
 "The JavaScript code that will be called when you click on the button to open "
 "the order form."
 msgstr ""
 
-#: page/tab1-option1.php:146
+#: page/tab1-option1.php:119
 msgid ""
 "The option enables or disables the display of the order button in one click "
 "in product categories. You can select a display position further."
 msgstr ""
 
-#: src/Controller/OrderController.php:169
+#: src/Controller/OrderController.php:170
 msgid "The order has been sent"
 msgstr ""
 
-#: page/tab1-option1.php:171
+#: page/tab1-option1.php:138
 msgid "The place where the button will be located in the category of goods"
 msgstr ""
 
-#: page/tab1-option1.php:105
+#: page/tab1-option1.php:86
 msgid "The place where the button will be located in the item card"
 msgstr ""
 
-#: page/tab1-option1.php:124
+#: page/tab1-option1.php:101
 msgid ""
 "The place where the button will be located in the item card if the item is "
 "not in stock. Only for the main button position in "
 "woocommerce_after_add_to_cart_button"
 msgstr ""
 
-#: page/tab2-option1.php:193 page/tab2-option1.php:213
+#: page/tab2-option1.php:191 page/tab2-option1.php:211
 msgid "The price of the product"
 msgstr ""
 
-#: page/tab2-option1.php:184 page/tab2-option1.php:204
+#: page/tab2-option1.php:182 page/tab2-option1.php:202
 msgid ""
 "The specified template \"%Template Name%\" will be converted to form "
 "information. You can also enter any text.\n"
@@ -1066,25 +1067,25 @@ msgid ""
 "the shop Screw and Shpuntik, the amount of your order is %TPRICE%\""
 msgstr ""
 
-#: page/tab1-option1.php:550
+#: page/tab1-option1.php:479
 msgid "The styles will be added to the html page"
 msgstr ""
 
-#: page/tab1-option1.php:461
+#: page/tab1-option1.php:392
 msgid "The user will see the message and go to the specified page."
 msgstr ""
 
-#: page/tab1-option1.php:443
+#: page/tab1-option1.php:381
 msgid "The window will remain open, the user will see the message above."
 msgstr ""
 
-#: page/tab2-option1.php:41
+#: page/tab2-option1.php:44
 msgid ""
 "This email will receive a copy of the order messages. Through the sign \",\" "
 "you can specify multiple Email. Example:"
 msgstr ""
 
-#: page/tab1-option1.php:553
+#: page/tab1-option1.php:482
 #, php-format
 msgid ""
 "This option is not needed in 99% of cases. When enabled, all plugin styles "
@@ -1092,47 +1093,43 @@ msgid ""
 "like that."
 msgstr ""
 
-#: page/tab2-option1.php:49
+#: page/tab2-option1.php:52
 msgid "Tick off the boxes to be sent."
 msgstr ""
 
-#: page/tab5-option1.php:102
+#: page/tab5-option1.php:105
 msgid "Transmit data"
 msgstr ""
 
-#: page/tab1-option1.php:93
+#: page/tab1-option1.php:78
 msgid "Under the full information about the product"
 msgstr ""
 
-#: page/tab1-option1.php:168
+#: page/tab1-option1.php:135
 msgid "Under the goods"
 msgstr ""
 
-#: page/tab1-option1.php:163
+#: page/tab1-option1.php:132
 msgid "Under the name of the product to the price"
 msgstr ""
 
-#: page/tab1-option1.php:98
+#: page/tab1-option1.php:81
 msgid "Under the price"
 msgstr ""
 
-#: page/tab2-option1.php:147 page/tab2-option1.php:159
-msgid "Use"
-msgstr ""
-
-#: page/tab2-option1.php:163
+#: page/tab2-option1.php:161
 msgid "Use for sms https. Default - do not use"
 msgstr ""
 
-#: page/tab2-option1.php:154
+#: page/tab2-option1.php:155
 msgid "Use HTTPS protocol"
 msgstr ""
 
-#: page/tab2-option1.php:143
+#: page/tab2-option1.php:146
 msgid "Use POST method"
 msgstr ""
 
-#: page/tab2-option1.php:150
+#: page/tab2-option1.php:151
 msgid "Use the POST method. By default, do not use"
 msgstr ""
 
@@ -1144,31 +1141,35 @@ msgstr ""
 msgid "Watch for updates via"
 msgstr ""
 
-#: page/tab1-option1.php:437
+#: page/tab1-option1.php:377
 msgid "What to do after pressing the button"
 msgstr ""
 
-#: page/tab5-option1.php:93
+#: page/tab5-option1.php:96
 msgid ""
 "When you specify these settings, data will be transmitted to the Yandex "
 "Metrica - e-commerce service. This event is a product purchase event."
 msgstr ""
 
-#: page/tab1-option1.php:187
+#: page/tab1-option1.php:171
 msgid ""
 "Will the product information be displayed in a modal window or not? The tick "
 "is worth it - will be displayed"
 msgstr ""
 
-#: page/tab3-option1.php:48
+#: page/tab3-option1.php:49
 msgid "Woo Order №"
 msgstr ""
 
-#: page/tab1-option1.php:103
+#: page/tab1-option1.php:142
+msgid "WooCommerce Order Status"
+msgstr ""
+
+#: page/tab1-option1.php:84
 msgid "woocommerce_after_add_to_cart_button"
 msgstr ""
 
-#: page/tab1-option1.php:121
+#: page/tab1-option1.php:98
 msgid "woocommerce_get_stock_html"
 msgstr ""
 
@@ -1176,7 +1177,7 @@ msgstr ""
 msgid "WordPress plugins page on Wordpress"
 msgstr ""
 
-#: page/tab1-option1.php:128
+#: page/tab1-option1.php:105
 msgid "Write orders to the Woocommerce table"
 msgstr ""
 
@@ -1184,26 +1185,26 @@ msgstr ""
 msgid "You have already sent an order!"
 msgstr ""
 
-#: page/tab1-option1.php:609
+#: page/tab1-option1.php:531
 msgid "Your function"
 msgstr ""
 
-#: page/tab1-option1.php:600
+#: page/tab1-option1.php:522
 msgid "your item code (string)"
 msgstr ""
 
-#: page/tab2-option1.php:130
+#: page/tab2-option1.php:133
 msgid "Your login from the service"
 msgstr ""
 
-#: page/tab1-option1.php:600
+#: page/tab1-option1.php:522
 msgid "your name (string)"
 msgstr ""
 
-#: page/tab2-option1.php:139
+#: page/tab2-option1.php:142
 msgid "Your service password"
 msgstr ""
 
-#: page/tab1-option1.php:486
+#: page/tab1-option1.php:417
 msgid "Your WordPress Theme Styles"
 msgstr ""

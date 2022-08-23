@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Templates\Elements;
 
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
+use Coderun\BuyOneClick\SimpleDataObjects\DataTransferObject;
 
 /**
  * Class Files
@@ -31,7 +32,7 @@ class Files implements ElementInterface
      *
      * @return string
      */
-    public function render(): string
+    public function render(DataTransferObject $params): string
     {
         if ($this->commonOptions->isEnableFieldWithFiles()) {
             ob_start();

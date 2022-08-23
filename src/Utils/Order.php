@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Utils;
 
+use Coderun\BuyOneClick\Constant\OrderStatus;
 use WC_Order;
 
+use function str_replace;
 use function wc_get_order;
 
 /**
@@ -35,5 +37,23 @@ class Order
             return false;
         }
         return true;
+    }
+
+    /**
+     * Список доступных статусов WooCommerce
+     *
+     * @return array<string, string>
+     */
+    public static function getListOfAvailableStatuses(string $title): array
+    {
+        $statuses = [];
+        foreach (wc_get_order_statuses() as $key => $statusTitle) {
+            $key = str_replace('wc-', '', $key);
+            $statuses[$key] = $statusTitle;
+        }
+        $select = [];
+        $select[OrderStatus::WITHOUT_STATUS] = $title;
+
+        return ($select + $statuses);
     }
 }

@@ -6,6 +6,7 @@ namespace Coderun\BuyOneClick\Controller;
 
 use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\SimpleDataObjects\FieldsOfOrderForm;
+use Coderun\BuyOneClick\SimpleDataObjects\Product;
 use Coderun\BuyOneClick\Templates\Elements\Factory\FilesFactory;
 use Coderun\BuyOneClick\Templates\Elements\Factory\QuantityFactory;
 use Coderun\BuyOneClick\Templates\QuickOrderFormFactory;
@@ -55,26 +56,34 @@ class FormController extends Controller
      */
     public function viewFormOrder(): void
     {
-        $productId = $_POST['productid'] ?? 0;
+        $productId = intval($_POST['productid'] ?? 0);
         $variationId = intval($_POST['variation_selected']);
 
         if ($variationId > 0) {
             $productId = $variationId;
         }
-        $productId = intval($productId);
-        $params = ProductUtils::getProductParam($productId);
+        $product = wc_get_product($productId);
+        if (method_exists($product, 'get_image_id')) {
+            $images = wp_get_attachment_image_src($product->get_image_id()); //Урл картинки товара
+        }
+        $productObject = new Product([
+            'product' => $product,
+        ]);
         $fields = new FieldsOfOrderForm(
             [
-                'productId'        => $params['article'] ?? '',
-                'productName'      => $params['name'] ?? '',
-                'productPrice'     => $params['amount'] ?? '',
+                'productId'        => $product->get_id(),
+                'productName'      => $product->get_name(),
+                'productPrice'     => $product->get_price(),
+                'productPriceHtml' => $product->get_price_html(),
+                'productCount'     => 1,
                 'shortCode'        => 0,
-                'productImg'       => $params['imageurl'] ?? '',
-                'productSrcImg'    => sprintf('<img src="%s" width="80" height="80">', $params['imageurl'] ?? ''),
+                'productImg'       => $images[0] ?? '',
+                'productSrcImg'    => sprintf('<img src="%s" width="80" height="80">', $images[0] ?? ''),
                 'variationPlugin'  => ObjectWithConstantState::getInstance()->isVariations(),
                 'templateStyle'    => $this->commonOptions->isStyleInsertHtml(),
-                'formWithFiles'    => ((new FilesFactory())->create())->render(),
-                'formWithQuantity' => ((new QuantityFactory())->create())->render(),
+                'formWithFiles'    => ((new FilesFactory())->create())->render($productObject),
+                'formWithQuantity' => ((new QuantityFactory())->create())->render($productObject),
+                'product'          => $product,
             ]
         );
         wp_send_json_success(((new QuickOrderFormFactory())->create())->render($fields));
@@ -84,22 +93,28 @@ class FormController extends Controller
      * Рисует форму заказа (из шорткода)
      *
      * @return void
+     * @throws \Exception
      */
     public function viewFormOrderCustom()
     {
+        $productObject = new Product([
+            'product' => null,
+        ]);
         $fields = new FieldsOfOrderForm(
             [
                 'productId'        => $_POST['productid'] ?? '',
                 'productName'      => $_POST['name'] ?? '',
                 'productPrice'     => $_POST['price'] ?? '',
-                'productCount'     => $_POST['count'] ?? '',
+                'productPriceHtml' => $_POST['priceHtml'] ?? '',
+                'productCount'     => $_POST['count'] ?? 1,
                 'shortCode'        => 1,
                 'productImg'       => '',
                 'productSrcImg'    => '',
                 'variationPlugin'  => ObjectWithConstantState::getInstance()->isVariations(),
                 'templateStyle'    => $this->commonOptions->isStyleInsertHtml(),
-                'formWithFiles'    => ((new FilesFactory())->create())->render(),
-                'formWithQuantity' => ((new QuantityFactory())->create())->render(),
+                'formWithFiles'    => ((new FilesFactory())->create())->render($productObject),
+                'formWithQuantity' => ((new QuantityFactory())->create())->render($productObject),
+                'product'          => null,
             ]
         );
         wp_send_json_success(((new QuickOrderFormFactory())->create())->render($fields));

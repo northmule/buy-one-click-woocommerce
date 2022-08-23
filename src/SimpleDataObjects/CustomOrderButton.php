@@ -55,4 +55,10 @@ class CustomOrderButton extends DataTransferObject
      * @var string
      */
     public string $inlineScript;
+    /**
+     * Цена для отображения
+     *
+     * @var string
+     */
+    public string $productPriceHtml;
 }

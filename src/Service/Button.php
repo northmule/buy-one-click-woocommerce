@@ -8,6 +8,7 @@ use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\SimpleDataObjects\CustomOrderButton as CustomOrderButtonDataObject;
 use Coderun\BuyOneClick\SimpleDataObjects\OrderButton as OrderButtonDataObject;
+use Coderun\BuyOneClick\SimpleDataObjects\ShortcodeParameters;
 use Coderun\BuyOneClick\Templates\OrderButton;
 use Coderun\BuyOneClick\Utils\Product as ProductUtils;
 use Exception;
@@ -86,24 +87,25 @@ class Button
     /**
      * HTML Кнопка заказа в один клик через Шорткод
      *
-     * @param array $params
+     * @param ShortcodeParameters $params
      *
      * @return string
      * @throws Exception
      */
-    public function getHtmlOrderButtonsCustom(array $params): string
+    public function getHtmlOrderButtonsCustom(ShortcodeParameters $params): string
     {
         if ($this->commonOptions->getNameButton() and $this->commonOptions->getPositionButton()) {
             return (new OrderButton())->render(
                 new CustomOrderButtonDataObject(
                     [
-                        'productId'    => $params['id'],
-                        'productPrice' => $params['price'],
-                        'productCount' => $params['count'],
-                        'productName'  => $params['name'],
-                        'buttonName'   => $this->commonOptions->getNameButton(),
-                        'inlineStyle'  => '',
-                        'inlineScript' => '',
+                        'productId'        => $params->id,
+                        'productPrice'     => $params->price,
+                        'productCount'     => $params->count,
+                        'productName'      => $params->name,
+                        'productPriceHtml' => $params->priceWithCurrency,
+                        'buttonName'       => $this->commonOptions->getNameButton(),
+                        'inlineStyle'      => '',
+                        'inlineScript'     => '',
                     ]
                 )
             );

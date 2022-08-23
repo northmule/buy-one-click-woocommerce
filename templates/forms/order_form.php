@@ -41,7 +41,7 @@ $commonOptions = $render->getCommonOptions();
                                 <span class="description"> <?php echo $fields->productName; ?></span>
                             </td>
                             <td data-label="<?php _e('Price', 'coderun-oneclickwoo'); ?>">
-                                <span class="description"><?php echo $fields->productPrice; ?></span>
+                                <span class="description"><?php echo $fields->productPriceHtml; ?></span>
                             </td>
                             <?php if (!empty($fields->productImg)) { ?>
                                 <td data-label="<?php _e('Picture', 'coderun-oneclickwoo'); ?>">

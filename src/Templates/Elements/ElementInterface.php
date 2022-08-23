@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Templates\Elements;
 
+use Coderun\BuyOneClick\SimpleDataObjects\DataTransferObject;
+
 interface ElementInterface
 {
     /**
@@ -11,5 +13,5 @@ interface ElementInterface
      *
      * @return string
      */
-    public function render(): string;
+    public function render(DataTransferObject $params): string;
 }

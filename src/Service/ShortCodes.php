@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Service;
 
 use Coderun\BuyOneClick\Common\ObjectWithConstantState;
+use Coderun\BuyOneClick\Constant\ShortcodeParameters;
 use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
 use Coderun\BuyOneClick\Core;
 use Exception;
+use Coderun\BuyOneClick\SimpleDataObjects\ShortcodeParameters as ShortcodeParametersObjects;
 
 use function shortcode_atts;
 use function array_filter;
@@ -103,16 +105,28 @@ class ShortCodes
         $params = array_filter((array) $params);
         $params = shortcode_atts(
             [
-                'id'    => '1',
-                'name'  => 'noname',
-                'count' => 1,
-                'price' => 5,
+                ShortcodeParameters::PRODUCT_ID          => '1',
+                ShortcodeParameters::PRODUCT_NAME        => 'noname',
+                ShortcodeParameters::PRODUCT_COUNT       => '1',
+                ShortcodeParameters::PRODUCT_PRICE       => '5',
+                ShortcodeParameters::PRICE_WITH_CURRENCY => '5',
             ],
             $params
         );
         $core = Core::getInstance();
         $core->styleAddFrontPage();
         $core->scriptAddFrontPage();
-        return ((new ButtonServiceFactory())->create())->getHtmlOrderButtonsCustom($params);
+        return ((new ButtonServiceFactory())->create())->getHtmlOrderButtonsCustom(
+            new ShortcodeParametersObjects(
+                [
+                    'id'                => $params[ShortcodeParameters::PRODUCT_ID],
+                    'name'              => $params[ShortcodeParameters::PRODUCT_NAME],
+                    'count'             => $params[ShortcodeParameters::PRODUCT_COUNT],
+                    'price'             => $params[ShortcodeParameters::PRODUCT_PRICE],
+                    'priceWithCurrency' => $params[ShortcodeParameters::PRICE_WITH_CURRENCY],
+
+                ]
+            )
+        );
     }
 }

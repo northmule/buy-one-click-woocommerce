@@ -7,6 +7,7 @@ namespace Coderun\BuyOneClick\Controller;
 use BuySMSC;
 use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Constant\Options\ActionsForm;
+use Coderun\BuyOneClick\Constant\OrderStatus;
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Exceptions\DependenciesException;
 use Coderun\BuyOneClick\Exceptions\LimitOnSendingFormsException;
@@ -49,11 +50,11 @@ class OrderController extends Controller
     {
         add_action(
             sprintf('wp_ajax_%s_buybuttonform', self::REQUEST_KEY),
-            [$this, 'sendingOrderFromFormAction']
+            [$this, 'creatingOrder']
         );
         add_action(
             sprintf('wp_ajax_nopriv_%s_buybuttonform', self::REQUEST_KEY),
-            [$this, 'sendingOrderFromFormAction']
+            [$this, 'creatingOrder']
         );
     }
 
@@ -63,7 +64,7 @@ class OrderController extends Controller
      * @return void
      * @throws \WC_Data_Exception
      */
-    public function sendingOrderFromFormAction(): void
+    public function creatingOrder(): void
     {
         try {
             if (empty($_POST)) {
@@ -175,13 +176,18 @@ class OrderController extends Controller
             if ($wooOrderId) {
                 $wcOrder = wc_get_order($wooOrderId);
                 if ($wcOrder instanceof WC_Order) {
+                    $defaultStatus = $this->commonOptions->getWooCommerceOrderStatus() === OrderStatus::WITHOUT_STATUS
+                        ? 'processing'
+                        : $this->commonOptions->getWooCommerceOrderStatus();
                     $orderResponse->setOrderNumber($this->getOrderNumber($wcOrder));
-                    $wcOrder->update_status('processing', 'Quick order form');
                     if ($this->commonOptions->getActionAfterSubmittingForm() == ActionsForm::SEND_TO_ORDER_PAGE) {
+                        $wcOrder->update_status($defaultStatus, 'Quick order form'); // todo костыль
                         $orderResponse->setRedirectUrl($wcOrder->get_checkout_order_received_url());
                     } elseif ($this->commonOptions->getActionAfterSubmittingForm() == ActionsForm::SEND_TO_ORDER_PAYMENT_PAGE) {
                         $wcOrder->update_status('wc-pending');
                         $orderResponse->setRedirectUrl($wcOrder->get_checkout_payment_url());
+                    } else {
+                        $wcOrder->update_status($defaultStatus, 'Quick order form'); // todo костыль
                     }
                 } else {
                     throw DependenciesException::orderCreationErrorWoo();

@@ -6,6 +6,7 @@ namespace Coderun\BuyOneClick\Options;
 
 use Coderun\BuyOneClick\Constant\Options\ButtonPosition;
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
+use Coderun\BuyOneClick\Constant\OrderStatus;
 
 use function boolval;
 use function intval;
@@ -372,6 +373,14 @@ class General extends Base
      * @var boolean
      */
     protected bool $styleInsertHtml;
+    /**
+     * Статус заказа WooCommerce при оформлении через форму плагина
+     *
+     * @wpOptionsName woo_commerce_order_status
+     *
+     * @var string
+     */
+    protected string $wooCommerceOrderStatus;
 
     /**
      * Настройки из WordPress в св-ва
@@ -464,6 +473,8 @@ class General extends Base
         $this->styleInsertHtml = boolval(
             $options['style_insert_html'] ?? false
         );
+
+        $this->wooCommerceOrderStatus = $options['woo_commerce_order_status'] ?? OrderStatus::WITHOUT_STATUS;
     }
 
     /**
@@ -1333,5 +1344,26 @@ class General extends Base
     protected function getRootKey(): string
     {
         return self::ROOT_KEY;
+    }
+
+    /**
+     * Get wooCommerceOrderStatus
+     *
+     * @return string
+     */
+    public function getWooCommerceOrderStatus(): string
+    {
+        return $this->wooCommerceOrderStatus;
+    }
+
+    /**
+     * @param string $wooCommerceOrderStatus
+     *
+     * @return General
+     */
+    public function setWooCommerceOrderStatus(string $wooCommerceOrderStatus): General
+    {
+        $this->wooCommerceOrderStatus = $wooCommerceOrderStatus;
+        return $this;
     }
 }

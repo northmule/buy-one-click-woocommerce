@@ -1,6 +1,7 @@
 <?php
 
 use Coderun\BuyOneClick\Core;
+use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -135,6 +136,25 @@ $commonOptions = $this->getCommonOptions();
 
                         </select>
                         <span class="description"><?php _e('The place where the button will be located in the category of goods', 'coderun-oneclickwoo'); ?></span>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('WooCommerce Order Status', 'coderun-oneclickwoo'); ?></th>
+                    <td>
+                        <select name="buyoptions[woo_commerce_order_status]">
+                            <?php
+                            foreach (UtilsOrder::getListOfAvailableStatuses(__('Specify the status if necessary', 'coderun-oneclickwoo')) as $statusKey => $statusTitle) {
+                                echo sprintf(
+                                    '<option %s value="%s">%s</option>',
+                                    selected($commonOptions->getWooCommerceOrderStatus(), $statusKey),
+                                    $statusKey,
+                                    $statusTitle
+                                );
+                            }
+                            ?>
+                        </select>
+                        <span class="description"><?php _e('The created order will be transferred to this status after registration via the quick order form. It only works when integrated with WooCommerce.', 'coderun-oneclickwoo'); ?></span>
+
                     </td>
                 </tr>
             </table>
