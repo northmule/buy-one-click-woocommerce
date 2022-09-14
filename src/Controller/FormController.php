@@ -10,7 +10,6 @@ use Coderun\BuyOneClick\SimpleDataObjects\Product;
 use Coderun\BuyOneClick\Templates\Elements\Factory\FilesFactory;
 use Coderun\BuyOneClick\Templates\Elements\Factory\QuantityFactory;
 use Coderun\BuyOneClick\Templates\QuickOrderFormFactory;
-use Coderun\BuyOneClick\Utils\Product as ProductUtils;
 
 use function add_action;
 use function intval;
@@ -71,10 +70,10 @@ class FormController extends Controller
         ]);
         $fields = new FieldsOfOrderForm(
             [
-                'productId'        => $product->get_id(),
-                'productName'      => $product->get_name(),
-                'productPrice'     => $product->get_price(),
-                'productPriceHtml' => $product->get_price_html(),
+                'productId'        => $product->get_id()?? '',
+                'productName'      => $product->get_name()?? '',
+                'productPrice'     => $product->get_price() ?? '',
+                'productPriceHtml' => $product->get_price_html() ?? '',
                 'productCount'     => 1,
                 'shortCode'        => 0,
                 'productImg'       => $images[0] ?? '',
