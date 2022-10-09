@@ -105,6 +105,57 @@ jQuery(document).ready(function () {
 
     });
 
+    /**
+     * Экспорт настроек
+     */
+    jQuery('input[name="export_options"]').on('click', function () {
+        jQuery.ajax({
+            type: "POST",
+            url: getAjaxUrl(),
+            data: {
+                action: 'buy_one_click_export_options',
+            }
+
+        }).done(function (response, status, xhr){
+            const blob = new Blob([JSON.stringify(response.data)], {type: xhr.getResponseHeader('Content-Type: text/json')});
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'buy_one_click_setting.json';
+            link.click();
+        });
+    });
+
+    /**
+     * Импорт настроек
+     */
+    jQuery('input[name="import_options"]').on('click', function () {
+        const input = jQuery('#settings_file_select');
+        const label = input.closest('.upload');
+        const form = jQuery('#form_settings_file_select');
+        input.trigger('click');
+        input.on('change', function(e) {
+            var formData = new FormData();
+            formData.append('action', 'buy_one_click_import_options');
+            formData.append('file', input[0].files[0]);
+            jQuery.ajax({
+                type: "POST",
+                cache: false,
+                processData: false,
+                contentType: false,
+                url: getAjaxUrl(),
+                data: formData,
+            }).done(function (response){
+                if (response.success) {
+                    window.location.reload();
+                }
+                if (response.data.message) {
+                    jQuery('.setting_message_result').text(response.data.message);
+                }
+
+            });
+        });
+
+    });
 
 });
 

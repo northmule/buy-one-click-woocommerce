@@ -94,7 +94,7 @@ class Core
     protected MarketingOptions $marketingOptions;
     /**
      * Все настройки плагина
-     * с значением по умолчанию
+     * со значением по умолчанию
      *
      * @var array<string, array>
      */

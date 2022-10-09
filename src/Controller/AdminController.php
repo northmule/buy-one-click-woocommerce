@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Controller;
 
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
+use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 use WC_Order;
@@ -38,6 +39,14 @@ class AdminController extends Controller
         add_action(
             'wp_ajax_removeorderall',
             [$this, 'deleteAllOrders']
+        );
+        add_action(
+            'wp_ajax_buy_one_click_export_options',
+            [$this, 'exportOptions']
+        );
+        add_action(
+            'wp_ajax_buy_one_click_import_options',
+            [$this, 'importOptions']
         );
     }
 
@@ -97,5 +106,53 @@ class AdminController extends Controller
         $id = $text['id'] ?? '-1';
         Order::getInstance()->update_status($id, intval($text['status']));
         wp_send_json_success();
+    }
+    
+    /**
+     * Экспорт настроек
+     *
+     * @return void
+     */
+    public function exportOptions(): void
+    {
+        wp_send_json_success([GeneralOptions::class => $this->commonOptions->toArrayWpToSave()]);
+    }
+    
+    /**
+     * Экспорт настроек
+     *
+     * @return void
+     */
+    public function importOptions(): void
+    {
+        $file = $_FILES;
+        $success = false;
+        try {
+            $settings = file_get_contents($file['file']['tmp_name']);
+            $settingsArray = json_decode($settings, true);
+            if (!is_array($settingsArray)) {
+                throw new \Exception('Settings not recognized');
+            }
+            $optionsObject = null;
+            foreach ($settingsArray as $settingClass => $options) {
+                if (GeneralOptions::class === $settingClass) {
+                    $optionsObject = new GeneralOptions(array_shift($options));
+                    break;
+                }
+            }
+            if ($optionsObject instanceof GeneralOptions) {
+                $optionsToSave = $optionsObject->toArrayWpToSave();
+                $optionsKey = array_key_first($optionsToSave);
+                update_option($optionsKey, $optionsToSave[$optionsKey]);
+                $success = true;
+            }
+            
+        } catch (\Throwable $exception) {
+            wp_send_json_error(['message' => $exception->getMessage()]);
+        }
+        if (!$success) {
+            wp_send_json_error(['message' => 'The settings for the plugin are not recognized']);
+        }
+        wp_send_json_success(['message' => 'Settings loaded']);
     }
 }

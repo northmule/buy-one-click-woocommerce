@@ -9,6 +9,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use Generator;
 
+use function json_encode;
 use function preg_match_all;
 
 trait OptionsTrait
@@ -22,12 +23,20 @@ trait OptionsTrait
     {
         $options = [];
         /**
- * @var ReflectionProperty $item
-*/
+         * @var ReflectionProperty $item
+         */
         foreach ($this->getProperty() as $item) {
             $options[$item->getName()] = $item->getValue($this);
         }
         return $options;
+    }
+    
+    /**
+     * @return string
+     */
+    public function toJson(): string
+    {
+        return json_encode($this->toArray());
     }
 
     /**
@@ -39,8 +48,8 @@ trait OptionsTrait
     {
         $options = [];
         /**
- * @var ReflectionProperty $item
-*/
+         * @var ReflectionProperty $item
+         */
         foreach ($this->getProperty() as $item) {
             $com = $item->getDocComment();
             preg_match_all('/@(\w+)\s+(.*)\r?\n/m', $com, $matches);

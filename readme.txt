@@ -72,6 +72,9 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.2.2 =
+* Fixed a problem with creating a zero order and an item with an empty price
+* Added import and export of the main plugin settings to a file
 = 2.2.1 =
 * Added currency to the order form
 * Added the ability to specify the status of the created order in WooCommerce

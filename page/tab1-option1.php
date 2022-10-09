@@ -489,17 +489,21 @@ $commonOptions = $this->getCommonOptions();
         <input type="hidden" name="action" value="update" />
         <p class="submit">
             <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+             <input name="export_options" type="button" class="button-secondary" value="<?php _e('Exporting Settings', 'coderun-oneclickwoo') ?>" />
+            <input name="import_options" type="button" class="button-secondary" value="<?php _e('Importing Settings', 'coderun-oneclickwoo') ?>" />
         </p>
-
+        <p class="setting_message_result"></p>
     </form>
-
+    <form method="post" id="form_settings_file_select" style="display:none">
+        <input id="settings_file_select" type="file"/>
+        <input type="hidden" name="action" value="buy_one_click_import_options">
+    </form>
     <fieldset>
         <legend><?php _e('Shortcodes and plugin hooks', 'coderun-oneclickwoo'); ?></legend>
         <div class="table-responsive">
             <table class="table">
                 <thead>
                 <tr>
-
                     <th class="active"><?php _e('Element', 'coderun-oneclickwoo'); ?></th>
                     <th class="success"><?php _e('Code to use', 'coderun-oneclickwoo'); ?></th>
                     <th class="warning"><?php _e('Description', 'coderun-oneclickwoo'); ?></th>

@@ -111,7 +111,7 @@ class Order
     public function createWooCommerceOrderWithoutSaving(int $productId): WC_Order
     {
         $product = wc_get_product($productId);
-        $order = new WC_Order(); //создаём новый заказ
+        $order = wc_create_order(); //создаём новый заказ
         $productItem = new WC_Order_Item_Product();
         $productItem->set_product($product);
         $productItem->set_quantity(1);
@@ -220,6 +220,7 @@ class Order
         $wpdb->insert($this->order_table, $order);
         Hooks::saveOrderToTable($wpdb->insert_id);
         if ($wpdb->last_error) {
+            // todo
         }
         return $wpdb->insert_id;
     }
