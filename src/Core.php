@@ -3,6 +3,7 @@
 namespace Coderun\BuyOneClick;
 
 use Coderun\BuyOneClick\Common\ObjectWithConstantState;
+use Coderun\BuyOneClick\Constant\Pages;
 use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
 use Coderun\BuyOneClick\Controller\Factory\AdminControllerFactory;
 use Coderun\BuyOneClick\Controller\Factory\CartControllerFactory;
@@ -385,7 +386,9 @@ class Core
             self::NAME_SUB_MENU,
             'manage_woocommerce',
             self::URL_SUB_MENU,
-            [$this, 'showSettingPage']
+            static function (): void {
+                include_once WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . self::PATCH_PLUGIN . DIRECTORY_SEPARATOR . self::OPTIONS_NAME_PAGE;
+            }
         );
         add_action('admin_print_styles-' . $page_option, [$this, 'styleAddPage']); //загружаем стили только для страницы плагина
         add_action('admin_print_scripts-' . $page_option, [$this, 'scriptAddPage']); //Скрипты
@@ -566,34 +569,18 @@ class Core
         wp_enqueue_script('buymaskedinput', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/jquery.maskedinput.min.js', ['jquery'], self::VERSION);
     }
 
+    
     /**
-     * Страница плагина
-     */
-    public function showSettingPage()
-    {
-        include_once WP_PLUGIN_DIR . '/' . self::PATCH_PLUGIN . '/' . self::OPTIONS_NAME_PAGE;
-    }
-
-    /**
-     * Активная вкладка в админпанели плагина
+     * Стиль активной вкладки
      *
-     * @return string css Класс для активной вкладки
+     * @param string $tabName
+     *
+     * @return string
      */
-    public function adminActiveTab($tab_name = null, $tab = null)
+    public function getCssOfActiveTab(string $tabName): string
     {
-        if (isset($_GET['tab']) && !$tab) {
-            $tab = $_GET['tab'];
-        } else {
-            $tab = 'general';
-        }
-
-        $output = '';
-        if (isset($tab_name) && $tab_name) {
-            if ($tab_name == $tab) {
-                $output = ' nav-tab-active';
-            }
-        }
-        echo $output;
+        $currentTab = $_GET['tab'] ?? Pages::GENERAL;
+        return $tabName === $currentTab ? 'nav-tab-active' : '';
     }
 
     /**
@@ -606,10 +593,12 @@ class Core
     public function showPage(): void
     {
         $pages = $this->getTabs();
-        $tab = $_GET['tab'] ?? 'default';
+        $tab = $_GET['tab'] ?? Pages::DEFAULT;
         if (array_key_exists($tab, $pages) && file_exists($pages[$tab])) {
-            include $pages[$tab];
+            include_once $pages[$tab];
+            return;
         }
+        include_once $pages[Pages::DEFAULT];
     }
 
     /**
@@ -621,13 +610,12 @@ class Core
     {
         $path = WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . self::PATCH_PLUGIN . DIRECTORY_SEPARATOR . 'page';
         return [
-            'default'      => sprintf('%s/tab1-option1.php', $path),
-            'general'      => sprintf('%s/tab1-option1.php', $path),
-            'notification' => sprintf('%s/tab2-option1.php', $path),
-            'orders'       => sprintf('%s/tab3-option1.php', $path),
-            'help'         => sprintf('%s/tab4-option1.php', $path),
-            'marketing'    => sprintf('%s/tab5-option1.php', $path),
-            'design_form'  => sprintf('%s/tab6-option1.php', $path),
+            Pages::DEFAULT      => sprintf('%s/tab1-option1.php', $path),
+            Pages::GENERAL      => sprintf('%s/tab1-option1.php', $path),
+            Pages::NOTIFICATION => sprintf('%s/tab2-option1.php', $path),
+            Pages::ORDERS       => sprintf('%s/tab3-option1.php', $path),
+            Pages::MARKETING    => sprintf('%s/tab5-option1.php', $path),
+            Pages::DESIGN_FORM  => sprintf('%s/tab6-option1.php', $path),
         ];
     }
 

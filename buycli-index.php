@@ -7,15 +7,15 @@
  * Version: 2.2.2
  * Author: Djo
  * Author URI: https://zixn.ru
- * WC requires at least: 5.2
- * WC tested up to: 5.9
- * Requires at least: 5.1
- * Tested up to: 5.9
+ * WC requires at least: 5.7
+ * WC tested up to: 7.3
+ * Requires at least: 5.5
+ * Tested up to: 6.1
  * Text Domain: coderun-oneclickwoo
  * Domain Path: /languages
  */
 
-/*  Copyright 2022  Djo  (email: izm@zixn.ru)
+/*  Copyright 2023  Djo  (email: izm@zixn.ru)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -47,21 +47,20 @@ define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.0.2');
 /**
  * Инициализация всего плагина
  */
-function coderun_buy_plugin_init_core()
+(function()
 {
     load_plugin_textdomain(
         'coderun-oneclickwoo',
         false,
         dirname(plugin_basename(__FILE__)) . '/languages'
     );
-
+    
     require_once(CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
     
     $main = Coderun\BuyOneClick\Core::getInstance();
     $main->initializingPlugin();
     register_activation_hook(__FILE__, [$main, 'activationPlugin']);
     register_deactivation_hook(__FILE__, [$main, 'deactivationPlugin']);
- 
-
-}
-coderun_buy_plugin_init_core();
+    
+    
+})();
