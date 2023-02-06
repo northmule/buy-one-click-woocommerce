@@ -72,6 +72,10 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.2.3 =
+* Removed part of the old code
+* Removed some of the unnecessary information from the settings
+* Fixed a bug with duplicate orders when calculating the price of goods
 = 2.2.2 =
 * Fixed a problem with creating a zero order and an item with an empty price
 * Added import and export of the main plugin settings to a file
