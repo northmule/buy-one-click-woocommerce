@@ -159,8 +159,6 @@ class Order
 
             $fee_total += $item->get_total();
         }
-        // $order->calculate_taxes();
-
         foreach ($order->get_items() as $item) {
             $cart_subtotal_tax += $item->get_subtotal_tax();
             $cart_total_tax += $item->get_total_tax();

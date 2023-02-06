@@ -485,6 +485,9 @@ $commonOptions = $this->getCommonOptions();
                     </td>
                 </tr>
             </table>
+            <div class="admin-link-block bottom-right">
+                <?php require 'admin-link-block.php'; ?>
+            </div>
         </fieldset>
         <input type="hidden" name="action" value="update" />
         <p class="submit">
@@ -498,49 +501,3 @@ $commonOptions = $this->getCommonOptions();
         <input id="settings_file_select" type="file"/>
         <input type="hidden" name="action" value="buy_one_click_import_options">
     </form>
-    <fieldset>
-        <legend><?php _e('Shortcodes and plugin hooks', 'coderun-oneclickwoo'); ?></legend>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class="active"><?php _e('Element', 'coderun-oneclickwoo'); ?></th>
-                    <th class="success"><?php _e('Code to use', 'coderun-oneclickwoo'); ?></th>
-                    <th class="warning"><?php _e('Description', 'coderun-oneclickwoo'); ?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="active"><?php _e('Element', 'coderun-oneclickwoo'); ?></td>
-                    <td class="success">[viewBuyButton id="<?php _e('Optional parameter of the real product ID', 'coderun-oneclickwoo'); ?>"]</td>
-                    <td class="warning">
-                        1. <?php _e('Button shortcode must be inserted in product output cycles, where it is possible to get the product ID. Wherein
-                         The shortcode loads styles and scripts for itself, and the "buy" button will be shown if there is a tick "Enable the display of the shortcode button"', 'coderun-oneclickwoo'); ?>
-                        <br>
-                        2. <?php _e('If the ID of the actual WooCommerce product is specified, then you can insert the button anywhere on your site.', 'coderun-oneclickwoo') ?>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td class="active"><?php _e('Buy button in any version', 'coderun-oneclickwoo'); ?></td>
-                    <td class="success">[viewBuyButtonCustom id="<?php _e('your item code (string)', 'coderun-oneclickwoo'); ?>" name="<?php _e('your name (string)', 'coderun-oneclickwoo'); ?>" count="<?php _e('purchase quantity (number)', 'coderun-oneclickwoo'); ?>" price="<?php _e('price (number)', 'coderun-oneclickwoo'); ?>"]</td>
-                    <td class="warning"><?php _e('Short code buttons with arbitrary parameters, you can set the "gag" is not tied to real goods.
-                         With this shortcode, orders will be recorded only in the plug-in table, in the Woocommerce table - no entries will be made.
-                         In this case, the Shortcode loads styles and scripts for itself, and the "buy" button will be shown if there is a checkmark "Enable display of the shortcode button"', 'coderun-oneclickwoo'); ?>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td class="active"><?php _e('New order event', 'coderun-oneclickwoo'); ?></td>
-                    <td class="success"><?php _e('Call', 'coderun-oneclickwoo'); ?> add_action('buy_click_new_order', '<?php _e('Your function', 'coderun-oneclickwoo'); ?>', 100, 2);</td>
-                    <td class="warning"><?php _e('An event (hook) occurs when a new order is formed via a plug-in form. As of arguments takes two arrays 1st function result, 2 - data sent to the plugins order book', 'coderun-oneclickwoo'); ?>   </td>
-
-                </tr>
-                </tbody>
-
-            </table>
-            <div class="admin-link-block bottom-right">
-                <?php require 'admin-link-block.php'; ?>
-            </div>
-        </div>
-    </fieldset>

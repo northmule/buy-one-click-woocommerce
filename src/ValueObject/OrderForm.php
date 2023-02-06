@@ -165,13 +165,7 @@ class OrderForm
         if (!$this->isWooCommerceProduct) {
             return;
         }
-        $wcOrder = Order::getInstance()->createWooCommerceOrderWithoutSaving($this->productId);
-        $this->productPriceWithTax = (float) Order::getInstance()->calculate_order_totals($wcOrder);
-        /** @var \WC_Order_Item_Product $orderItem */
-        foreach ($wcOrder->get_items() as $orderItem) {
-            $wcOrder->remove_item($orderItem->get_id());
-        }
-        $wcOrder->delete(true);
+        $this->productPriceWithTax = wc_get_price_including_tax(wc_get_product($this->productId));
     }
 
     /**
