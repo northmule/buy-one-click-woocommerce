@@ -234,12 +234,6 @@ class Core
     {
         if ($this->commonOptions->isEnableButton()) {
             $locationInProductCard = $this->commonOptions->getPositionButton(); //Позиция кнопки
-            if (ObjectWithConstantState::getInstance()->isVariations()) {
-                $positionInVariations = VariationsAddition::getInstance()->getPositionButton();
-                if ($positionInVariations !== false) {
-                    $locationInProductCard = $positionInVariations;
-                }
-            }
             add_action($locationInProductCard, [$this, 'styleAddFrontPage']); //Стили фронта
             add_action($locationInProductCard, [$this, 'scriptAddFrontPage']); //Скрипты фронта
             add_action(
@@ -304,7 +298,7 @@ class Core
     protected function frontVariables(): void
     {
         $variables = ['ajaxurl' => admin_url('admin-ajax.php')];
-        $variables['variation'] = ObjectWithConstantState::getInstance()->isVariations() ? 1 : 0;
+        $variables['variation'] = 0;
         $variables['tel_mask'] = str_replace(['\'', '"'], [], $this->commonOptions->getPhoneNumberInputMask());
         $variables['work_mode'] = $this->commonOptions->getPluginWorkMode();
         $variables['success_action'] = $this->commonOptions->getActionAfterSubmittingForm();
@@ -332,7 +326,7 @@ class Core
             'goal_id'                          => $this->marketingOptions->getGoalIdInYandexECommerce(),
         ];
         $variables['add_an_order_to_woo_commerce'] = $this->commonOptions->isAddAnOrderToWooCommerce();
-
+        $variables = Hooks::filterInitFrontVariables($variables);
         $outputList = [
             sprintf('<script type="text/javascript">%s', "\n"),
             sprintf('let buyone_ajax = %s;%s', json_encode($variables), "\n"),

@@ -89,7 +89,6 @@ class OrderController extends Controller
             $orderForm = new OrderForm(
                 $_POST,
                 $notificationOptions,
-                ObjectWithConstantState::getInstance()->isVariations(),
                 $files
             );
             $this->checkRequireField($orderForm, new FieldNameViaType($this->commonOptions));

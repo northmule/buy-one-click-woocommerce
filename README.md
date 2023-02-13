@@ -46,6 +46,10 @@ add_filter('coderun_oneclickwoo_file_valid_mime_types',
         return $newName;
     });
 ```
+* All the hooks and filters of the plugin
+```php 
+Coderun\BuyOneClick\Utils\Hooks::class
+```
 
 ### Available shortcodes
 

@@ -10,6 +10,7 @@ use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
 use Coderun\BuyOneClick\Core;
+use Coderun\BuyOneClick\Utils\Hooks;
 use Exception;
 use Coderun\BuyOneClick\SimpleDataObjects\ShortcodeParameters as ShortcodeParametersObjects;
 
@@ -81,8 +82,8 @@ class ShortCodes
         $core = Core::getInstance();
         $core->styleAddFrontPage();
         $core->scriptAddFrontPage();
-        if (ObjectWithConstantState::getInstance()->isVariations()) {
-            $content = \Coderun\BuyOneClick\VariationsAddition::getInstance()->shortCode();
+        if (!empty($params['id'])) {
+            $content = $this->initVariationAddon((int)$params['id']);
         }
         $content .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons($params);
         return $content;
@@ -128,5 +129,25 @@ class ShortCodes
                 ]
             )
         );
+    }
+    
+    /**
+     * Инициализация для дополнения с вариативными товарами
+     *
+     * @param int $productId
+     *
+     * @return string
+     */
+    protected function initVariationAddon(int $productId): string
+    {
+        $product = wc_get_product($productId);
+        if (!$product instanceof \WC_Product_Variable) {
+            return '';
+        }
+        ob_start();
+        Hooks::beforeDrawingOrderButtonOnlyForVariableProducts($this);
+        $page = \ob_get_contents();
+        ob_end_clean();
+        return $page;
     }
 }

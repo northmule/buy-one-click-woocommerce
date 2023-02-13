@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Common;
 
-use function class_exists;
+use Coderun\BuyOneClick\Utils\Hooks;
+
 
 /**
  * Что то вроде глобальной переменной живущей от начала до конца
@@ -25,12 +26,10 @@ class ObjectWithConstantState
      * @var boolean
      */
     protected bool $variations = false;
-
+    
     protected function __construct()
     {
-        if (class_exists('\Coderun\BuyOneClick\VariationsAddition')) {
-            $this->variations = true;
-        }
+        $this->variations = Hooks::filterVariationsPluginIsUsed($this);
     }
 
     /**

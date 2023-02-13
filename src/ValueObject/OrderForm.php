@@ -6,10 +6,9 @@ namespace Coderun\BuyOneClick\ValueObject;
 
 use Coderun\BuyOneClick\Exceptions\ObjectException;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
-use Coderun\BuyOneClick\Repository\Order;
 use Coderun\BuyOneClick\SimpleDataObjects\DownloadedFile;
+use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Uuid as UuidUtils;
-use Coderun\BuyOneClick\VariationsAddition;
 use WC_Data_Exception;
 
 /**
@@ -116,7 +115,6 @@ class OrderForm
     public function __construct(
         array $formData,
         NotificationOptions $notificationOptions,
-        bool $variationEnable = false,
         array $files = []
     ) {
         $this->formData = $formData;
@@ -143,9 +141,7 @@ class OrderForm
         $this->quantityProduct = $this->formDateParse('quantity_product') == ''
             ? 1 : intval($this->formDateParse('quantity_product'));
         $this->fillInPriceWithTax();
-        if ($variationEnable) {
-            $this->fillingWithVariations();
-        }
+        $this->fillingWithVariations();
         $this->filesUrlCollection = $this->collectUrlToUploadedFiles($files);
         foreach ($this->filesUrlCollection as $fileUrl) {
             $this->filesLink = sprintf('</br> %s', $this->collectLinkToProductForUser($fileUrl));
@@ -175,12 +171,11 @@ class OrderForm
      */
     private function fillingWithVariations(): void
     {
-        $pluginVariations = VariationsAddition::getInstance();
-        $this->variationData = $pluginVariations->getVariableProductInfo($this->getFormsField());
-        $variation_id = $pluginVariations->getVariationId($this->getFormsField());
+        $this->variationData = Hooks::filterDataAboutSelectedVariationFromForm($this->getFormsField());
+        $variation_id = Hooks::filterGetIdOfSelectedVariation($this->getFormsField());
         if ($variation_id > 0) {
             $this->productIsVariable = true;
-            $this->productId = (int) $variation_id;
+            $this->productId = $variation_id;
         }
     }
 

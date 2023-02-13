@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Service;
 
+use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\SimpleDataObjects\CustomOrderButton as CustomOrderButtonDataObject;
 use Coderun\BuyOneClick\SimpleDataObjects\OrderButton as OrderButtonDataObject;
 use Coderun\BuyOneClick\SimpleDataObjects\ShortcodeParameters;
 use Coderun\BuyOneClick\Templates\OrderButton;
+use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Product as ProductUtils;
 use Exception;
 
@@ -68,6 +70,7 @@ class Button
                     }
                 }
             }
+            $this->initVariationAddon($productId);
 
             return (new OrderButton())->render(
                 new OrderButtonDataObject(
@@ -95,6 +98,7 @@ class Button
     public function getHtmlOrderButtonsCustom(ShortcodeParameters $params): string
     {
         if ($this->commonOptions->getNameButton() and $this->commonOptions->getPositionButton()) {
+            $this->initVariationAddon((int)$params->id);
             return (new OrderButton())->render(
                 new CustomOrderButtonDataObject(
                     [
@@ -140,5 +144,21 @@ class Button
         //onbackorder - в не выполненом заказе
 
         return $stockStatus === 'outofstock' ? $name : $defaultName;
+    }
+    
+    /**
+     * Инициализация для дополнения с вариативными товарами
+     *
+     * @param int $productId
+     *
+     * @return void
+     */
+    protected function initVariationAddon(int $productId)
+    {
+        $product = wc_get_product($productId);
+        if (!$product instanceof \WC_Product_Variable) {
+            return;
+        }
+        Hooks::beforeDrawingOrderButtonOnlyForVariableProducts($this);
     }
 }

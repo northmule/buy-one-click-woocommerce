@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Utils;
 
+use function is_bool;
+use function is_int;
+use function is_string;
+
 /**
  * Class Hooks
  *
@@ -22,9 +26,8 @@ class Hooks
     /**
      * Вызывается после создания нового заказа
      *
-     * @param array $arResult результат функции с заказом
-     * @param array $arLog    лог(журнал
-     *                        плагина)
+     * @param array $arResult Результат функции с заказом
+     * @param array $arLog    Лог(журнал плагина)
      */
     public static function buyClickNewrder($arResult, $arLog)
     {
@@ -98,5 +101,78 @@ class Hooks
     public static function filterPathToFileFolder(array $path)
     {
         return apply_filters('coderun_oneclickwoo_file_load_folder_path', $path);
+    }
+    
+    /**
+     * Перед тем как будет нарисована кнопка быстрого заказа в карточке товара
+     * Только для вариативных товаров
+     *
+     * @param $context object|mixed текущий объект
+     *
+     * @return void
+     */
+    public static function beforeDrawingOrderButtonOnlyForVariableProducts($context): void
+    {
+        do_action('buy_click_before_drawing_order_button_only_for_variable_products', $context);
+    }
+    
+    /**
+     * Во время сборки массива пременных JS фронт
+     *
+     * @param array $variables
+     *
+     * @return array
+     */
+    public static function filterInitFrontVariables(array $variables): array
+    {
+        return apply_filters('buy_click_init_front_variables', $variables) ?? $variables;
+    }
+    
+    /**
+     * Принимает данные с формы, возвращает читабельную строку
+     *
+     * @param array $form
+     *
+     * @return string
+     */
+    public static function filterDataAboutSelectedVariationFromForm(array $form): string
+    {
+        $result = apply_filters('buy_click_data_about_selected_variation_from_form', $form);
+        if (!is_string($result)) {
+            return '';
+        }
+        return $result;
+    }
+    
+    /**
+     * ИД вариативного товара с формы
+     *
+     * @param array $form
+     *
+     * @return int
+     */
+    public static function filterGetIdOfSelectedVariation(array $form): int
+    {
+        $result = apply_filters('buy_click_get_id_of_selected_variation', $form);
+        if (!is_int($result)) {
+            return 0;
+        }
+        return $result;
+    }
+    
+    /**
+     * Устанавливает признак активности плагина вариативных товаров
+     *
+     * @param $context
+     *
+     * @return bool
+     */
+    public static function filterVariationsPluginIsUsed($context): bool
+    {
+        $result = apply_filters('buy_click_variations_plugin_is_used', $context);
+        if (!is_bool($result)) {
+            return false;
+        }
+        return $result;
     }
 }
