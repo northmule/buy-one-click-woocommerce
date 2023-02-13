@@ -149,11 +149,11 @@ class Button
     /**
      * Инициализация для дополнения с вариативными товарами
      *
-     * @param int $productId
+     * @param int|string $productId
      *
      * @return void
      */
-    protected function initVariationAddon(int $productId)
+    protected function initVariationAddon($productId)
     {
         $product = wc_get_product($productId);
         if (!$product instanceof \WC_Product_Variable) {

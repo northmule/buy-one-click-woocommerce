@@ -12,7 +12,9 @@ use WC_Order_Item_Product;
 
 class Order
 {
+    /** @var Order  */
     protected static $_instance = null;
+    /** @var string  */
     protected $order_table = 'wp_coderun_oneclickwoo_orders';
 
     /**
@@ -26,10 +28,6 @@ class Order
             self::$_instance = new self();
         }
         return self::$_instance;
-    }
-
-    protected function __construct()
-    {
     }
 
     /**
