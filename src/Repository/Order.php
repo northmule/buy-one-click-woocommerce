@@ -5,6 +5,7 @@ namespace Coderun\BuyOneClick\Repository;
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
 use Coderun\BuyOneClick\Hydrator\CommonHydrator;
 use Coderun\BuyOneClick\Utils\Hooks;
+use Coderun\BuyOneClick\Utils\Product as ProductUtils;
 use Exception;
 use WC_Order;
 use WC_Order_Item;
@@ -67,8 +68,8 @@ class Order
             'product_id'   => $product->is_type('variation') ? $product->get_parent_id() : $product->get_id(),
             'variation_id' => $params['product_id'],
             'variation'    => $product->is_type('variation') ? $product->get_attributes() : [],
-            'subtotal'     => wc_get_price_excluding_tax($product, ['qty' => $params['qty']]),
-            'total'        => wc_get_price_excluding_tax($product, ['qty' => $params['qty']]),
+            'subtotal'     => ProductUtils::getProductPrice($product, $params['qty']),
+            'total'        => ProductUtils::getProductPrice($product, $params['qty']),
             'quantity'     => $params['qty'],
         ];
         $order->add_product($product, $params['qty'], $product_params);
