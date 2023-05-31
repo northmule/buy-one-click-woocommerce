@@ -1366,4 +1366,27 @@ class General extends Base
         $this->wooCommerceOrderStatus = $wooCommerceOrderStatus;
         return $this;
     }
+    
+    /**
+     * Поля которые можно переводить
+     *
+     * @return array
+     */
+    public function getTextsForTranslation(): array
+    {
+        return [
+            $this->getDescriptionForFieldComment(),
+            $this->getDescriptionConsentToProcessing(),
+            $this->getDescriptionForFieldEmail(),
+            $this->getDescriptionForFieldFiles(),
+            $this->getDescriptionForFieldFormatPhone(),
+            $this->getDescriptionForFieldName(),
+            $this->getDescriptionOfPreOrderButton(),
+            $this->getNameButton(),
+            $this->getDescriptionForFieldOrderButton(),
+            $this->getMessageAfterSubmittingForm(),
+            $this->getSubmittingFormMessageSuccess(),
+            $this->getFormSubmissionLimitMessage(),
+        ];
+    }
 }

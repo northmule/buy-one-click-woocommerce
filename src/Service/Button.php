@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Service;
 
-use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\SimpleDataObjects\CustomOrderButton as CustomOrderButtonDataObject;
@@ -13,6 +12,7 @@ use Coderun\BuyOneClick\SimpleDataObjects\ShortcodeParameters;
 use Coderun\BuyOneClick\Templates\OrderButton;
 use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Product as ProductUtils;
+use Coderun\BuyOneClick\Utils\Translation;
 use Exception;
 
 use function file_get_contents;
@@ -51,7 +51,7 @@ class Button
     public function getHtmlOrderButtons($params = []): string
     {
         if ($this->commonOptions->getPositionButton()) {
-            $name = self::getButtonName();
+            $name = $this->getButtonName();
             $productId = ProductUtils::getProductId();
             if (isset($params['id']) && !empty($params['id'])) {
                 $productId = $params['id'];
@@ -107,7 +107,7 @@ class Button
                         'productCount'     => $params->count,
                         'productName'      => $params->name,
                         'productPriceHtml' => $params->priceWithCurrency,
-                        'buttonName'       => $this->commonOptions->getNameButton(),
+                        'buttonName'       => Translation::translate($this->commonOptions->getNameButton()),
                         'inlineStyle'      => '',
                         'inlineScript'     => '',
                     ]
@@ -136,14 +136,14 @@ class Button
         }
 
         if (ProductUtils::getProductId() === 0 || !$this->commonOptions->isEnableWorkWithRemainingItems()) {
-            return $defaultName;
+            return Translation::translate($defaultName);
         }
         $stockStatus = get_post_meta(ProductUtils::getProductId(), '_stock_status', true);
         //outofstock - нет в наличие
         //instock - в наличие
         //onbackorder - в не выполненом заказе
 
-        return $stockStatus === 'outofstock' ? $name : $defaultName;
+        return Translation::translate($stockStatus === 'outofstock' ? $name : $defaultName);
     }
     
     /**

@@ -5,6 +5,7 @@ namespace Coderun\BuyOneClick;
 use Coderun\BuyOneClick\Common\ObjectWithConstantState;
 use Coderun\BuyOneClick\Constant\Pages;
 use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
+use Coderun\BuyOneClick\Constant\TranslationString;
 use Coderun\BuyOneClick\Controller\Factory\AdminControllerFactory;
 use Coderun\BuyOneClick\Controller\Factory\CartControllerFactory;
 use Coderun\BuyOneClick\Controller\Factory\FormControllerFactory;
@@ -16,6 +17,7 @@ use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
 use Coderun\BuyOneClick\Service\Factory\EmailTemplateFactory;
 use Coderun\BuyOneClick\Service\Factory\ShortCodesFactory;
 use Coderun\BuyOneClick\Utils\Hooks;
+use Coderun\BuyOneClick\Utils\Translation;
 use Exception;
 use WC_Product;
 use Coderun\BuyOneClick\Constant\Options\Type as OptionsType;
@@ -138,6 +140,16 @@ class Core
         );
         add_action(
             'init',
+            [Translation::class, 'registrationTranslate']
+        );
+        add_action(
+            'init',
+            function (): void {
+                Translation::registrationTranslateByOptions($this->commonOptions);
+            }
+        );
+        add_action(
+            'init',
             function (): void {
                 do_action('buy_one_click_woocommerce_start_load_core');
                 ObjectWithConstantState::getInstance();
@@ -188,6 +200,15 @@ class Core
                 Hooks::load();
             }
         );
+        add_filter('gettext', function ($translation, $text, $domain) {
+            if ($domain !== 'coderun-oneclickwoo' || !function_exists('pll__')) {
+                return $translation;
+            }
+            if (!in_array($text, TranslationString::all())) {
+                return $translation;
+            }
+            return Translation::translate($text);
+        }, 10, 3);
     }
 
     /**
@@ -312,7 +333,7 @@ class Core
             if ($this->commonOptions->getUrlRedirectAddress()) {
                 $variables['after_submit_form'] = $this->commonOptions->getUrlRedirectAddress(); // 4  Редирект на страницу после нажатия на кнопку в форме
             }
-            $variables['after_message_form'] = $this->commonOptions->getSubmittingFormMessageSuccess();
+            $variables['after_message_form'] = Translation::translate($this->commonOptions->getSubmittingFormMessageSuccess());
         }
         if ($this->marketingOptions->getAfterClickingOnButton()) {
             $variables['callback_after_clicking_on_button'] = $this->marketingOptions->getAfterClickingOnButton();

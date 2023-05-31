@@ -19,6 +19,6 @@ if (!defined('ABSPATH')) {
         data-count="<?php echo $fields->productId; ?>"
         data-price="<?php echo $fields->productPrice; ?>"
         data-priceHtml="<?php echo $fields->productPriceHtml; ?>">
-    <span><?php echo $fields->buttonName; ?></span>
+    <span><?php echo \Coderun\BuyOneClick\Utils\Translation::translate($fields->buttonName); ?></span>
     <div style="font-size:14px" class="ld ld-ring ld-cycle"></div>
 </button>

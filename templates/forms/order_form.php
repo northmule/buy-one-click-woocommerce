@@ -1,4 +1,7 @@
 <?php
+
+use Coderun\BuyOneClick\Utils\Translation;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -16,7 +19,7 @@ $commonOptions = $render->getCommonOptions();
     <div class="popup">
         <div class="close_order <?php echo $fields->templateStyle ? 'button' : '' ?>">x</div>
         <form id="buyoneclick_form_order" class="b1c-form" method="post" action="#">
-            <h2><?php echo $commonOptions->getNameButton(); ?></h2>
+            <h2><?php echo Translation::translate($commonOptions->getNameButton()); ?></h2>
             <?php if ($commonOptions->isEnableProductInformation()) { ?>
                 <div class="table-wrap">
                     <table>
@@ -55,10 +58,10 @@ $commonOptions = $render->getCommonOptions();
             <?php } ?>
             
             <?php if ($commonOptions->isEnableFieldWithName()) { ?>
-                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?>" type="text" <?php ?> placeholder="<?php echo $commonOptions->getDescriptionForFieldName(); ?>" name="txtname">
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?>" type="text" <?php ?> placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldName()); ?>" name="txtname">
             <?php } ?>
             <?php if ($commonOptions->isEnableFieldWithPhone()) { ?>
-                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="tel" <?php ?> placeholder="<?php echo $commonOptions->getDescriptionForFieldPhone(); ?>" name="txtphone">
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="tel" <?php ?> placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldPhone()); ?>" name="txtphone">
                 <p class="phoneFormat"><?php
                     if (!empty($commonOptions->getDescriptionForFieldFormatPhone())) {
                         echo __('Format', 'coderun-oneclickwoo') . ' ' . $commonOptions->getDescriptionForFieldFormatPhone();
@@ -66,16 +69,16 @@ $commonOptions = $render->getCommonOptions();
                     ?></p>
             <?php } ?>
             <?php if ($commonOptions->isEnableFieldWithEmail()) { ?>
-                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="email" <?php ?> placeholder="<?php echo $commonOptions->getDescriptionForFieldEmail(); ?>" name="txtemail">
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="email" <?php ?> placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldEmail()); ?>" name="txtemail">
             <?php } ?>
             <?php if ($commonOptions->isEnableFieldWithComment()) { ?>
-                <textarea class="buymessage buyvalide" <?php ?> name="message" placeholder="<?php echo $commonOptions->getDescriptionForFieldComment(); ?>" rows="2" value=""></textarea>
+                <textarea class="buymessage buyvalide" <?php ?> name="message" placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldComment()); ?>" rows="2" value=""></textarea>
             <?php } ?>
             
             <?php if ($commonOptions->isConsentToProcessing()) { ?>
                 <p>
                     <input type="checkbox" name="conset_personal_data">
-                    <?php echo $commonOptions->getDescriptionConsentToProcessing(); ?>
+                    <?php echo Translation::translate($commonOptions->getDescriptionConsentToProcessing()); ?>
                 </p>
             <?php } ?>
             
@@ -104,7 +107,7 @@ $commonOptions = $render->getCommonOptions();
                 type="submit"
                 class="button alt buyButtonOkForm ld-ext-left"
                 name="btnsend">
-                <span> <?php echo $commonOptions->getDescriptionForFieldOrderButton(); ?></span>
+                <span> <?php echo Translation::translate($commonOptions->getDescriptionForFieldOrderButton()); ?></span>
                 <div style="font-size:14px" class="ld ld-ring ld-cycle"></div>
             </button>
         
@@ -117,7 +120,7 @@ $commonOptions = $render->getCommonOptions();
         <div class = "overlay_message" title = "<?php _e('Notification', 'coderun-oneclickwoo'); ?>"></div>
         <div class = "popummessage">
             <div class="close_message">x</div>
-            <?php echo $commonOptions->getMessageAfterSubmittingForm();  ?>
+            <?php echo Translation::translate($commonOptions->getMessageAfterSubmittingForm());  ?>
         </div>
         <?php
     }

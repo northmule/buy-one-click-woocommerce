@@ -26,6 +26,7 @@ use Coderun\BuyOneClick\Service\UploadingFiles;
 use Coderun\BuyOneClick\Utils\Email as EmailUtils;
 use Coderun\BuyOneClick\Utils\Hooks;
 use Coderun\BuyOneClick\Utils\Sms as SmsUtils;
+use Coderun\BuyOneClick\Utils\Translation;
 use Coderun\BuyOneClick\ValueObject\FieldNameViaType;
 use Coderun\BuyOneClick\ValueObject\OrderForm;
 use WC_Order;
@@ -167,7 +168,7 @@ class OrderController extends Controller
             );
             $orderResponse = new OrderResponse();
             $orderResponse->setMessage(__('The order has been sent', 'coderun-oneclickwoo'));
-            $orderResponse->setResult($this->commonOptions->getSubmittingFormMessageSuccess());
+            $orderResponse->setResult(Translation::translate($this->commonOptions->getSubmittingFormMessageSuccess()));
             $orderResponse->setProducts([new Product($orderForm)]);
             $orderResponse->setOrderUuid($orderForm->getOrderUuid());
             $orderResponse->setOrderId(intval($wooOrderId));

@@ -124,21 +124,16 @@ jQuery(document).ready(function () {
      */
     jQuery(document).on('click', 'button.clickBuyButton', function (e) {
         e.preventDefault();
-        var self = jQuery(this);
+        let self = jQuery(this);
         if(jQuery(self).hasClass('disabled')){
             return;
         }
-        var zixnAjaxUrl = getAjaxUrl();
-        var butObj = 'body';
-        // var butObj = self.parent();
-
-        var button = jQuery(this);
-
-        var urlpost = window.location.href;
-        var productid = jQuery(this).attr('data-productid');
-        var action = 'getViewForm';
-        var variation_selected = 0;
-        var variation_attr = '';
+        let button = jQuery(this);
+        let urlpost = window.location.href;
+        let productid = jQuery(this).attr('data-productid');
+        let action = 'getViewForm';
+        let variation_selected = 0;
+        let variation_attr = '';
 
         jQuery(button).addClass('running');
 
@@ -152,8 +147,7 @@ jQuery(document).ready(function () {
 
         jQuery.ajax({
             type: "POST",
-            url: zixnAjaxUrl,
-            // async: false,
+            url: getAjaxUrl(),
             data: {
                 action: action,
                 urlpost: urlpost,
@@ -170,7 +164,7 @@ jQuery(document).ready(function () {
                     return true;
                 }
                 jQuery('#formOrderOneClick').remove();
-                jQuery(butObj).append(response.data);
+                jQuery('body').append(response.data);
                 jQuery('.popup, .overlay').css('opacity', '1');
                 jQuery('.popup, .overlay').css('visibility', 'visible');
 
@@ -180,9 +174,12 @@ jQuery(document).ready(function () {
                 jQuery(button).removeClass('running');
                 buyone_click_body_scroll();
                 if (typeof buyone_ajax.callback_after_clicking_on_button !== 'undefined') {
-                    var callback = new Function(buyone_ajax.callback_after_clicking_on_button);
+                    const callback = new Function(buyone_ajax.callback_after_clicking_on_button);
                     callback();
                 }
+            },
+            error: function (response) {
+
             }
         });
     });
@@ -220,7 +217,7 @@ jQuery(document).ready(function () {
                 jQuery('.popup, .overlay').css('visibility', 'visible');
                 buyone_click_body_scroll();
                 if (typeof buyone_ajax.callback_after_clicking_on_button !== 'undefined') {
-                    var callback = new Function(buyone_ajax.callback_after_clicking_on_button);
+                    const callback = new Function(buyone_ajax.callback_after_clicking_on_button);
                     callback();
                 }
             }

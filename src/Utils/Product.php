@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Utils;
 
+use Throwable;
 use WC_Product;
+
+use function class_exists;
+use function is_array;
+use function method_exists;
 
 /**
  * Class Product
@@ -31,6 +36,8 @@ class Product
     }
     
     /**
+     * Цена товара с учётом сторонних дополнений
+     *
      * @param     $product
      * @param int $quantity
      *
@@ -38,14 +45,21 @@ class Product
      */
     public static function getProductPrice($product, $quantity = 1)
     {
-        if (!$product instanceof \WC_Product) {
+        if (!$product instanceof WC_Product) {
             return '';
         }
         $prices = [];
-        if (class_exists('\Wdr\App\Controllers\ManageDiscount') && method_exists('Wdr\App\Controllers\ManageDiscount', 'calculateInitialAndDiscountedPrice')) {
-            $prices = \Wdr\App\Controllers\ManageDiscount::calculateInitialAndDiscountedPrice($product, $quantity);
+        try {
+            // plugin - Woo Discount Rules
+            if (class_exists('\Wdr\App\Controllers\ManageDiscount')
+                && method_exists('Wdr\App\Controllers\ManageDiscount', 'calculateInitialAndDiscountedPrice')) {
+                $prices = \Wdr\App\Controllers\ManageDiscount::calculateInitialAndDiscountedPrice($product, $quantity);
+            }
+        } catch (Throwable $e) {
+         // ignore errors
         }
-        if (is_array($prices) && isset($prices['discounted_price'])) {
+
+        if (is_array($prices) && !empty($prices['discounted_price'])) {
             return $prices['discounted_price'];
         }
     

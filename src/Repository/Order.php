@@ -68,8 +68,8 @@ class Order
             'product_id'   => $product->is_type('variation') ? $product->get_parent_id() : $product->get_id(),
             'variation_id' => $params['product_id'],
             'variation'    => $product->is_type('variation') ? $product->get_attributes() : [],
-            'subtotal'     => ProductUtils::getProductPrice($product, $params['qty']),
-            'total'        => ProductUtils::getProductPrice($product, $params['qty']),
+            'subtotal'     => ProductUtils::getProductPrice($product) * intval($params['qty']),
+            'total'        => ProductUtils::getProductPrice($product) * intval($params['qty']),
             'quantity'     => $params['qty'],
         ];
         $order->add_product($product, $params['qty'], $product_params);

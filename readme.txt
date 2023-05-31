@@ -3,11 +3,11 @@ Contributors: northmule
 Donate link: https://yoomoney.ru/to/41001746944171
 Tags: woocommerce, ecommerce, mode catalog, buy one click, buy now, add to cart, buy now button, buttons
 Requires at least: 5.0
-Tested up to: 6.1
-Stable tag: 5.7
+Tested up to: 6.2
+Stable tag: 5.9
 Requires PHP: 7.4
-WC requires at least: 4.7
-WC tested up to: 6.1
+WC requires at least: 5.0
+WC tested up to: 7.7
 License: GPLv2 or later
 License URI: http://www.apache.org/licenses/
 
@@ -72,6 +72,9 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.2.5 =
+* Added polylang support for multilingual sites
+* Added plugin "Woo Discount Rules" support for product pricing
 = 2.2.4 =
 * Improved compatibility with the plugin "coderun-buy-one-click-woocommerce-variations"
 * Added new hooks
