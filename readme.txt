@@ -72,6 +72,8 @@ This project supports the best IDE for development [JetBrains](https://www.jetbr
 
 
 == Changelog ==
+= 2.2.6 =
+* fix product name
 = 2.2.5 =
 * Added polylang support for multilingual sites
 * Added plugin "Woo Discount Rules" support for product pricing
