@@ -14,6 +14,7 @@ use Coderun\BuyOneClick\Utils\Product as ProductUtils;
 
 use function add_action;
 use function intval;
+use function sprintf;
 
 /**
  * Class FormController
@@ -63,6 +64,11 @@ class FormController extends Controller
             $productId = $variationId;
         }
         $product = wc_get_product($productId);
+        $productName = $product->get_name() ?? '';
+       if ($product instanceof \WC_Product_Variation) {
+           $productName .= ' ( '.$product->get_attribute_summary(). ' ) ';
+           
+        }
         if (method_exists($product, 'get_image_id')) {
             $images = wp_get_attachment_image_src($product->get_image_id()); //Урл картинки товара
         }
@@ -71,8 +77,8 @@ class FormController extends Controller
         ]);
         $fields = new FieldsOfOrderForm(
             [
-                'productId'        => $product->get_id()?? '',
-                'productName'      => $product->get_name()?? '',
+                'productId'        => $product->get_id() ?? '',
+                'productName'      => $productName,
                 'productPrice'     => ProductUtils::getProductPrice($product),
                 'productPriceHtml' => $product->get_price_html() ?? '',
                 'productCount'     => 1,
