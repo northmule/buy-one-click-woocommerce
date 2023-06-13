@@ -42,8 +42,7 @@ This is the best solution for WooCommere to easily add a quick order button to t
 * English
 
 = Sponsors =
-This project supports the best IDE for development [JetBrains](https://www.jetbrains.com/?from=Original-texts-yandex-web-master-WordPress)
-![JetBrains](https://zixn.ru/wp-content/uploads/jetbrains-logo-wordpress.jpg)
+This project is being developed using the best free IDE [NetBeans](https://netbeans.apache.org/)
 
 = Donate link: =
 <a href="https://yoomoney.ru/to/41001746944171" target="_blank">Visa(RU) / MasterCard(RU) / Mir / YandexMoney</a>
