@@ -10,6 +10,7 @@ use WC_Product;
 use function class_exists;
 use function is_array;
 use function method_exists;
+use function floatval;
 
 /**
  * Class Product
@@ -43,10 +44,10 @@ class Product
      *
      * @return mixed|string
      */
-    public static function getProductPrice($product, $quantity = 1)
+    public static function getProductPrice($product, $quantity = 1): float
     {
         if (!$product instanceof WC_Product) {
-            return '';
+            return floatval(0);
         }
         $prices = [];
         try {
@@ -60,9 +61,9 @@ class Product
         }
 
         if (is_array($prices) && !empty($prices['discounted_price'])) {
-            return $prices['discounted_price'];
+            return floatval($prices['discounted_price']);
         }
     
-        return $product->get_price() ?? '';
+        return floatval($product->get_price());
     }
 }
