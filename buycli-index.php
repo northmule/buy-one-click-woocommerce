@@ -2,13 +2,13 @@
 
 /*
  * Plugin Name: Buy one click WooCommerce
- * Plugin URI: http://zixn.ru/plagin-zakazat-v-odin-klik-dlya-woocommerce.html
+ * Plugin URI: https://github.com/northmule/buy-one-click-woocommerce
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 2.2.7
+ * Version: 2.2.8
  * Author: Djo
  * Author URI: https://zixn.ru
  * WC requires at least: 5.7
- * WC tested up to: 8.1
+ * WC tested up to: 8.3
  * Requires at least: 5.5
  * Tested up to: 6.3
  * Text Domain: coderun-oneclickwoo
@@ -61,6 +61,14 @@ define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.0.2');
     $main->initializingPlugin();
     register_activation_hook(__FILE__, [$main, 'activationPlugin']);
     register_deactivation_hook(__FILE__, [$main, 'deactivationPlugin']);
+    
+    add_action( 'before_woocommerce_init', function() {
+        if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+                'custom_order_tables', __FILE__, true
+            );
+        }
+    });
     
     
 })();

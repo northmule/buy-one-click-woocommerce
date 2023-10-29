@@ -7,7 +7,7 @@ Tested up to: 6.3
 Stable tag: 6.0
 Requires PHP: 7.4
 WC requires at least: 7.0
-WC tested up to: 8.1
+WC tested up to: 8.3
 License: GPLv2 or later
 License URI: http://www.apache.org/licenses/
 
@@ -71,6 +71,8 @@ This project is being developed using the best free IDE [NetBeans](https://netbe
 
 
 == Changelog ==
+= 2.2.8 =
+* WooCommerce HPOS
 = 2.2.7 =
 * fix getProductPrice
 = 2.2.6 =
