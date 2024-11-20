@@ -28,7 +28,7 @@ class ReCaptcha
     {
         $result = [
             'check'   => false,
-            'message' => _e('Captcha failed', 'coderun-oneclickwoo'),
+            'message' => esc_html_e('Captcha failed', 'coderun-oneclickwoo'),
         ];
         if ($plugin === 'advanced_nocaptcha_recaptcha') {
             if (!$this->isSupportPluginAnrCaptcha()) {
