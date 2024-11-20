@@ -189,6 +189,12 @@ class Core
                 $this->frontVariables();
             }
         );
+        add_action(
+            'admin_enqueue_scripts',
+            function (): void {
+                $this->adminPageVariables();
+            }
+        );
         // Обработчики запросов
         $this->initController();
         $this->initAdminPages();
@@ -239,6 +245,10 @@ class Core
         add_action(
             'init',
             static function () {
+                if (!is_admin() || !current_user_can('administrator')) {
+                    return;
+                }
+
                 ((new AdminControllerFactory())->create())->init();
             }
         );
@@ -357,6 +367,31 @@ class Core
                 $this->marketingOptions->getNameOfYandexMetricaDataContainer(),
                 "\n"
             ),
+            sprintf('</script>%s', "\n"),
+        ];
+        foreach ($outputList as $value) {
+            echo $value;
+        }
+    }
+    
+    /**
+     * JS переменные админки
+     *
+     * @return void
+     */
+    protected function adminPageVariables(): void
+    {
+        $variables = ['ajaxurl' => admin_url('admin-ajax.php')];
+        $variables['removeorderall'] = wp_create_nonce('removeorderall');
+        $variables['removeorder'] = wp_create_nonce('removeorder');
+        $variables['updatestatus'] = wp_create_nonce('updatestatus');
+        $variables['buy_one_click_export_options'] = wp_create_nonce('buy_one_click_export_options');
+        $variables['buy_one_click_import_options'] = wp_create_nonce('buy_one_click_import_options');
+        
+        
+        $outputList = [
+            sprintf('<script type="text/javascript">%s', "\n"),
+            sprintf('let buy_one_click_nonce_value_actions = %s;%s', \json_encode($variables), "\n"),
             sprintf('</script>%s', "\n"),
         ];
         foreach ($outputList as $value) {

@@ -3,11 +3,11 @@ Contributors: northmule
 Donate link: https://yoomoney.ru/to/41001746944171
 Tags: woocommerce, ecommerce, mode catalog, buy one click, buy now, add to cart, buy now button, buttons
 Requires at least: 6.0
-Tested up to: 6.4
+Tested up to: 6.7
 Stable tag: 6.0
 Requires PHP: 7.4
 WC requires at least: 7.0
-WC tested up to: 8.7
+WC tested up to: 9.4.2
 License: GPLv2 or later
 License URI: http://www.apache.org/licenses/
 
@@ -71,6 +71,8 @@ This project is being developed using the best free IDE [NetBeans](https://netbe
 
 
 == Changelog ==
+= 2.3.0 =
+* Added request verification in the admin panel
 = 2.2.9 =
 * Checking compatibility with new versions of WooCommerce
 = 2.2.8 =

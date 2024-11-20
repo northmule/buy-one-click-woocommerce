@@ -41,7 +41,8 @@ jQuery(document).ready(function () {
             async: false,
             data: {
                 action: 'removeorder',
-                text: id
+                text: id,
+                buy_one_click_admin_actions: buy_one_click_nonce_value_actions.removeorder,
             }
         });
 
@@ -60,7 +61,8 @@ jQuery(document).ready(function () {
             data: {
                 action: 'removeorder',
                 orderId:  jQuery(this).attr('data-woo_id'),
-                pluginId: jQuery(this).attr('data-plugin_id')
+                pluginId: jQuery(this).attr('data-plugin_id'),
+                buy_one_click_admin_actions: buy_one_click_nonce_value_actions.removeorder,
             }
         }).done(function(response){
             if(response.success) {
@@ -76,15 +78,15 @@ jQuery(document).ready(function () {
     jQuery('.updatestatus').click(function () {
         var id = jQuery(this).attr('id');
         var statusold = jQuery(this).attr('orderstat');
-        //alert(statusold);
+        let status = "-1"
         if (statusold === "1") {
-            var status = '2'
+            status = '2'
             jQuery(this).attr('2');
             jQuery(this).html('<span class="glyphicon glyphicon-ok-circle">ОК</span>');
 
 
         } else {
-            var status = '1'
+            status = '1'
             jQuery(this).html('<span class="glyphicon glyphicon-ban-circle">НЕТ</span>');
 
         }
@@ -98,7 +100,8 @@ jQuery(document).ready(function () {
             async: false,
             data: {
                 action: 'updatestatus',
-                text: info
+                text: info,
+                buy_one_click_admin_actions: buy_one_click_nonce_value_actions.updatestatus,
             }
 
         });
@@ -114,6 +117,7 @@ jQuery(document).ready(function () {
             url: getAjaxUrl(),
             data: {
                 action: 'buy_one_click_export_options',
+                buy_one_click_admin_actions: buy_one_click_nonce_value_actions.buy_one_click_export_options,
             }
 
         }).done(function (response, status, xhr){
@@ -137,6 +141,7 @@ jQuery(document).ready(function () {
             var formData = new FormData();
             formData.append('action', 'buy_one_click_import_options');
             formData.append('file', input[0].files[0]);
+            formData.append('buy_one_click_admin_actions', buy_one_click_nonce_value_actions.buy_one_click_import_options)
             jQuery.ajax({
                 type: "POST",
                 cache: false,
