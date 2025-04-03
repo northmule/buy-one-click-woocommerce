@@ -71,6 +71,8 @@ This project is being developed using the best free IDE [NetBeans](https://netbe
 
 
 == Changelog ==
+= 2.3.1 =
+* Checking compatibility with new versions of WooCommerce
 = 2.3.0 =
 * Added request verification in the admin panel
 = 2.2.9 =
