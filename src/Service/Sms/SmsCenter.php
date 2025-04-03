@@ -81,7 +81,7 @@ class SmsCenter
 
         if ($ret == '') {
             if ($this->notificationOptions->isEnableSmsDebug()) {
-                echo "Ошибка чтения адреса: $url\n";
+                echo esc_html("Ошибка чтения адреса: $url\n");
             }
 
             $ret = ','; // фиктивный ответ
@@ -147,7 +147,7 @@ class SmsCenter
             $ret = curl_exec($c);
         } elseif ($files) {
             if ($this->notificationOptions->isEnableSmsDebug()) {
-                echo "Не установлен модуль curl для передачи файлов\n";
+                echo esc_html("Не установлен модуль curl для передачи файлов\n");
             }
         } else {
             if (!$this->notificationOptions->isEnableSmsServiceHttpsProtocol() && function_exists('fsockopen')) {

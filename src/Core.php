@@ -178,7 +178,7 @@ class Core
         add_action(
             'woocommerce_email_before_order_table',
             static function ($order, $sent_to_admin, $plain_text): void {
-                echo (new EmailTemplateFactory())->create()->modificationOrderTemplateWooCommerce($order);
+                echo esc_html((new EmailTemplateFactory())->create()->modificationOrderTemplateWooCommerce($order));
             },
             10,
             3
@@ -360,7 +360,7 @@ class Core
             sprintf('</script>%s', "\n"),
         ];
         foreach ($outputList as $value) {
-            echo $value;
+            echo esc_html($value);
         }
     }
 
