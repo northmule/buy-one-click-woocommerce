@@ -17,7 +17,7 @@ $commonOptions = $render->getCommonOptions();
 <div id="formOrderOneClick">
     <div class="overlay" title="окно"></div>
     <div class="popup">
-        <div class="close_order <?php echo esc_html($fields->templateStyle ? 'button' : ''); ?>">x</div>
+        <div class="close_order <?php echo $fields->templateStyle ? 'button' : '' ?>">x</div>
         <form id="buyoneclick_form_order" class="b1c-form" method="post" action="#">
             <h2><?php echo Translation::translate($commonOptions->getNameButton()); ?></h2>
             <?php if ($commonOptions->isEnableProductInformation()) { ?>
@@ -26,29 +26,29 @@ $commonOptions = $render->getCommonOptions();
                         <thead>
                         <tr valign="top">
                             <th scope="row">
-                                <span class="description"><?php esc_html_e('Name', 'coderun-oneclickwoo'); ?></span>
+                                <span class="description"><?php _e('Name', 'coderun-oneclickwoo'); ?></span>
                             </th>
                             <th>
-                                <span class="description"><?php esc_html_e('Price', 'coderun-oneclickwoo'); ?></span>
+                                <span class="description"><?php _e('Price', 'coderun-oneclickwoo'); ?></span>
                             </th>
                             <?php if (!empty($fields->productImg)) { ?>
                                 <th>
-                                    <span class="description"><?php esc_html_e('Picture', 'coderun-oneclickwoo'); ?></span>
+                                    <span class="description"><?php _e('Picture', 'coderun-oneclickwoo'); ?></span>
                                 </th>
                             <?php } ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr valign="top">
-                            <td data-label="<?php esc_html_e('Name', 'coderun-oneclickwoo'); ?>" scope="row">
-                                <span class="description"> <?php echo esc_html($fields->productName); ?></span>
+                            <td data-label="<?php _e('Name', 'coderun-oneclickwoo'); ?>" scope="row">
+                                <span class="description"> <?php echo $fields->productName; ?></span>
                             </td>
-                            <td data-label="<?php esc_html_e('Price', 'coderun-oneclickwoo'); ?>">
-                                <span class="description"><?php echo esc_html($fields->productPriceHtml); ?></span>
+                            <td data-label="<?php _e('Price', 'coderun-oneclickwoo'); ?>">
+                                <span class="description"><?php echo $fields->productPriceHtml; ?></span>
                             </td>
                             <?php if (!empty($fields->productImg)) { ?>
-                                <td data-label="<?php esc_html_e('Picture', 'coderun-oneclickwoo'); ?>">
-                                    <span class="description"><?php echo esc_html($fields->productSrcImg); ?></span>
+                                <td data-label="<?php _e('Picture', 'coderun-oneclickwoo'); ?>">
+                                    <span class="description"><?php echo $fields->productSrcImg; ?></span>
                                 </td>
                             <?php } ?>
                         </tr>
@@ -58,10 +58,10 @@ $commonOptions = $render->getCommonOptions();
             <?php } ?>
             
             <?php if ($commonOptions->isEnableFieldWithName()) { ?>
-                <input class="buyvalide <?php echo esc_html($fields->templateStyle ? 'input-text' : ''); ?>" type="text" <?php ?> placeholder="<?php echo esc_html(Translation::translate($commonOptions->getDescriptionForFieldName())); ?>" name="txtname">
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?>" type="text" <?php ?> placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldName()); ?>" name="txtname">
             <?php } ?>
             <?php if ($commonOptions->isEnableFieldWithPhone()) { ?>
-                <input class="buyvalide <?php echo esc_html($fields->templateStyle ? 'input-text' : ''); ?> " type="tel" <?php ?> placeholder="<?php echo esc_html(Translation::translate($commonOptions->getDescriptionForFieldPhone())); ?>" name="txtphone">
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="tel" <?php ?> placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldPhone()); ?>" name="txtphone">
                 <p class="phoneFormat"><?php
                     if (!empty($commonOptions->getDescriptionForFieldFormatPhone())) {
                         echo __('Format', 'coderun-oneclickwoo') . ' ' . $commonOptions->getDescriptionForFieldFormatPhone();
@@ -69,10 +69,10 @@ $commonOptions = $render->getCommonOptions();
                     ?></p>
             <?php } ?>
             <?php if ($commonOptions->isEnableFieldWithEmail()) { ?>
-                <input class="buyvalide <?php echo esc_html($fields->templateStyle ? 'input-text' : ''); ?> " type="email" <?php ?> placeholder="<?php echo esc_html(Translation::translate($commonOptions->getDescriptionForFieldEmail())); ?>" name="txtemail">
+                <input class="buyvalide <?php echo $fields->templateStyle ? 'input-text' : '' ?> " type="email" <?php ?> placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldEmail()); ?>" name="txtemail">
             <?php } ?>
             <?php if ($commonOptions->isEnableFieldWithComment()) { ?>
-                <textarea class="buymessage buyvalide" <?php ?> name="message" placeholder="<?php echo esc_html(Translation::translate($commonOptions->getDescriptionForFieldComment())); ?>" rows="2" value=""></textarea>
+                <textarea class="buymessage buyvalide" <?php ?> name="message" placeholder="<?php echo Translation::translate($commonOptions->getDescriptionForFieldComment()); ?>" rows="2" value=""></textarea>
             <?php } ?>
             
             <?php if ($commonOptions->isConsentToProcessing()) { ?>
@@ -82,18 +82,18 @@ $commonOptions = $render->getCommonOptions();
                 </p>
             <?php } ?>
             
-            <?php echo esc_html($fields->formWithQuantity); ?>
+            <?php echo $fields->formWithQuantity; ?>
             
             <?php wp_nonce_field('one_click_send', '_coderun_nonce'); ?>
-            <input type="hidden" name="nametovar" value="<?php echo esc_html($fields->productName); ?>" />
-            <input type="hidden" name="pricetovar" value="<?php echo esc_html($fields->productPrice); ?>" />
-            <input type="hidden" name="idtovar" value="<?php echo esc_html($fields->productId); ?>" />
+            <input type="hidden" name="nametovar" value="<?php echo $fields->productName; ?>" />
+            <input type="hidden" name="pricetovar" value="<?php echo $fields->productPrice; ?>" />
+            <input type="hidden" name="idtovar" value="<?php echo $fields->productId; ?>" />
             <input type="hidden" name="action" value="coderun_send_form_buy_one_click_buybuttonform" />
-            <input type="hidden" name="custom" value="<?php echo esc_html($fields->shortCode); ?>"/>
+            <input type="hidden" name="custom" value="<?php echo $fields->shortCode; ?>"/>
             
             <?php
             //Форма файлов
-            echo esc_html($fields->formWithFiles);
+            echo $fields->formWithFiles;
             
             if ($commonOptions->isRecaptchaEnabled()) {
                 Coderun\BuyOneClick\ReCaptcha::getInstance()->view($commonOptions->getCaptchaProvider());
@@ -117,7 +117,7 @@ $commonOptions = $render->getCommonOptions();
     <?php
     if ($commonOptions->getActionAfterSubmittingForm() > 0) {
         ?>
-        <div class = "overlay_message" title = "<?php esc_html_e('Notification', 'coderun-oneclickwoo'); ?>"></div>
+        <div class = "overlay_message" title = "<?php _e('Notification', 'coderun-oneclickwoo'); ?>"></div>
         <div class = "popummessage">
             <div class="close_message">x</div>
             <?php echo Translation::translate($commonOptions->getMessageAfterSubmittingForm());  ?>

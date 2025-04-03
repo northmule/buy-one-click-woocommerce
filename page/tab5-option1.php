@@ -13,11 +13,11 @@ $marketingOptions = $this->getMarketingOptions();
     <?php wp_nonce_field('update-options'); ?>
     <?php settings_fields(sprintf('%s_options', Core::OPTIONS_MARKETING)); ?>
 
-    <h3><?php esc_html_e('Additional settings', 'coderun-oneclickwoo'); ?></h3>
-    <p><?php esc_html_e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://coderun.ru/blog/kak-v-plagin-buy-one-click-woocommerce-dobavit-celi-po-sobytiya-javascript/"><?php esc_html_e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
+    <h3><?php _e('Additional settings', 'coderun-oneclickwoo'); ?></h3>
+    <p><?php _e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://coderun.ru/blog/kak-v-plagin-buy-one-click-woocommerce-dobavit-celi-po-sobytiya-javascript/"><?php _e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
     <table class="form-table">
         <tr valign="top">
-            <th scope="row"><?php esc_html_e('Event after clicking the button', 'coderun-oneclickwoo'); ?></th>
+            <th scope="row"><?php _e('Event after clicking the button', 'coderun-oneclickwoo'); ?></th>
             <td>
                 <?php
                 $codeMirrorSetting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
@@ -43,15 +43,15 @@ $marketingOptions = $this->getMarketingOptions();
                 ]);
                 ?>
                 <p><span class="description">
-                    <?php esc_html_e('The JavaScript code that will be called when you click on the button to open the order form.', 'coderun-oneclickwoo'); ?>
+                    <?php _e('The JavaScript code that will be called when you click on the button to open the order form.', 'coderun-oneclickwoo'); ?>
                         <br>
-                     <?php esc_html_e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
+                     <?php _e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
                     </span>
                 </p>
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row"><?php esc_html_e('Event after successful form submission', 'coderun-oneclickwoo'); ?></th>
+            <th scope="row"><?php _e('Event after successful form submission', 'coderun-oneclickwoo'); ?></th>
             <td>
                 <?php
                 $codeMirrorSetting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
@@ -77,55 +77,55 @@ $marketingOptions = $this->getMarketingOptions();
                 ]);
                 ?>
                 <p><span class="description">
-                        <?php esc_html_e('The JavaScript code that will be called after the successful submission of the order form.', 'coderun-oneclickwoo'); ?>
+                        <?php _e('The JavaScript code that will be called after the successful submission of the order form.', 'coderun-oneclickwoo'); ?>
                         <br>
-                    <?php esc_html_e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
+                    <?php _e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
                     </span>
                 </p>
             </td>
         </tr>
     </table>
     <fieldset>
-        <legend><?php esc_html_e('Data transfer to Yandex e-commerce event of product purchase', 'coderun-oneclickwoo'); ?></legend>
+        <legend><?php _e('Data transfer to Yandex e-commerce event of product purchase', 'coderun-oneclickwoo'); ?></legend>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row"></th>
                 <td>
                     <p>
                         <span class="description">
-                        <?php esc_html_e('When you specify these settings, data will be transmitted to the Yandex Metrica - e-commerce service. This event is a product purchase event.', 'coderun-oneclickwoo'); ?>
+                        <?php _e('When you specify these settings, data will be transmitted to the Yandex Metrica - e-commerce service. This event is a product purchase event.', 'coderun-oneclickwoo'); ?>
                         <br>
-                    <p><?php esc_html_e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://yandex.ru/support/metrica/ecommerce/data.html"><?php esc_html_e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
+                    <p><?php _e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://yandex.ru/support/metrica/ecommerce/data.html"><?php _e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
                         
                         </span>
                     </p>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php esc_html_e('Transmit data', 'coderun-oneclickwoo'); ?></th>
+                <th scope="row"><?php _e('Transmit data', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="checkbox" name="<?php echo esc_html(Core::OPTIONS_MARKETING); ?>[transfer_data_to_yandex_commerce]" <?php
+                    <input type="checkbox" name="<?php echo Core::OPTIONS_MARKETING ?>[transfer_data_to_yandex_commerce]" <?php
                     checked($marketingOptions->isTransferDataToYandexCommerce());
                     ?>/>
-                    <span class="description"><?php esc_html_e('Enable data transfer to the Yandex e-commerce service', 'coderun-oneclickwoo'); ?></span>
+                    <span class="description"><?php _e('Enable data transfer to the Yandex e-commerce service', 'coderun-oneclickwoo'); ?></span>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php esc_html_e('Name of the data container', 'coderun-oneclickwoo'); ?></th>
+                <th scope="row"><?php _e('Name of the data container', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="text" name="<?php echo esc_html(Core::OPTIONS_MARKETING); ?>[name_of_yandex_metrica_data_container]" value="<?php
-                    echo esc_html($marketingOptions->getNameOfYandexMetricaDataContainer());
+                    <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[name_of_yandex_metrica_data_container]" value="<?php
+                    echo $marketingOptions->getNameOfYandexMetricaDataContainer();
                     ?>" />
-                    <span class="description"><?php esc_html_e('Name of the yandex Metrica data container. The default value is "dataLayer"', 'coderun-oneclickwoo'); ?></span>
+                    <span class="description"><?php _e('Name of the yandex Metrica data container. The default value is "dataLayer"', 'coderun-oneclickwoo'); ?></span>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php esc_html_e('Goal ID', 'coderun-oneclickwoo'); ?></th>
+                <th scope="row"><?php _e('Goal ID', 'coderun-oneclickwoo'); ?></th>
                 <td>
-                    <input type="text" name="<?php echo esc_html(Core::OPTIONS_MARKETING); ?>[goal_id_in_yandex_e_commerce]" value="<?php
-                    echo esc_html($marketingOptions->getGoalIdInYandexECommerce());
+                    <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[goal_id_in_yandex_e_commerce]" value="<?php
+                    echo $marketingOptions->getGoalIdInYandexECommerce();
                     ?>" />
-                    <span class="description"><?php esc_html_e('Goal ID. If used, specify it here', 'coderun-oneclickwoo'); ?></span>
+                    <span class="description"><?php _e('Goal ID. If used, specify it here', 'coderun-oneclickwoo'); ?></span>
                 </td>
             </tr>
 
@@ -133,6 +133,6 @@ $marketingOptions = $this->getMarketingOptions();
     </fieldset>
     <input type="hidden" name="action" value="update" />
     <p class="submit">
-        <input type="submit" class="button-primary" value="<?php esc_html_e('Save Changes') ?>" />
+        <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
     </p>
 </form>

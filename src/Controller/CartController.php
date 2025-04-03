@@ -57,7 +57,7 @@ class CartController extends Controller
             }
         }
         if (!function_exists('WC')) {
-            echo esc_html(get_home_url());
+            echo get_home_url();
             die();
         }
         $productid = intval($_POST['productid']);
