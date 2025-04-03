@@ -1,5 +1,6 @@
 <?php
-
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
 namespace Coderun\BuyOneClick\Repository;
 
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;

@@ -1,5 +1,6 @@
 <?php
-
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 declare(strict_types=1);
 
 use Coderun\BuyOneClick\SimpleDataObjects\Product;

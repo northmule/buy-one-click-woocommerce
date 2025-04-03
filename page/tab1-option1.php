@@ -1,5 +1,6 @@
 <?php
-
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 

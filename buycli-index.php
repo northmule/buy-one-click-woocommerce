@@ -4,13 +4,13 @@
  * Plugin Name: Buy one click WooCommerce
  * Plugin URI: https://github.com/northmule/buy-one-click-woocommerce
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
- * Version: 2.2.9
+ * Version: 2.3.0
  * Author: Djo
  * Author URI: https://zixn.ru
- * WC requires at least: 6.0
- * WC tested up to: 8.7
- * Requires at least: 6.0
- * Tested up to: 6.4
+ * WC requires at least: 8.0
+ * WC tested up to: 9.7
+ * Requires at least: 6.3
+ * Tested up to: 6.7
  * Text Domain: coderun-oneclickwoo
  * Domain Path: /languages
  */

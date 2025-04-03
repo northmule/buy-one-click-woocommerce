@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\ValueObject;

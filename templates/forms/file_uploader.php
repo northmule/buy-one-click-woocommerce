@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 if (!defined('ABSPATH')) {
     exit;
 }

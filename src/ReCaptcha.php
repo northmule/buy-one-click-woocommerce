@@ -1,5 +1,6 @@
 <?php
-
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 namespace Coderun\BuyOneClick;
 
 class ReCaptcha

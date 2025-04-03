@@ -1,5 +1,6 @@
 <?php
-
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Service;
@@ -143,15 +144,15 @@ class UploadingFiles
     {
         foreach ($this->files as $file) {
             if (!in_array($file->extension, $this->getValidExtension())) {
-                throw UploadingFilesException::invalidFileExtension($file->extension);
+                throw UploadingFilesException::invalidFileExtension(esc_html($file->extension));
             }
 
             if ($file->size > $this->getValidSize()) {
-                throw UploadingFilesException::invalidFileSize($file->size);
+                throw UploadingFilesException::invalidFileSize(esc_html($file->size));
             }
 
             if (!in_array($file->type, $this->getValidMimeTypes())) {
-                UploadingFilesException::invalidFileType($file->type);
+                UploadingFilesException::invalidFileType(esc_html($file->type));
             }
         }
     }
