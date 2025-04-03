@@ -10,9 +10,9 @@ use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 
 /** @var Core $this */
 ?>
-<h3><?php _e('Orders via plugin', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
-<p><?php _e('All orders sent via the button', 'coderun-oneclickwoo'); ?> "<?php echo $this->getCommonOptions()->getNameButton(); ?>"</p>
-<input type="button" class="btn btn-default btn-sm removeallorder" value="<?php _e('Delete history', 'coderun-oneclickwoo'); ?>"/>
+<h3><?php esc_html_e('Orders via plugin', 'coderun-oneclickwoo'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
+<p><?php esc_html_e('All orders sent via the button', 'coderun-oneclickwoo'); ?> "<?php echo $this->getCommonOptions()->getNameButton(); ?>"</p>
+<input type="button" class="btn btn-default btn-sm removeallorder" value="<?php esc_html_e('Delete history', 'coderun-oneclickwoo'); ?>"/>
 <?php
 $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'), 'admin.php');
 
@@ -21,18 +21,18 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
     <thead>
     <tr>
         <th>№ </th>
-        <th><?php _e('Date and time of addition', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Item Number', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Full name', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Phone', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Date and time of addition', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Item Number', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Full name', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Phone', 'coderun-oneclickwoo'); ?></th>
         <th>Email</th>
-        <th><?php _e('Product Information', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Price', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Message', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Product', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('SMS', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Status', 'coderun-oneclickwoo'); ?></th>
-        <th><?php _e('Remove', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Product Information', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Price', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Message', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Product', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('SMS', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Status', 'coderun-oneclickwoo'); ?></th>
+        <th><?php esc_html_e('Remove', 'coderun-oneclickwoo'); ?></th>
     </tr>
     </thead>
     <tbody>
@@ -107,12 +107,12 @@ $url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'),
 
             <th>
                 <a class="removeorder" id="<?php echo $order->getId(); ?>" href="<?php echo $url_tab; ?>#id=<?php echo $order->getId(); ?>">
-                    <span class="glyphicon glyphicon-remove-circle"><?php _e('OnlyPlugin', 'coderun-oneclickwoo'); ?></span>
+                    <span class="glyphicon glyphicon-remove-circle"><?php esc_html_e('OnlyPlugin', 'coderun-oneclickwoo'); ?></span>
                 </a>
                 <?php if (UtilsOrder::thereIsAWooCommerceOrder($order->getWooOrderId() ?? 0)) { ?>
                     <br><br>
                     <a class="removeorder_woo" data-plugin_id="<?php echo $order->getId(); ?>" data-woo_id="<?php echo $order->getWooOrderId(); ?>" href="<?php echo $url_tab; ?>#id=<?php echo $order->getWooOrderId(); ?>">
-                        <span class="glyphicon glyphicon-remove-circle"><?php _e('OnlyWoo', 'coderun-oneclickwoo'); ?></span>
+                        <span class="glyphicon glyphicon-remove-circle"><?php esc_html_e('OnlyWoo', 'coderun-oneclickwoo'); ?></span>
                     </a>
                 <?php } ?>
             </th>

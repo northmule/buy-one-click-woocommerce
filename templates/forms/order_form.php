@@ -27,28 +27,28 @@ $commonOptions = $render->getCommonOptions();
                         <thead>
                         <tr valign="top">
                             <th scope="row">
-                                <span class="description"><?php _e('Name', 'coderun-oneclickwoo'); ?></span>
+                                <span class="description"><?php esc_html_e('Name', 'coderun-oneclickwoo'); ?></span>
                             </th>
                             <th>
-                                <span class="description"><?php _e('Price', 'coderun-oneclickwoo'); ?></span>
+                                <span class="description"><?php esc_html_e('Price', 'coderun-oneclickwoo'); ?></span>
                             </th>
                             <?php if (!empty($fields->productImg)) { ?>
                                 <th>
-                                    <span class="description"><?php _e('Picture', 'coderun-oneclickwoo'); ?></span>
+                                    <span class="description"><?php esc_html_e('Picture', 'coderun-oneclickwoo'); ?></span>
                                 </th>
                             <?php } ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr valign="top">
-                            <td data-label="<?php _e('Name', 'coderun-oneclickwoo'); ?>" scope="row">
+                            <td data-label="<?php esc_html_e('Name', 'coderun-oneclickwoo'); ?>" scope="row">
                                 <span class="description"> <?php echo $fields->productName; ?></span>
                             </td>
-                            <td data-label="<?php _e('Price', 'coderun-oneclickwoo'); ?>">
+                            <td data-label="<?php esc_html_e('Price', 'coderun-oneclickwoo'); ?>">
                                 <span class="description"><?php echo $fields->productPriceHtml; ?></span>
                             </td>
                             <?php if (!empty($fields->productImg)) { ?>
-                                <td data-label="<?php _e('Picture', 'coderun-oneclickwoo'); ?>">
+                                <td data-label="<?php esc_html_e('Picture', 'coderun-oneclickwoo'); ?>">
                                     <span class="description"><?php echo $fields->productSrcImg; ?></span>
                                 </td>
                             <?php } ?>
@@ -118,7 +118,7 @@ $commonOptions = $render->getCommonOptions();
     <?php
     if ($commonOptions->getActionAfterSubmittingForm() > 0) {
         ?>
-        <div class = "overlay_message" title = "<?php _e('Notification', 'coderun-oneclickwoo'); ?>"></div>
+        <div class = "overlay_message" title = "<?php esc_html_e('Notification', 'coderun-oneclickwoo'); ?>"></div>
         <div class = "popummessage">
             <div class="close_message">x</div>
             <?php echo Translation::translate($commonOptions->getMessageAfterSubmittingForm());  ?>

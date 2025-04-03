@@ -24,10 +24,6 @@ class AdminController extends Controller
      */
     public function init()
     {
-        if (!is_admin()) {
-            return;
-        }
-
         add_action(
             'wp_ajax_removeorder',
             [$this, 'deleteOrderById']
@@ -57,6 +53,8 @@ class AdminController extends Controller
      */
     public function deleteOrderById(): void
     {
+        check_admin_referer( 'removeorder', 'buy_one_click_admin_actions' );
+        
         // Удаление записи журнала плагина
         if (!empty($_POST['text'])) {
             $order_id = intval($_POST['text']);
@@ -86,6 +84,8 @@ class AdminController extends Controller
      */
     public function deleteAllOrders(): void
     {
+        check_admin_referer( 'removeorder', 'buy_one_click_admin_actions' );
+        
         $nonce = $_POST['nonce'] ?? []; // Массив URL и NONCE
         if (wp_verify_nonce($nonce['nonce'] ?? '-1', 'superKey')) {
             Order::getInstance()->remove_order_all();
@@ -102,6 +102,8 @@ class AdminController extends Controller
      */
     public function updateOrderStatus(): void
     {
+        check_admin_referer( 'updatestatus', 'buy_one_click_admin_actions' );
+        
         $text = $_POST['text'] ?? [];
         $id = $text['id'] ?? '-1';
         Order::getInstance()->update_status($id, intval($text['status']));
@@ -115,6 +117,8 @@ class AdminController extends Controller
      */
     public function exportOptions(): void
     {
+        check_admin_referer( 'buy_one_click_export_options', 'buy_one_click_admin_actions' );
+        
         wp_send_json_success([GeneralOptions::class => $this->commonOptions->toArrayWpToSave()]);
     }
     
@@ -125,6 +129,8 @@ class AdminController extends Controller
      */
     public function importOptions(): void
     {
+        check_admin_referer( 'buy_one_click_import_options', 'buy_one_click_admin_actions' );
+        
         $file = $_FILES;
         $success = false;
         try {
