@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 declare(strict_types=1);
 

@@ -71,6 +71,10 @@ This project is being developed using the best free IDE [NetBeans](https://netbe
 
 
 == Changelog ==
+= 2.4.0 =
+* Code cleanup and alignment with WordPress coding standards
+* Minor code optimizations
+* Updated copyright year
 = 2.3.1 =
 * Checking compatibility with new versions of WooCommerce
 = 2.3.0 =

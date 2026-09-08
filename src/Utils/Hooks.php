@@ -102,7 +102,7 @@ class Hooks
     {
         return apply_filters('coderun_oneclickwoo_file_load_folder_path', $path);
     }
-    
+
     /**
      * Перед тем как будет нарисована кнопка быстрого заказа в карточке товара
      * Только для вариативных товаров
@@ -115,7 +115,7 @@ class Hooks
     {
         do_action('buy_click_before_drawing_order_button_only_for_variable_products', $context);
     }
-    
+
     /**
      * Во время сборки массива пременных JS фронт
      *
@@ -127,7 +127,7 @@ class Hooks
     {
         return apply_filters('buy_click_init_front_variables', $variables) ?? $variables;
     }
-    
+
     /**
      * Принимает данные с формы, возвращает читабельную строку
      *
@@ -143,7 +143,7 @@ class Hooks
         }
         return $result;
     }
-    
+
     /**
      * ИД вариативного товара с формы
      *
@@ -159,7 +159,7 @@ class Hooks
         }
         return $result;
     }
-    
+
     /**
      * Устанавливает признак активности плагина вариативных товаров
      *

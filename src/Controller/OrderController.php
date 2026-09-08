@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 // phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped

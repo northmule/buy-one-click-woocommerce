@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Coderun\BuyOneClick\Utils;
 
 use Coderun\BuyOneClick\Constant\TranslationString;
-
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 
 use function function_exists;
@@ -17,26 +16,24 @@ use function function_exists;
  */
 class Translation
 {
-    
     /**
      * @param string $text
      *
      * @return string
      */
-    public static function translate(string $text = '' ): string
+    public static function translate(string $text = ''): string
     {
         if ($text === '') {
             return $text;
         }
         // Polylang Translation
-        if (function_exists( '\pll__') ) {
+        if (function_exists('\pll__')) {
             $text = \pll__($text);
         }
-        
+
         return $text;
-        
     }
-    
+
     /**
      * Регистрация переводов для плагинов
      *
@@ -50,7 +47,7 @@ class Translation
             }
         }
     }
-    
+
     /**
      * Регистрация переводов для настроек плагина(пользовательские настройки)
      *

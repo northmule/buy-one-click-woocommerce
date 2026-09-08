@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 // phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 namespace Coderun\BuyOneClick;
@@ -374,7 +375,7 @@ class Core
             echo $value;
         }
     }
-    
+
     /**
      * JS переменные админки
      *
@@ -388,8 +389,8 @@ class Core
         $variables['updatestatus'] = wp_create_nonce('updatestatus');
         $variables['buy_one_click_export_options'] = wp_create_nonce('buy_one_click_export_options');
         $variables['buy_one_click_import_options'] = wp_create_nonce('buy_one_click_import_options');
-        
-        
+
+
         $outputList = [
             sprintf('<script type="text/javascript">%s', "\n"),
             sprintf('let buy_one_click_nonce_value_actions = %s;%s', \json_encode($variables), "\n"),
@@ -620,7 +621,7 @@ class Core
         wp_enqueue_script('buymaskedinput', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/jquery.maskedinput.min.js', ['jquery'], self::VERSION);
     }
 
-    
+
     /**
      * Стиль активной вкладки
      *

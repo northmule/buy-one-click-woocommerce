@@ -30,7 +30,7 @@ trait OptionsTrait
         }
         return $options;
     }
-    
+
     /**
      * @return string
      */

@@ -6,7 +6,6 @@ namespace Coderun\BuyOneClick\Common;
 
 use Coderun\BuyOneClick\Utils\Hooks;
 
-
 /**
  * Что то вроде глобальной переменной живущей от начала до конца
  *
@@ -26,7 +25,7 @@ class ObjectWithConstantState
      * @var boolean
      */
     protected bool $variations = false;
-    
+
     protected function __construct()
     {
         $this->variations = Hooks::filterVariationsPluginIsUsed($this);

@@ -98,7 +98,7 @@ class Button
     public function getHtmlOrderButtonsCustom(ShortcodeParameters $params): string
     {
         if ($this->commonOptions->getNameButton() and $this->commonOptions->getPositionButton()) {
-            $this->initVariationAddon((int)$params->id);
+            $this->initVariationAddon((int) $params->id);
             return (new OrderButton())->render(
                 new CustomOrderButtonDataObject(
                     [
@@ -145,7 +145,7 @@ class Button
 
         return Translation::translate($stockStatus === 'outofstock' ? $name : $defaultName);
     }
-    
+
     /**
      * Инициализация для дополнения с вариативными товарами
      *

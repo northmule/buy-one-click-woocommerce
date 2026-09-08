@@ -23,7 +23,7 @@ class ObjectException extends BaseException implements ExceptionInterface
             sprintf(
                 'The method %s does not exist: %s',
                 $method,
-                get_class($class)
+                $class::class
             ),
         );
     }

@@ -65,9 +65,8 @@ class FormController extends Controller
         }
         $product = wc_get_product($productId);
         $productName = $product->get_name() ?? '';
-       if ($product instanceof \WC_Product_Variation) {
-           $productName .= ' ( '.$product->get_attribute_summary(). ' ) ';
-           
+        if ($product instanceof \WC_Product_Variation) {
+            $productName .= ' ( ' . $product->get_attribute_summary() . ' ) ';
         }
         if (method_exists($product, 'get_image_id')) {
             $images = wp_get_attachment_image_src($product->get_image_id()); //Урл картинки товара
