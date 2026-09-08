@@ -8,9 +8,9 @@ use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 
 /** @var Core $this */
 ?>
-<h3><?php esc_html_e('Orders via plugin', 'buy-one-click-woocommerce'); ?> <?php echo Core::NAME_PLUGIN; ?></h3>
-<p><?php esc_html_e('All orders sent via the button', 'buy-one-click-woocommerce'); ?> "<?php echo $this->getCommonOptions()->getNameButton(); ?>"</p>
-<input type="button" class="btn btn-default btn-sm removeallorder" value="<?php esc_html_e('Delete history', 'buy-one-click-woocommerce'); ?>"/>
+<h3><?php esc_html_e('Orders via plugin', 'buy-one-click-woocommerce'); ?> <?php echo esc_html(Core::NAME_PLUGIN); ?></h3>
+<p><?php esc_html_e('All orders sent via the button', 'buy-one-click-woocommerce'); ?> "<?php echo esc_html($this->getCommonOptions()->getNameButton()); ?>"</p>
+<input type="button" class="btn btn-default btn-sm removeallorder" value="<?php esc_attr_e('Delete history', 'buy-one-click-woocommerce'); ?>"/>
 <?php
 $booc_url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orders'), 'admin.php');
 
@@ -23,7 +23,7 @@ $booc_url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orde
         <th><?php esc_html_e('Item Number', 'buy-one-click-woocommerce'); ?></th>
         <th><?php esc_html_e('Full name', 'buy-one-click-woocommerce'); ?></th>
         <th><?php esc_html_e('Phone', 'buy-one-click-woocommerce'); ?></th>
-        <th>Email</th>
+        <th><?php esc_html_e('Email', 'buy-one-click-woocommerce'); ?></th>
         <th><?php esc_html_e('Product Information', 'buy-one-click-woocommerce'); ?></th>
         <th><?php esc_html_e('Price', 'buy-one-click-woocommerce'); ?></th>
         <th><?php esc_html_e('Message', 'buy-one-click-woocommerce'); ?></th>
@@ -35,51 +35,52 @@ $booc_url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orde
     </thead>
     <tbody>
     <?php foreach (Coderun\BuyOneClick\Repository\Order::getInstance()->getOrders() as $order) { ?>
-        <tr class="success order<?php echo $order->getId(); ?>">
+        <tr class="success order<?php echo esc_attr($order->getId()); ?>">
             <th>
                 <?php
-                echo '<br>'.__('Plugin Order №', 'buy-one-click-woocommerce').": {$order->getId()}";
+                echo '<br>' . esc_html__('Plugin Order №', 'buy-one-click-woocommerce') . ': ' . esc_html($order->getId());
                 ?>
                 <?php
-              
+
                 $booc_order_data = new OrderDataForAdminValueObject(
                     json_decode($order->getForm(), true)
                 );
                 if ($order->getWooOrderId()) {
-                    echo '<br>'.__('Woo Order №', 'buy-one-click-woocommerce').": <a href='/wp-admin/post.php?post={$order->getWooOrderId()}&action=edit'>{$order->getWooOrderId()}</a>";
+                    $booc_woo_link = esc_url(admin_url('post.php?action=edit&amp;' . http_build_query(['post' => $order->getWooOrderId()])));
+                    echo '<br>' . esc_html__('Woo Order №', 'buy-one-click-woocommerce') . ": <a href='" . $booc_woo_link . "'>" . esc_html($order->getWooOrderId()) . "</a>";
                 }
                 if ($booc_order_data->getUuid()) {
-                   echo sprintf('<p>Uuid: %s</p>', $booc_order_data->getUuid());
+                    echo sprintf('<p>Uuid: %s</p>', esc_html($booc_order_data->getUuid()));
                 }
                 ?>
             </th>
-            <th><?php echo $order->getDateCreate()->format('d.m.Y H:i:s'); ?></th>
-            <th><?php echo $order->getProductId(); ?></th>
-            <th><?php echo $booc_order_data->getUserName(); ?></th>
-            <th><?php echo $booc_order_data->getUserPhone(); ?></th>
-            <th><?php echo $booc_order_data->getUserEmail(); ?></th>
+            <th><?php echo esc_html($order->getDateCreate()->format('d.m.Y H:i:s')); ?></th>
+            <th><?php echo esc_html($order->getProductId()); ?></th>
+            <th><?php echo esc_html($booc_order_data->getUserName()); ?></th>
+            <th><?php echo esc_html($booc_order_data->getUserPhone()); ?></th>
+            <th><?php echo esc_html($booc_order_data->getUserEmail()); ?></th>
             <th>
-                <?php echo $order->getProductName(); ?>
+                <?php echo esc_html($order->getProductName()); ?>
                 <br>
-                <?php echo $booc_order_data->isProductIsVariable() ? $booc_order_data->getVariationData() : ''; ?>
+                <?php echo esc_html($booc_order_data->isProductIsVariable() ? $booc_order_data->getVariationData() : ''); ?>
                 <br>
                 <?php
-                    echo __('Quantity', 'buy-one-click-woocommerce') . ': ' . $booc_order_data->getQuantityProduct();
-                
+                    echo esc_html__('Quantity', 'buy-one-click-woocommerce') . ': ' . esc_html($booc_order_data->getQuantityProduct());
+
                     foreach ($booc_order_data->getFiles() as $booc_key => $booc_url_file) {
-                        echo sprintf('<a href="%s" target="_blank">%s %s</a><br>', $booc_url_file, __('File' ,'buy-one-click-woocommerce'), ++$booc_key);
+                        echo sprintf('<a href="%s" target="_blank">%s %s</a><br>', esc_url($booc_url_file), esc_html__('File' ,'buy-one-click-woocommerce'), esc_html(++$booc_key));
                     }
                     ?>
             </th>
-            <th><?php echo $order->getProductPrice(); ?></th>
-            <th><?php echo $booc_order_data->getUserComment(); ?></th>
-            <th><?php echo $booc_order_data->getProductLinkAdmin(); ?></th>
+            <th><?php echo esc_html($order->getProductPrice()); ?></th>
+            <th><?php echo esc_html($booc_order_data->getUserComment()); ?></th>
+            <th><?php echo esc_html($booc_order_data->getProductLinkAdmin()); ?></th>
             <th><?php
                 $booc_sms = json_decode($order->getSmsLog(), true);
                 if (!empty($booc_sms) && is_array($booc_sms)) {
-                    echo 'id:' . $booc_sms[0] . '</br>' . __('Count sms', 'buy-one-click-woocommerce') . ':' . $booc_sms[1] . '</br>' . __('Cost of', 'buy-one-click-woocommerce') . ':' . $booc_sms[2] . '</br>' . __('Balance', 'buy-one-click-woocommerce') . ':' . $booc_sms[3];
+                    echo 'id:' . esc_html($booc_sms[0]) . '</br>' . esc_html__('Count sms', 'buy-one-click-woocommerce') . ':' . esc_html($booc_sms[1]) . '</br>' . esc_html__('Cost of', 'buy-one-click-woocommerce') . ':' . esc_html($booc_sms[2]) . '</br>' . esc_html__('Balance', 'buy-one-click-woocommerce') . ':' . esc_html($booc_sms[3]);
                     if (isset($booc_sms['debud'])) {
-                        echo sprintf('<p>Debug: %s</p>', $booc_sms['debud']);
+                        echo sprintf('<p>Debug: %s</p>', esc_html($booc_sms['debud']));
                     }
                 }
                 ?></th>
@@ -89,12 +90,12 @@ $booc_url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orde
                 } else {
                     echo '1';
                 }
-                ?>" class="updatestatus" id="<?php echo $order->getId(); ?>" href="<?php echo $booc_url_tab . '#id=' . $order->getId(); ?>">
+                ?>" class="updatestatus" id="<?php echo esc_attr($order->getId()); ?>" href="<?php echo esc_url($booc_url_tab . '#id=' . $order->getId()); ?>">
                     <?php
                     if ($order->getStatus() == 1) {
-                        echo '<span class="glyphicon glyphicon-ban-circle">' . __('NOT', 'buy-one-click-woocommerce') . '</span>';
+                        echo '<span class="glyphicon glyphicon-ban-circle">' . esc_html__('NOT', 'buy-one-click-woocommerce') . '</span>';
                     } else {
-                        echo '<span class="glyphicon glyphicon-ok-circle">' . __('OK', 'buy-one-click-woocommerce') . '</span>';
+                        echo '<span class="glyphicon glyphicon-ok-circle">' . esc_html__('OK', 'buy-one-click-woocommerce') . '</span>';
                     }
                     ?>
 
@@ -104,12 +105,12 @@ $booc_url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orde
             </th>
 
             <th>
-                <a class="removeorder" id="<?php echo $order->getId(); ?>" href="<?php echo $booc_url_tab; ?>#id=<?php echo $order->getId(); ?>">
+                <a class="removeorder" id="<?php echo esc_attr($order->getId()); ?>" href="<?php echo esc_url($booc_url_tab); ?>#id=<?php echo esc_attr($order->getId()); ?>">
                     <span class="glyphicon glyphicon-remove-circle"><?php esc_html_e('OnlyPlugin', 'buy-one-click-woocommerce'); ?></span>
                 </a>
                 <?php if (UtilsOrder::thereIsAWooCommerceOrder($order->getWooOrderId() ?? 0)) { ?>
                     <br><br>
-                    <a class="removeorder_woo" data-plugin_id="<?php echo $order->getId(); ?>" data-woo_id="<?php echo $order->getWooOrderId(); ?>" href="<?php echo $booc_url_tab; ?>#id=<?php echo $order->getWooOrderId(); ?>">
+                    <a class="removeorder_woo" data-plugin_id="<?php echo esc_attr($order->getId()); ?>" data-woo_id="<?php echo esc_attr($order->getWooOrderId()); ?>" href="<?php echo esc_url($booc_url_tab); ?>#id=<?php echo esc_attr($order->getWooOrderId()); ?>">
                         <span class="glyphicon glyphicon-remove-circle"><?php esc_html_e('OnlyWoo', 'buy-one-click-woocommerce'); ?></span>
                     </a>
                 <?php } ?>
@@ -117,7 +118,3 @@ $booc_url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orde
         </tr>
     <?php } ?>
     </tbody>
-
-
-
-</table>

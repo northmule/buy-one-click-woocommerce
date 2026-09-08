@@ -38,7 +38,9 @@ class CartController extends Controller
      */
     public function addToCart(): void
     {
-        $this->verifyFrontendNonce();
+        if (!wp_verify_nonce($this->getFrontendNonce(), self::FRONTEND_NONCE_ACTION)) {
+            $this->abortOnFailedNonce();
+        }
         $variation_id = isset($_POST['variation_selected']) ? intval(wp_unslash($_POST['variation_selected'])) : 0;
         $variations = [];
         $quantity = 1;
@@ -61,7 +63,7 @@ class CartController extends Controller
             }
         }
         if (!function_exists('WC')) {
-            echo get_home_url();
+            echo esc_url(get_home_url());
             die();
         }
         $productid = isset($_POST['productid']) ? intval(wp_unslash($_POST['productid'])) : 0;

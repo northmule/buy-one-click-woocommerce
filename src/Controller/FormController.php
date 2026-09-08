@@ -57,7 +57,9 @@ class FormController extends Controller
      */
     public function viewFormOrder(): void
     {
-        $this->verifyFrontendNonce();
+        if (!wp_verify_nonce($this->getFrontendNonce(), self::FRONTEND_NONCE_ACTION)) {
+            $this->abortOnFailedNonce();
+        }
         $productId = isset($_POST['productid']) ? intval(wp_unslash($_POST['productid'])) : 0;
         $variationId = isset($_POST['variation_selected']) ? intval(wp_unslash($_POST['variation_selected'])) : 0;
 
@@ -103,7 +105,9 @@ class FormController extends Controller
      */
     public function viewFormOrderCustom()
     {
-        $this->verifyFrontendNonce();
+        if (!wp_verify_nonce($this->getFrontendNonce(), self::FRONTEND_NONCE_ACTION)) {
+            $this->abortOnFailedNonce();
+        }
         $productObject = new Product([
             'product' => null,
         ]);

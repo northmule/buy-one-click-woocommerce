@@ -178,7 +178,7 @@ class Core
         add_action(
             'woocommerce_email_before_order_table',
             static function ($order, $sent_to_admin, $plain_text): void {
-                echo (new EmailTemplateFactory())->create()->modificationOrderTemplateWooCommerce($order);
+                echo (new EmailTemplateFactory())->create()->modificationOrderTemplateWooCommerce($order); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             },
             10,
             3
@@ -270,7 +270,7 @@ class Core
             add_action(
                 $locationInProductCard,
                 static function (): void {
-                    echo((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
+                    echo((new ButtonServiceFactory())->create())->getHtmlOrderButtons(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 }
             ); //Кнопка заказать
             //Положение в категории товаров
@@ -279,7 +279,7 @@ class Core
                 add_action(
                     $locationInCategory,
                     static function (): void {
-                        echo((new ButtonServiceFactory())->create())->getHtmlOrderButtons();
+                        echo((new ButtonServiceFactory())->create())->getHtmlOrderButtons(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     }
                 ); //Кнопка заказать
                 add_action($locationInCategory, [$this, 'styleAddFrontPage']); //Стили фронта
@@ -371,7 +371,7 @@ class Core
             sprintf('</script>%s', "\n"),
         ];
         foreach ($outputList as $value) {
-            echo $value;
+            echo $value; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         }
     }
 
@@ -396,7 +396,7 @@ class Core
             sprintf('</script>%s', "\n"),
         ];
         foreach ($outputList as $value) {
-            echo $value;
+            echo $value; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         }
     }
 
@@ -687,7 +687,7 @@ class Core
         $pluginPath = self::PATCH_PLUGIN . '/' . self::INDEX_NAME_FILE;
         if ($filePath === $pluginPath) {
             $listLinks = [
-                sprintf('<a href="admin.php?page=%s">%s</a>', self::URL_SUB_MENU, __('Settings', 'default')),
+                sprintf('<a href="admin.php?page=%s">%s</a>', self::URL_SUB_MENU, __('Settings', 'buy-one-click-woocommerce')),
                 sprintf('<a href="https://t.me/coderunphp">%s</a>', __('Telegram', 'buy-one-click-woocommerce')),
             ];
             $commonMenu = array_merge($commonMenu, $listLinks);
@@ -711,7 +711,7 @@ class Core
     public function getOption($key, $optionsBush = 'buyoptions', $defaultValue = '')
     {
         if (!array_key_exists($optionsBush, $this->optionsPull) || empty($optionsBush)) {
-            throw new Exception(sprintf('Invalid settings key: %s', $optionsBush));
+            throw new Exception(sprintf('Invalid settings key: %s', esc_html($optionsBush)));
         }
 
         if (empty($this->optionsPull[$optionsBush])) {

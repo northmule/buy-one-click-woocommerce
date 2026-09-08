@@ -104,7 +104,7 @@ $booc_marketingOptions = $this->getMarketingOptions();
             <tr valign="top">
                 <th scope="row"><?php esc_html_e('Transmit data', 'buy-one-click-woocommerce'); ?></th>
                 <td>
-                    <input type="checkbox" name="<?php echo Core::OPTIONS_MARKETING ?>[transfer_data_to_yandex_commerce]" <?php
+                    <input type="checkbox" name="<?php echo esc_attr(Core::OPTIONS_MARKETING); ?>[transfer_data_to_yandex_commerce]" <?php
                     checked($booc_marketingOptions->isTransferDataToYandexCommerce());
                     ?>/>
                     <span class="description"><?php esc_html_e('Enable data transfer to the Yandex e-commerce service', 'buy-one-click-woocommerce'); ?></span>
@@ -113,8 +113,8 @@ $booc_marketingOptions = $this->getMarketingOptions();
             <tr valign="top">
                 <th scope="row"><?php esc_html_e('Name of the data container', 'buy-one-click-woocommerce'); ?></th>
                 <td>
-                    <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[name_of_yandex_metrica_data_container]" value="<?php
-                    echo $booc_marketingOptions->getNameOfYandexMetricaDataContainer();
+                    <input type="text" name="<?php echo esc_attr(Core::OPTIONS_MARKETING); ?>[name_of_yandex_metrica_data_container]" value="<?php
+                    echo esc_attr($booc_marketingOptions->getNameOfYandexMetricaDataContainer());
                     ?>" />
                     <span class="description"><?php esc_html_e('Name of the yandex Metrica data container. The default value is "dataLayer"', 'buy-one-click-woocommerce'); ?></span>
                 </td>
@@ -122,8 +122,8 @@ $booc_marketingOptions = $this->getMarketingOptions();
             <tr valign="top">
                 <th scope="row"><?php esc_html_e('Goal ID', 'buy-one-click-woocommerce'); ?></th>
                 <td>
-                    <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[goal_id_in_yandex_e_commerce]" value="<?php
-                    echo $booc_marketingOptions->getGoalIdInYandexECommerce();
+                    <input type="text" name="<?php echo esc_attr(Core::OPTIONS_MARKETING); ?>[goal_id_in_yandex_e_commerce]" value="<?php
+                    echo esc_attr($booc_marketingOptions->getGoalIdInYandexECommerce());
                     ?>" />
                     <span class="description"><?php esc_html_e('Goal ID. If used, specify it here', 'buy-one-click-woocommerce'); ?></span>
                 </td>

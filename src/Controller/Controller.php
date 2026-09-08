@@ -20,6 +20,13 @@ abstract class Controller implements ControllerInterface
     public const REQUEST_KEY = 'coderun_send_form_buy_one_click';
 
     /**
+     * Action front-end nonce-a
+     *
+     * @var string
+     */
+    public const FRONTEND_NONCE_ACTION = 'buy_one_click_frontend';
+
+    /**
      * @var Logger
      */
     protected Logger $logger;
@@ -44,15 +51,22 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
-     * Проверяет nonce фронтенд-запроса. При неудаче прерывает выполнение.
+     * Возвращает значение nonce фронтенд-запроса
+     *
+     * @return string
+     */
+    protected function getFrontendNonce(): string
+    {
+        return isset($_POST['booc_nonce']) ? (string) wp_unslash($_POST['booc_nonce']) : '';
+    }
+
+    /**
+     * Прерывает обработку запроса при ошибке проверки nonce
      *
      * @return void
      */
-    protected function verifyFrontendNonce(): void
+    protected function abortOnFailedNonce(): void
     {
-        $nonce = isset($_POST['booc_nonce']) ? wp_unslash($_POST['booc_nonce']) : '';
-        if (!wp_verify_nonce($nonce, 'buy_one_click_frontend')) {
-            wp_die('-1');
-        }
+        wp_die('-1');
     }
 }

@@ -27,7 +27,7 @@ if ($params->product === null) {
 $booc_view[] = '</div>';
 
 foreach ($booc_view as $booc_value) {
-    echo $booc_value;
+    echo wp_kses_post($booc_value);
 }
 
 

@@ -81,7 +81,7 @@ class SmsCenter
 
         if ($ret == '') {
             if ($this->notificationOptions->isEnableSmsDebug()) {
-                echo "Ошибка чтения адреса: $url\n";
+                error_log('Ошибка чтения адреса: ' . $url);
             }
 
             $ret = ','; // фиктивный ответ
@@ -144,7 +144,7 @@ class SmsCenter
 
         if (is_wp_error($response)) {
             if ($this->notificationOptions->isEnableSmsDebug()) {
-                echo 'Ошибка запроса к сервису СМС: ' . $response->get_error_message() . "\n";
+                error_log('Ошибка запроса к сервису СМС: ' . $response->get_error_message());
             }
             return '';
         }
