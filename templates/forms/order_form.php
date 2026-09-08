@@ -93,7 +93,8 @@ $booc_commonOptions = $render->getCommonOptions();
             
             <?php
             //Форма файлов
-            echo wp_kses_post($fields->formWithFiles);
+            //Шаблон содержит собственные блоки <style>/<script>, поэтому не фильтруем через wp_kses_post
+            echo $fields->formWithFiles; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             
             if ($booc_commonOptions->isRecaptchaEnabled()) {
                 Coderun\BuyOneClick\ReCaptcha::getInstance()->view($booc_commonOptions->getCaptchaProvider());
