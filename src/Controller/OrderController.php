@@ -71,10 +71,8 @@ class OrderController extends Controller
             if (empty($_POST)) {
                 throw RequestException::emptyRequest();
             }
-            if (
-                !isset($_POST['_coderun_nonce'])
-                || !wp_verify_nonce(wp_unslash($_POST['_coderun_nonce']), 'one_click_send')
-            ) {
+            $nonce = isset($_POST['_coderun_nonce']) ? sanitize_text_field(wp_unslash($_POST['_coderun_nonce'])) : '';
+            if (!wp_verify_nonce($nonce, 'one_click_send')) {
                 throw RequestException::nonceError();
             }
 
@@ -228,26 +226,26 @@ class OrderController extends Controller
     protected function checkRequireField(OrderForm $orderForm, FieldNameViaType $translatingFields): void
     {
         if ($this->commonOptions->isFieldEmailIsRequired() && !$orderForm->getUserEmail()) {
-            throw RequireFieldException::fieldIsRequired($translatingFields->getUserEmail());
+            throw RequireFieldException::fieldIsRequired(esc_html($translatingFields->getUserEmail()));
         }
         if ($this->commonOptions->isFieldNameIsRequired() && !$orderForm->getUserName()) {
-            throw RequireFieldException::fieldIsRequired($translatingFields->getUserName());
+            throw RequireFieldException::fieldIsRequired(esc_html($translatingFields->getUserName()));
         }
         if ($this->commonOptions->isFieldPhoneIsRequired() && !$orderForm->getUserPhone()) {
-            throw RequireFieldException::fieldIsRequired($translatingFields->getUserPhone());
+            throw RequireFieldException::fieldIsRequired(esc_html($translatingFields->getUserPhone()));
         }
         if ($this->commonOptions->isFieldCommentIsRequired() && !$orderForm->getUserComment()) {
-            throw RequireFieldException::fieldIsRequired($translatingFields->getUserComment());
+            throw RequireFieldException::fieldIsRequired(esc_html($translatingFields->getUserComment()));
         }
         if ($this->commonOptions->isConsentToProcessing() && !$orderForm->isConset()) {
-            throw RequireFieldException::fieldIsRequired($translatingFields->getConsent());
+            throw RequireFieldException::fieldIsRequired(esc_html($translatingFields->getConsent()));
         }
         if (
             $this->commonOptions->isEnableFieldWithFiles()
             && $this->commonOptions->isFieldFilesIsRequired()
             && count($orderForm->getFiles()) == 0
         ) {
-            throw  RequireFieldException::fieldIsRequired($translatingFields->getFiles());
+            throw  RequireFieldException::fieldIsRequired(esc_html($translatingFields->getFiles()));
         }
     }
 
@@ -269,7 +267,7 @@ class OrderController extends Controller
             $storage->setSessionValue($key, (time() + $this->commonOptions->getFormSubmissionLimit()));
         } else {
             if ($storage->getSessionValue($key, 0) > time()) {
-                throw LimitOnSendingFormsException::error($this->commonOptions->getFormSubmissionLimitMessage());
+                throw LimitOnSendingFormsException::error(esc_html($this->commonOptions->getFormSubmissionLimitMessage()));
             } else {
                 $storage->deleteSessionKey($key);
             }

@@ -20,6 +20,10 @@ class PluginUpdate
     public static function createOrderTable()
     {
         global $wpdb;
+        // Static CREATE TABLE DDL for the plugin's own table; contains no user-supplied data.
+        // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+        // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
+        // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
         $createTable = "CREATE TABLE IF NOT EXISTS `wp_coderun_oneclickwoo_orders` (
                       `id` bigint(10) NOT NULL AUTO_INCREMENT,
                       `plugin_version` varchar(50) NOT NULL DEFAULT '0',

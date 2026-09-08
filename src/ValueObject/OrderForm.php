@@ -533,7 +533,7 @@ class OrderForm
     public function __call(string $name, $arguments)
     {
         if (substr($name, 0, 3) !== 'set') {
-            throw ObjectException::setterDoesNotExist($name, self::class);
+            throw ObjectException::setterDoesNotExist(esc_html($name), self::class);
         }
         $property = lcfirst(substr($name, 3));
         $this->{$property} = $arguments[0] ?? '';

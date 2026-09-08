@@ -45,7 +45,7 @@ class CartController extends Controller
         $variations = [];
         $quantity = 1;
         if (isset($_POST['variation_attr'])) {
-            $variation_attr = wp_unslash($_POST['variation_attr']);
+            $variation_attr = sanitize_text_field(wp_unslash($_POST['variation_attr']));
             $arSelectVariation = explode('&', $variation_attr);
             foreach ($arSelectVariation as $values) {
                 $params = explode('=', $values);

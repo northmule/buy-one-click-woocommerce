@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 use Coderun\BuyOneClick\Core;
 use Coderun\BuyOneClick\Utils\Order as UtilsOrder;
 

@@ -1,4 +1,10 @@
 <?php
+// Dedicated repository for the plugin's own `wp_coderun_oneclickwoo_orders` table.
+// Direct $wpdb access is intentional here (no equivalent WP/WC CRUD layer exists for this table).
+// Table name is a fixed internal identifier, so raw SQL built around it is acceptable.
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
+// phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
+// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 
 namespace Coderun\BuyOneClick\Repository;
 

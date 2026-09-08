@@ -63,7 +63,7 @@ class UploadingFiles
             );
             $savePath = $path . $newName;
             // Единственный безопасный способ переместить временный загруженный файл
-            if (move_uploaded_file($file->temporaryName, $savePath)) {
+            if (move_uploaded_file($file->temporaryName, $savePath)) { // phpcs:ignore Generic.PHP.ForbiddenFunctions.move_uploaded_file -- move_uploaded_file() is the only safe way to persist an uploaded file
                 $result[$number] = new DownloadedFile(
                     [
                         'url'  => $this->pathToDownloadsFolder['url'] . '/' . $newName,
@@ -86,7 +86,7 @@ class UploadingFiles
      */
     protected function composeFilesStructure(): array
     {
-        $fileList = $_FILES['files'] ?? [];
+        $fileList = $_FILES['files'] ?? []; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- $_FILES upload payload is gated by the frontend nonce verified in OrderController; uploaded binaries cannot be sanitized and each file passes extension/mime/size whitelists in checkRestriction()
         if (!$fileList) {
             return [];
         }

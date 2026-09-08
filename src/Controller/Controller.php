@@ -57,7 +57,8 @@ abstract class Controller implements ControllerInterface
      */
     protected function getFrontendNonce(): string
     {
-        return isset($_POST['booc_nonce']) ? (string) wp_unslash($_POST['booc_nonce']) : '';
+        // Frontend nonce extraction; verified by callers via wp_verify_nonce(FRONTEND_NONCE_ACTION).
+        return isset($_POST['booc_nonce']) ? sanitize_text_field(wp_unslash($_POST['booc_nonce'])) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     }
 
     /**

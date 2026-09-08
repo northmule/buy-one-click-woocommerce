@@ -1,4 +1,4 @@
-=== Buy one click WooCommerce ===
+=== Buy one click for WooCommerce ===
 Contributors: northmule
 Donate link: https://yoomoney.ru/to/41001746944171
 Tags: woocommerce, buy now, add to cart, quick order, one click
@@ -10,6 +10,7 @@ WC requires at least: 8.0
 WC tested up to: 9.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Short Description: Adds a "buy in one click" quick order button to your WooCommerce store.
 
 == Description ==
 

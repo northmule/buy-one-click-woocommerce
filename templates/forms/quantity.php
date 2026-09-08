@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 declare(strict_types=1);
 
 use Coderun\BuyOneClick\SimpleDataObjects\Product;

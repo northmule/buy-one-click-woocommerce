@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Service\Sms;
 
+use Coderun\BuyOneClick\Common\Logger;
 use Coderun\BuyOneClick\Options\Notification as NotificationOptions;
 use Exception;
 
@@ -81,7 +82,7 @@ class SmsCenter
 
         if ($ret == '') {
             if ($this->notificationOptions->isEnableSmsDebug()) {
-                error_log('Ошибка чтения адреса: ' . $url);
+                Logger::getInstance()->error('Ошибка чтения адреса SMS-сервиса.');
             }
 
             $ret = ','; // фиктивный ответ
@@ -144,7 +145,7 @@ class SmsCenter
 
         if (is_wp_error($response)) {
             if ($this->notificationOptions->isEnableSmsDebug()) {
-                error_log('Ошибка запроса к сервису СМС: ' . $response->get_error_message());
+                Logger::getInstance()->error('Ошибка запроса к сервису СМС: ' . $response->get_error_message());
             }
             return '';
         }

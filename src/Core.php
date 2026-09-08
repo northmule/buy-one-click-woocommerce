@@ -635,7 +635,7 @@ class Core
      */
     public function getCssOfActiveTab(string $tabName): string
     {
-        $currentTab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : Pages::GENERAL;
+        $currentTab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : Pages::GENERAL; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only UI helper picking which settings tab to highlight; performs no privileged action
         return $tabName === $currentTab ? 'nav-tab-active' : '';
     }
 
@@ -649,7 +649,7 @@ class Core
     public function showPage(): void
     {
         $pages = $this->getTabs();
-        $tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : Pages::DEFAULT;
+        $tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : Pages::DEFAULT; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only selection of which settings tab page to render; no privileged action performed
         if (array_key_exists($tab, $pages) && file_exists($pages[$tab])) {
             include_once $pages[$tab];
             return;

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Plugin Name: Buy one click WooCommerce
+ * Plugin Name: Buy one click for WooCommerce
  * Plugin URI: https://github.com/northmule/buy-one-click-woocommerce
  * Description: Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click
  * Version: 2.4.0
@@ -51,13 +51,6 @@ define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.4.0');
  */
 (function()
 {
-    load_plugin_textdomain(
-        'buy-one-click-woocommerce',
-        false,
-        dirname(plugin_basename(__FILE__)) . '/languages',
-        CODERUN_ONECLICKWOO_PLUGIN_DIR . '/languages'
-    );
-    
     require_once(CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');
     
     $main = Coderun\BuyOneClick\Core::getInstance();

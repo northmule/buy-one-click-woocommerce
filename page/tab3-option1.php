@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -46,8 +47,8 @@ $booc_url_tab = add_query_arg(array('page' => Core::URL_SUB_MENU, 'tab' => 'orde
                     json_decode($order->getForm(), true)
                 );
                 if ($order->getWooOrderId()) {
-                    $booc_woo_link = esc_url(admin_url('post.php?action=edit&amp;' . http_build_query(['post' => $order->getWooOrderId()])));
-                    echo '<br>' . esc_html__('Woo Order №', 'buy-one-click-woocommerce') . ": <a href='" . $booc_woo_link . "'>" . esc_html($order->getWooOrderId()) . "</a>";
+                    $booc_woo_link = admin_url('post.php?' . http_build_query(['post' => $order->getWooOrderId(), 'action' => 'edit']));
+                    echo '<br>' . esc_html__('Woo Order №', 'buy-one-click-woocommerce') . ": <a href='" . esc_url($booc_woo_link) . "'>" . esc_html($order->getWooOrderId()) . "</a>";
                 }
                 if ($booc_order_data->getUuid()) {
                     echo sprintf('<p>Uuid: %s</p>', esc_html($booc_order_data->getUuid()));

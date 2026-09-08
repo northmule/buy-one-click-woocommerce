@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 use Coderun\BuyOneClick\Utils\Translation;
 
 if (!defined('ABSPATH')) {
@@ -43,11 +44,11 @@ $booc_commonOptions = $render->getCommonOptions();
                                 <span class="description"> <?php echo esc_html($fields->productName); ?></span>
                             </td>
                             <td data-label="<?php esc_html_e('Price', 'buy-one-click-woocommerce'); ?>">
-                                <span class="description"><?php echo $fields->productPriceHtml; ?></span>
+                                <span class="description"><?php echo wp_kses_post($fields->productPriceHtml); ?></span>
                             </td>
                             <?php if (!empty($fields->productImg)) { ?>
                                 <td data-label="<?php esc_html_e('Picture', 'buy-one-click-woocommerce'); ?>">
-                                    <span class="description"><?php echo $fields->productSrcImg; ?></span>
+                                    <span class="description"><?php echo wp_kses_post($fields->productSrcImg); ?></span>
                                 </td>
                             <?php } ?>
                         </tr>
@@ -81,7 +82,7 @@ $booc_commonOptions = $render->getCommonOptions();
                 </p>
             <?php } ?>
             
-            <?php echo $fields->formWithQuantity; ?>
+            <?php echo wp_kses_post($fields->formWithQuantity); ?>
             
             <?php wp_nonce_field('one_click_send', '_coderun_nonce'); ?>
             <input type="hidden" name="nametovar" value="<?php echo esc_attr($fields->productName); ?>" />
@@ -92,7 +93,7 @@ $booc_commonOptions = $render->getCommonOptions();
             
             <?php
             //Форма файлов
-            echo $fields->formWithFiles;
+            echo wp_kses_post($fields->formWithFiles);
             
             if ($booc_commonOptions->isRecaptchaEnabled()) {
                 Coderun\BuyOneClick\ReCaptcha::getInstance()->view($booc_commonOptions->getCaptchaProvider());

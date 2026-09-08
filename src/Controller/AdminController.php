@@ -86,8 +86,8 @@ class AdminController extends Controller
     {
         check_admin_referer('removeorder', 'buy_one_click_admin_actions');
 
-        $nonce = isset($_POST['nonce']) ? wp_unslash($_POST['nonce']) : []; // Массив URL и NONCE
-        if (is_array($nonce) && wp_verify_nonce(sanitize_text_field($nonce['nonce'] ?? '-1'), 'superKey')) {
+        $nonce = isset($_POST['nonce']['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce']['nonce'])) : '-1';
+        if (wp_verify_nonce($nonce, 'superKey')) {
             Order::getInstance()->remove_order_all();
             wp_send_json_success('ok');
         } else {
@@ -104,9 +104,8 @@ class AdminController extends Controller
     {
         check_admin_referer('updatestatus', 'buy_one_click_admin_actions');
 
-        $text = isset($_POST['text']) ? wp_unslash($_POST['text']) : [];
-        $id = is_array($text) ? intval($text['id'] ?? -1) : -1;
-        $status = is_array($text) ? intval($text['status'] ?? 0) : 0;
+        $id = isset($_POST['text']['id']) ? intval(wp_unslash($_POST['text']['id'])) : -1;
+        $status = isset($_POST['text']['status']) ? intval(wp_unslash($_POST['text']['status'])) : 0;
         Order::getInstance()->update_status($id, $status);
         wp_send_json_success();
     }

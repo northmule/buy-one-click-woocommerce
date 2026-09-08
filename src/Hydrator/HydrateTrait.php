@@ -73,7 +73,7 @@ trait HydrateTrait
             /** @var ReflectionType $propertyType */
             $propertyType = $propertyMap[$propertyName] ?? null;
             if ($propertyType == null) {
-                throw VariablesException::valueIsNotDefined($propertyName);
+                throw VariablesException::valueIsNotDefined(esc_html($propertyName));
             }
             $setter = sprintf('set%s', ucfirst($propertyName));
 //            if (!method_exists($entity, $setter)) {
