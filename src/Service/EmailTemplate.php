@@ -71,23 +71,23 @@ class EmailTemplate
         if (!$form instanceof OrderDataForAdmin) {
             return '';
         }
-        $htmlItems = '<h2>' . __('In one click', 'coderun-oneclickwoo') . '</h2>';
+        $htmlItems = '<h2>' . __('In one click', 'buy-one-click-woocommerce') . '</h2>';
         if ($form->getUserName()) {
-            $htmlItems .= sprintf('<p>%s: %s</p>', __('Name', 'coderun-oneclickwoo'), $form->getUserName());
+            $htmlItems .= sprintf('<p>%s: %s</p>', __('Name', 'buy-one-click-woocommerce'), $form->getUserName());
         }
         if ($form->getUserPhone()) {
-            $htmlItems .= sprintf('<p>%s: %s</p>', __('Phone', 'coderun-oneclickwoo'), $form->getUserPhone());
+            $htmlItems .= sprintf('<p>%s: %s</p>', __('Phone', 'buy-one-click-woocommerce'), $form->getUserPhone());
         }
         if ($form->getUserEmail()) {
-            $htmlItems .= sprintf('<p>%s: %s</p>', __('Email', 'coderun-oneclickwoo'), $form->getUserEmail());
+            $htmlItems .= sprintf('<p>%s: %s</p>', __('Email', 'buy-one-click-woocommerce'), $form->getUserEmail());
         }
         if ($form->getProductName()) {
-            $htmlItems .= sprintf('<p>%s: %s</p>', __('Products', 'coderun-oneclickwoo'), $form->getProductName());
+            $htmlItems .= sprintf('<p>%s: %s</p>', __('Products', 'buy-one-click-woocommerce'), $form->getProductName());
         }
 
         if ($this->notificationOptions->isEnableFileLinks()) {
             foreach ($form->getFiles() as $url) {
-                $htmlItems .= sprintf('<p>%s: %s</p>', __('File url', 'coderun-oneclickwoo'), $url);
+                $htmlItems .= sprintf('<p>%s: %s</p>', __('File url', 'buy-one-click-woocommerce'), $url);
             }
         }
         return sprintf('<table><tr><td>%s</td></tr></table>', $htmlItems);

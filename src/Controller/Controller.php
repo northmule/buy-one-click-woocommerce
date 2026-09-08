@@ -42,4 +42,17 @@ abstract class Controller implements ControllerInterface
         $this->commonOptions = $commonOptions;
         $this->notificationOptions = $notificationOptions;
     }
+
+    /**
+     * Проверяет nonce фронтенд-запроса. При неудаче прерывает выполнение.
+     *
+     * @return void
+     */
+    protected function verifyFrontendNonce(): void
+    {
+        $nonce = isset($_POST['booc_nonce']) ? wp_unslash($_POST['booc_nonce']) : '';
+        if (!wp_verify_nonce($nonce, 'buy_one_click_frontend')) {
+            wp_die('-1');
+        }
+    }
 }

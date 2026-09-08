@@ -19,7 +19,7 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
      */
     public static function noFilesToDownload(): UploadingFilesException
     {
-        return new self(__('No file to download', 'coderun-oneclickwoo'));
+        return new self(__('No file to download', 'buy-one-click-woocommerce'));
     }
 
     /**
@@ -31,7 +31,8 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
     {
         return new self(
             sprintf(
-                __('Invalid file extension: %s', 'coderun-oneclickwoo'),
+                /* translators: %s: file extension */
+                __('Invalid file extension: %s', 'buy-one-click-woocommerce'),
                 $extension
             )
         );
@@ -46,7 +47,8 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
     {
         return new self(
             sprintf(
-                __('Invalid file size: %s', 'coderun-oneclickwoo'),
+                /* translators: %s: file size */
+                __('Invalid file size: %s', 'buy-one-click-woocommerce'),
                 $size
             )
         );
@@ -61,7 +63,8 @@ class UploadingFilesException extends BaseException implements ExceptionInterfac
     {
         return new self(
             sprintf(
-                __('Invalid file type: %s', 'coderun-oneclickwoo'),
+                /* translators: %s: mime type */
+                __('Invalid file type: %s', 'buy-one-click-woocommerce'),
                 $type
             )
         );

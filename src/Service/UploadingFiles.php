@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Service;
@@ -64,6 +62,7 @@ class UploadingFiles
                 $file->extension
             );
             $savePath = $path . $newName;
+            // Единственный безопасный способ переместить временный загруженный файл
             if (move_uploaded_file($file->temporaryName, $savePath)) {
                 $result[$number] = new DownloadedFile(
                     [

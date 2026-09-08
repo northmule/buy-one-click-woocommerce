@@ -1,6 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Controller;
@@ -87,8 +86,8 @@ class AdminController extends Controller
     {
         check_admin_referer('removeorder', 'buy_one_click_admin_actions');
 
-        $nonce = $_POST['nonce'] ?? []; // Массив URL и NONCE
-        if (wp_verify_nonce($nonce['nonce'] ?? '-1', 'superKey')) {
+        $nonce = isset($_POST['nonce']) ? wp_unslash($_POST['nonce']) : []; // Массив URL и NONCE
+        if (is_array($nonce) && wp_verify_nonce(sanitize_text_field($nonce['nonce'] ?? '-1'), 'superKey')) {
             Order::getInstance()->remove_order_all();
             wp_send_json_success('ok');
         } else {
@@ -105,9 +104,10 @@ class AdminController extends Controller
     {
         check_admin_referer('updatestatus', 'buy_one_click_admin_actions');
 
-        $text = $_POST['text'] ?? [];
-        $id = $text['id'] ?? '-1';
-        Order::getInstance()->update_status($id, intval($text['status']));
+        $text = isset($_POST['text']) ? wp_unslash($_POST['text']) : [];
+        $id = is_array($text) ? intval($text['id'] ?? -1) : -1;
+        $status = is_array($text) ? intval($text['status'] ?? 0) : 0;
+        Order::getInstance()->update_status($id, $status);
         wp_send_json_success();
     }
 

@@ -1,8 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
-// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Controller;
@@ -74,7 +71,10 @@ class OrderController extends Controller
             if (empty($_POST)) {
                 throw RequestException::emptyRequest();
             }
-            if (!wp_verify_nonce($_POST['_coderun_nonce'], 'one_click_send')) {
+            if (
+                !isset($_POST['_coderun_nonce'])
+                || !wp_verify_nonce(wp_unslash($_POST['_coderun_nonce']), 'one_click_send')
+            ) {
                 throw RequestException::nonceError();
             }
 
@@ -147,7 +147,7 @@ class OrderController extends Controller
                         'postcode'            => '',
                         'country'             => '',
                         'order_status'        => 'processing', //Статус заказа который будет установлен
-                        'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
+                        'message_notes_order' => __('Quick order form', 'buy-one-click-woocommerce'), //Сообщение в заказе
                         'qty'                 => $orderForm->getQuantityProduct() ?: 1,
                         'product_id'          => $orderForm->getProductId(), //ИД товара Woo
                     ]
@@ -170,7 +170,7 @@ class OrderController extends Controller
                 $order_field
             );
             $orderResponse = new OrderResponse();
-            $orderResponse->setMessage(__('The order has been sent', 'coderun-oneclickwoo'));
+            $orderResponse->setMessage(__('The order has been sent', 'buy-one-click-woocommerce'));
             $orderResponse->setResult(Translation::translate($this->commonOptions->getSubmittingFormMessageSuccess()));
             $orderResponse->setProducts([new Product($orderForm)]);
             $orderResponse->setOrderUuid($orderForm->getOrderUuid());
@@ -206,7 +206,7 @@ class OrderController extends Controller
             );
         } catch (RequestException $ex) {
             $errorResponse = new ErrorResponse();
-            $errorResponse->setMessage(__('request error', 'coderun-oneclickwoo'));
+            $errorResponse->setMessage(__('request error', 'buy-one-click-woocommerce'));
             $this->logger->error($ex->getMessage());
             wp_send_json_error((new CommonHydrator())->extractToArray($errorResponse));
         } catch (DependenciesException | RequireFieldException | LimitOnSendingFormsException | UploadingFilesException $ex) {

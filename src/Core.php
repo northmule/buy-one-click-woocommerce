@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 namespace Coderun\BuyOneClick;
 
 use Coderun\BuyOneClick\Common\ObjectWithConstantState;
@@ -153,7 +151,7 @@ class Core
         add_action(
             'init',
             function (): void {
-                do_action('buy_one_click_woocommerce_start_load_core');
+                do_action('coderun_oneclickwoo_start_load_core');
                 ObjectWithConstantState::getInstance();
             }
         );
@@ -209,7 +207,7 @@ class Core
             }
         );
         add_filter('gettext', function ($translation, $text, $domain) {
-            if ($domain !== 'coderun-oneclickwoo' || !function_exists('pll__')) {
+            if ($domain !== 'buy-one-click-woocommerce' || !function_exists('pll__')) {
                 return $translation;
             }
             if (!in_array($text, TranslationString::all())) {
@@ -331,6 +329,7 @@ class Core
     protected function frontVariables(): void
     {
         $variables = ['ajaxurl' => admin_url('admin-ajax.php')];
+        $variables['nonce'] = wp_create_nonce('buy_one_click_frontend');
         $variables['variation'] = 0;
         $variables['tel_mask'] = str_replace(['\'', '"'], [], $this->commonOptions->getPhoneNumberInputMask());
         $variables['work_mode'] = $this->commonOptions->getPluginWorkMode();
@@ -453,9 +452,9 @@ class Core
      */
     public function styleAddPage(): void
     {
-        wp_register_style('buybootstrapcss1', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/css/bootstrap.css');
+        wp_register_style('buybootstrapcss1', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/css/bootstrap.css', [], self::VERSION);
         wp_enqueue_style('buybootstrapcss1');
-        wp_register_style('buyadmincss2', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'css/admin.css');
+        wp_register_style('buyadmincss2', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'css/admin.css', [], self::VERSION);
         wp_enqueue_style('buyadmincss2');
     }
 
@@ -470,13 +469,15 @@ class Core
             'buybootstrapjs1',
             plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'bootstrap/js/bootstrap.js',
             ['jquery'],
-            self::VERSION
+            self::VERSION,
+            true
         );
         wp_enqueue_script(
             'buyorder',
             plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/admin_order.js',
             ['jquery'],
-            self::VERSION
+            self::VERSION,
+            true
         );
         wp_localize_script(
             'buyorder',
@@ -494,17 +495,19 @@ class Core
                 self::PATCH_PLUGIN
             ),
             ['jquery'],
-            self::VERSION
+            self::VERSION,
+            true
         );
         wp_enqueue_script(
-            'form-builder',
+            'form-builder-render',
             sprintf(
                 '%s/%s/js/formBuilder/form-render.min.js',
                 plugins_url(),
                 self::PATCH_PLUGIN
             ),
             ['jquery'],
-            self::VERSION
+            self::VERSION,
+            true
         );
     }
 
@@ -516,7 +519,7 @@ class Core
     public function styleAddFrontPage(): void
     {
         foreach ($this->getStylesFront() as $styleName => $styleParams) {
-            wp_register_style($styleName, $styleParams['url'], $styleParams['deps']);
+            wp_register_style($styleName, $styleParams['url'], $styleParams['deps'], self::VERSION);
             wp_enqueue_style($styleName);
         }
     }
@@ -615,10 +618,11 @@ class Core
             'buy-one-click-yandex-metrica',
             sprintf('%s/%s/js/BuyOneClickYandexMetrica.js', plugins_url(), self::PATCH_PLUGIN),
             ['jquery'],
-            self::VERSION
+            self::VERSION,
+            true
         );
-        wp_enqueue_script('buyonclickfrontjs', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/form.js', ['jquery', 'buymaskedinput'], self::VERSION);
-        wp_enqueue_script('buymaskedinput', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/jquery.maskedinput.min.js', ['jquery'], self::VERSION);
+        wp_enqueue_script('buymaskedinput', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/jquery.maskedinput.min.js', ['jquery'], self::VERSION, true);
+        wp_enqueue_script('buyonclickfrontjs', plugins_url() . '/' . self::PATCH_PLUGIN . '/' . 'js/form.js', ['jquery', 'buymaskedinput'], self::VERSION, true);
     }
 
 
@@ -631,7 +635,7 @@ class Core
      */
     public function getCssOfActiveTab(string $tabName): string
     {
-        $currentTab = $_GET['tab'] ?? Pages::GENERAL;
+        $currentTab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : Pages::GENERAL;
         return $tabName === $currentTab ? 'nav-tab-active' : '';
     }
 
@@ -645,7 +649,7 @@ class Core
     public function showPage(): void
     {
         $pages = $this->getTabs();
-        $tab = $_GET['tab'] ?? Pages::DEFAULT;
+        $tab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : Pages::DEFAULT;
         if (array_key_exists($tab, $pages) && file_exists($pages[$tab])) {
             include_once $pages[$tab];
             return;
@@ -684,7 +688,7 @@ class Core
         if ($filePath === $pluginPath) {
             $listLinks = [
                 sprintf('<a href="admin.php?page=%s">%s</a>', self::URL_SUB_MENU, __('Settings', 'default')),
-                sprintf('<a href="https://t.me/coderunphp">%s</a>', __('Telegram', 'coderun-oneclickwoo')),
+                sprintf('<a href="https://t.me/coderunphp">%s</a>', __('Telegram', 'buy-one-click-woocommerce')),
             ];
             $commonMenu = array_merge($commonMenu, $listLinks);
         }

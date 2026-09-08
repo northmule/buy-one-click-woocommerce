@@ -1,6 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Controller;
@@ -39,21 +38,25 @@ class CartController extends Controller
      */
     public function addToCart(): void
     {
-        $variation_id = intval($_POST['variation_selected'] ?? 0);
+        $this->verifyFrontendNonce();
+        $variation_id = isset($_POST['variation_selected']) ? intval(wp_unslash($_POST['variation_selected'])) : 0;
         $variations = [];
         $quantity = 1;
         if (isset($_POST['variation_attr'])) {
-            $variation_attr = $_POST['variation_attr'];
+            $variation_attr = wp_unslash($_POST['variation_attr']);
             $arSelectVariation = explode('&', $variation_attr);
             foreach ($arSelectVariation as $values) {
                 $params = explode('=', $values);
+                if (count($params) < 2) {
+                    continue;
+                }
                 if (stripos($params[0], 'attribute_pa') !== false) {
                     $variation_slug = str_replace('attribute_pa_', '', $params[0]);
                     $variation_value = $params[1];
-                    $variations[$variation_slug] = $variation_value;
+                    $variations[sanitize_text_field($variation_slug)] = sanitize_text_field($variation_value);
                 }
                 if (stripos($params[0], 'quantity') !== false) {
-                    $quantity = $params[1];
+                    $quantity = intval($params[1]);
                 }
             }
         }
@@ -61,7 +64,7 @@ class CartController extends Controller
             echo get_home_url();
             die();
         }
-        $productid = intval($_POST['productid']);
+        $productid = isset($_POST['productid']) ? intval(wp_unslash($_POST['productid'])) : 0;
         WC()->cart->add_to_cart($productid, $quantity, $variation_id, $variations);
         $url = get_permalink(get_option('woocommerce_checkout_page_id'));
         wp_send_json_success($url);

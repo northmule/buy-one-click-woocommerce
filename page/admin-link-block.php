@@ -1,3 +1,9 @@
+<?php
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <p>
     <a href="https://github.com/northmule/buy-one-click-woocommerce/blob/master/README.md" target="_blank">GitHub</a> |
     <a href="https://t.me/coderunphp" target="_blank">Telegram</a> |

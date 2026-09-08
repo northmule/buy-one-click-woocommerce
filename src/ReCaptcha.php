@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 namespace Coderun\BuyOneClick;
 
 class ReCaptcha
@@ -30,7 +28,7 @@ class ReCaptcha
     {
         $result = [
             'check'   => false,
-            'message' => esc_html_e('Captcha failed', 'coderun-oneclickwoo'),
+            'message' => esc_html_e('Captcha failed', 'buy-one-click-woocommerce'),
         ];
         if ($plugin === 'advanced_nocaptcha_recaptcha') {
             if (!$this->isSupportPluginAnrCaptcha()) {

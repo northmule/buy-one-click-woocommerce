@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\Service\Sms;
@@ -92,9 +90,10 @@ class SmsCenter
         $delim = ',';
 
         if ($cmd == 'status') {
-            parse_str($arg);
+            $parsedArgs = [];
+            parse_str($arg, $parsedArgs);
 
-            if (strpos($id, ',')) {
+            if (isset($id) && strpos($id, ',')) {
                 $delim = "\n";
             }
         }
@@ -102,76 +101,57 @@ class SmsCenter
         return explode($delim, $ret);
     }
 
-    // Функция чтения URL. Для работы должно быть доступно:
-    // curl или fsockopen (только http) или включена опция allow_url_fopen для file_get_contents
+    // Чтение ответа сервиса через HTTP API WordPress (wp_http)
 
     protected function _smsc_read_url($url, $files)
     {
         $ret = '';
         $post = $this->notificationOptions->isEnableSmsServicePostProtocol() || strlen($url) > 2000 || $files;
 
-        if (function_exists('curl_init')) {
-            static $c = 0; // keepalive
+        $args = [
+            'timeout'     => 60,
+            'sslverify'   => false,
+            'redirection' => 5,
+        ];
 
-            if (!$c) {
-                $c = curl_init();
-                curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 10);
-                curl_setopt($c, CURLOPT_TIMEOUT, 60);
-                curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+        if ($post) {
+            $parts = explode('?', $url, 2);
+            $baseUrl = reset($parts);
+            $queryString = count($parts) > 1 ? $parts[1] : '';
+
+            $queryParams = [];
+            if ($queryString !== '') {
+                parse_str($queryString, $queryParams);
             }
 
-            curl_setopt($c, CURLOPT_POST, $post);
-
-            if ($post) {
-                [$url, $post] = explode('?', $url, 2);
-
-                if ($files) {
-                    parse_str($post, $m);
-
-                    foreach ($m as $k => $v) {
-                        $m[$k] = isset($v[0]) && $v[0] == '@' ? sprintf("\0%s", $v) : $v;
-                    }
-
-                    $post = $m;
-                    foreach ($files as $i => $path) {
-                        if (file_exists($path)) {
-                            $post['file' . $i] = function_exists('curl_file_create') ? curl_file_create($path) : '@' . $path;
-                        }
+            $body = $queryParams;
+            if ($files) {
+                foreach ($files as $i => $path) {
+                    if (file_exists($path)) {
+                        $body['file' . $i] = $path;
                     }
                 }
-
-                curl_setopt($c, CURLOPT_POSTFIELDS, $post);
             }
 
-            curl_setopt($c, CURLOPT_URL, $url);
-
-            $ret = curl_exec($c);
-        } elseif ($files) {
-            if ($this->notificationOptions->isEnableSmsDebug()) {
-                echo "Не установлен модуль curl для передачи файлов\n";
-            }
+            $args['method'] = 'POST';
+            $args['body'] = $body;
+            $url = $baseUrl;
         } else {
-            if (!$this->notificationOptions->isEnableSmsServiceHttpsProtocol() && function_exists('fsockopen')) {
-                $m = parse_url($url);
+            $args['method'] = 'GET';
+        }
 
-                if (!$fp = fsockopen($m['host'], 80, $errno, $errstr, 10)) {
-                    $fp = fsockopen('212.24.33.196', 80, $errno, $errstr, 10);
-                }
+        $response = wp_remote_request($url, $args);
 
-                if ($fp) {
-                    fwrite($fp, ($post ? "POST $m[path]" : "GET $m[path]?$m[query]") . " HTTP/1.1\r\nHost: smsc.ru\r\nUser-Agent: PHP" . ($post ? "\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: " . strlen($m['query']) : '') . "\r\nConnection: Close\r\n\r\n" . ($post ? $m['query'] : ''));
-
-                    while (!feof($fp)) {
-                        $ret .= fgets($fp, 1024);
-                    }
-                    [, $ret] = explode("\r\n\r\n", $ret, 2);
-
-                    fclose($fp);
-                }
-            } else {
-                $ret = file_get_contents($url);
+        if (is_wp_error($response)) {
+            if ($this->notificationOptions->isEnableSmsDebug()) {
+                echo 'Ошибка запроса к сервису СМС: ' . $response->get_error_message() . "\n";
             }
+            return '';
+        }
+
+        $statusCode = wp_remote_retrieve_response_code($response);
+        if ($statusCode >= 200 && $statusCode < 300) {
+            $ret = wp_remote_retrieve_body($response);
         }
 
         return $ret;

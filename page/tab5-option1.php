@@ -1,6 +1,4 @@
 <?php
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -9,27 +7,27 @@ use Coderun\BuyOneClick\Core;
 
 /** @var Core $this */
 
-$marketingOptions = $this->getMarketingOptions();
+$booc_marketingOptions = $this->getMarketingOptions();
 ?>
 <form method="post" action="options.php">
     <?php wp_nonce_field('update-options'); ?>
     <?php settings_fields(sprintf('%s_options', Core::OPTIONS_MARKETING)); ?>
 
-    <h3><?php esc_html_e('Additional settings', 'coderun-oneclickwoo'); ?></h3>
-    <p><?php esc_html_e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://coderun.ru/blog/kak-v-plagin-buy-one-click-woocommerce-dobavit-celi-po-sobytiya-javascript/"><?php esc_html_e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
+    <h3><?php esc_html_e('Additional settings', 'buy-one-click-woocommerce'); ?></h3>
+    <p><?php esc_html_e('Example', 'buy-one-click-woocommerce') ?>: <a target="_blank" href="https://coderun.ru/blog/kak-v-plagin-buy-one-click-woocommerce-dobavit-celi-po-sobytiya-javascript/"><?php esc_html_e('Switching to another site', 'buy-one-click-woocommerce') ?></a> </p>
     <table class="form-table">
         <tr valign="top">
-            <th scope="row"><?php esc_html_e('Event after clicking the button', 'coderun-oneclickwoo'); ?></th>
+            <th scope="row"><?php esc_html_e('Event after clicking the button', 'buy-one-click-woocommerce'); ?></th>
             <td>
                 <?php
-                $codeMirrorSetting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
-                if ($codeMirrorSetting !== false) {
+                $booc_code_mirror_setting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
+                if ($booc_code_mirror_setting !== false) {
                     wp_add_inline_script(
                         'code-editor',
-                        sprintf('jQuery( function() { wp.codeEditor.initialize( "after_clicking_on_button", %s ); } );', wp_json_encode($codeMirrorSetting))
+                        sprintf('jQuery( function() { wp.codeEditor.initialize( "after_clicking_on_button", %s ); } );', wp_json_encode($booc_code_mirror_setting))
                     );
                 }
-                \wp_editor($marketingOptions->getAfterClickingOnButton(), 'after_clicking_on_button', [
+                \wp_editor($booc_marketingOptions->getAfterClickingOnButton(), 'after_clicking_on_button', [
                     'wpautop' => false,
                     'media_buttons' => 0,
                     'textarea_name' => \sprintf('%s[after_clicking_on_button]', Core::OPTIONS_MARKETING),
@@ -45,25 +43,25 @@ $marketingOptions = $this->getMarketingOptions();
                 ]);
                 ?>
                 <p><span class="description">
-                    <?php esc_html_e('The JavaScript code that will be called when you click on the button to open the order form.', 'coderun-oneclickwoo'); ?>
+                    <?php esc_html_e('The JavaScript code that will be called when you click on the button to open the order form.', 'buy-one-click-woocommerce'); ?>
                         <br>
-                     <?php esc_html_e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
+                     <?php esc_html_e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'buy-one-click-woocommerce'); ?>
                     </span>
                 </p>
             </td>
         </tr>
         <tr valign="top">
-            <th scope="row"><?php esc_html_e('Event after successful form submission', 'coderun-oneclickwoo'); ?></th>
+            <th scope="row"><?php esc_html_e('Event after successful form submission', 'buy-one-click-woocommerce'); ?></th>
             <td>
                 <?php
-                $codeMirrorSetting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
-                if ($codeMirrorSetting !== false) {
+                $booc_code_mirror_setting = wp_enqueue_code_editor([ 'type' => 'application/javascript' ]);
+                if ($booc_code_mirror_setting !== false) {
                     wp_add_inline_script(
                         'code-editor',
-                        sprintf('jQuery( function() { wp.codeEditor.initialize( "successful_form_submission", %s ); } );', wp_json_encode($codeMirrorSetting))
+                        sprintf('jQuery( function() { wp.codeEditor.initialize( "successful_form_submission", %s ); } );', wp_json_encode($booc_code_mirror_setting))
                     );
                 }
-                \wp_editor($marketingOptions->getSuccessfulFormSubmission(), 'successful_form_submission', [
+                \wp_editor($booc_marketingOptions->getSuccessfulFormSubmission(), 'successful_form_submission', [
                     'wpautop' => false,
                     'media_buttons' => 0,
                     'textarea_name' => \sprintf('%s[successful_form_submission]', Core::OPTIONS_MARKETING),
@@ -79,55 +77,55 @@ $marketingOptions = $this->getMarketingOptions();
                 ]);
                 ?>
                 <p><span class="description">
-                        <?php esc_html_e('The JavaScript code that will be called after the successful submission of the order form.', 'coderun-oneclickwoo'); ?>
+                        <?php esc_html_e('The JavaScript code that will be called after the successful submission of the order form.', 'buy-one-click-woocommerce'); ?>
                         <br>
-                    <?php esc_html_e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'coderun-oneclickwoo'); ?>
+                    <?php esc_html_e('Please note that the code may disrupt the normal operation of the plugin. Always check the changes after saving the settings.', 'buy-one-click-woocommerce'); ?>
                     </span>
                 </p>
             </td>
         </tr>
     </table>
     <fieldset>
-        <legend><?php esc_html_e('Data transfer to Yandex e-commerce event of product purchase', 'coderun-oneclickwoo'); ?></legend>
+        <legend><?php esc_html_e('Data transfer to Yandex e-commerce event of product purchase', 'buy-one-click-woocommerce'); ?></legend>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row"></th>
                 <td>
                     <p>
                         <span class="description">
-                        <?php esc_html_e('When you specify these settings, data will be transmitted to the Yandex Metrica - e-commerce service. This event is a product purchase event.', 'coderun-oneclickwoo'); ?>
+                        <?php esc_html_e('When you specify these settings, data will be transmitted to the Yandex Metrica - e-commerce service. This event is a product purchase event.', 'buy-one-click-woocommerce'); ?>
                         <br>
-                    <p><?php esc_html_e('Example', 'coderun-oneclickwoo') ?>: <a target="_blank" href="https://yandex.ru/support/metrica/ecommerce/data.html"><?php esc_html_e('Switching to another site', 'coderun-oneclickwoo') ?></a> </p>
+                    <p><?php esc_html_e('Example', 'buy-one-click-woocommerce') ?>: <a target="_blank" href="https://yandex.ru/support/metrica/ecommerce/data.html"><?php esc_html_e('Switching to another site', 'buy-one-click-woocommerce') ?></a> </p>
                         
                         </span>
                     </p>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php esc_html_e('Transmit data', 'coderun-oneclickwoo'); ?></th>
+                <th scope="row"><?php esc_html_e('Transmit data', 'buy-one-click-woocommerce'); ?></th>
                 <td>
                     <input type="checkbox" name="<?php echo Core::OPTIONS_MARKETING ?>[transfer_data_to_yandex_commerce]" <?php
-                    checked($marketingOptions->isTransferDataToYandexCommerce());
+                    checked($booc_marketingOptions->isTransferDataToYandexCommerce());
                     ?>/>
-                    <span class="description"><?php esc_html_e('Enable data transfer to the Yandex e-commerce service', 'coderun-oneclickwoo'); ?></span>
+                    <span class="description"><?php esc_html_e('Enable data transfer to the Yandex e-commerce service', 'buy-one-click-woocommerce'); ?></span>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php esc_html_e('Name of the data container', 'coderun-oneclickwoo'); ?></th>
+                <th scope="row"><?php esc_html_e('Name of the data container', 'buy-one-click-woocommerce'); ?></th>
                 <td>
                     <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[name_of_yandex_metrica_data_container]" value="<?php
-                    echo $marketingOptions->getNameOfYandexMetricaDataContainer();
+                    echo $booc_marketingOptions->getNameOfYandexMetricaDataContainer();
                     ?>" />
-                    <span class="description"><?php esc_html_e('Name of the yandex Metrica data container. The default value is "dataLayer"', 'coderun-oneclickwoo'); ?></span>
+                    <span class="description"><?php esc_html_e('Name of the yandex Metrica data container. The default value is "dataLayer"', 'buy-one-click-woocommerce'); ?></span>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><?php esc_html_e('Goal ID', 'coderun-oneclickwoo'); ?></th>
+                <th scope="row"><?php esc_html_e('Goal ID', 'buy-one-click-woocommerce'); ?></th>
                 <td>
                     <input type="text" name="<?php echo Core::OPTIONS_MARKETING ?>[goal_id_in_yandex_e_commerce]" value="<?php
-                    echo $marketingOptions->getGoalIdInYandexECommerce();
+                    echo $booc_marketingOptions->getGoalIdInYandexECommerce();
                     ?>" />
-                    <span class="description"><?php esc_html_e('Goal ID. If used, specify it here', 'coderun-oneclickwoo'); ?></span>
+                    <span class="description"><?php esc_html_e('Goal ID. If used, specify it here', 'buy-one-click-woocommerce'); ?></span>
                 </td>
             </tr>
 
@@ -135,6 +133,6 @@ $marketingOptions = $this->getMarketingOptions();
     </fieldset>
     <input type="hidden" name="action" value="update" />
     <p class="submit">
-        <input type="submit" class="button-primary" value="<?php esc_html_e('Save Changes') ?>" />
+        <input type="submit" class="button-primary" value="<?php esc_html_e('Save Changes', 'buy-one-click-woocommerce') ?>" />
     </p>
 </form>

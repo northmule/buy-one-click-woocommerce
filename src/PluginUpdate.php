@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching 
 namespace Coderun\BuyOneClick;
 
 /**
@@ -43,6 +41,7 @@ class PluginUpdate
                       KEY `wp_coderun_oneclickwoo_orders_woo_order_id_IDX` (`woo_order_id`) USING BTREE
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Orders from the plugin in One Click';";
 
+        // Статичный DDL без пользовательских данных, подготовка не требуется
         $wpdb->query($createTable);
         update_option('wp_coderun_oneclickwoo_db_version', self::DB_VERSION);
     }

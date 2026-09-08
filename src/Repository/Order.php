@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
-// phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
 namespace Coderun\BuyOneClick\Repository;
 
 use Coderun\BuyOneClick\Entity\Order as OrderEntity;
@@ -56,7 +54,7 @@ class Order
             'postcode'            => '',
             'country'             => '',
             'order_status'        => 'processing', //Статус заказа который будет установлен
-            'message_notes_order' => __('Quick order form', 'coderun-oneclickwoo'), //Сообщение в заказе
+            'message_notes_order' => __('Quick order form', 'buy-one-click-woocommerce'), //Сообщение в заказе
             'qty'                 => 1,
             'product_id'          => 0, //ИД товара Woo или ИД вариации
         ];
@@ -227,8 +225,12 @@ class Order
     public function get_order($order_id)
     {
         global $wpdb;
-        $order_id = intval($order_id);
-        return $wpdb->get_row("select * from {$this->order_table} where id={$order_id}", ARRAY_A);
+        $order_id = absint($order_id);
+        $table = esc_sql($this->order_table);
+        return $wpdb->get_row(
+            $wpdb->prepare('SELECT * FROM ' . $table . ' WHERE id = %d', $order_id),
+            ARRAY_A
+        );
     }
 
     /**
@@ -243,8 +245,9 @@ class Order
     {
         global $wpdb;
 
+        $table = esc_sql($this->order_table);
         $row = $wpdb->get_row(
-            sprintf('select * from %s where woo_order_id = %s', $this->order_table, $orderId),
+            $wpdb->prepare('SELECT * FROM ' . $table . ' WHERE woo_order_id = %d', $orderId),
             ARRAY_A
         );
         if (!is_array($row)) {
@@ -262,12 +265,9 @@ class Order
     public function getOrders(): array
     {
         global $wpdb;
+        $table = esc_sql($this->order_table);
         $rows = $wpdb->get_results(
-            sprintf(
-                'select * from %s where active = %d order by id asc',
-                $this->order_table,
-                1
-            ),
+            'SELECT * FROM ' . $table . ' WHERE active = 1 ORDER BY id ASC',
             ARRAY_A
         );
         $result = [];
@@ -287,7 +287,8 @@ class Order
     public function remove_order_all()
     {
         global $wpdb;
-        $wpdb->query("truncate table {$this->order_table}");
+        $table = esc_sql($this->order_table);
+        $wpdb->query('TRUNCATE TABLE ' . $table);
     }
 
     public function update_status($order_id, $status)

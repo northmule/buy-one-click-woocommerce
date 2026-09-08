@@ -10,9 +10,11 @@
  * WC requires at least: 8.0
  * WC tested up to: 9.7
  * Requires at least: 6.3
- * Tested up to: 6.7
- * Text Domain: coderun-oneclickwoo
+ * Tested up to: 7.1
+ * Text Domain: buy-one-click-woocommerce
  * Domain Path: /languages
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 /*  Copyright 2026  Djo  (email: izm@zixn.ru)
@@ -33,8 +35,8 @@
  *
  */
 
-__('Buy one click WooCommerce');
-__('Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click');
+__('Buy one click WooCommerce', 'buy-one-click-woocommerce');
+__('Buy in one click for WooCommerce. The best plugin that adds to your online store purchase button in one click', 'buy-one-click-woocommerce');
 
 if (!defined('ABSPATH')) {
     exit;
@@ -42,7 +44,7 @@ if (!defined('ABSPATH')) {
 
 define('CODERUN_ONECLICKWOO_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . dirname(plugin_basename(__FILE__)));
 define('CODERUN_ONECLICKWOO_TEMPLATES_PLUGIN_DIR', CODERUN_ONECLICKWOO_PLUGIN_DIR . '/templates');
-define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.0.2');
+define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.4.0');
 
 /**
  * Инициализация всего плагина
@@ -50,9 +52,10 @@ define('CODERUN_ONECLICKWOO_PLUGIN_VERSION', '2.0.2');
 (function()
 {
     load_plugin_textdomain(
-        'coderun-oneclickwoo',
+        'buy-one-click-woocommerce',
         false,
-        dirname(plugin_basename(__FILE__)) . '/languages'
+        dirname(plugin_basename(__FILE__)) . '/languages',
+        CODERUN_ONECLICKWOO_PLUGIN_DIR . '/languages'
     );
     
     require_once(CODERUN_ONECLICKWOO_PLUGIN_DIR . '/vendor/autoload.php');

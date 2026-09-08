@@ -1,6 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 declare(strict_types=1);
 
 namespace Coderun\BuyOneClick\ValueObject;
@@ -198,7 +197,7 @@ class OrderForm
         return sprintf(
             '<a href="%s" target="_blank">%s</a>',
             $url,
-            __('Look', 'coderun-oneclickwoo')
+            __('Look', 'buy-one-click-woocommerce')
         );
     }
 

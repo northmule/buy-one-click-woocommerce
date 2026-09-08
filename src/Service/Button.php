@@ -125,7 +125,7 @@ class Button
      */
     protected function getButtonName(): string
     {
-        $defaultName = __('Buy on click', 'coderun-oneclickwoo');
+        $defaultName = __('Buy on click', 'buy-one-click-woocommerce');
         if (!$this->commonOptions->getNameButton()) {
             return $defaultName;
         }

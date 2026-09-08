@@ -22,7 +22,8 @@ class RequireFieldException extends BaseException implements ExceptionInterface
     {
         return new self(
             sprintf(
-                __('The %s field is required', 'coderun-oneclickwoo'),
+                /* translators: %s: field name */
+                __('The %s field is required', 'buy-one-click-woocommerce'),
                 $fieldName
             ),
             self::CODE_SUCCESS

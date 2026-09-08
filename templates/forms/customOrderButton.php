@@ -1,6 +1,4 @@
 <?php
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-// phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction
 if (!defined('ABSPATH')) {
     exit;
 }

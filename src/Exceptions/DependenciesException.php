@@ -30,6 +30,6 @@ class DependenciesException extends BaseException implements ExceptionInterface
      */
     public static function orderCreationErrorWoo(): DependenciesException
     {
-        return new self(__('Couldn\'t create WooCommerce order', 'coderun-oneclickwoo'));
+        return new self(__('Couldn\'t create WooCommerce order', 'buy-one-click-woocommerce'));
     }
 }

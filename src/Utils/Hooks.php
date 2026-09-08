@@ -20,7 +20,7 @@ class Hooks
      */
     public static function load()
     {
-        do_action('buy_click_load');
+        do_action('coderun_oneclickwoo_load');
     }
 
     /**
@@ -31,7 +31,7 @@ class Hooks
      */
     public static function buyClickNewrder($arResult, $arLog)
     {
-        do_action('buy_click_new_order', $arResult, $arLog);
+        do_action('coderun_oneclickwoo_new_order', $arResult, $arLog);
     }
 
     /**
@@ -39,7 +39,7 @@ class Hooks
      */
     public static function saveOrderToTable($order_id)
     {
-        do_action('buy_click_save_order_to_table', $order_id);
+        do_action('coderun_oneclickwoo_save_order_to_table', $order_id);
     }
 
     /**
@@ -113,7 +113,7 @@ class Hooks
      */
     public static function beforeDrawingOrderButtonOnlyForVariableProducts($context): void
     {
-        do_action('buy_click_before_drawing_order_button_only_for_variable_products', $context);
+        do_action('coderun_oneclickwoo_before_drawing_order_button_only_for_variable_products', $context);
     }
 
     /**
@@ -125,7 +125,7 @@ class Hooks
      */
     public static function filterInitFrontVariables(array $variables): array
     {
-        return apply_filters('buy_click_init_front_variables', $variables) ?? $variables;
+        return apply_filters('coderun_oneclickwoo_init_front_variables', $variables) ?? $variables;
     }
 
     /**
@@ -137,7 +137,7 @@ class Hooks
      */
     public static function filterDataAboutSelectedVariationFromForm(array $form): string
     {
-        $result = apply_filters('buy_click_data_about_selected_variation_from_form', $form);
+        $result = apply_filters('coderun_oneclickwoo_data_about_selected_variation_from_form', $form);
         if (!is_string($result)) {
             return '';
         }
@@ -153,7 +153,7 @@ class Hooks
      */
     public static function filterGetIdOfSelectedVariation(array $form): int
     {
-        $result = apply_filters('buy_click_get_id_of_selected_variation', $form);
+        $result = apply_filters('coderun_oneclickwoo_get_id_of_selected_variation', $form);
         if (!is_int($result)) {
             return 0;
         }
@@ -169,7 +169,7 @@ class Hooks
      */
     public static function filterVariationsPluginIsUsed($context): bool
     {
-        $result = apply_filters('buy_click_variations_plugin_is_used', $context);
+        $result = apply_filters('coderun_oneclickwoo_variations_plugin_is_used', $context);
         if (!is_bool($result)) {
             return false;
         }

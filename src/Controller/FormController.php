@@ -57,8 +57,9 @@ class FormController extends Controller
      */
     public function viewFormOrder(): void
     {
-        $productId = intval($_POST['productid'] ?? 0);
-        $variationId = intval($_POST['variation_selected']);
+        $this->verifyFrontendNonce();
+        $productId = isset($_POST['productid']) ? intval(wp_unslash($_POST['productid'])) : 0;
+        $variationId = isset($_POST['variation_selected']) ? intval(wp_unslash($_POST['variation_selected'])) : 0;
 
         if ($variationId > 0) {
             $productId = $variationId;
@@ -102,16 +103,17 @@ class FormController extends Controller
      */
     public function viewFormOrderCustom()
     {
+        $this->verifyFrontendNonce();
         $productObject = new Product([
             'product' => null,
         ]);
         $fields = new FieldsOfOrderForm(
             [
-                'productId'        => $_POST['productid'] ?? '',
-                'productName'      => $_POST['name'] ?? '',
-                'productPrice'     => $_POST['price'] ?? '',
-                'productPriceHtml' => $_POST['priceHtml'] ?? '',
-                'productCount'     => $_POST['count'] ?? 1,
+                'productId'        => isset($_POST['productid']) ? intval(wp_unslash($_POST['productid'])) : 0,
+                'productName'      => isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '',
+                'productPrice'     => isset($_POST['price']) ? floatval(wp_unslash($_POST['price'])) : 0,
+                'productPriceHtml' => isset($_POST['priceHtml']) ? wp_kses_post(wp_unslash($_POST['priceHtml'])) : '',
+                'productCount'     => isset($_POST['count']) ? intval(wp_unslash($_POST['count'])) : 1,
                 'shortCode'        => 1,
                 'productImg'       => '',
                 'productSrcImg'    => '',

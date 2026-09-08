@@ -1,22 +1,21 @@
 === Buy one click WooCommerce ===
 Contributors: northmule
 Donate link: https://yoomoney.ru/to/41001746944171
-Tags: woocommerce, ecommerce, mode catalog, buy one click, buy now, add to cart, buy now button, buttons
+Tags: woocommerce, buy now, add to cart, quick order, one click
 Requires at least: 6.3
-Tested up to: 6.7
-Stable tag: 6.7
+Tested up to: 7.1
+Stable tag: 2.4.0
 Requires PHP: 7.4
 WC requires at least: 8.0
 WC tested up to: 9.7
 License: GPLv2 or later
-License URI: http://www.apache.org/licenses/
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
- 		
 == Description ==
 
-The plugin adds a buy button in one click to your WooCommerce
+Adds a "buy in one click" button to your WooCommerce store.
 
-This is the best solution for WooCommere to easily add a quick order button to the site.
+This is the best solution for WooCommerce to easily add a quick order button to the site.
 
 = Some advantages of the plugin: =
 * PHP >= 7.4

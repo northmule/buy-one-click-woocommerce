@@ -47,7 +47,7 @@ class Email
     {
         $filesMessage = '';
         if ($orderForm->getFilesUrlCollection()) {
-            $filesMessage = sprintf('<td style="border-color: #132cba; text-align: center; vertical-align: middle;">%s: </td>', __('Files', 'coderun-oneclickwoo'));
+            $filesMessage = sprintf('<td style="border-color: #132cba; text-align: center; vertical-align: middle;">%s: </td>', __('Files', 'buy-one-click-woocommerce'));
             $filesMessage .= sprintf(
                 '<td style="border-color: #132cba; text-align: center; vertical-align: middle;">%s</td>',
                 $orderForm->getFilesLink()
@@ -66,40 +66,40 @@ class Email
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;" colspan="2">' . $orderForm->getCompanyName() . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Date', 'coderun-oneclickwoo') . ': </td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Date', 'buy-one-click-woocommerce') . ': </td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getOrderTime() . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Link to the product', 'coderun-oneclickwoo') . ': </td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Link to the product', 'buy-one-click-woocommerce') . ': </td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getProductUrl() . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Price', 'coderun-oneclickwoo') . ': </td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Price', 'buy-one-click-woocommerce') . ': </td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $costOfGoods . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Name', 'coderun-oneclickwoo') . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Name', 'buy-one-click-woocommerce') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getProductName() . '<br>' . $orderForm->getVariationData() . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Quantity', 'coderun-oneclickwoo') . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Quantity', 'buy-one-click-woocommerce') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getQuantityProduct() . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Email', 'coderun-oneclickwoo') . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Email', 'buy-one-click-woocommerce') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getUserEmail() . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Phone number', 'coderun-oneclickwoo') . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Phone number', 'buy-one-click-woocommerce') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getUserPhone() . '</td>
 </tr>
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Customer', 'coderun-oneclickwoo') . '</td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . __('Customer', 'buy-one-click-woocommerce') . '</td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;">' . $orderForm->getUserName() . '</td>
 </tr>
 ' . $filesMessage . '
 <tr>
-<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Additionally', 'coderun-oneclickwoo') . ' </td>
+<td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . __('Additionally', 'buy-one-click-woocommerce') . ' </td>
 <td style="border-color: #132cba; text-align: center; vertical-align: middle;"> ' . $orderForm->getUserComment() . ' </td>
 </tr>
 <tr>

@@ -154,6 +154,7 @@ jQuery(document).ready(function () {
                 productid: productid,
                 variation_selected: variation_selected,
                 variation_attr: variation_attr,
+                booc_nonce: typeof buyone_ajax.nonce !== 'undefined' ? buyone_ajax.nonce : '',
             },
             success: function (response) {
                 if (!response.success) {
@@ -206,6 +207,7 @@ jQuery(document).ready(function () {
                 count: count,
                 price: price,
                 priceHtml: jQuery(butObj).attr('data-priceHtml'),
+                booc_nonce: typeof buyone_ajax.nonce !== 'undefined' ? buyone_ajax.nonce : '',
             },
             success: function (response) {
                 if (!response.success) {
