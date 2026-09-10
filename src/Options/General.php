@@ -16,10 +16,7 @@ use function intval;
  */
 class General extends Base
 {
-    /**
-     * @var string
-     */
-    protected const ROOT_KEY = OptionsType::GENERAL;
+    protected const string ROOT_KEY = OptionsType::GENERAL;
 
     /**
      * Режим работы плагина
@@ -567,7 +564,7 @@ class General extends Base
      *
      * @return General
      */
-    public function setPositionButton($positionButton)
+    public function setPositionButton(string $positionButton): General
     {
         $this->positionButton = $positionButton;
         return $this;
@@ -586,7 +583,7 @@ class General extends Base
      *
      * @return General
      */
-    public function setPositionButtonOutStock($positionButtonOutStock): General
+    public function setPositionButtonOutStock(string $positionButtonOutStock): General
     {
         $this->positionButtonOutStock = $positionButtonOutStock;
         return $this;
@@ -648,7 +645,7 @@ class General extends Base
      *
      * @return General
      */
-    public function setButtonPositionInCategory($buttonPositionInCategory): General
+    public function setButtonPositionInCategory(string $buttonPositionInCategory): General
     {
         $this->buttonPositionInCategory = $buttonPositionInCategory;
         return $this;
@@ -905,7 +902,7 @@ class General extends Base
      *
      * @return General
      */
-    public function setDescriptionForFieldFiles($descriptionForFieldFiles)
+    public function setDescriptionForFieldFiles(string $descriptionForFieldFiles): General
     {
         $this->descriptionForFieldFiles = $descriptionForFieldFiles;
         return $this;
@@ -1040,7 +1037,7 @@ class General extends Base
      *
      * @return General
      */
-    public function setPhoneNumberInputMask($phoneNumberInputMask): General
+    public function setPhoneNumberInputMask(string $phoneNumberInputMask): General
     {
         $this->phoneNumberInputMask = $phoneNumberInputMask;
         return $this;
@@ -1079,7 +1076,7 @@ class General extends Base
      *
      * @return General
      */
-    public function setDescriptionOfPreOrderButton($descriptionOfPreOrderButton): General
+    public function setDescriptionOfPreOrderButton(string $descriptionOfPreOrderButton): General
     {
         $this->descriptionOfPreOrderButton = $descriptionOfPreOrderButton;
         return $this;

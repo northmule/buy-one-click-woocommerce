@@ -11,15 +11,12 @@ use function sprintf;
 
 class Logger
 {
-    /**
-     * @var string
-     */
-    protected const PREFIX = 'Buy one click WooCommerce plugin';
+    protected const string PREFIX = 'Buy one click WooCommerce plugin';
 
     /**
      * @var ?WC_Logger
      */
-    private ?WC_Logger $logger = null;
+    private readonly ?WC_Logger $logger;
     /**
      * @var Logger|null
      */
@@ -35,7 +32,7 @@ class Logger
      */
     public static function getInstance(): Logger
     {
-        if (self::$instance == null) {
+        if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
@@ -49,7 +46,7 @@ class Logger
      *
      * @return void
      */
-    public function info(string $message, ?array $context = null)
+    public function info(string $message, ?array $context = null): void
     {
         $this->logger->info(sprintf('%s: %s', self::PREFIX, $message), $context);
     }
@@ -62,7 +59,7 @@ class Logger
      *
      * @return void
      */
-    public function error(string $message, ?array $context = null)
+    public function error(string $message, ?array $context = null): void
     {
         $this->logger->error(sprintf('%s: %s', self::PREFIX, $message), $context);
     }

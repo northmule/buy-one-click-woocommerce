@@ -13,8 +13,5 @@ use RuntimeException;
  */
 class BaseException extends RuntimeException
 {
-    /**
-     * @var int
-     */
-    protected const CODE_SUCCESS = 200;
+    protected const int CODE_SUCCESS = 200;
 }

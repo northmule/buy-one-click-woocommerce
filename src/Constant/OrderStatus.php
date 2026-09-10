@@ -11,6 +11,5 @@ namespace Coderun\BuyOneClick\Constant;
  */
 class OrderStatus
 {
-    /** @var string  */
-    public const WITHOUT_STATUS = 'without_status';
+    public const string WITHOUT_STATUS = 'without_status';
 }

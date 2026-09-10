@@ -9,14 +9,8 @@ namespace Coderun\BuyOneClick\Constant;
  */
 class ShortCodes
 {
-    /**
-     * @var string
-     */
-    public const VIEW_BUY_BUTTON = 'viewBuyButton';
-    /**
-     * @var string
-     */
-    public const VIEW_BUY_BUTTON_CUSTOM = 'viewBuyButtonCustom';
+    public const string VIEW_BUY_BUTTON = 'viewBuyButton';
+    public const string VIEW_BUY_BUTTON_CUSTOM = 'viewBuyButtonCustom';
 
     /**
      * @return array<int, string>

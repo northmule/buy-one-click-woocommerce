@@ -72,7 +72,7 @@ trait HydrateTrait
             $propertyName = ManipulationsWithStrings::snakeInCamelCase($propertyName);
             /** @var ReflectionType $propertyType */
             $propertyType = $propertyMap[$propertyName] ?? null;
-            if ($propertyType == null) {
+            if ($propertyType === null) {
                 throw VariablesException::valueIsNotDefined(esc_html($propertyName));
             }
             $setter = sprintf('set%s', ucfirst($propertyName));
@@ -119,7 +119,7 @@ trait HydrateTrait
 */
         foreach ($this->getProperty($object) as $item) {
             $typeData = $item->getType();
-            if ($typeData == null) {
+            if ($typeData === null) {
                 throw ObjectException::propertyTypeIsNotDefined();
             }
             $typesMap[$item->getName()] = $typeData;
@@ -131,15 +131,15 @@ trait HydrateTrait
      * Преобразование строковых переменных в нужный тип
      * для значения сеттеров
      *
-     * @param string|null    $variable
+     * @param mixed          $variable
      * @param ReflectionType $type
      *
      * @return mixed
      * @throws \Exception
      */
-    private function typeConversions($variable, ReflectionType $type)
+    private function typeConversions(mixed $variable, ReflectionType $type): mixed
     {
-        if ($variable == null) {
+        if ($variable === null) {
             return $variable;
         }
         $acceptableTypes[] = $type->getName();
@@ -169,5 +169,6 @@ trait HydrateTrait
                     throw VariablesException::variableWasNotExpected();
             }
         }
+        return $variable;
     }
 }

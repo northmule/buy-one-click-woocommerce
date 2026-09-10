@@ -93,7 +93,7 @@ class UploadingFiles
         $result = [];
         if ($this->isMultiForm()) {
             foreach ($fileList['name'] as $number => $value) {
-                if (strlen($value) == 0) {
+                if (strlen($value) === 0) {
                     continue;
                 }
                 $file = new DownloadableFile(
@@ -140,7 +140,7 @@ class UploadingFiles
      *
      * @throws Exception
      */
-    protected function checkRestriction()
+    protected function checkRestriction(): void
     {
         foreach ($this->files as $file) {
             if (!in_array($file->extension, $this->getValidExtension())) {
@@ -152,7 +152,7 @@ class UploadingFiles
             }
 
             if (!in_array($file->type, $this->getValidMimeTypes())) {
-                UploadingFilesException::invalidFileType(esc_html($file->type));
+                throw UploadingFilesException::invalidFileType(esc_html($file->type));
             }
         }
     }
@@ -175,10 +175,12 @@ class UploadingFiles
     /**
      * Новое имя файла
      *
+     * @param string $name
+     *
      * @return string
      * @throws Exception
      */
-    protected function getNewName($name)
+    protected function getNewName(string $name): string
     {
         return Hooks::filterNameOfUploadedFile(
             sprintf('%s_%s', 'buy_file_', UuidUtils::uuidGenerator()),
@@ -209,7 +211,10 @@ class UploadingFiles
         return Hooks::filterExtensionsOfUploadedFile(['jpeg', 'jpg', 'png', 'gif', 'bmp', 'pdf', 'doc', 'ppt']);
     }
 
-    protected function getValidMimeTypes()
+    /**
+     * @return array<int, string>
+     */
+    protected function getValidMimeTypes(): array
     {
         $types = [
             'image/gif',
@@ -245,7 +250,10 @@ class UploadingFiles
         return Hooks::filterMimeTypeOfDownloadedFile($types);
     }
 
-    protected function getValidSize()
+    /**
+     * @return int
+     */
+    protected function getValidSize(): int
     {
         return Hooks::filterSizeOfUploadedFile(10485760);
     }

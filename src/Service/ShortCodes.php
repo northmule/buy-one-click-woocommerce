@@ -9,17 +9,12 @@ use Coderun\BuyOneClick\Constant\ShortCodes as ShortCodesConst;
 use Coderun\BuyOneClick\Options\General as GeneralOptions;
 use Coderun\BuyOneClick\Service\Factory\ButtonFactory as ButtonServiceFactory;
 use Coderun\BuyOneClick\Core;
-use Coderun\BuyOneClick\Utils\Hooks;
 use Exception;
 use Coderun\BuyOneClick\SimpleDataObjects\ShortcodeParameters as ShortcodeParametersObjects;
 
-use function ob_get_contents;
-use function ob_start;
-use function ob_end_clean;
 use function shortcode_atts;
 use function array_filter;
 use function is_numeric;
-use function wc_get_product;
 
 class ShortCodes
 {
@@ -62,22 +57,15 @@ class ShortCodes
      * @return string
      * @throws Exception
      */
-    public function viewBuyButton($params): string
+    public function viewBuyButton(array $params): string
     {
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
         $params = array_filter(
-            (array) $params,
-            static function ($value, $key) {
-                if (is_numeric($key)) {
-                    return false;
-                }
-                if ($key === 'id') {
-                    return is_numeric($value);
-                }
-                return true;
-            },
+            $params,
+            static fn(mixed $value, mixed $key): bool => !is_numeric($key)
+                && ($key !== 'id' || is_numeric($value)),
             ARRAY_FILTER_USE_BOTH
         );
         $content = '';
@@ -85,10 +73,7 @@ class ShortCodes
         $core = Core::getInstance();
         $core->styleAddFrontPage();
         $core->scriptAddFrontPage();
-        if (!empty($params['id'])) {
-            $content = $this->initVariationAddon($params['id']);
-        }
-        $content .= ((new ButtonServiceFactory())->create())->getHtmlOrderButtons($params);
+        $content .= (new ButtonServiceFactory())->create()->getHtmlOrderButtons($params);
         return $content;
     }
 
@@ -106,7 +91,7 @@ class ShortCodes
         if (!$this->commonOptions->isEnableButtonShortcode()) {
             return '';
         }
-        $params = array_filter((array) $params);
+        $params = array_filter($params);
         $params = shortcode_atts(
             [
                 ShortcodeParameters::PRODUCT_ID          => '1',
@@ -120,7 +105,7 @@ class ShortCodes
         $core = Core::getInstance();
         $core->styleAddFrontPage();
         $core->scriptAddFrontPage();
-        return ((new ButtonServiceFactory())->create())->getHtmlOrderButtonsCustom(
+        return (new ButtonServiceFactory())->create()->getHtmlOrderButtonsCustom(
             new ShortcodeParametersObjects(
                 [
                     'id'                => $params[ShortcodeParameters::PRODUCT_ID],
@@ -132,25 +117,5 @@ class ShortCodes
                 ]
             )
         );
-    }
-
-    /**
-     * Инициализация для дополнения с вариативными товарами
-     *
-     * @param int|string $productId
-     *
-     * @return string
-     */
-    protected function initVariationAddon($productId): string
-    {
-        $product = wc_get_product($productId);
-        if (!$product instanceof \WC_Product_Variable) {
-            return '';
-        }
-        ob_start();
-        Hooks::beforeDrawingOrderButtonOnlyForVariableProducts($this);
-        $page = ob_get_contents();
-        ob_end_clean();
-        return $page;
     }
 }

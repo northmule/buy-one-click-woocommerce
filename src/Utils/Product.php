@@ -39,16 +39,13 @@ class Product
     /**
      * Цена товара с учётом сторонних дополнений
      *
-     * @param     $product
-     * @param int     $quantity
+     * @param WC_Product $product
+     * @param int        $quantity
      *
-     * @return mixed|string
+     * @return float
      */
-    public static function getProductPrice($product, $quantity = 1): float
+    public static function getProductPrice(WC_Product $product, int $quantity = 1): float
     {
-        if (!$product instanceof WC_Product) {
-            return floatval(0);
-        }
         $prices = [];
         try {
             // plugin - Woo Discount Rules

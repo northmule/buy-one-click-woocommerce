@@ -19,17 +19,16 @@ use WC_Order_Item_Product;
 
 class Order
 {
-    /** @var Order  */
-    protected static $_instance = null;
-    /** @var string  */
-    protected $order_table = 'wp_coderun_oneclickwoo_orders';
+    /** @var Order|null */
+    protected static ?Order $_instance = null;
+    protected string $order_table = 'wp_coderun_oneclickwoo_orders';
 
     /**
      * Singletone
      *
      * @return Order
      */
-    public static function getInstance()
+    public static function getInstance(): Order
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
@@ -40,12 +39,12 @@ class Order
     /**
      * Создаёт необходимый объект заказа
      *
-     * @param $params
+     * @param array<string, mixed> $params
      *
      * @return WC_Order|\WP_Error
      * @throws \WC_Data_Exception
      */
-    public function create_order($params)
+    public function create_order(array $params): WC_Order|\WP_Error
     {
         $default_params = [
             'first_name'          => '',
@@ -181,9 +180,11 @@ class Order
     /**
      * Создаёт заказ в WooCommerce
      *
-     * @param array $params массив параметров аналогичный $default_params
+     * @param array<string, mixed> $params массив параметров аналогичный $default_params
+     *
+     * @return int
      */
-    public function set_order($params)
+    public function set_order(array $params): int
     {
         $order = $this->create_order($params);
         // Вызывается ниже по коду, что бы не запускать события раньше времени
@@ -228,7 +229,12 @@ class Order
         return $wpdb->insert_id;
     }
 
-    public function get_order($order_id)
+    /**
+     * @param int $order_id
+     *
+     * @return \stdClass|null
+     */
+    public function get_order(int $order_id): ?\stdClass
     {
         global $wpdb;
         $order_id = absint($order_id);
@@ -284,20 +290,34 @@ class Order
         return $result;
     }
 
-    public function deactive_order($order_id)
+    /**
+     * @param int $order_id
+     *
+     * @return void
+     */
+    public function deactive_order(int $order_id): void
     {
         global $wpdb;
         $wpdb->update($this->order_table, ['active' => 0], ['id' => $order_id]);
     }
 
-    public function remove_order_all()
+    /**
+     * @return void
+     */
+    public function remove_order_all(): void
     {
         global $wpdb;
         $table = esc_sql($this->order_table);
         $wpdb->query('TRUNCATE TABLE ' . $table);
     }
 
-    public function update_status($order_id, $status)
+    /**
+     * @param int $order_id
+     * @param int $status
+     *
+     * @return void
+     */
+    public function update_status(int $order_id, int $status): void
     {
         global $wpdb;
         $wpdb->update($this->order_table, ['status' => $status], ['id' => $order_id]);

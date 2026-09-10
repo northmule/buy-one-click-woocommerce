@@ -12,10 +12,7 @@ namespace Coderun\BuyOneClick\Service;
  */
 class CacheStorage
 {
-    /**
-     * @var string
-     */
-    protected const GROUP_KEY = 'buy_coderun_storage';
+    protected const string GROUP_KEY = 'buy_coderun_storage';
 
     /**
      * Установка ключа и значения

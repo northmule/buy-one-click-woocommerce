@@ -121,7 +121,7 @@ class OrderController extends Controller
                     $orderForm
                 );
             }
-            if ($notificationOptions->getEmailBcc() != '') {
+            if ($notificationOptions->getEmailBcc() !== '') {
                 EmailUtils::sendAnEmail(
                     $notificationOptions->getEmailBcc(),
                     $orderForm
@@ -130,7 +130,7 @@ class OrderController extends Controller
 
             $wooOrderId = 0;
             //В таблицу Woo
-            if ($this->commonOptions->isAddAnOrderToWooCommerce() and $orderForm->getCustom() == 0) {
+            if ($this->commonOptions->isAddAnOrderToWooCommerce() && $orderForm->getCustom() === 0) {
                 $wooOrderId = Order::getInstance()->set_order(
                     [
                         'first_name'          => $orderForm->getUserName(),
@@ -243,7 +243,7 @@ class OrderController extends Controller
         if (
             $this->commonOptions->isEnableFieldWithFiles()
             && $this->commonOptions->isFieldFilesIsRequired()
-            && count($orderForm->getFiles()) == 0
+            && count($orderForm->getFiles()) === 0
         ) {
             throw  RequireFieldException::fieldIsRequired(esc_html($translatingFields->getFiles()));
         }
@@ -258,12 +258,12 @@ class OrderController extends Controller
     protected function checkLimitSendForm(int $product_id): void
     {
         $uniqueId = $this->getCustomerUniqueId();
-        if (empty($uniqueId) || $this->commonOptions->getFormSubmissionLimit() == 0) {
+        if (empty($uniqueId) || $this->commonOptions->getFormSubmissionLimit() === 0) {
             return;
         }
         $storage = new CacheStorage();
         $key = sprintf('buy_one_%s_%s', $product_id, $uniqueId);
-        if ($storage->getSessionValue($key) == null) {//Установка
+        if ($storage->getSessionValue($key) === null) {//Установка
             $storage->setSessionValue($key, (time() + $this->commonOptions->getFormSubmissionLimit()));
         } else {
             if ($storage->getSessionValue($key, 0) > time()) {
@@ -301,7 +301,7 @@ class OrderController extends Controller
         $session = serialize(WC()->session);
         preg_match('/(wp_woocommerce_session_[a-zA-Z\d]+)"/i', $session, $matches);
         $uniqueString = $matches[1] ?? '';
-        if (strlen($uniqueString) > 0) {
+        if ($uniqueString !== '') {
             $uniqueString = md5($uniqueString);
         } elseif (is_user_logged_in()) {
             $uniqueString = (string) get_current_user_id();

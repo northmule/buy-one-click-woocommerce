@@ -15,10 +15,8 @@ abstract class Base implements OptionsInterface
 
     /**
      * Имя докБлока для разбора значений опций WoordPress
-     *
-     * @var string
      */
-    protected const DOC_OPTIONS_NAME = 'wpOptionsName';
+    protected const string DOC_OPTIONS_NAME = 'wpOptionsName';
 
     /**
      * Имя корневой настройки

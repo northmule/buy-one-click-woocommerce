@@ -43,12 +43,12 @@ class Button
     /**
      * Возвращает HTML кнопки "Купить в один клик"
      *
-     * @param $params<int, mixed>
+     * @param array<string, mixed> $params
      *
      * @return string
      * @throws Exception
      */
-    public function getHtmlOrderButtons($params = []): string
+    public function getHtmlOrderButtons(array $params = []): string
     {
         if ($this->commonOptions->getPositionButton()) {
             $name = $this->getButtonName();
@@ -82,8 +82,7 @@ class Button
                         'inlineScript' => $scripts,
                     ]
                 )
-            );
-        }
+            );        }
         return '';
     }
 
@@ -97,7 +96,7 @@ class Button
      */
     public function getHtmlOrderButtonsCustom(ShortcodeParameters $params): string
     {
-        if ($this->commonOptions->getNameButton() and $this->commonOptions->getPositionButton()) {
+        if ($this->commonOptions->getNameButton() && $this->commonOptions->getPositionButton()) {
             $this->initVariationAddon((int) $params->id);
             return (new OrderButton())->render(
                 new CustomOrderButtonDataObject(
@@ -147,13 +146,14 @@ class Button
     }
 
     /**
-     * Инициализация для дополнения с вариативными товарами
+     * Инициализация встроенной поддержки вариативных товаров
+     * Выводит скрипты выборки вариации непосредственно перед кнопкой
      *
-     * @param int|string $productId
+     * @param int $productId
      *
      * @return void
      */
-    protected function initVariationAddon($productId)
+    protected function initVariationAddon(int $productId): void
     {
         $product = wc_get_product($productId);
         if (!$product instanceof \WC_Product_Variable) {

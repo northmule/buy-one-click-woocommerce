@@ -55,7 +55,7 @@ class Email
         }
 
         $costOfGoods = $orderForm->getProductPriceWithTax();
-        if ($costOfGoods == 0) {
+        if ($costOfGoods === 0) {
             $costOfGoods = $orderForm->getProductPrice();
         }
 

@@ -18,7 +18,7 @@ class Hooks
     /**
      * Плагин загружен
      */
-    public static function load()
+    public static function load(): void
     {
         do_action('coderun_oneclickwoo_load');
     }
@@ -26,10 +26,10 @@ class Hooks
     /**
      * Вызывается после создания нового заказа
      *
-     * @param array $arResult Результат функции с заказом
-     * @param array $arLog    Лог(журнал плагина)
+     * @param array<string, mixed> $arResult Результат функции с заказом
+     * @param array<string, mixed> $arLog    Лог(журнал плагина)
      */
-    public static function buyClickNewrder($arResult, $arLog)
+    public static function buyClickNewrder(array $arResult, array $arLog): void
     {
         do_action('coderun_oneclickwoo_new_order', $arResult, $arLog);
     }
@@ -37,7 +37,7 @@ class Hooks
     /**
      * Вызывается после сохранения в таблицу данных о заказе
      */
-    public static function saveOrderToTable($order_id)
+    public static function saveOrderToTable(int $order_id): void
     {
         do_action('coderun_oneclickwoo_save_order_to_table', $order_id);
     }
@@ -45,11 +45,11 @@ class Hooks
     /**
      * Размер загружаемого файла
      *
-     * @param $size
+     * @param mixed $size
      *
-     * @return mixed|void
+     * @return mixed
      */
-    public static function filterSizeOfUploadedFile($size)
+    public static function filterSizeOfUploadedFile(mixed $size): mixed
     {
         return apply_filters('coderun_oneclickwoo_file_valid_size', $size);
     }
@@ -57,11 +57,11 @@ class Hooks
     /**
      * Mime типы загружаемых файлов
      *
-     * @param array $types
+     * @param array<int, string> $types
      *
-     * @return void
+     * @return array<int, string>
      */
-    public static function filterMimeTypeOfDownloadedFile(array $types)
+    public static function filterMimeTypeOfDownloadedFile(array $types): array
     {
         return apply_filters('coderun_oneclickwoo_file_valid_mime_types', $types);
     }
@@ -69,11 +69,11 @@ class Hooks
     /**
      * Расширения загружаемых файлов
      *
-     * @param array $extensions
+     * @param array<int, string> $extensions
      *
-     * @return mixed|void
+     * @return array<int, string>
      */
-    public static function filterExtensionsOfUploadedFile(array $extensions)
+    public static function filterExtensionsOfUploadedFile(array $extensions): array
     {
         return apply_filters('coderun_oneclickwoo_file_valid_extension', $extensions);
     }
@@ -84,9 +84,9 @@ class Hooks
      * @param string $newName
      * @param string $name
      *
-     * @return mixed|void
+     * @return string
      */
-    public static function filterNameOfUploadedFile(string $newName, string $name)
+    public static function filterNameOfUploadedFile(string $newName, string $name): string
     {
         return apply_filters('coderun_oneclickwoo_file_name', $newName, $name);
     }
@@ -94,11 +94,11 @@ class Hooks
     /**
      * Путь к папке с фалами
      *
-     * @param array<string,string>{"path","url"} $path
+     * @param array<string, string>{path: string, url: string} $path
      *
-     * @return mixed|void
+     * @return array<string, string>
      */
-    public static function filterPathToFileFolder(array $path)
+    public static function filterPathToFileFolder(array $path): array
     {
         return apply_filters('coderun_oneclickwoo_file_load_folder_path', $path);
     }
@@ -107,11 +107,11 @@ class Hooks
      * Перед тем как будет нарисована кнопка быстрого заказа в карточке товара
      * Только для вариативных товаров
      *
-     * @param $context object|mixed текущий объект
+     * @param object|mixed $context Текущий объект
      *
      * @return void
      */
-    public static function beforeDrawingOrderButtonOnlyForVariableProducts($context): void
+    public static function beforeDrawingOrderButtonOnlyForVariableProducts(mixed $context): void
     {
         do_action('coderun_oneclickwoo_before_drawing_order_button_only_for_variable_products', $context);
     }
@@ -163,11 +163,11 @@ class Hooks
     /**
      * Устанавливает признак активности плагина вариативных товаров
      *
-     * @param $context
+     * @param mixed $context
      *
      * @return bool
      */
-    public static function filterVariationsPluginIsUsed($context): bool
+    public static function filterVariationsPluginIsUsed(mixed $context): bool
     {
         $result = apply_filters('coderun_oneclickwoo_variations_plugin_is_used', $context);
         if (!is_bool($result)) {

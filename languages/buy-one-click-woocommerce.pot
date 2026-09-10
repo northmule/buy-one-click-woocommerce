@@ -1208,3 +1208,7 @@ msgstr ""
 #: page/tab1-option1.php:417
 msgid "Your WordPress Theme Styles"
 msgstr ""
+
+#: src/Service/Variations.php
+msgid "Please select a variation"
+msgstr ""

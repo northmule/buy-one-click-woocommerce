@@ -15,7 +15,7 @@ use function strlen;
  */
 class Marketing extends Base
 {
-    protected const ROOT_KEY = OptionsType::MARKETING;
+    protected const string ROOT_KEY = OptionsType::MARKETING;
 
     /**
      * Событие после нажатия кнопки

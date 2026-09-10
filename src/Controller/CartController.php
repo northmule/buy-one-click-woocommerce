@@ -17,7 +17,7 @@ class CartController extends Controller
     /**
      * @inheritDoc
      */
-    public function init()
+    public function init(): void
     {
         add_action(
             'wp_ajax_buy_coderun_add_to_cart',

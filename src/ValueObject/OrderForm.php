@@ -138,7 +138,7 @@ class OrderForm
         $this->orderTime = current_time('mysql');
         $this->custom = (int) $this->formDateParse('custom');
         $this->files = $files;
-        $this->quantityProduct = $this->formDateParse('quantity_product') == ''
+        $this->quantityProduct = $this->formDateParse('quantity_product') === ''
             ? 1 : intval($this->formDateParse('quantity_product'));
         $this->fillInPriceWithTax();
         $this->fillingWithVariations();
@@ -203,11 +203,11 @@ class OrderForm
 
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return array|string
      */
-    private function formDateParse($key)
+    private function formDateParse(string $key): array|string
     {
         return $this->arrayParse($this->formData, $key);
     }

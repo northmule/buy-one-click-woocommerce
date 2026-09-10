@@ -92,7 +92,7 @@ class OrderDataForAdmin
      */
     public function __construct(?array $data = null)
     {
-        if ($data == null) {
+        if ($data === null) {
             return;
         }
         try {

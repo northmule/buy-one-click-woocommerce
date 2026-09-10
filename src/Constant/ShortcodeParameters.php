@@ -13,14 +13,9 @@ namespace Coderun\BuyOneClick\Constant;
  */
 class ShortcodeParameters
 {
-    /** @var string  */
-    public const PRODUCT_ID = 'id';
-    /** @var string  */
-    public const PRODUCT_NAME = 'name';
-    /** @var string  */
-    public const PRODUCT_COUNT = 'count';
-    /** @var string  */
-    public const PRODUCT_PRICE = 'price';
-    /** @var string  */
-    public const PRICE_WITH_CURRENCY = 'price_with_currency';
+    public const string PRODUCT_ID = 'id';
+    public const string PRODUCT_NAME = 'name';
+    public const string PRODUCT_COUNT = 'count';
+    public const string PRODUCT_PRICE = 'price';
+    public const string PRICE_WITH_CURRENCY = 'price_with_currency';
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Coderun\BuyOneClick;
 
 /**
@@ -7,17 +9,14 @@ namespace Coderun\BuyOneClick;
  */
 class PluginUpdate
 {
-    /**
-     * @var int
-     */
-    public const DB_VERSION = 2;
+    public const int DB_VERSION = 2;
 
     /**
      * Создание БД при необходимости
      *
      * @return void
      */
-    public static function createOrderTable()
+    public static function createOrderTable(): void
     {
         global $wpdb;
         // Static CREATE TABLE DDL for the plugin's own table; contains no user-supplied data.

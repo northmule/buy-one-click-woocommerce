@@ -18,7 +18,7 @@ class LimitOnSendingFormsException extends BaseException implements ExceptionInt
      */
     public static function error(?string $message = null): LimitOnSendingFormsException
     {
-        if ($message == null) {
+        if ($message === null) {
             $message = __('You have already sent an order!', 'buy-one-click-woocommerce');
         }
         return new self(

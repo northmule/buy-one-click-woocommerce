@@ -28,7 +28,7 @@ class ManipulationsWithStrings
         }
         $camelCaseParts = [];
         foreach ($partsProperty as $key => $part) {
-            if ($key == 0) {
+            if ($key === 0) {
                 $camelCaseParts[] = $part;
                 continue;
             }

@@ -38,10 +38,10 @@ abstract class DataTransferObject implements DataTransferObjectInterface
      * @param mixed              $value
      * @param ReflectionProperty $property
      *
-     * @return bool|DateTime|float|int|string|null
+     * @return bool|DateTime|float|int|string|array<object>|WC_Product|null
      * @throws Exception
      */
-    protected function leadToType($value, ReflectionProperty $property)
+    protected function leadToType(mixed $value, ReflectionProperty $property): mixed
     {
         $propertyType = $property->getType();
         $acceptableTypes[] = $propertyType->getName();

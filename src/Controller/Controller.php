@@ -14,17 +14,12 @@ use WC_Logger;
  */
 abstract class Controller implements ControllerInterface
 {
-    /**
-     * @var string
-     */
-    public const REQUEST_KEY = 'coderun_send_form_buy_one_click';
+    public const string REQUEST_KEY = 'coderun_send_form_buy_one_click';
 
     /**
      * Action front-end nonce-a
-     *
-     * @var string
      */
-    public const FRONTEND_NONCE_ACTION = 'buy_one_click_frontend';
+    public const string FRONTEND_NONCE_ACTION = 'buy_one_click_frontend';
 
     /**
      * @var Logger

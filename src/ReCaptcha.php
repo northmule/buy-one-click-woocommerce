@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Coderun\BuyOneClick;
 
 class ReCaptcha
 {
-    protected static $_instance = null;
+    protected static ?ReCaptcha $_instance = null;
 
     /**
      * Вывод капчи
      *
-     * @param $plugin
+     * @param string $plugin
      */
-    public function view($plugin)
+    public function view(string $plugin): void
     {
         if ($plugin === 'advanced_nocaptcha_recaptcha') {
             $this->viewPluginAnrCaptcha();
@@ -21,10 +23,11 @@ class ReCaptcha
     /**
      * Провека капчи
      *
-     * @param  $plugin
-     * @return array check и message
+     * @param string $plugin
+     *
+     * @return array{check: bool, message: string}
      */
-    public function check($plugin)
+    public function check(string $plugin): array
     {
         $result = [
             'check'   => false,
@@ -48,9 +51,9 @@ class ReCaptcha
      * url - страница в WP
      * contributors - Автор в репозитарии WP
      *
-     * @return array
+     * @return array<string, array{name: string, url: string, contributors: string}>
      */
-    public function isSupported()
+    public function isSupported(): array
     {
         $result = [];
 
@@ -71,7 +74,7 @@ class ReCaptcha
      * Contributors: shamim51
      * Url: https://ru.wordpress.org/plugins/advanced-nocaptcha-recaptcha/
      */
-    protected function viewPluginAnrCaptcha()
+    protected function viewPluginAnrCaptcha(): void
     {
         if (!$this->isSupportPluginAnrCaptcha()) {
             return;
@@ -90,7 +93,7 @@ class ReCaptcha
         \anr_captcha_class::init()->form_field();
     }
 
-    protected function isSupportPluginAnrCaptcha()
+    protected function isSupportPluginAnrCaptcha(): bool
     {
         if (!function_exists('\anr_get_option')) {
             return false;
@@ -125,7 +128,7 @@ class ReCaptcha
      *
      * @return self
      */
-    public static function getInstance()
+    public static function getInstance(): self
     {
         if (is_null(self::$_instance)) {
             self::$_instance = new self();
@@ -137,12 +140,12 @@ class ReCaptcha
     {
     }
 
-    public function __clone()
+    public function __clone(): void
     {
         throw new \Exception('Forbiden instance __clone');
     }
 
-    public function __wakeup()
+    public function __wakeup(): void
     {
         throw new \Exception('Forbiden instance __wakeup');
     }

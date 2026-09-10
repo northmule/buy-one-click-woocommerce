@@ -47,13 +47,28 @@ class AdminController extends Controller
     }
 
     /**
+     * Проверка доступа к действиям панели управления плагином
+     *
+     * @param string $action Action для верификации nonce
+     *
+     * @return void
+     */
+    private function verifyAccess(string $action): void
+    {
+        if (!current_user_can('manage_woocommerce')) {
+            wp_die(-1);
+        }
+        check_admin_referer($action, 'buy_one_click_admin_actions');
+    }
+
+    /**
      * Удаляет заказ из таблицы заказов
      *
      * @return void
      */
     public function deleteOrderById(): void
     {
-        check_admin_referer('removeorder', 'buy_one_click_admin_actions');
+        $this->verifyAccess('removeorder');
 
         // Удаление записи журнала плагина
         if (!empty($_POST['text'])) {
@@ -84,7 +99,7 @@ class AdminController extends Controller
      */
     public function deleteAllOrders(): void
     {
-        check_admin_referer('removeorder', 'buy_one_click_admin_actions');
+        $this->verifyAccess('removeorderall');
 
         $nonce = isset($_POST['nonce']['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce']['nonce'])) : '-1';
         if (wp_verify_nonce($nonce, 'superKey')) {
@@ -102,7 +117,7 @@ class AdminController extends Controller
      */
     public function updateOrderStatus(): void
     {
-        check_admin_referer('updatestatus', 'buy_one_click_admin_actions');
+        $this->verifyAccess('updatestatus');
 
         $id = isset($_POST['text']['id']) ? intval(wp_unslash($_POST['text']['id'])) : -1;
         $status = isset($_POST['text']['status']) ? intval(wp_unslash($_POST['text']['status'])) : 0;
@@ -117,7 +132,7 @@ class AdminController extends Controller
      */
     public function exportOptions(): void
     {
-        check_admin_referer('buy_one_click_export_options', 'buy_one_click_admin_actions');
+        $this->verifyAccess('buy_one_click_export_options');
 
         wp_send_json_success([GeneralOptions::class => $this->commonOptions->toArrayWpToSave()]);
     }
@@ -129,7 +144,7 @@ class AdminController extends Controller
      */
     public function importOptions(): void
     {
-        check_admin_referer('buy_one_click_import_options', 'buy_one_click_admin_actions');
+        $this->verifyAccess('buy_one_click_import_options');
 
         $file = $_FILES;
         $success = false;

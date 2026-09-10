@@ -1305,3 +1305,7 @@ msgstr "Ваш сервисный пароль"
 #: page/tab1-option1.php:417
 msgid "Your WordPress Theme Styles"
 msgstr "Ваши стили темы WordPress"
+
+#: src/Service/Variations.php
+msgid "Please select a variation"
+msgstr "Выберите вариант"

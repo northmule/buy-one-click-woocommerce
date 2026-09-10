@@ -17,10 +17,7 @@ use function boolval;
  */
 class Notification extends Base
 {
-    /**
-     * @var string
-     */
-    protected const ROOT_KEY = OptionsType::NOTIFICATIONS;
+    protected const string ROOT_KEY = OptionsType::NOTIFICATIONS;
 
     /**
      * Название организации

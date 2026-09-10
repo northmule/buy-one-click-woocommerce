@@ -11,16 +11,10 @@ namespace Coderun\BuyOneClick\Constant;
  */
 class Pages
 {
-    /** @var string  */
-    public const DEFAULT = 'default';
-    /** @var string  */
-    public const GENERAL = 'general';
-    /** @var string  */
-    public const NOTIFICATION = 'notification';
-    /** @var string  */
-    public const ORDERS = 'orders';
-    /** @var string  */
-    public const MARKETING = 'marketing';
-    /** @var string  */
-    public const DESIGN_FORM = 'design_form';
+    public const string DEFAULT = 'default';
+    public const string GENERAL = 'general';
+    public const string NOTIFICATION = 'notification';
+    public const string ORDERS = 'orders';
+    public const string MARKETING = 'marketing';
+    public const string DESIGN_FORM = 'design_form';
 }

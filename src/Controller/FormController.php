@@ -89,8 +89,8 @@ class FormController extends Controller
                 'productSrcImg'    => sprintf('<img src="%s" width="80" height="80">', $images[0] ?? ''),
                 'variationPlugin'  => ObjectWithConstantState::getInstance()->isVariations(),
                 'templateStyle'    => $this->commonOptions->isStyleInsertHtml(),
-                'formWithFiles'    => ((new FilesFactory())->create())->render($productObject),
-                'formWithQuantity' => ((new QuantityFactory())->create())->render($productObject),
+                'formWithFiles'    => (new FilesFactory())->create()->render($productObject),
+                'formWithQuantity' => (new QuantityFactory())->create()->render($productObject),
                 'product'          => $product,
             ]
         );
@@ -103,7 +103,7 @@ class FormController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function viewFormOrderCustom()
+    public function viewFormOrderCustom(): void
     {
         if (!wp_verify_nonce($this->getFrontendNonce(), self::FRONTEND_NONCE_ACTION)) {
             $this->abortOnFailedNonce();
@@ -123,8 +123,8 @@ class FormController extends Controller
                 'productSrcImg'    => '',
                 'variationPlugin'  => ObjectWithConstantState::getInstance()->isVariations(),
                 'templateStyle'    => $this->commonOptions->isStyleInsertHtml(),
-                'formWithFiles'    => ((new FilesFactory())->create())->render($productObject),
-                'formWithQuantity' => ((new QuantityFactory())->create())->render($productObject),
+                'formWithFiles'    => (new FilesFactory())->create()->render($productObject),
+                'formWithQuantity' => (new QuantityFactory())->create()->render($productObject),
                 'product'          => null,
             ]
         );

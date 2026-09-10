@@ -3,9 +3,9 @@ Contributors: northmule
 Donate link: https://yoomoney.ru/to/41001746944171
 Tags: woocommerce, buy now, add to cart, quick order, one click
 Requires at least: 6.3
-Tested up to: 7.1
-Stable tag: 2.4.0
-Requires PHP: 7.4
+Tested up to: 6.9
+Stable tag: 2.6.0
+Requires PHP: 8.4
 WC requires at least: 8.0
 WC tested up to: 9.7
 License: GPLv2 or later
@@ -19,7 +19,7 @@ Adds a "buy in one click" button to your WooCommerce store.
 This is the best solution for WooCommerce to easily add a quick order button to the site.
 
 = Some advantages of the plugin: =
-* PHP >= 7.4
+* PHP >= 8.4
 * You only need WooCommere
 * Several modes of operation
 * Several styles for the form directly from the plugin settings
@@ -71,6 +71,16 @@ This project is being developed using the best free IDE [NetBeans](https://netbe
 
 
 == Changelog ==
+= 2.6.0 =
+* Built-in support for variable products (merged from the standalone "Buy one click WooCommerce variations" addon)
+* Selected variation is saved with the order and shown in emails and notifications
+* Compatibility with WooCommerce TM Extra Product Options and PPOM personalization addons
+= 2.5.0 =
+* Raised minimum PHP requirement to 8.4
+* Modernized codebase: typed class constants, strict comparisons, arrow functions, nullable union types, improved parameter and return type declarations
+* Fixed missing `throw` keyword in MIME-type validation of uploaded files
+= 2.4.1 =
+* Security: Added capability check (manage_woocommerce) to all admin AJAX handlers to prevent unauthorized settings export/import and order deletion (CVE-2024-10852, CVE-2024-10853, CVE-2024-10854)
 = 2.4.0 =
 * Code cleanup and alignment with WordPress coding standards
 * Minor code optimizations
